@@ -14,7 +14,7 @@
     "mocha": "^6.0.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --revrusive \"./test/tests/*.js\""
   },
   "author": "zedaizd",
   "license": "ISC"
