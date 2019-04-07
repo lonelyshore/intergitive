@@ -1,0 +1,9 @@
+asset_index:
+  mode: "ondisk"
+  assets:
+    - default_double_fallback: "default_double_fallback.txt"
+  fallbacks:
+    default:
+      target_path: "/test-course/test-language/"
+      keys:
+        - "default_cyclic"
