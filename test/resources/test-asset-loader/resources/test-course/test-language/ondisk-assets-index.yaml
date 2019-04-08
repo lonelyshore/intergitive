@@ -1,8 +1,8 @@
 asset_index:
   mode: "ondisk"
   assets:
-    - fallback1: "asset1.png"
-    - fallback2: "asset2.txt"
+    - picture: "asset1.png"
+    - text: "asset2.txt"
   fallbacks:
     default:
       target_path: "/fallback-target/target-language/"
@@ -11,4 +11,4 @@ asset_index:
         - "default_cyclic"
         - "default_double_fallback"
     redirects:
-      - redirect_fallback1: "/fallback-target/test-language/"
+      - redirect_fallback: "/fallback-target/test-language/"
