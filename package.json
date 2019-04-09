@@ -14,7 +14,7 @@
     "mocha": "^6.0.2"
   },
   "scripts": {
-    "test": "mocha --revrusive \"./test/tests/*.js\""
+    "test": "mocha --recursive \"./test/tests/*.js\""
   },
   "author": "zedaizd",
   "license": "ISC"
