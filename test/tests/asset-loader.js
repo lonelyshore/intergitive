@@ -6,7 +6,7 @@ const path = require("path");
 describe("AssetLoader", function() {
     describe("Load Assets", function() {
 
-        const resourcePath = path.resolve(__dirname, "../resources/test-asset-router/resources");
+        const resourcePath = path.resolve(__dirname, "../resources/test-asset-loader/resources");
         const testCourceTestLanguagePath = path.join("test-course", "test-language");
         let router;
 
