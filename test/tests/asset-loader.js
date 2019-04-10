@@ -7,6 +7,7 @@ describe("AssetLoader", function() {
     describe("Load Assets", function() {
 
         const resourcePath = path.resolve(__dirname, "../resources/test-asset-router/resources");
+        const testCourceTestLanguagePath = path.join("test-course", "test-language");
         let router;
 
         beforeEach(function() {
@@ -24,10 +25,10 @@ describe("AssetLoader", function() {
 
         it("ondisk path correctly routed", function() {
             return router.getFullAssetPath("ondisk-assets/picture")
-                .should.eventually.equal("asset1.png")
+                .should.eventually.equal(path.join(resourcePath, testCourceTestLanguagePath, "asset1.png"))
                 .then(() => {
                     return router.getFullAssetPath("ondisk-assets/text")
-                        .should.eventually.equal("asset2.txt");
+                        .should.eventually.equal(path.join(resourcePath, testCourceTestLanguagePath, "asset2.txt"));
                 });
         })
     })
