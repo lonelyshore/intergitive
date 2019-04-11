@@ -14,6 +14,8 @@ describe("AssetLoader", function() {
         const resourcePath = path.resolve(__dirname, "../resources/test-asset-loader/resources");
         const testCourceTestLanguagePath = 
             path.join(resourcePath, "test-course", "test-language");
+        const fallbackTargetTestLanguagePath =
+            path.join(resourcePath, "fallback-target", "test-language");
         let router;
 
         beforeEach(function() {
@@ -49,6 +51,31 @@ describe("AssetLoader", function() {
             });
         });
 
+        describe("Simple Fallbacks", function() {
+            
+            it("infile default fallback", function() {
+                return router.loadInfileAsset("infile-assets/default_fallback1")
+                .should.eventually
+                .equal("fallback text")
+                .then(() => {
+                    return router.loadInfileAsset("infile-assets/default_fallback2")
+                    .should.eventually
+                    .equal("多國語言にほんごالعربيةTiếng việtไทย");
+                });
+            });
+
+            it("ondisk default fallback", function() {
+                return router.getFullAssetPath("ondisk-assets/default_fallback")
+                .should.eventually
+                .equal(
+                    path.join(
+                        fallbackTargetTestLanguagePath,
+                        "asset1.png"
+                    )
+                );
+            });
+
+        })
 
     })
 })
