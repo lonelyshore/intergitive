@@ -2,6 +2,11 @@
 
 const AssetLoader = require("../../lib/asset-loader").AssetLoader;
 const path = require("path");
+const chai = require("chai");
+const chaiAsPromised = require("chai-as-promised");
+
+chai.use(chaiAsPromised);
+chai.should();
 
 describe("AssetLoader", function() {
     describe("Load Assets", function() {
