@@ -1,4 +1,4 @@
 asset_index:
   mode: "infile"
   assets:
-    - double_fallback: "double_fallback"
+    double_fallback: "double_fallback"

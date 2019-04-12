@@ -1,7 +1,7 @@
 asset_index:
   mode: "ondisk"
   assets:
-    - default_double_fallback: "default_double_fallback.txt"
+    default_double_fallback: "default_double_fallback.txt"
   fallbacks:
     default:
       path_replacement: ["test-course", "test-language"]

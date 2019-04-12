@@ -1,8 +1,8 @@
 asset_index:
   mode: "ondisk"
   assets:
-    - default_fallback: "asset1.png"
-    - redirect_fallback: "asset2.txt"
+    default_fallback: "asset1.png"
+    redirect_fallback: "asset2.txt"
   fallbacks:
     default:
       path_replacement: ["", "fallback-language"]
