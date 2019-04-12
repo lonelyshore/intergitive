@@ -100,7 +100,7 @@ describe("AssetLoader", function() {
             it("infile double fallback", function() {
                 return router.loadInfileAsset("infile-assets/redirect_double_fallback")
                 .should.eventually
-                .equal("double-fallback");
+                .equal("double_fallback");
             });
 
             it("ondisk double fallback", function() {
