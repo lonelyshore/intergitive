@@ -52,7 +52,7 @@ describe("AssetLoader", function() {
         });
 
         describe("Simple Fallbacks", function() {
-            
+
             it("infile default fallback", function() {
                 return router.loadInfileAsset("infile-assets/default_fallback1")
                 .should.eventually
@@ -74,6 +74,27 @@ describe("AssetLoader", function() {
                     )
                 );
             });
+
+            it("infile redirect fallback", function() {
+                return router.loadInfileAsset("infile-assets/redirect_fallback")
+                .should.eventually
+                .equal("\"DOUBLE QUOTE\"");
+            });
+
+            it("ondisk redirect fallback", function() {
+                return router.getFullAssetPath("ondisk-assets/redirect_fallback")
+                .should.eventually
+                .equal(
+                    path.join(
+                        fallbackTargetTestLanguagePath,
+                        "asset2.txt"
+                    )
+                );
+            });
+
+        });
+
+        describe("Double Fallbacks", function() {
 
         })
 
