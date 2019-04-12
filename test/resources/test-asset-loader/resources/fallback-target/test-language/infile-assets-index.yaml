@@ -7,5 +7,5 @@ asset_index:
     - not_in_used_fallback: "this is not used..."
   fallbacks:
     redirects:
-      - redirect_cyclic: "/test-course/test-language/"
-      - redirect_double_fallback: "../fallback-language/"
+      - redirect_cyclic: ["test-course", "test-language"]
+      - redirect_double_fallback: ["", "fallback-language"]

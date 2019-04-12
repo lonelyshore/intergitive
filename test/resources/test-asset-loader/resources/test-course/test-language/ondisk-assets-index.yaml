@@ -5,10 +5,10 @@ asset_index:
     text: "asset2.txt"
   fallbacks:
     default:
-      target_path: "/fallback-target/target-language/"
+      path_replacement: ["fallback-target", "test-language"]
       keys:
         - "default_fallback"
         - "default_cyclic"
         - "default_double_fallback"
     redirects:
-      redirect_fallback: "/fallback-target/test-language/"
+      redirect_fallback: ["fallback-target", "test-language"]
