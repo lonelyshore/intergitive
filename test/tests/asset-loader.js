@@ -16,6 +16,8 @@ describe("AssetLoader", function() {
             path.join(resourcePath, "test-course", "test-language");
         const fallbackTargetTestLanguagePath =
             path.join(resourcePath, "fallback-target", "test-language");
+        const fallbackTargetFallbackLanguagePath =
+            path.join(resourcePath, "fallback-target", "fallback-language");
         let router;
 
         beforeEach(function() {
@@ -95,8 +97,23 @@ describe("AssetLoader", function() {
         });
 
         describe("Double Fallbacks", function() {
+            it("infile double fallback", function() {
+                return router.loadInfileAsset("infile-assets/redirect_double_fallback")
+                .should.eventually
+                .equal("double-fallback");
+            });
 
-        })
+            it("ondisk double fallback", function() {
+                return router.getFullAssetPath("ondisk-assets/default_double_fallback")
+                .should.eventually
+                .equal(
+                    path.join(
+                        fallbackTargetFallbackLanguagePath,
+                        "default_double_fallback.txt"
+                    )
+                );
+            });
+        });
 
     })
 })
