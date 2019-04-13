@@ -2,6 +2,7 @@
 
 const AssetLoader = require("../../lib/asset-loader").AssetLoader;
 const NotFoundError = require("../../lib/asset-loader").NotFoundError;
+const CyclicFallbackError = require("../../lib/asset-loader").CyclicFallbackError;
 const path = require("path");
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
@@ -199,7 +200,22 @@ describe("AssetLoader", function() {
                 });
             });
 
-        })
+        });
+
+        describe("Fallback Cycle Detection", function() {
+            it("cycle in redirect", function() {
+                let assetName = "redirect_cyclic";
+                
+                return router.loadInfileAsset(`${infileAssets}/${assetName}`)
+                .should.eventually
+                .be.an.instanceof(CyclicFallbackError)
+                .and.include({
+                    startingContainerPath: path.join(testCourceTestLanguageSubPath, infileAssets),
+                    assetName: assetName
+                });
+            })
+
+        });
 
     })
 })
