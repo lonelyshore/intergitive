@@ -15,12 +15,18 @@ describe("AssetLoader", function() {
         const resourcePath = path.resolve(__dirname, "../resources/test-asset-loader/resources");
         const infileAssets = "infile-assets";
         const ondiskAssets = "ondisk-assets";
+        const testCourceTestLanguageSubPath =
+            path.join("test-course", "test-language");
         const testCourceTestLanguagePath = 
-            path.join(resourcePath, "test-course", "test-language");
+            path.join(resourcePath, testCourceTestLanguageSubPath);
+        const fallbackTargetTestLanguageSubPath =
+            path.join("fallback-target", "test-language");
         const fallbackTargetTestLanguagePath =
-            path.join(resourcePath, "fallback-target", "test-language");
+            path.join(resourcePath, fallbackTargetTestLanguageSubPath);
+        const fallbackTargetFallbackLanguageSubPath =
+            path.join("fallback-target", "fallback-language");
         const fallbackTargetFallbackLanguagePath =
-            path.join(resourcePath, "fallback-target", "fallback-language");
+            path.join(resourcePath, fallbackTargetFallbackLanguageSubPath);
         let router;
 
         beforeEach(function() {
@@ -124,36 +130,22 @@ describe("AssetLoader", function() {
                 return router.loadInfileAsset(`${infileAssets}/not_exists`)
                 .should.eventually
                 .be.an.instanceof(NotFoundError)
-                .and.have.property(
-                    "startingContainerPath",
-                    path.join(testCourceTestLanguagePath, infileAssets)
-                )
-                .and.have.property(
-                    "finalContainerPath", 
-                    path.join(testCourceTestLanguagePath, infileAssets)
-                )
-                .and.have.property(
-                    "assetName",
-                    "not_exists"
-                );
+                .and.include({
+                    startingContainerPath: path.join(testCourceTestLanguageSubPath, infileAssets),
+                    finalContainerPath: path.join(testCourceTestLanguageSubPath, infileAssets),
+                    assetName: "not_exists"
+                });
             });
             
             it("ondisk not found", function() {
                 return router.getFullAssetPath(`${ondiskAssets}/not_exists`)
                 .should.eventually
                 .be.an.instanceof(NotFoundError)
-                .and.have.property(
-                    "startingContainerPath",
-                    path.join(testCourceTestLanguagePath, ondiskAssets)
-                )
-                .and.have.property(
-                    "finalContainerPath", 
-                    path.join(testCourceTestLanguagePath, ondiskAssets)
-                )
-                .and.have.property(
-                    "assetName",
-                    "not_exists"
-                );
+                .and.include({
+                    startingContainerPath: path.join(testCourceTestLanguagePath, ondiskAssets),
+                    finalContainerPath: path.join(testCourceTestLanguagePath, ondiskAssets),
+                    assetName: "not_exists"                   
+                });
             });
 
             it("infile fallback not found", function() {
@@ -161,18 +153,11 @@ describe("AssetLoader", function() {
                 return router.loadInfileAsset(`${infile-assets}/${assetName}`)
                 .should.eventually
                 .be.an.instanceof(NotFoundError)
-                .and.have.property(
-                    "startingContainerPath",
-                    path.join(testCourceTestLanguagePath, infileAssets)
-                )
-                .and.have.property(
-                    "finalContainerPath", 
-                    path.join(fallbackTargetTestLanguagePath, infileAssets)
-                )
-                .and.have.property(
-                    "assetName",
-                    assetName
-                );
+                .and.include({
+                    startingContainerPath: path.join(testCourceTestLanguagePath, infileAssets),
+                    finalContainerPath: path.join(fallbackTargetTestLanguagePath, infileAssets),
+                    assetName: assetName
+                });
             });
 
             it("ondisk fallback not found", function() {
@@ -180,18 +165,11 @@ describe("AssetLoader", function() {
                 return router.getFullAssetPath(`${ondiskAssets}/${assetName}`)
                 .should.eventually
                 .be.an.instanceof(NotFoundError)
-                .and.have.property(
-                    "startingContainerPath",
-                    path.join(testCourceTestLanguagePath, infileAssets)
-                )
-                .and.have.property(
-                    "finalContainerPath", 
-                    path.join(fallbackTargetTestLanguagePath, infileAssets)
-                )
-                .and.have.property(
-                    "assetName",
-                    assetName
-                );
+                .and.include({
+                    startingContainerPath: path.join(testCourceTestLanguagePath, infileAssets),
+                    finalContainerPath: path.join(fallbackTargetTestLanguagePath, infileAssets),
+                    assetName: assetName
+                });
             });
         });
 
@@ -200,18 +178,11 @@ describe("AssetLoader", function() {
                 return router.loadInfileAsset("not-exists/not-exists")
                 .should.eventually
                 .be.an.instanceof(NotFoundError)
-                .and.have.property(
-                    "startingContainerPath",
-                    path.join(testCourceTestLanguagePath, "not-exists")
-                )
-                .and.have.property(
-                    "finalContainerPath", 
-                    path.join(testCourceTestLanguagePath, "not-exists")
-                )
-                .and.have.property(
-                    "assetName",
-                    "not-exists"
-                );
+                .and.include({
+                    startingContainerPath: path.join(testCourceTestLanguagePath, "not-exists"),
+                    finalContainerPath: path.join(testCourceTestLanguagePath, "not-exists"),
+                    assetName: "not-exists"
+                });
             })
         })
 
