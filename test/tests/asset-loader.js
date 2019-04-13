@@ -128,7 +128,19 @@ describe("AssetLoader", function() {
                 .should.eventually
                 .equal(null);
             });
-        })
+
+            it("infile fallback not found", function() {
+                return router.loadInfileAsset("infile-assets/redirect_not_found")
+                .should.eventually
+                .equal(null);
+            });
+
+            it("ondisk fallback not found", function() {
+                return router.getFullAssetPath("ondisk-assets/default_not_found")
+                .should.eventually
+                .equal(null);
+            });
+        });
 
     })
 })
