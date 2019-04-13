@@ -13,4 +13,4 @@ asset_index:
       redirect_fallback: ["fallback-target", "test-language"]
       redirect_cyclic: ["fallback-target", "test-language"]
       redirect_double_fallback: ["fallback-target", "test-language"]
-      redirect_not_found: ["fallback-target", test"language]
+      redirect_not_found: [ fallback-target, test-language ]
