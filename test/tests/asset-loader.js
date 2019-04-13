@@ -196,7 +196,7 @@ describe("AssetLoader", function() {
 
         });
 
-        describe.skip("Fallback Cycle Detection", function() {
+        describe("Fallback Cycle Detection", function() {
 
             it("cycle in redirect", function() {
                 let assetName = "redirect_cyclic";
