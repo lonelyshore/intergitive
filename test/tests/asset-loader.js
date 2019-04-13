@@ -142,8 +142,8 @@ describe("AssetLoader", function() {
                 .should.eventually
                 .be.an.instanceof(NotFoundError)
                 .and.include({
-                    startingContainerPath: path.join(testCourceTestLanguagePath, ondiskAssets),
-                    finalContainerPath: path.join(testCourceTestLanguagePath, ondiskAssets),
+                    startingContainerPath: path.join(testCourceTestLanguageSubPath, ondiskAssets),
+                    finalContainerPath: path.join(testCourceTestLanguageSubPath, ondiskAssets),
                     assetName: "not_exists"                   
                 });
             });
@@ -154,8 +154,8 @@ describe("AssetLoader", function() {
                 .should.eventually
                 .be.an.instanceof(NotFoundError)
                 .and.include({
-                    startingContainerPath: path.join(testCourceTestLanguagePath, infileAssets),
-                    finalContainerPath: path.join(fallbackTargetTestLanguagePath, infileAssets),
+                    startingContainerPath: path.join(testCourceTestLanguageSubPath, infileAssets),
+                    finalContainerPath: path.join(fallbackTargetTestLanguageSubPath, infileAssets),
                     assetName: assetName
                 });
             });
@@ -166,21 +166,21 @@ describe("AssetLoader", function() {
                 .should.eventually
                 .be.an.instanceof(NotFoundError)
                 .and.include({
-                    startingContainerPath: path.join(testCourceTestLanguagePath, infileAssets),
-                    finalContainerPath: path.join(fallbackTargetTestLanguagePath, infileAssets),
+                    startingContainerPath: path.join(testCourceTestLanguageSubPath, ondiskAssets),
+                    finalContainerPath: path.join(fallbackTargetTestLanguageSubPath, ondiskAssets),
                     assetName: assetName
                 });
             });
         });
 
-        describe("Handle Bundle Not Found", function() {
+        describe("Handle Container Not Found", function() {
             it("Direct Load Not Found", function() {
                 return router.loadInfileAsset("not-exists/not-exists")
                 .should.eventually
                 .be.an.instanceof(NotFoundError)
                 .and.include({
-                    startingContainerPath: path.join(testCourceTestLanguagePath, "not-exists"),
-                    finalContainerPath: path.join(testCourceTestLanguagePath, "not-exists"),
+                    startingContainerPath: path.join(testCourceTestLanguageSubPath, "not-exists"),
+                    finalContainerPath: path.join(testCourceTestLanguageSubPath, "not-exists"),
                     assetName: "not-exists"
                 });
             })
