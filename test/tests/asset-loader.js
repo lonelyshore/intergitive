@@ -150,7 +150,7 @@ describe("AssetLoader", function() {
 
             it("infile fallback not found", function() {
                 let assetName = "redirect_not_found";
-                return router.loadInfileAsset(`${infile-assets}/${assetName}`)
+                return router.loadInfileAsset(`${infileAssets}/${assetName}`)
                 .should.eventually
                 .be.an.instanceof(NotFoundError)
                 .and.include({
