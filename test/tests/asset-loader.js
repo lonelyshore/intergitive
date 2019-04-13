@@ -174,7 +174,8 @@ describe("AssetLoader", function() {
         });
 
         describe("Handle Container Not Found", function() {
-            it("Direct Load Not Found", function() {
+
+            it("direct load not found", function() {
                 return router.loadInfileAsset("not-exists/not-exists")
                 .should.eventually
                 .be.an.instanceof(NotFoundError)
@@ -183,7 +184,21 @@ describe("AssetLoader", function() {
                     finalContainerPath: path.join(testCourceTestLanguageSubPath, "not-exists"),
                     assetName: "not-exists"
                 });
-            })
+            });
+
+            it("fallback not found", function() {
+                let assetName = "redirect_container_not_found";
+
+                return router.loadInfileAsset(`${infileAssets}/${assetName}`)
+                .should.eventually
+                .be.an.instanceof(NotFoundError)
+                .and.include({
+                    startingContainerPath: path.join(testCourceTestLanguageSubPath, infileAssets),
+                    finalContainerPath: path.join("not_exist", "not_exist", infileAssets),
+                    assetName: assetName
+                });
+            });
+
         })
 
     })
