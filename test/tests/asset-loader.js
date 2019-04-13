@@ -125,11 +125,11 @@ describe("AssetLoader", function() {
                 .should.eventually
                 .be.an.instanceof(NotFoundError)
                 .and.have.property(
-                    "sourceBundlePath",
+                    "startingContainerPath",
                     path.join(testCourceTestLanguagePath, infileAssets)
                 )
                 .and.have.property(
-                    "finalBundlePath", 
+                    "finalContainerPath", 
                     path.join(testCourceTestLanguagePath, infileAssets)
                 )
                 .and.have.property(
@@ -143,11 +143,11 @@ describe("AssetLoader", function() {
                 .should.eventually
                 .be.an.instanceof(NotFoundError)
                 .and.have.property(
-                    "sourceBundlePath",
+                    "startingContainerPath",
                     path.join(testCourceTestLanguagePath, ondiskAssets)
                 )
                 .and.have.property(
-                    "finalBundlePath", 
+                    "finalContainerPath", 
                     path.join(testCourceTestLanguagePath, ondiskAssets)
                 )
                 .and.have.property(
@@ -162,11 +162,11 @@ describe("AssetLoader", function() {
                 .should.eventually
                 .be.an.instanceof(NotFoundError)
                 .and.have.property(
-                    "sourceBundlePath",
+                    "startingContainerPath",
                     path.join(testCourceTestLanguagePath, infileAssets)
                 )
                 .and.have.property(
-                    "finalBundlePath", 
+                    "finalContainerPath", 
                     path.join(fallbackTargetTestLanguagePath, infileAssets)
                 )
                 .and.have.property(
@@ -181,11 +181,11 @@ describe("AssetLoader", function() {
                 .should.eventually
                 .be.an.instanceof(NotFoundError)
                 .and.have.property(
-                    "sourceBundlePath",
+                    "startingContainerPath",
                     path.join(testCourceTestLanguagePath, infileAssets)
                 )
                 .and.have.property(
-                    "finalBundlePath", 
+                    "finalContainerPath", 
                     path.join(fallbackTargetTestLanguagePath, infileAssets)
                 )
                 .and.have.property(
@@ -201,11 +201,11 @@ describe("AssetLoader", function() {
                 .should.eventually
                 .be.an.instanceof(NotFoundError)
                 .and.have.property(
-                    "sourceBundlePath",
+                    "startingContainerPath",
                     path.join(testCourceTestLanguagePath, "not-exists")
                 )
                 .and.have.property(
-                    "finalBundlePath", 
+                    "finalContainerPath", 
                     path.join(testCourceTestLanguagePath, "not-exists")
                 )
                 .and.have.property(
