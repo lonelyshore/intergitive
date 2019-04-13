@@ -1,6 +1,7 @@
 "use strict";
 
 const AssetLoader = require("../../lib/asset-loader").AssetLoader;
+const NotFoundError = require("../../lib/asset-loader").NotFoundError;
 const path = require("path");
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
@@ -12,6 +13,8 @@ describe("AssetLoader", function() {
     describe("Load Assets", function() {
 
         const resourcePath = path.resolve(__dirname, "../resources/test-asset-loader/resources");
+        const infileAssets = "infile-assets";
+        const ondiskAssets = "ondisk-assets";
         const testCourceTestLanguagePath = 
             path.join(resourcePath, "test-course", "test-language");
         const fallbackTargetTestLanguagePath =
@@ -118,29 +121,99 @@ describe("AssetLoader", function() {
         describe("Handle Not Found", function() {
 
             it("infile not found", function() {
-                return router.loadInfileAsset("infile-assets/not_exists")
+                return router.loadInfileAsset(`${infileAssets}/not_exists`)
                 .should.eventually
-                .equal(null);
+                .be.an.instanceof(NotFoundError)
+                .and.have.property(
+                    "sourceBundlePath",
+                    path.join(testCourceTestLanguagePath, infileAssets)
+                )
+                .and.have.property(
+                    "finalBundlePath", 
+                    path.join(testCourceTestLanguagePath, infileAssets)
+                )
+                .and.have.property(
+                    "assetName",
+                    "not_exists"
+                );
             });
             
             it("ondisk not found", function() {
-                return router.getFullAssetPath("ondisk-assets/not_exists")
+                return router.getFullAssetPath(`${ondiskAssets}/not_exists`)
                 .should.eventually
-                .equal(null);
+                .be.an.instanceof(NotFoundError)
+                .and.have.property(
+                    "sourceBundlePath",
+                    path.join(testCourceTestLanguagePath, ondiskAssets)
+                )
+                .and.have.property(
+                    "finalBundlePath", 
+                    path.join(testCourceTestLanguagePath, ondiskAssets)
+                )
+                .and.have.property(
+                    "assetName",
+                    "not_exists"
+                );
             });
 
             it("infile fallback not found", function() {
-                return router.loadInfileAsset("infile-assets/redirect_not_found")
+                let assetName = "redirect_not_found";
+                return router.loadInfileAsset(`${infile-assets}/${assetName}`)
                 .should.eventually
-                .equal(null);
+                .be.an.instanceof(NotFoundError)
+                .and.have.property(
+                    "sourceBundlePath",
+                    path.join(testCourceTestLanguagePath, infileAssets)
+                )
+                .and.have.property(
+                    "finalBundlePath", 
+                    path.join(fallbackTargetTestLanguagePath, infileAssets)
+                )
+                .and.have.property(
+                    "assetName",
+                    assetName
+                );
             });
 
             it("ondisk fallback not found", function() {
-                return router.getFullAssetPath("ondisk-assets/default_not_found")
+                let assetName = "default_not_found";
+                return router.getFullAssetPath(`${ondiskAssets}/${assetName}`)
                 .should.eventually
-                .equal(null);
+                .be.an.instanceof(NotFoundError)
+                .and.have.property(
+                    "sourceBundlePath",
+                    path.join(testCourceTestLanguagePath, infileAssets)
+                )
+                .and.have.property(
+                    "finalBundlePath", 
+                    path.join(fallbackTargetTestLanguagePath, infileAssets)
+                )
+                .and.have.property(
+                    "assetName",
+                    assetName
+                );
             });
         });
+
+        describe("Handle Bundle Not Found", function() {
+            it("Direct Load Not Found", function() {
+                return router.loadInfileAsset("not-exists/not-exists")
+                .should.eventually
+                .be.an.instanceof(NotFoundError)
+                .and.have.property(
+                    "sourceBundlePath",
+                    path.join(testCourceTestLanguagePath, "not-exists")
+                )
+                .and.have.property(
+                    "finalBundlePath", 
+                    path.join(testCourceTestLanguagePath, "not-exists")
+                )
+                .and.have.property(
+                    "assetName",
+                    "not-exists"
+                );
+            })
+        })
 
     })
 })
