@@ -207,7 +207,18 @@ describe("AssetLoader", function() {
                     startingContainerPath: path.join(testCourceTestLanguageSubPath, infileAssets),
                     assetName: assetName
                 });
-            })
+            });
+
+            it("cycle in default fallback", function() {
+                let assetName = "default_cyclic";
+
+                return router.getFullAssetPath(`${ondiskAssets}/${assetName}`)
+                .should.be.eventually.rejectedWith(CyclicFallbackError)
+                .and.include({
+                    startingContainerPath: path.join(testCourceTestLanguageSubPath, ondiskAssets),
+                    assetName: assetName
+                });
+            });
 
         });
 
