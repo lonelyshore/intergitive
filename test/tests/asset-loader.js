@@ -115,5 +115,20 @@ describe("AssetLoader", function() {
             });
         });
 
+        describe("Handle Not Found", function() {
+
+            it("infile not found", function() {
+                return router.loadInfileAsset("infile-assets/not_exists")
+                .should.eventually
+                .equal(null);
+            });
+            
+            it("ondisk not found", function() {
+                return router.getFullAssetPath("ondisk-assets/not_exists")
+                .should.eventually
+                .equal(null);
+            });
+        })
+
     })
 })

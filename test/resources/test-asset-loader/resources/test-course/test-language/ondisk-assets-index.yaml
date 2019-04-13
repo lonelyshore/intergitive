@@ -10,5 +10,6 @@ asset_index:
         - "default_fallback"
         - "default_cyclic"
         - "default_double_fallback"
+        - "default_not_found"
     redirects:
       redirect_fallback: ["fallback-target", "test-language"]

@@ -2,7 +2,7 @@ asset_index:
   mode: "infile" # <"infile" | "ondisk">, mandatory
   assets: # an array of key value pairs, mandatory
     text: "test-course->test-language->infile-assets"
-    not_in_used: "this is not used..."
+    not_in_use: "this is not used..."
   fallbacks: # optional
     default: # optional
       path_replacement: ["fallback-target", "test-language"] # mandatory when .fallbacks.default exists; the new base path of the remapped keys
@@ -13,3 +13,4 @@ asset_index:
       redirect_fallback: ["fallback-target", "test-language"]
       redirect_cyclic: ["fallback-target", "test-language"]
       redirect_double_fallback: ["fallback-target", "test-language"]
+      redirect_not_found: ["fallback-target", test"language]
