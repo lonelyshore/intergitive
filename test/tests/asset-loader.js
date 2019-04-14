@@ -47,17 +47,19 @@ describe("AssetLoader", function() {
             });
     
             it("ondisk path correctly routed", function() {
-                return router.getFullAssetPath("ondisk-assets/picture")
+                return router.getFullAssetPath(`${ondiskAssets}/picture`)
                     .should.eventually
                     .equal(
                         path.join(
                             testCourceTestLanguagePath, 
+                            ondiskAssets,
                             "asset1.png"))
                     .then(() => {
-                        return router.getFullAssetPath("ondisk-assets/text")
+                        return router.getFullAssetPath(`${ondiskAssets}/text`)
                             .should.eventually.equal(
                                 path.join(
                                     testCourceTestLanguagePath, 
+                                    ondiskAssets,
                                     "asset2.txt"));
                     });
             });
@@ -77,11 +79,12 @@ describe("AssetLoader", function() {
             });
 
             it("ondisk default fallback", function() {
-                return router.getFullAssetPath("ondisk-assets/default_fallback")
+                return router.getFullAssetPath(`${ondiskAssets}/default_fallback`)
                 .should.eventually
                 .equal(
                     path.join(
                         fallbackTargetTestLanguagePath,
+                        ondiskAssets,
                         "asset1.png"
                     )
                 );
@@ -94,11 +97,12 @@ describe("AssetLoader", function() {
             });
 
             it("ondisk redirect fallback", function() {
-                return router.getFullAssetPath("ondisk-assets/redirect_fallback")
+                return router.getFullAssetPath(`${ondiskAssets}/redirect_fallback`)
                 .should.eventually
                 .equal(
                     path.join(
                         fallbackTargetTestLanguagePath,
+                        ondiskAssets,
                         "asset2.txt"
                     )
                 );
@@ -114,11 +118,12 @@ describe("AssetLoader", function() {
             });
 
             it("ondisk double fallback", function() {
-                return router.getFullAssetPath("ondisk-assets/default_double_fallback")
+                return router.getFullAssetPath(`${ondiskAssets}/default_double_fallback`)
                 .should.eventually
                 .equal(
                     path.join(
                         fallbackTargetFallbackLanguagePath,
+                        ondiskAssets,
                         "default_double_fallback.txt"
                     )
                 );
