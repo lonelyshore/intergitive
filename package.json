@@ -4,12 +4,12 @@
   "description": "An interactive git tutorial",
   "main": "main.js",
   "dependencies": {
-    "adm-zip": "^0.4.13",
     "fs-extra": "^7.0.1",
     "js-yaml": "^3.12.2",
     "nodegit": "^0.24.1"
   },
   "devDependencies": {
+    "adm-zip": "^0.4.13",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "mocha": "^6.0.2"
