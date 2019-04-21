@@ -1,14 +1,51 @@
 "use strict";
 
 const path = require("path");
+const fs = require("fs-extra");
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
+
+const zip = require("../../lib/simple-archive");
+const vcs = require("../../lib/repo-vcs");
 
 chai.use(chaiAsPromised);
 chai.should();
 
 describe.skip("VCS Compare", function() {
     describe("Local", function() {
+
+        const checkedBasePath = path.join(playgroundPath, "checked");
+        const checkedRepoPath = path.join(checkedBasePath, "compare-test-local");
+        const referenceStorePath = path.join(playgroundPath, "repo-store");
+        const referenceStoreName = "compare-test-local";
+
+        let checkedRepo;
+        let vcsManager;
+
+        before(function() {
+            const playgroundPath = path.resolve(__dirname, "../playground");
+
+            const archivePath = path.resolve(__dirname, "../resources/repo-archive");
+            const referenceArchivePath = path.join(archivePath, "compare-test-local-ref.zip");
+            const checkedArchivePath = path.join(archivePath, "compare-test-local-checked.zip");
+
+
+            
+            return fs.ensureDir(playgroundPath)
+            .then(() => {
+                return zip.extractArchiveTo(referenceArchivePath, referenceStorePath);
+            })
+            .then(() => {
+                return zip.extractArchiveTo(checkedArchivePath, checkedBasePath);
+            })
+            .then(() => {
+                return vcs.RepoReferenceManager.create(checkedRepoPath, referenceStorePath, referenceStoreName)
+                .then((manager) => {
+                    vcsManager = manager;
+                });
+            });
+        });
+
         describe("Equal", function() {
             it("clean stage and working directory", function() {
                 const referenceName = "clean";
@@ -57,7 +94,7 @@ describe.skip("VCS Compare", function() {
     
             it("detached head", function() {
                 const referenceName = "detached";
-                
+
             });
         });
     
