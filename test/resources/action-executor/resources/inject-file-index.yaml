@@ -1,0 +1,15 @@
+asset_index:
+  mode: "ondisk"
+  assets:
+    simpleOneFile: "simple-one-file.txt"
+    oneFileOverwritting: "one-file-overwritting.txt"
+    oneFileInPath: "one-file-in-path.txt"
+    oneFileInPathOverwritting: "one-file-in-path-overwritting"
+    manyFiles1: "many-files-1.txt"
+    manyFiles2: "many-files-2.txt"
+    manyFilesOverwritting1: "many-files-overwritting-1.txt"
+    manyFilesOverwritting2: "many-files-overwritting-2.txt"
+    manyFilesInPath1: "many-files-in-path-1.txt"
+    manyFilesInPath2: "many-files-in-path-2.txt"
+    manyFilesInPathOverwritting1: "many-files-in-path-overwritting-1.txt"
+    manyFilesInPathOverwritting2: "many-files-in-path-overwriting-2.txt"
