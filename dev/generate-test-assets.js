@@ -12,11 +12,16 @@ const collectIndexPaths = function(basePath) {
     while (stack.length !== 0) {
         let currentPath = stack.pop();
         let children = fs.readdirSync(currentPath);
+
         children.forEach(c => {
+            let childPath = path.join(currentPath, c);
+
             if (c.endsWith("-index.yaml")) {
-                results.push(path.join(currentPath, c));
+                results.push(childPath);
             }
-            stack.push(path.join(currentPath, c));
+            else if (fs.statSync(childPath).isDirectory()) {
+                stack.push(childPath);
+            }
         });
     }
 
@@ -75,13 +80,13 @@ function generateAssets(basePath, assetNames) {
     return Promise.all(generateAssetPromises);
 }
 
-const generateAssetsForIndex = function(indexPath) {
+const generateAssetsForIndex = function(indexPath, bundlePathElements) {
     return fs.readFile(indexPath)
     .then(content => {
         return yaml.safeLoad(content);
     })
     .then(obj => {
-        return new AssetIndex(obj);
+        return new AssetIndex(obj, bundlePathElements);
     })
     .then(index => {
         return collectAssetNamesFromIndex(index);
@@ -100,11 +105,11 @@ const generateAssetsForIndex = function(indexPath) {
 module.exports.generateTestAssets = function(rootPath, bundlePathElements) {
     let basePath = path.join(...[rootPath].concat(bundlePathElements));
     let indexPaths = collectIndexPaths(basePath);
-    
+
     let generateAssetsForIndexPromides = [];
     indexPaths.forEach(indexPath => {
         generateAssetsForIndexPromides.push(
-            generateAssetsForIndex(indexPath)
+            generateAssetsForIndex(indexPath, bundlePathElements)
         );
     });
 
