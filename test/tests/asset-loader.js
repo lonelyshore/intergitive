@@ -4,6 +4,7 @@ const AssetLoader = require("../../lib/asset-loader").AssetLoader;
 const NotFoundError = require("../../lib/asset-loader").NotFoundError;
 const CyclicFallbackError = require("../../lib/asset-loader").CyclicFallbackError;
 const path = require("path");
+const utils = require("./test-utils");
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
 
@@ -13,7 +14,8 @@ chai.should();
 describe("AssetLoader", function() {
     describe("Load Assets", function() {
 
-        const resourcePath = path.resolve(__dirname, "../resources/test-asset-loader/resources");
+        const resourcePath = path.join(utils.RESOURCES_PATH, "/test-asset-loader/resources");
+        
         const infileAssets = "infile-assets";
         const ondiskAssets = "ondisk-assets";
         const testCourceTestLanguageSubPath =

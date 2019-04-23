@@ -2,6 +2,8 @@
 
 const path = require("path");
 const fs = require("fs-extra");
+const utils = require("./test-utils");
+
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
 
@@ -14,6 +16,8 @@ chai.should();
 describe.skip("VCS Compare", function() {
     describe("Local", function() {
 
+        const playgroundPath = utils.PLAYGROUND_PATH;
+
         const checkedBasePath = path.join(playgroundPath, "checked");
         const checkedRepoPath = path.join(checkedBasePath, "compare-test-local");
         const referenceStorePath = path.join(playgroundPath, "repo-store");
@@ -23,13 +27,11 @@ describe.skip("VCS Compare", function() {
         let vcsManager;
 
         before(function() {
-            const playgroundPath = path.resolve(__dirname, "../playground");
+            
 
-            const archivePath = path.resolve(__dirname, "../resources/repo-archive");
+            const archivePath = path.join(utils.RESOURCES_PATH, "repo-archive");
             const referenceArchivePath = path.join(archivePath, "compare-test-local-ref.zip");
             const checkedArchivePath = path.join(archivePath, "compare-test-local-checked.zip");
-
-
             
             return fs.ensureDir(playgroundPath)
             .then(() => {
