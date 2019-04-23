@@ -28,7 +28,7 @@ describe.skip("Action Executor", function() {
             return fs.remove(utils.PLAYGROUND_PATH);
         });
 
-        describe("Add File", function() {
+        describe("Inject File", function() {
 
             it("add one file source exists", function() {
                 fail();
