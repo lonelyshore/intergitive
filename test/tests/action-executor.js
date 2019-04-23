@@ -13,37 +13,38 @@ const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
+const fail = function() {
+    throw new Error("fail");
+}
+
 describe.skip("Action Executor", function() {
     describe("File Operations", function() {
             
-        beforeEach(function() {
-            return fs.ensureDir(utils.PLAYGROUND_PATH);
+        before(function() {
+            return fs.emptyDir(utils.PLAYGROUND_PATH);
         });
 
         afterEach(function() {
-            return fs.emptyDir(utils.PLAYGROUND_PATH)
-            .then(() => {
-                return fs.remove(utils.PLAYGROUND_PATH);
-            });
+            return fs.remove(utils.PLAYGROUND_PATH);
         });
 
-        describe("add a file", () => {
+        describe("Add File", function() {
 
-            let tempPath;
-
-            before(function() {
-                return fs.mkdtemp(os.tmpdir() + path.sep)
-                .then(result => {
-                    tempPath = result;
-                })
-            });
-            after(function() {
-                return fs.rmdir(tempPath);
+            it("add one file source exists", function() {
+                fail();
             });
 
-            it("add file exists", () => {
-                
-            })
+            it("add multiple files all sources exist", function() {
+                fail();
+            });
+
+            it("add one file source not exist should fail", function() {
+                fail();
+            });
+
+            it("add multiple files any source not exist should fail", function() {
+                fail();
+            });
 
         });
     });
