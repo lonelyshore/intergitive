@@ -43,13 +43,36 @@ const collectAssetNamesFromIndex = function(index) {
     }
 }
 
+function generateAssetAtPath(assetPath) {
+    return fs.writeFile(assetPath, path.basename(assetPath));
+}
+
 /**
  * 
  * @param {string} basePath 
  * @param {Array<string>} assetNames 
  */
 function generateAssets(basePath, assetNames) {
+    let generateAssetPromises = [];
 
+    generateAssetPromises.push(
+        fs.ensureDir(basePath)
+    );
+
+    assetNames.forEach(assetName => {
+        let assetPath = path.join(basePath, assetName);
+
+        generateAssetPromises.push(
+            fs.exists(assetPath)
+            .then(isExist => {
+                if (!isExist) {
+                    return generateAssetAtPath(assetPath);
+                }
+            })
+        );
+    });
+
+    return Promise.all(generateAssetPromises);
 }
 
 const generateAssetsForIndex = function(indexPath) {
@@ -64,12 +87,26 @@ const generateAssetsForIndex = function(indexPath) {
         return collectAssetNamesFromIndex(index);
     })
     .then(assetNames => {
+        let parsed = path.parse(indexPath);
+        let assetBasePath = path.join(parsed.dir, parsed.name.replace("-index"));
 
+        return generateAssets(
+            assetBasePath,
+            assetNames
+        );
     });
 }
 
 module.exports.generateTestAssets = function(rootPath, bundlePathElements) {
     let basePath = path.join(...[rootPath].concat(bundlePathElements));
     let indexPaths = collectIndexPaths(basePath);
-    let generateAssetsFor
+    
+    let generateAssetsForIndexPromides = [];
+    indexPaths.forEach(indexPath => {
+        generateAssetsForIndexPromides.push(
+            generateAssetsForIndex(indexPath)
+        );
+    });
+
+    return Promise.all(generateAssetsForIndexPromides);
 }
