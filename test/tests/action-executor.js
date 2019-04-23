@@ -30,22 +30,41 @@ describe.skip("Action Executor", function() {
 
         describe("Inject File", function() {
 
-            it("add one file source exists", function() {
+            it("one file not overwritting", function() {
                 fail();
             });
 
-            it("add multiple files all sources exist", function() {
+            it("one file overwritting", function() {
                 fail();
             });
 
-            it("add one file source not exist should fail", function() {
+            it("one file inside path not overwritting", function() {
                 fail();
             });
 
-            it("add multiple files any source not exist should fail", function() {
+            it("one file in path overwritting", function() {
                 fail();
             });
 
+            it("many files not overwritting", function() {
+                fail();
+            });
+
+            it("many files overwritting", function() {
+                fail();                
+            });
+
+            it("many files inside path not overwritting", function() {
+                fail();
+            });
+
+            it("many files inside path overwritting", function() {
+                fail();
+            });
+
+            it("source not exist should fail", function() {
+                fail();
+            });
         });
     });
 });
