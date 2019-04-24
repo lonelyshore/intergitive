@@ -93,7 +93,7 @@ const generateAssetsForIndex = function(indexPath, bundlePathElements) {
     })
     .then(assetNames => {
         let parsed = path.parse(indexPath);
-        let assetBasePath = path.join(parsed.dir, parsed.name.replace("-index"));
+        let assetBasePath = path.join(parsed.dir, parsed.name.replace("-index", ""));
 
         return generateAssets(
             assetBasePath,
