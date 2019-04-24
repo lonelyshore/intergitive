@@ -6,6 +6,7 @@ const path = require("path");
 const fs = require("fs-extra");
 const utils = require("./test-utils");
 const ActionExecutor = require("../../lib/action-executor").ActionExecutor;
+const actionTypes = require("../../lib/config-action");
 
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
@@ -17,21 +18,90 @@ const fail = function() {
     throw new Error("fail");
 }
 
-describe.skip("Action Executor", function() {
+describe("Action Executor", function() {
+
+    let actionExecutor;
+
+    before(function() {
+        actionExecutor = new ActionExecutor();
+    })
+
     describe("File Operations", function() {
             
-        before(function() {
+        beforeEach("Initialize Playground", function() {
             return fs.emptyDir(utils.PLAYGROUND_PATH);
         });
 
-        afterEach(function() {
+        afterEach("Remove Playground", function() {
             return fs.remove(utils.PLAYGROUND_PATH);
         });
 
         describe("Inject File", function() {
 
+            /**
+             * 
+             * @param {string} str
+             * @returns {string} 
+             */
+            const reverseString = function(str) {
+                return str.split("").reverse().join("");
+            }
+
+            const initializeFolder = function(fileSubPaths, baseFolderPath) {
+
+                fileSubPaths.forEach(fileSubPath => {
+
+                    let filePath = path.join(baseFolderPath, fileSubPath);
+
+                    let parsed = path.parse(filePath);
+
+                    return fs.ensureDir(parsed.dir)
+                    .then(() => { 
+                        return fs.exists(filePath);
+                    })
+                    .then(exists => {
+                        let next = Promise.resolve();
+                        if (exists) {
+                            next = next.then(() => {
+                                return fs.remove(filePath);
+                            });
+                        }
+                        
+                        next = next.then(() => {
+                            return fs.writeFile(filePath, reverseString(parsed.name));
+                        });
+                    });
+                });
+            }
+
+            /**
+             * 
+             * @param {string} filePath 
+             * @param {string} content 
+             */
+            const fileHasContent = function(baseFolder, fileSubPath, content) {
+                return fs.readFile(path.join(baseFolder, fileSubPath), "utf8")
+                .then(fileContent => {
+                    return fileContent === content;
+                });
+            }
+
             it("one file not overwritting", function() {
-                fail();
+
+                const keys = ["simpleOneFile"];
+
+                initializeFolder(keys, utils.PLAYGROUND_PATH);
+
+                let action = new actionTypes.InjectFileAction(
+                    keys,
+                    keys
+                );
+
+                return action.executeBy(actionExecutor)
+                .then(() => {
+                    return fileHasContent(utils.PLAYGROUND_PATH, keys[0], keys[0]);
+                })
+                .should.eventually.equals(true);
             });
 
             it("one file overwritting", function() {
