@@ -5,6 +5,7 @@
 const path = require("path");
 const fs = require("fs-extra");
 const utils = require("./test-utils");
+const AssetLoader = require("../../lib/asset-loader").AssetLoader;
 const ActionExecutor = require("../../lib/action-executor").ActionExecutor;
 const actionTypes = require("../../lib/config-action");
 
@@ -23,7 +24,9 @@ describe("Action Executor", function() {
     let actionExecutor;
 
     before(function() {
-        actionExecutor = new ActionExecutor();
+        let assetLoader = new AssetLoader(path.join(utils.RESOURCES_PATH, "action-executor/resources"));
+        assetLoader.setBundlePath();
+        actionExecutor = new ActionExecutor(utils.PLAYGROUND_PATH, assetLoader);
     })
 
     describe("File Operations", function() {
