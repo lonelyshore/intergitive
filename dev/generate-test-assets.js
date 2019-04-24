@@ -32,46 +32,46 @@ const collectIndexPaths = function(basePath) {
  * 
  * @param {AssetIndex} index 
  */
-const collectAssetNamesFromIndex = function(index) {
+const collectAssetNamePairsFromIndex = function(index) {
 
-    let assetNames = [];
+    let assetNamePairs = [];
     if (index.mode === "infile") {
-        return assetNames;
+        return assetNamePairs;
     }
     else{
         let assets = index.assets;
         Object.keys(assets).forEach(key => {
-            assetNames.push(assets[key]);
+            assetNamePairs.push({ key: key, assetName: assets[key] });
         });
 
-        return assetNames;
+        return assetNamePairs;
     }
 }
 
-function generateAssetAtPath(assetPath) {
-    return fs.writeFile(assetPath, path.basename(assetPath));
+function generateAssetAtPath(assetPath, key) {
+    return fs.writeFile(assetPath, key);
 }
 
 /**
  * 
  * @param {string} basePath 
- * @param {Array<string>} assetNames 
+ * @param {Array<Object>} assetNames 
  */
-function generateAssets(basePath, assetNames) {
+function generateAssets(basePath, assetNamePairs) {
     let generateAssetPromises = [];
 
     generateAssetPromises.push(
         fs.ensureDir(basePath)
     );
 
-    assetNames.forEach(assetName => {
-        let assetPath = path.join(basePath, assetName);
+    assetNamePairs.forEach(assetNamePair => {
+        let assetPath = path.join(basePath, assetNamePair.assetName);
 
         generateAssetPromises.push(
             fs.exists(assetPath)
             .then(isExist => {
                 if (!isExist) {
-                    return generateAssetAtPath(assetPath);
+                    return fs.writeFile(assetPath, assetNamePair.key)
                 }
             })
         );
@@ -89,15 +89,15 @@ const generateAssetsForIndex = function(indexPath, bundlePathElements) {
         return new AssetIndex(obj, bundlePathElements);
     })
     .then(index => {
-        return collectAssetNamesFromIndex(index);
+        return collectAssetNamePairsFromIndex(index);
     })
-    .then(assetNames => {
+    .then(assetNamePairs => {
         let parsed = path.parse(indexPath);
         let assetBasePath = path.join(parsed.dir, parsed.name.replace("-index", ""));
 
         return generateAssets(
             assetBasePath,
-            assetNames
+            assetNamePairs
         );
     });
 }
