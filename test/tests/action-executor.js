@@ -36,7 +36,7 @@ describe("Action Executor", function() {
             return fs.remove(utils.PLAYGROUND_PATH);
         });
 
-        describe("Inject File", function() {
+        describe("Write File", function() {
 
             /**
              * 
@@ -72,7 +72,7 @@ describe("Action Executor", function() {
                         });
                     });
                 });
-            }
+            };
 
             /**
              * 
@@ -80,19 +80,27 @@ describe("Action Executor", function() {
              * @param {string} content 
              */
             const fileHasContent = function(baseFolder, fileSubPath, content) {
-                return fs.readFile(path.join(baseFolder, fileSubPath), "utf8")
-                .then(fileContent => {
-                    return fileContent === content;
+                let filePath = path.join(baseFolder, fileSubPath);
+
+                return fs.exists(filePath)
+                .then(exists => {
+                    if (!exists) {
+                        return false;
+                    }
+                    else {
+                        return fs.readFile(path.join(baseFolder, fileSubPath), "utf8")
+                        .then(fileContent => {
+                            return fileContent === content;
+                        });
+                    }
                 });
-            }
+            };
 
             it("one file not overwritting", function() {
 
                 const keys = ["simpleOneFile"];
 
-                initializeFolder(keys, utils.PLAYGROUND_PATH);
-
-                let action = new actionTypes.InjectFileAction(
+                let action = new actionTypes.WriteFileAction(
                     keys,
                     keys
                 );
@@ -102,6 +110,7 @@ describe("Action Executor", function() {
                     return fileHasContent(utils.PLAYGROUND_PATH, keys[0], keys[0]);
                 })
                 .should.eventually.equals(true);
+
             });
 
             it("one file overwritting", function() {
