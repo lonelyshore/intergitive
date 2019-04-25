@@ -233,7 +233,7 @@ describe("AssetLoader", function() {
 
     describe("Empty Bundle Load", function() {
 
-        let basePath = path.join(utils.RESOURCES_PATH, "test-asset-loaer/empty-bundle");
+        let basePath = path.join(utils.RESOURCES_PATH, "test-asset-loader/empty-bundle");
         let assetLoader;
 
         beforeEach(function() {
