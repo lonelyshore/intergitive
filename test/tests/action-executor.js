@@ -224,11 +224,39 @@ describe("Action Executor", function() {
                     );
                 })
                 .should.eventually.equal(true);
-                
+
             });
 
             it("unrelated files intact", function() {
-                fail();
+                
+                let targets = ["manyFiles1", "manyFiles2"];
+                let keys = appendFolderName(targets, "write-file");
+                let untouched = ["untouched1", "untouched2"];
+
+                let action = new actionTypes.WriteFileAction(
+                    keys,
+                    targets
+                );
+
+                return initializeFolder(targets.concat(untouched), utils.PLAYGROUND_PATH)
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return Promise.all([
+                            allFilesHasContents(
+                                utils.PLAYGROUND_PATH,
+                                targets,
+                                targets
+                            ),
+                            allFilesHasContents(
+                                utils.PLAYGROUND_PATH,
+                                untouched,
+                                untouched.map(c => reverseString(c))
+                            )
+                        ]);
+                })
+                .should.eventually.deep.equal([true, true]);
             })
 
             it("source not exist should fail", function() {
