@@ -229,5 +229,34 @@ describe("AssetLoader", function() {
 
         });
 
+    });
+
+    describe("Empty Bundle Load", function() {
+
+        let basePath = path.join(utils.RESOURCES_PATH, "test-asset-loaer/empty-bundle");
+        let assetLoader;
+
+        beforeEach(function() {
+            assetLoader = new AssetLoader(basePath);
+            assetLoader.setBundlePath();
+        });
+
+        it("infile asset", function() {
+            return Promise.all([
+                assetLoader.loadInfileAsset("first")
+                .should.eventually.equal("first-asset"),
+                assetLoader.loadInfileAsset("second")
+                .should.eventually.equal("second-asset")
+            ]);
+        });
+
+        it("ondisk asset", function() {
+            return Promise.all([
+                assetLoader.getFullAssetPath("first")
+                .should.eventually.equal(path.join(basePath, "ondisk-assets/first-asset.txt")),
+                assetLoader.getFullAssetPath("second")
+                .should.eventually.equal(path.join(basePath, "ondisk-assets/second-asset.txt"))
+            ]);
+        });
     })
-})
+});
