@@ -198,15 +198,37 @@ describe("Action Executor", function() {
                     );
                 })
                 .should.eventually.equal(true);
-                
+
             });
 
             it("files inside path overwritting", function() {
-                fail();
+                
+                let targets = ["manyFilesInPathOverwritting1", "manyFilesInPathOverwritting2"];
+                let keys = appendFolderName(targets, "write-file");
+                let destinations = appendFolderName(targets, "parent");
+
+                let action = new actionTypes.WriteFileAction(
+                    keys,
+                    destinations
+                );
+
+                return initializeFolder(destinations, utils.PLAYGROUND_PATH)
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return allFilesHasContents(
+                        utils.PLAYGROUND_PATH,
+                        destinations,
+                        targets
+                    );
+                })
+                .should.eventually.equal(true);
+                
             });
 
             it("unrelated files intact", function() {
-
+                fail();
             })
 
             it("source not exist should fail", function() {
