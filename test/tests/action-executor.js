@@ -260,7 +260,46 @@ describe("Action Executor", function() {
             })
 
             it("source not exist should fail", function() {
-                fail();
+                
+                let targets = ["not-exists"];
+                let keys = appendFolderName(targets, "write-file");
+
+                let action = new actionTypes.WriteFileAction(
+                    keys,
+                    targets
+                );
+                
+                return initializeFolder(targets, utils.PLAYGROUND_PATH)
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .should.eventually.be.rejected;
+                
+            });
+
+            it("source not exist destination untouched", function() {
+                
+                let targets = ["not-exists"];
+                let keys = appendFolderName(targets, "write-file");
+
+                let action = new actionTypes.WriteFileAction(
+                    keys,
+                    targets
+                );
+                
+                return initializeFolder(targets, utils.PLAYGROUND_PATH)
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .catch(() => {
+                    return allFilesHasContents(
+                        utils.PLAYGROUND_PATH,
+                        targets,
+                        targets.map(c => reverseString(c))
+                    );
+                })
+                .should.eventually.equal(true);
+                
             });
         });
     });
