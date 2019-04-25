@@ -153,17 +153,42 @@ describe("Action Executor", function() {
                 .should.eventually.equal(true);
             });
 
-            it("many files overwritting", function() {
-                fail();                
+            it("files overwritting", function() {
+
+                let targets = ["manyFilesOverwritting1", "manyFilesOverwritting2"];
+                let keys = appendFolderName(targets, "write-file");
+
+                let action = new actionTypes.WriteFileAction(
+                    keys,
+                    targets
+                );
+
+                return initializeFolder(targets, utils.PLAYGROUND_PATH)
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return allFilesHasContents(
+                        utils.PLAYGROUND_PATH,
+                        targets,
+                        targets
+                    );
+                })
+                .should.eventually.equal(true);
+
             });
 
-            it("many files inside path not overwritting", function() {
+            it("files inside path not overwritting", function() {
                 fail();
             });
 
-            it("many files inside path overwritting", function() {
+            it("files inside path overwritting", function() {
                 fail();
             });
+
+            it("unrelated files intact", function() {
+
+            })
 
             it("source not exist should fail", function() {
                 fail();
