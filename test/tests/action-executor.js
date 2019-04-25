@@ -180,7 +180,25 @@ describe("Action Executor", function() {
             });
 
             it("one file inside path not overwritting", function() {
-                fail();
+                
+                let files = ["oneFileInPath"];
+                let keys = appendContinerName(files, "write-file");
+                let targets = appendContinerName(files, "local-path");
+
+                let action = new actionTypes.WriteFileAction(
+                    keys,
+                    targets
+                );
+
+                return initializeFolder(targets, utils.PLAYGROUND_PATH)
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return allFilesHasContents(utils.PLAYGROUND_PATH, targets, files);
+                })
+                .should.eventually.equal(true);
+
             });
 
             it("one file in path overwritting", function() {
