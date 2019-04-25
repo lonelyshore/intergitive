@@ -179,7 +179,26 @@ describe("Action Executor", function() {
             });
 
             it("files inside path not overwritting", function() {
-                fail();
+                
+                let targets = ["manyFilesInPath1", "manyFilesInPath2"];
+                let keys = appendFolderName(targets, "write-file");
+                let destinations = appendFolderName(targets, "parent");
+
+                let action = new actionTypes.WriteFileAction(
+                    keys,
+                    destinations
+                );
+
+                return action.executeBy(actionExecutor)
+                .then(() => {
+                    return allFilesHasContents(
+                        utils.PLAYGROUND_PATH,
+                        destinations,
+                        targets
+                    );
+                })
+                .should.eventually.equal(true);
+                
             });
 
             it("files inside path overwritting", function() {
