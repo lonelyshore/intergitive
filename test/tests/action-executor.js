@@ -303,4 +303,35 @@ describe("Action Executor", function() {
             });
         });
     });
+
+    describe("Git Operations", function() {
+
+        describe("Stage", function() {
+
+            it("stage single file", function() {
+                fail();
+            });
+
+            it("stage multiple files", function() {
+                fail();
+            });
+
+            it("stage with pattern", function() {
+                fail();
+            });
+
+            it("stage all", function() {
+                fail();
+            });
+
+            it("stage not matching no error", function() {
+                fail();
+            });
+
+        });
+
+        describe.skip("Unstage", function() {
+
+        });
+    });
 });
