@@ -243,18 +243,18 @@ describe("AssetLoader", function() {
 
         it("infile asset", function() {
             return Promise.all([
-                assetLoader.loadInfileAsset("first")
+                assetLoader.loadInfileAsset("infile-assets/first")
                 .should.eventually.equal("first-asset"),
-                assetLoader.loadInfileAsset("second")
+                assetLoader.loadInfileAsset("infile-assets/second")
                 .should.eventually.equal("second-asset")
             ]);
         });
 
         it("ondisk asset", function() {
             return Promise.all([
-                assetLoader.getFullAssetPath("first")
+                assetLoader.getFullAssetPath("ondisk-assets/first")
                 .should.eventually.equal(path.join(basePath, "ondisk-assets/first-asset.txt")),
-                assetLoader.getFullAssetPath("second")
+                assetLoader.getFullAssetPath("ondisk-assets/second")
                 .should.eventually.equal(path.join(basePath, "ondisk-assets/second-asset.txt"))
             ]);
         });
