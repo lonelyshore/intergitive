@@ -101,7 +101,7 @@ describe("Action Executor", function() {
 
             it("one file not overwritting", function() {
 
-                const keys = ["simpleOneFile"];
+                const keys = ["write-file/simpleOneFile"];
 
                 let action = new actionTypes.WriteFileAction(
                     keys,
