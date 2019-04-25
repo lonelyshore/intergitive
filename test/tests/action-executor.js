@@ -81,10 +81,10 @@ describe("Action Executor", function() {
                 return Promise.all(operations);
             };
 
-            const appendContinerName = function(fileSubPaths, containerName) {
+            const appendFolderName = function(fileSubPaths, folderName) {
                 let ret = [];
                 fileSubPaths.forEach(fileSubPath => {
-                    ret.push(containerName + "/" + path.basename(fileSubPath));
+                    ret.push(folderName + "/" + path.basename(fileSubPath));
                 });
 
                 return ret;
@@ -132,12 +132,11 @@ describe("Action Executor", function() {
                 });
             }
 
-            it("one file not overwritting", function() {
-
-                const targets = ["simpleOneFile"];
-                const keys = appendContinerName(targets, "write-file");
+            it("files not overwritting", function() {
                 
-
+                let targets = ["manyFiles1", "manyFiles2"]
+                let keys = appendFolderName(targets, "write-file");
+                
                 let action = new actionTypes.WriteFileAction(
                     keys,
                     targets
@@ -151,62 +150,7 @@ describe("Action Executor", function() {
                         targets
                     );
                 })
-                .should.eventually.equals(true);
-
-            });
-
-            it("one file overwritting", function() {
-                
-                const targets = ["oneFileOverwritting"];
-                const keys = appendContinerName(targets, "write-file");
-
-                let action = new actionTypes.WriteFileAction(
-                    keys,
-                    targets
-                );
-
-                return initializeFolder(targets, utils.PLAYGROUND_PATH)
-                .then(() => {
-                    return action.executeBy(actionExecutor);
-                })
-                .then(() => {
-                    return allFilesHasContents(
-                        utils.PLAYGROUND_PATH,
-                        targets,
-                        targets
-                    );
-                })
-                .should.eventually.equals(true);
-            });
-
-            it("one file inside path not overwritting", function() {
-                
-                let files = ["oneFileInPath"];
-                let keys = appendContinerName(files, "write-file");
-                let targets = appendContinerName(files, "local-path");
-
-                let action = new actionTypes.WriteFileAction(
-                    keys,
-                    targets
-                );
-
-                return initializeFolder(targets, utils.PLAYGROUND_PATH)
-                .then(() => {
-                    return action.executeBy(actionExecutor);
-                })
-                .then(() => {
-                    return allFilesHasContents(utils.PLAYGROUND_PATH, targets, files);
-                })
                 .should.eventually.equal(true);
-
-            });
-
-            it("one file in path overwritting", function() {
-                fail();
-            });
-
-            it("many files not overwritting", function() {
-                fail();
             });
 
             it("many files overwritting", function() {
