@@ -77,6 +77,15 @@ describe("Action Executor", function() {
                 });
             };
 
+            const appendContinerName = function(fileSubPaths, containerName) {
+                let ret = [];
+                fileSubPaths.forEach(fileSubPath => {
+                    ret.push(containerName + "/" + path.basename(fileSubPath));
+                });
+
+                return ret;
+            }
+
             /**
              * 
              * @param {string} filePath 
@@ -101,7 +110,9 @@ describe("Action Executor", function() {
 
             it("one file not overwritting", function() {
 
-                const keys = ["write-file/simpleOneFile"];
+                const targets = ["simpleOneFile"];
+                const keys = appendContinerName(targets, "write-file");
+                
 
                 let action = new actionTypes.WriteFileAction(
                     keys,
@@ -110,7 +121,7 @@ describe("Action Executor", function() {
 
                 return action.executeBy(actionExecutor)
                 .then(() => {
-                    return fileHasContent(utils.PLAYGROUND_PATH, keys[0], keys[0]);
+                    return fileHasContent(utils.PLAYGROUND_PATH, keys[0], targets[0]);
                 })
                 .should.eventually.equals(true);
 
