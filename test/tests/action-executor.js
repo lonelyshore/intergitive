@@ -354,7 +354,7 @@ describe("Action Executor", function() {
 
             it("stage single file", function() {
 
-                let action = new actionTypes.StageAction(testRepoSetupName, "newFile");
+                let action = new actionTypes.StageAction(testRepoSetupName, ["newFile"]);
 
                 return fs.writeFile(path.join(repoPath, "newFile"), "newFileContent")
                 .then(() => {
@@ -366,10 +366,14 @@ describe("Action Executor", function() {
                 .then(() => {
                     return repo.status();
                 })
+                .then(status => {
+                    return status;
+                })
                 .should.eventually
-                .has.property("staged", ["newFile"])
-                .and.has.property("not_added", ["otherFile"]);
-
+                .and.deep.include({ 
+                    created: ["newFile"],
+                    not_added: ["otherFile"]
+                });
             });
 
             it("stage multiple files", function() {
