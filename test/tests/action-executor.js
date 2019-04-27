@@ -9,6 +9,7 @@ const simpleGitCtor = require("simple-git/promise");
 const utils = require("./test-utils");
 const AssetLoader = require("../../lib/asset-loader").AssetLoader;
 const ActionExecutor = require("../../lib/action-executor").ActionExecutor;
+const RepoVcsSetup = require("../../lib/config-level").RepoVcsSetup;
 const actionTypes = require("../../lib/config-action");
 
 const chai = require("chai");
@@ -25,11 +26,23 @@ describe("Action Executor", function() {
 
     let actionExecutor;
     const testRepoSetupName = "test-repo";
+    const repoParentPath = path.join(utils.PLAYGROUND_PATH, "repo");
+    const repoArchiveName = "action-executor";
+    const repoPath = path.join(repoParentPath, repoArchiveName);    
 
     before(function() {
         let assetLoader = new AssetLoader(path.join(utils.RESOURCES_PATH, "action-executor/resources"));
         assetLoader.setBundlePath();
-        actionExecutor = new ActionExecutor(utils.PLAYGROUND_PATH, assetLoader);
+
+        let repoSetups = {
+            [testRepoSetupName]: new RepoVcsSetup(
+                repoPath,
+                "",
+                ""
+            )
+        };
+
+        actionExecutor = new ActionExecutor(utils.PLAYGROUND_PATH, assetLoader, repoSetups);
     })
 
     describe("File Operations", function() {
@@ -309,14 +322,13 @@ describe("Action Executor", function() {
 
     describe("Git Operations", function() {
 
-        const repoParentPath = path.join(utils.PLAYGROUND_PATH, "repo");
-        const repoArchiveName = "action-executor";
-        const repoPath = path.join(repoParentPath, repoArchiveName);
         const archivePath = path.join(utils.ARCHIVE_RESOURCES_PATH, repoArchiveName + ".zip");
 
         let repo;
 
         beforeEach("Load Testing Repos", function(){
+
+            this.timeout(5000);
 
             return fs.emptyDir(repoPath)
             .then(() => {
