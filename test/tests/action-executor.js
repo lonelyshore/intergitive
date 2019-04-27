@@ -4,6 +4,8 @@
 
 const path = require("path");
 const fs = require("fs-extra");
+const zip = require("../../lib/simple-archive");
+const simpleGitCtor = require("simple-git/promise");
 const utils = require("./test-utils");
 const AssetLoader = require("../../lib/asset-loader").AssetLoader;
 const ActionExecutor = require("../../lib/action-executor").ActionExecutor;
@@ -305,6 +307,31 @@ describe("Action Executor", function() {
     });
 
     describe("Git Operations", function() {
+
+        const repoParentPath = path.join(utils.PLAYGROUND_PATH, "repo");
+        const repoArchiveName = "action-executor";
+        const repoPath = path.join(repoParentPath, repoArchiveName);
+        const archivePath = path.join(utils.ARCHIVE_RESOURCES_PATH, repoArchiveName);
+
+        let repo;
+
+        beforeEach("Load Testing Repos", function(){
+
+            return fs.emptyDir(repoPath)
+            .then(() => {
+                return zip.extractArchiveTo(archivePath, repoPath);
+            })
+            .then(() => {
+                return repo = simpleGitCtor(repoPath);
+            })
+            .then(() => {
+                return repo.checkout(["-f", "master"]);
+            })
+            .then(() => {
+                return repo.clean("f", ["-d"]);
+            });
+            
+        });
 
         describe("Stage", function() {
 
