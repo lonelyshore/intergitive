@@ -344,9 +344,9 @@ describe("Action Executor", function() {
 
                 let action = new actionTypes.StageAction(testRepoSetupName, "newFile");
 
-                return fs.writeFile("newFile", "newFileContent")
+                return fs.writeFile(path.join(repoPath, "newFile"), "newFileContent")
                 .then(() => {
-                    return fs.writeFile("otherFile", "otherFileContent");
+                    return fs.writeFile(path.join(repoPath, "otherFile"), "otherFileContent");
                 })
                 .then(() => {
                     return action.executeBy(actionExecutor);
