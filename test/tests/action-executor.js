@@ -24,6 +24,7 @@ const fail = function() {
 describe("Action Executor", function() {
 
     let actionExecutor;
+    const testRepoSetupName = "test-repo";
 
     before(function() {
         let assetLoader = new AssetLoader(path.join(utils.RESOURCES_PATH, "action-executor/resources"));
@@ -311,7 +312,7 @@ describe("Action Executor", function() {
         const repoParentPath = path.join(utils.PLAYGROUND_PATH, "repo");
         const repoArchiveName = "action-executor";
         const repoPath = path.join(repoParentPath, repoArchiveName);
-        const archivePath = path.join(utils.ARCHIVE_RESOURCES_PATH, repoArchiveName);
+        const archivePath = path.join(utils.ARCHIVE_RESOURCES_PATH, repoArchiveName + ".zip");
 
         let repo;
 
@@ -319,10 +320,10 @@ describe("Action Executor", function() {
 
             return fs.emptyDir(repoPath)
             .then(() => {
-                return zip.extractArchiveTo(archivePath, repoPath);
+                return zip.extractArchiveTo(archivePath, repoParentPath);
             })
             .then(() => {
-                return repo = simpleGitCtor(repoPath);
+                repo = simpleGitCtor(repoPath);
             })
             .then(() => {
                 return repo.checkout(["-f", "master"]);
@@ -330,13 +331,33 @@ describe("Action Executor", function() {
             .then(() => {
                 return repo.clean("f", ["-d"]);
             });
-            
+
         });
+
+        after("Clear Testing Repo", function() {
+            return fs.remove(repoParentPath);
+        })
 
         describe("Stage", function() {
 
             it("stage single file", function() {
-                fail();
+
+                let action = new actionTypes.StageAction(testRepoSetupName, "newFile");
+
+                return fs.writeFile("newFile", "newFileContent")
+                .then(() => {
+                    return fs.writeFile("otherFile", "otherFileContent");
+                })
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return repo.status();
+                })
+                .should.eventually
+                .has.property("staged", ["newFile"])
+                .and.has.property("not_added", ["otherFile"]);
+
             });
 
             it("stage multiple files", function() {
