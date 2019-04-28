@@ -366,22 +366,61 @@ describe("Action Executor", function() {
                 .then(() => {
                     return repo.status();
                 })
-                .then(status => {
-                    return status;
-                })
-                .should.eventually
-                .and.deep.include({ 
+                .should.eventually.deep.include({ 
                     created: ["newFile"],
                     not_added: ["otherFile"]
                 });
             });
 
             it("stage multiple files", function() {
-                fail();
+                
+                let action = new actionTypes.StageAction(
+                    testRepoSetupName,
+                    [ "a.txt", "c.txt", "newFile", "d.txt", "renamed" ]
+                );
+
+                return fs.readFile(path.join(repoPath, "a.txt"))
+                .then(aContent => {
+                    return fs.writeFile(
+                        path.join(repoPath, "a.txt"),
+                        aContent + " appended to ensure changing"
+                    );
+                })
+                .then(() => {
+                    return fs.remove(path.join(repoPath, "c.txt"));
+                })
+                .then(() => {
+                    return fs.writeFile(
+                        path.join(repoPath, "newFile"),
+                        "some"
+                    );
+                })
+                .then(() => {
+                    return fs.rename(
+                        path.join(repoPath, "d.txt"),
+                        path.join(repoPath, "renamed")
+                    );
+                })
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return repo.status();
+                })
+                .then(status => {
+                    let dummy = status;
+                    return status;
+                })
+                .should.eventually.deep.include({
+                    created: [ "newFile" ],
+                    deleted: [ "c.txt" ],
+                    modified: [ "a.txt" ],
+                    renamed: [ { from: "d.txt", to: "renamed" } ]
+                });
             });
 
             it("stage with pattern", function() {
-                fail();
+                
             });
 
             it("stage all", function() {
