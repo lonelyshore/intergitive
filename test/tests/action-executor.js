@@ -421,6 +421,36 @@ describe("Action Executor", function() {
 
             it("stage with pattern", function() {
                 
+                let action = new actionTypes.StageAction(
+                    testRepoSetupName,
+                    ["*.txt"]
+                );
+
+                return fs.writeFile(
+                    path.join(repoPath, "not_added"),
+                    "some"
+                )
+                .then(() => {
+                    return fs.writeFile(
+                        path.join(repoPath, "new1.txt"),
+                        "some"
+                    )
+                    .then(() => {
+                        return fs.writeFile(
+                            path.join(repoPath, "new2.txt"),
+                            "someOther"
+                        );
+                    });
+                })
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return repo.status();
+                })
+                .should.eventually.deep.include({
+                    created: [ "new1.txt", "new2.txt" ]
+                });
             });
 
             it("stage all", function() {
