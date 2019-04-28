@@ -459,6 +459,8 @@ describe("Action Executor", function() {
                 let action = new actionTypes.StageAllAction(testRepoSetupName);
 
                 let fileNames = [ "a.txt", "c.txt", "d.txt", "e.txt", "f.txt" ];
+                let addedFolder = path.join(repoPath, "newFolder", "newFolder2");
+                let addedFile = path.join(addedFolder, "newFile")
 
                 let removeAll = () => {
                     let removes = [];
@@ -470,13 +472,20 @@ describe("Action Executor", function() {
 
                 return removeAll()
                 .then(() => {
+                    return fs.ensureDir(addedFolder)
+                    .then(() => {
+                        return fs.writeFile(addedFile, "some content");
+                    });
+                })
+                .then(() => {
                     return action.executeBy(actionExecutor);
                 })
                 .then(() => {
                     return repo.status();
                 })
                 .should.eventually.deep.include({
-                    deleted: fileNames
+                    deleted: fileNames,
+                    created: [ "newFolder/newFolder2/newFile" ]
                 });
             });
 
