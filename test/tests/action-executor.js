@@ -510,9 +510,5 @@ describe("Action Executor", function() {
             });
 
         });
-
-        describe.skip("Unstage", function() {
-
-        });
     });
 });
