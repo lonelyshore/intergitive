@@ -473,7 +473,7 @@ describe("Action Executor", function() {
                     return action.executeBy(actionExecutor);
                 })
                 .then(() => {
-                    return repeo.status();
+                    return repo.status();
                 })
                 .should.eventually.deep.include({
                     deleted: fileNames
