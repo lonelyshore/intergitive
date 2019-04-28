@@ -451,10 +451,33 @@ describe("Action Executor", function() {
                 .should.eventually.deep.include({
                     created: [ "new1.txt", "new2.txt" ]
                 });
+
             });
 
             it("stage all", function() {
-                fail();
+                
+                let action = new actionTypes.StageAllAction(testRepoSetupName);
+
+                let fileNames = [ "a.txt", "c.txt", "d.txt", "e.txt", "f.txt" ];
+
+                let removeAll = () => {
+                    let removes = [];
+                    fileNames.forEach(fileName => {
+                        removes.push(fs.remove(path.join(repoPath, fileName)));
+                    });
+                    return Promise.all(removes);
+                };
+
+                return removeAll()
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return repeo.status();
+                })
+                .should.eventually.deep.include({
+                    deleted: fileNames
+                });
             });
 
             it("stage not matching no error", function() {
