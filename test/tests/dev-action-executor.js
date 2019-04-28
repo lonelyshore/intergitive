@@ -84,6 +84,167 @@ describe("Dev Action Executor", function() {
 
         after("Clear Testing Repo", function() {
             return fs.remove(repoParentPath);
-        })
+        });
+
+        describe("Stage", function() {
+
+            it("stage single file", function() {
+
+                let action = new actionTypes.StageAction(testRepoSetupName, ["newFile"]);
+
+                return fs.writeFile(path.join(repoPath, "newFile"), "newFileContent")
+                .then(() => {
+                    return fs.writeFile(path.join(repoPath, "otherFile"), "otherFileContent");
+                })
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return repo.status();
+                })
+                .should.eventually.deep.include({ 
+                    created: ["newFile"],
+                    not_added: ["otherFile"]
+                });
+            });
+
+            it("stage multiple files", function() {
+                
+                let action = new actionTypes.StageAction(
+                    testRepoSetupName,
+                    [ "a.txt", "c.txt", "newFile", "d.txt", "renamed" ]
+                );
+
+                return fs.readFile(path.join(repoPath, "a.txt"))
+                .then(aContent => {
+                    return fs.writeFile(
+                        path.join(repoPath, "a.txt"),
+                        aContent + " appended to ensure changing"
+                    );
+                })
+                .then(() => {
+                    return fs.remove(path.join(repoPath, "c.txt"));
+                })
+                .then(() => {
+                    return fs.writeFile(
+                        path.join(repoPath, "newFile"),
+                        "some"
+                    );
+                })
+                .then(() => {
+                    return fs.rename(
+                        path.join(repoPath, "d.txt"),
+                        path.join(repoPath, "renamed")
+                    );
+                })
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return repo.status();
+                })
+                .then(status => {
+                    let dummy = status;
+                    return status;
+                })
+                .should.eventually.deep.include({
+                    created: [ "newFile" ],
+                    deleted: [ "c.txt" ],
+                    modified: [ "a.txt" ],
+                    renamed: [ { from: "d.txt", to: "renamed" } ]
+                });
+            });
+
+            it("stage with pattern", function() {
+                
+                let action = new actionTypes.StageAction(
+                    testRepoSetupName,
+                    ["*.txt"]
+                );
+
+                return fs.writeFile(
+                    path.join(repoPath, "not_added"),
+                    "some"
+                )
+                .then(() => {
+                    return fs.writeFile(
+                        path.join(repoPath, "new1.txt"),
+                        "some"
+                    )
+                    .then(() => {
+                        return fs.writeFile(
+                            path.join(repoPath, "new2.txt"),
+                            "someOther"
+                        );
+                    });
+                })
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return repo.status();
+                })
+                .should.eventually.deep.include({
+                    created: [ "new1.txt", "new2.txt" ]
+                });
+
+            });
+
+            it("stage all", function() {
+                
+                let action = new actionTypes.StageAllAction(testRepoSetupName);
+
+                let fileNames = [ "a.txt", "c.txt", "d.txt", "e.txt", "f.txt" ];
+                let addedFolder = path.join(repoPath, "newFolder", "newFolder2");
+                let addedFile = path.join(addedFolder, "newFile")
+
+                let removeAll = () => {
+                    let removes = [];
+                    fileNames.forEach(fileName => {
+                        removes.push(fs.remove(path.join(repoPath, fileName)));
+                    });
+                    return Promise.all(removes);
+                };
+
+                return removeAll()
+                .then(() => {
+                    return fs.ensureDir(addedFolder)
+                    .then(() => {
+                        return fs.writeFile(addedFile, "some content");
+                    });
+                })
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return repo.status();
+                })
+                .should.eventually.deep.include({
+                    deleted: fileNames,
+                    created: [ "newFolder/newFolder2/newFile" ]
+                });
+            });
+
+            it("stage not matching no error", function() {
+                
+                let action = new actionTypes.StageAction(
+                    testRepoSetupName,
+                    [ "not_exists" ]
+                );
+
+                return fs.writeFile(path.join(repoPath, "newFile"), "some content")
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return repo.status();
+                })
+                .should.eventually.deep.include({
+                    not_added: [ "newFile" ]
+                });
+
+            });
+
+        });
     });
 });
