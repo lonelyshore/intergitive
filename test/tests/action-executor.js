@@ -490,7 +490,23 @@ describe("Action Executor", function() {
             });
 
             it("stage not matching no error", function() {
-                fail();
+                
+                let action = new actionTypes.StageAction(
+                    testRepoSetupName,
+                    [ "not_exists" ]
+                );
+
+                return fs.writeFile(path.join(repoPath, "newFile"), "some content")
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return repo.status();
+                })
+                .should.eventually.deep.include({
+                    not_added: [ "newFile" ]
+                });
+
             });
 
         });
