@@ -246,5 +246,23 @@ describe("Dev Action Executor", function() {
             });
 
         });
+
+        
+        describe("Merge", function() {
+
+            it("merge branches", function() {
+                fail();
+                
+            });
+
+            it("merge conflict will stop", function() {
+                fail();
+            });
+
+            it("resolve conflict", function() {
+                fail();
+            });
+        });
+
     });
 });
