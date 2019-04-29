@@ -20,6 +20,17 @@ class UnstageAllAction extends upstream.Action {
     }
 }
 
+class MergeAction extends upstream.Action {
+    constructor(repoSetupName, toBranch, fromBranch) {
+        super();
+        this.klass = "MergeAction";
+        this.repoSetupName = repoSetupName;
+        this.toBranch = toBranch;
+        this.fromBranch = fromBranch;
+    }
+}
+
 module.exports = Object.assign({}, upstream);
 module.exports.UnstageAction = UnstageAction;
 module.exports.UnstageAllAction = UnstageAllAction;
+module.exports.MergeAction = MergeAction;
