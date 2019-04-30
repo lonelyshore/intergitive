@@ -251,7 +251,51 @@ describe("Dev Action Executor", function() {
         describe("Merge", function() {
 
             it("merge branches", function() {
-                fail();
+                
+                const toBranch = "master";
+                const fromBranch = "mergable";
+
+                let action = new actionTypes.MergeAction(
+                    testRepoSetupName,
+                    toBranch,
+                    fromBranch
+                );
+
+                let toBranchSha;
+                let fromBranchSha;
+                let parentOneSha;
+                let parentTwoSha;
+                
+                return repo.revparse(toBranch)
+                .then(result => {
+                    toBranchSha = result;
+                })
+                .then(() => {
+                    return repo.revparse(fromBranch);
+                })
+                .then(result => {
+                    fromBranchSha = result;
+                })
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return repo.revparse(toBranch + "^1")
+                    .then(result => {
+                        parentOneSha = result;
+                    })
+                    .then(() => {
+                        return repo.revparse(toBranch + "^2")
+                    })
+                    .then(result => {
+                        parentTwoSha = result;
+                    });
+                })
+                .then(() => {
+                    return parentOneSha === toBranchSha
+                        && parentTwoSha === fromBranchSha;
+                })
+                .should.eventually.be.true;
                 
             });
 
