@@ -252,8 +252,8 @@ describe("Dev Action Executor", function() {
 
             it("merge branches", function() {
                 
-                const toBranch = "master";
-                const fromBranch = "mergable";
+                const toBranch = "mergable";
+                const fromBranch = "master";
 
                 let action = new actionTypes.MergeAction(
                     testRepoSetupName,
@@ -290,6 +290,16 @@ describe("Dev Action Executor", function() {
             });
 
             it("merge conflict will stop", function() {
+                
+                const toBranch = "master";
+                const fromBranch = "conflict-AA";
+
+                let action = new actionTypes.MergeAction(
+                    testRepoSetupName,
+                    toBranch,
+                    fromBranch
+                );
+
                 fail();
             });
 
@@ -298,5 +308,23 @@ describe("Dev Action Executor", function() {
             });
         });
 
+        describe("Clean Checkout", function() {
+
+            it("checkout head", function() {
+                fail();
+            });
+
+            it("checkout branch", function() {
+                fail();
+            });
+
+            it("checkout refspec", function() {
+                fail();
+            })
+
+            it("checkout sha", function() {
+                fail();
+            })
+        })
     });
 });
