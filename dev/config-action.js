@@ -49,3 +49,4 @@ module.exports = Object.assign({}, upstream);
 module.exports.UnstageAction = UnstageAction;
 module.exports.UnstageAllAction = UnstageAllAction;
 module.exports.MergeAction = MergeAction;
+module.exports.CleanCheckoutAction = CleanCheckoutAction;

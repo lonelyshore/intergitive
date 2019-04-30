@@ -311,7 +311,67 @@ describe("Dev Action Executor", function() {
         describe("Clean Checkout", function() {
 
             it("checkout head", function() {
-                fail();
+                
+                let action = new actionTypes.CleanCheckoutAction(
+                    testRepoSetupName,
+                    "HEAD"
+                );
+
+                const newFileName = "newFile";
+                const newStagedFileName = "newStageFile";
+                const dirtyFileName = "a.txt";
+                const dirtyStagedFileName = "c.txt";
+                const removedFileName = "e.txt";
+                const removedStagedFileName = "f.txt";
+
+                let initialSha;
+
+                return Promise.resolve()
+                .then(() => {
+                    return repo.revparse(["HEAD"])
+                    .then(result => {
+                        initialSha = result;
+                    });
+                })
+                .then(() => {
+                    return Promise.all([
+                        fs.writeFile(path.join(repoPath, newFileName), newFileName),
+                        fs.writeFile(path.join(repoPath, newStagedFileName), newStagedFileName),
+                        fs.writeFile(path.join(repoPath, dirtyFileName), "cdnaifhdaifenfuidnafkldahfuief"),
+                        fs.writeFile(path.join(repoPath, dirtyStagedFileName), "jfkdajfiomiofmdodfjdifjsdiofjdisofjsdop"),
+                        fs.remove(removedFileName),
+                        fs.remove(removedStagedFileName)
+                    ]);
+                })
+                .then(() => {
+                    return repo.add([ newStagedFileName, dirtyStagedFileName, removedStagedFileName ]);
+                })
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    let rev;
+                    let status;
+                    return repo.revparse("HEAD")
+                    .then(result => {
+                        result.should.equal(initialSha);
+                    })
+                    .then(() => {
+                        return repo.status();
+                    })
+                    .then(result => {
+                        result.should.deep.include({
+                            not_added: [],
+                            conflicted: [],
+                            created: [],
+                            deleted: [],
+                            modified: [],
+                            renamed: [],
+                            staged: []
+                        });
+                    });
+                })
+                .should.be.fulfilled;
             });
 
             it("checkout branch", function() {
