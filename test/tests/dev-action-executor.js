@@ -352,7 +352,7 @@ describe("Dev Action Executor", function() {
                 .then(() => {
                     let rev;
                     let status;
-                    return repo.revparse("HEAD")
+                    return repo.revparse(["HEAD"])
                     .then(result => {
                         result.should.equal(initialSha);
                     })

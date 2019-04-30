@@ -32,6 +32,16 @@ class DevActionExecutor extends ActionExecutor {
         });
     }
 
+    executeCleanCheckout(repoSetupName, revSpec) {
+        return this[getRepo](repoSetupName)
+        .then(repo => {
+            return repo.checkout(["-f", revSpec])
+            .then(() => {
+                return repo.clean("f", ["-d"]);
+            })
+        })
+    }
+
     [getRepo](repoSetupName) {
         let setup = this.repoSetups[repoSetupName];
         if (!setup) {

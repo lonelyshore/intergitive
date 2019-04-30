@@ -37,11 +37,19 @@ class MergeAction extends upstream.Action {
     }
 }
 
+/**
+ * @inheritdoc
+ */
 class CleanCheckoutAction extends upstream.Action {
     constructor(repoSetupName, commitish) {
         super();
         this.klass = "CleanCheckoutAction";
+        this.repoSetupName = repoSetupName;
         this.commitish = commitish;
+    }
+
+    executeBy(actionExecutor) {
+        return actionExecutor.executeCleanCheckout(this.repoSetupName, this.commitish);
     }
 }
 
