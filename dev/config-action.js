@@ -37,6 +37,14 @@ class MergeAction extends upstream.Action {
     }
 }
 
+class CleanCheckoutAction extends upstream.Action {
+    constructor(repoSetupName, commitish) {
+        super();
+        this.klass = "CleanCheckoutAction";
+        this.commitish = commitish;
+    }
+}
+
 module.exports = Object.assign({}, upstream);
 module.exports.UnstageAction = UnstageAction;
 module.exports.UnstageAllAction = UnstageAllAction;
