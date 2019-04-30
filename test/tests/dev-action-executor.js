@@ -266,30 +266,20 @@ describe("Dev Action Executor", function() {
                 let parentOneSha;
                 let parentTwoSha;
 
-                return repo.revparse([toBranch])
-                .then(result => {
-                    toBranchSha = result;
-                })
-                .then(() => {
-                    return repo.revparse([fromBranch]);
-                })
-                .then(result => {
-                    fromBranchSha = result;
+                return repo.revparse([ toBranch, fromBranch ])
+                .then(results => {
+                    toBranchSha = results[0];
+                    fromBranchSha = results[1];
                 })
                 .then(() => {
                     return action.executeBy(actionExecutor);
                 })
                 .then(() => {
-                    return repo.revparse([toBranch + "^1"])
-                    .then(result => {
-                        parentOneSha = result;
+                    return repo.revparse([ toBranch + "^1", toBranch + "^2" ])
+                    .then(results => {
+                        parentOneSha = results[0];
+                        parentTwoSha = results[1];
                     })
-                    .then(() => {
-                        return repo.revparse([toBranch + "^2"])
-                    })
-                    .then(result => {
-                        parentTwoSha = result;
-                    });
                 })
                 .then(() => {
                     return parentOneSha === toBranchSha
