@@ -3,6 +3,8 @@
 const simpleGit = require("simple-git/promise");
 const ActionExecutor = require("../lib/action-executor").ActionExecutor;
 
+const getRepo = Symbol("getRepo");
+
 /**
  * @inheritdoc
  */
@@ -12,21 +14,7 @@ class DevActionExecutor extends ActionExecutor {
     }
 
     executeStaging(repoSetupName, pathSpecs) {
-        let getRepo = () => {
-            let setup = this.repoSetups[repoSetupName];
-            if (!setup) {
-                return Promise.reject(new Error(`Cannot find repo setup ${repoSetupName}`));
-            }
-            else {
-                if (!("devRepo" in setup)) {
-                    setup.devRepo = simpleGit(setup.workingPath);
-                }
-
-                return Promise.resolve(setup.devRepo);
-            }
-        };
-
-        return getRepo()
+        return this[getRepo](repoSetupName)
         .then(repo => {
             return repo.add(pathSpecs)
             .catch(err => {
@@ -35,6 +23,27 @@ class DevActionExecutor extends ActionExecutor {
                 }
             });
         })
+    }
+
+    executeMerge(repoSetupName, toBranch, fromBranch) {
+        return this[getRepo](repoSetupName)
+        .then(repo => {
+            return repo.mergeFromTo(fromBranch, toBranch);
+        });
+    }
+
+    [getRepo](repoSetupName) {
+        let setup = this.repoSetups[repoSetupName];
+        if (!setup) {
+            return Promise.reject(new Error(`Cannot find repo setup ${repoSetupName}`));
+        }
+        else {
+            if (!("devRepo" in setup)) {
+                setup.devRepo = simpleGit(setup.workingPath);
+            }
+
+            return Promise.resolve(setup.devRepo);
+        }
     }
 }
 

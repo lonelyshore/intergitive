@@ -265,13 +265,13 @@ describe("Dev Action Executor", function() {
                 let fromBranchSha;
                 let parentOneSha;
                 let parentTwoSha;
-                
-                return repo.revparse(toBranch)
+
+                return repo.revparse([toBranch])
                 .then(result => {
                     toBranchSha = result;
                 })
                 .then(() => {
-                    return repo.revparse(fromBranch);
+                    return repo.revparse([fromBranch]);
                 })
                 .then(result => {
                     fromBranchSha = result;
@@ -280,12 +280,12 @@ describe("Dev Action Executor", function() {
                     return action.executeBy(actionExecutor);
                 })
                 .then(() => {
-                    return repo.revparse(toBranch + "^1")
+                    return repo.revparse([toBranch + "^1"])
                     .then(result => {
                         parentOneSha = result;
                     })
                     .then(() => {
-                        return repo.revparse(toBranch + "^2")
+                        return repo.revparse([toBranch + "^2"])
                     })
                     .then(result => {
                         parentTwoSha = result;
