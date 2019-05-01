@@ -1,0 +1,61 @@
+actions:
+  - name: dirty
+    contents:
+    - !cleanCheckout
+      repoSetupName: compare
+      commitish: master
+    - !writeFile
+      sourceAssetIds:
+        - file/dirty
+      destinationPaths:
+        - repo/folder/forth
+  - name: dirtyStage
+    contents:
+    - replay:
+      - dirty
+    - !stageAll
+      repoSetupName: compare
+  - name: merge
+    contents:
+    - !merge
+      repoSetupName: compare
+      withBranch: second_branch
+  - name: conflict
+    contents:
+    - !merge
+      repoSetupName: compare
+      withBranch: merge_conflict
+  - name: conclictEdit
+    contents:
+    - replay:
+      - conflict
+    - !writeFile
+      sourceAssetIds:
+        - file/resolveConflict
+      destinationPaths:
+        - repo/first_file
+  - name: conflictResolveStage
+    contents:
+    - replay:
+      - conflict
+      - conflictEdit
+    - !stageAll
+      repoSetupName: compare
+  - name: conflictResolve
+    contents:
+    - replay:
+      - conflict
+      - conflictEdit
+      - conflictResolveStage
+    - !continueMerge
+      repoSetupName: compare
+  - name: detached
+    contents:
+    - !cleanCheckout
+      repoSetupName: compare
+      commitish: "ea38d"
+      
+
+        
+
+

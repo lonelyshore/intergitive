@@ -1,0 +1,5 @@
+asset_index:
+  mode: "ondisk"
+  assets:
+    dirty: "dirty.txt"
+    resolveConflict: "resolveConflict.txt"
