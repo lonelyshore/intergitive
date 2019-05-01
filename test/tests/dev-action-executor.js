@@ -321,11 +321,37 @@ describe("Dev Action Executor", function() {
                 })
                 .should.be.fulfilled;
             });
+        });
+
+        describe("Continue Merge", function() {
 
             it("resolve conflict", function() {
+                
+                const toBranch = "master";
+                const fromBranch = "conflict-MM";
+
+                let action = new actionTypes.MergeAction(
+                    testRepoSetupName,
+                    fromBranch
+                );
+
                 fail();
-            });
-        });
+
+                let toSha;
+                let fromSha;
+                return repo.revparse([ toBranch, fromBranch ])
+                .then(results => {
+                    toSha = results[0];
+                    fromSha = results[1];
+                })
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                });
+
+
+            });   
+
+        })
 
         describe("Clean Checkout", function() {
 
