@@ -335,6 +335,10 @@ describe("Dev Action Executor", function() {
                     fromBranch
                 );
 
+                let continueAction = new actionTypes.ContinueMergeAction(
+                    testRepoSetupName
+                );
+
                 fail();
 
                 let toSha;
@@ -346,7 +350,21 @@ describe("Dev Action Executor", function() {
                 })
                 .then(() => {
                     return action.executeBy(actionExecutor);
-                });
+                })
+                .then(() => {
+                    return fs.writeFile(path.join(repoPath, "a.txt"), "");
+                })
+                .then(() => {
+                    return continueAction.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return repo.revparse([ "HEAD^1", "HEAD^2" ])
+                    .then(results => {
+                        results[0].should.equal(toSha);
+                        results[1].should.equal(fromSha);
+                    });
+                })
+                .should.be.fulfilled;
 
 
             });   

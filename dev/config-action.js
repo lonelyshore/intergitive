@@ -64,4 +64,5 @@ module.exports = Object.assign({}, upstream);
 module.exports.UnstageAction = UnstageAction;
 module.exports.UnstageAllAction = UnstageAllAction;
 module.exports.MergeAction = MergeAction;
+module.exports.ContinueMergeAction = ContinueMergeAction;
 module.exports.CleanCheckoutAction = CleanCheckoutAction;
