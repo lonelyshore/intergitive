@@ -69,11 +69,6 @@ describe.skip("VCS Compare", function() {
 
             });
     
-            it("merging", function() {
-                const referenceName = "merging";
-
-            });
-    
             it("merging conflict", function() {
                 const referenceName = "conflict";
 

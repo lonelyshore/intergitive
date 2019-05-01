@@ -16,7 +16,7 @@ const memberIsStringArray = function(data, memberName) {
 }
 
 let unstageActionType = new yaml.Type("!unstage", {
-    kind: mapping,
+    kind: "mapping",
 
     resolve: function(data) {
         return data !== null
@@ -37,7 +37,7 @@ let unstageActionType = new yaml.Type("!unstage", {
 });
 
 let unstageAllActionType = new yaml.Type("!unstageAll", {
-    kind: mapping,
+    kind: "mapping",
 
     resolve: function(data) {
         return data !== null
@@ -54,7 +54,7 @@ let unstageAllActionType = new yaml.Type("!unstageAll", {
 });
 
 let mergeActionType = new yaml.Type("!merge", {
-    kind: mapping,
+    kind: "mapping",
 
     resolve: function(data) {
         return data !== null
@@ -76,7 +76,7 @@ let mergeActionType = new yaml.Type("!merge", {
 });
 
 let continueMergeActionType = new yaml.Type("!continueMerge", {
-    kind: mapping,
+    kind: "mapping",
 
     resolve: function(data) {
         return data !== null
@@ -94,7 +94,7 @@ let continueMergeActionType = new yaml.Type("!continueMerge", {
 });
 
 let cleanCheckoutActionType = new yaml.Type("!cleanCheckout", {
-    kind: mapping,
+    kind: "mapping",
 
     resolve: function(data) {
         return data !== null
@@ -105,7 +105,7 @@ let cleanCheckoutActionType = new yaml.Type("!cleanCheckout", {
     },
 
     construct: function(data) {
-        return actionConfig.CleanCheckoutAction(
+        return new actionConfig.CleanCheckoutAction(
             data.repoSetupName,
             data.commitish
         );
