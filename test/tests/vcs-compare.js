@@ -21,6 +21,50 @@ chai.use(chaiAsPromised);
 chai.should();
 
 describe("VCS Compare", function() {
+
+    /**
+     * 
+     * @param {Array<Any>} contents 
+     * @param {ActionExecutor} actionExecutor 
+     */
+    const executeContents = function(contents, actionExecutor) {
+        let executions = Promise.resolve();
+        contents.forEach(item => {
+            if (item instanceof Action) {
+                executions = executions.then(() => {
+                    return item.executeBy(actionExecutor)
+                    .catch(err => {
+                        console.error(`[execute ${item.klass}] ${err.message}`);
+                        throw err;
+                    });
+                });
+            }
+        })
+
+        return executions;
+    }
+
+    const tryApplyReplay = function(executions, contents, stageMap, actionExecutor) {
+
+        if (contents.length !== 0 && ("replay" in contents[0])) {
+            let replayContents = [];
+            contents[0]["replay"].forEach(replayName => {
+                replayContents = replayContents.concat(stageMap[replayName]);
+            });
+
+            executions = executions.then(() => executeContents(replayContents, actionExecutor));
+        }
+
+        return executions;
+    }
+
+    const executeStage = function(contents, stageMap, actionExecutor) {
+        let executions = Promise.resolve();
+        executions = tryApplyReplay(executions, contents, stageMap, actionExecutor);
+        executions = executions.then(() => executeContents(contents, actionExecutor));
+        return executions;
+    }
+
     describe("Local", function() {
 
         const workingPath = path.join(utils.PLAYGROUND_PATH, "compare-vcs");
@@ -63,9 +107,7 @@ describe("VCS Compare", function() {
                 })
                 .then(config => {
                     config.actions.forEach(action => {
-                        stageMap[action.name] = action.contents.filter(item => {
-                            return item instanceof Action;
-                        });
+                        stageMap[action.name] = action.contents;
                     });
                 })
             })
@@ -112,8 +154,12 @@ describe("VCS Compare", function() {
             });
     
             it("dirty working directory", function() {
-                const referenceName = "dirty-directory";
-                utils.notImplemented();                
+                const referenceName = "dirty";
+                return executeStage(stageMap[referenceName], stageMap, actionExecutor)
+                .then(() => {
+                    return vcsManager.diff(referenceName);
+                })
+                .should.eventually.equal(true);
             });
     
             it("merged", function() {
