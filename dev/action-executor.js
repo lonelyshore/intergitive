@@ -29,7 +29,12 @@ class DevActionExecutor extends ActionExecutor {
     executeMerge(repoSetupName, withBranch) {
         return this[getRepo](repoSetupName)
         .then(repo => {
-            return repo.merge([withBranch]);
+            return repo.merge([withBranch])
+            .catch(err => {
+                if (!(err.toString().includes("CONFLICTS:"))) {
+                    throw err;
+                }
+            });
         });
     }
 

@@ -290,14 +290,36 @@ describe("Dev Action Executor", function() {
             it("merge conflict will stop", function() {
                 
                 const toBranch = "master";
-                const fromBranch = "conflict-AA";
+                const fromBranch = "conflict-MM";
 
                 let action = new actionTypes.MergeAction(
                     testRepoSetupName,
                     fromBranch
                 );
 
-                fail();
+                let currentSha;
+                return repo.revparse([toBranch])
+                .then(result => {
+                    currentSha = result;
+                })
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return repo.revparse(["HEAD"])
+                    .then(result => {
+                        result.should.equal(currentSha);
+                    })
+                    .then(() => {
+                        return repo.status();
+                    })
+                    .then(result => {
+                        result.should.deep.include({
+                            conflicted: ["a.txt"]
+                        });
+                    });
+                })
+                .should.be.fulfilled;
             });
 
             it("resolve conflict", function() {
