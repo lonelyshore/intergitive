@@ -18,9 +18,6 @@ const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
-const fail = function() {
-    throw new Error("fail");
-}
 
 describe("Action Executor", function() {
 

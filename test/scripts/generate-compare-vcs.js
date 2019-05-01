@@ -81,6 +81,9 @@ Promise.resolve()
     return RefMaker.create(sourceRepoPath, refStorePath, refName)
     .then(result => {
         refMaker = result;
+    })
+    .then(() => {
+        return refMaker.save("clean");
     });
 })
 .then(() => {
@@ -98,7 +101,7 @@ Promise.resolve()
     let executions = Promise.resolve();
 
     config.actions.forEach(action => {
-        
+
         executions = executions.then(initializeRepo);
 
         let contents = action.contents;
