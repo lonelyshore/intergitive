@@ -16,6 +16,7 @@ class DevActionExecutor extends ActionExecutor {
     executeStaging(repoSetupName, pathSpecs) {
         return this[getRepo](repoSetupName)
         .then(repo => {
+            
             return repo.add(pathSpecs)
             .catch(err => {
                 if (!err.toString().includes("fatal: pathspec")) {
@@ -50,6 +51,7 @@ class DevActionExecutor extends ActionExecutor {
         else {
             if (!("devRepo" in setup)) {
                 setup.devRepo = simpleGit(setup.workingPath);
+                setup.devRepo.silent(true);
             }
 
             return Promise.resolve(setup.devRepo);

@@ -79,7 +79,6 @@ describe("Dev Action Executor", function() {
             .then(() => {
                 return repo.clean("f", ["-d"]);
             });
-
         });
 
         after("Clear Testing Repo", function() {
@@ -295,7 +294,6 @@ describe("Dev Action Executor", function() {
 
                 let action = new actionTypes.MergeAction(
                     testRepoSetupName,
-                    toBranch,
                     fromBranch
                 );
 
