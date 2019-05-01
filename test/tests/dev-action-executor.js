@@ -313,7 +313,7 @@ describe("Dev Action Executor", function() {
             const assertCleanAt = function(targetSha) {
                 return repo.revparse(["HEAD"])
                 .then(result => {
-                    result.should.equal(targetSha);
+                    result.trim().should.equal(targetSha.trim());
                 })
                 .then(() => {
                     return repo.status();
@@ -329,6 +329,26 @@ describe("Dev Action Executor", function() {
                         staged: []
                     });
                 });
+            };
+
+            const assertCleanCheckout = function(commitish) {
+                let action = new actionTypes.CleanCheckoutAction(
+                    testRepoSetupName,
+                    commitish
+                );
+
+                let targetSha
+                return repo.revparse([commitish])
+                .then(result => {
+                    targetSha = result;
+                })
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return assertCleanAt(targetSha);
+                })
+                .should.be.fulfilled;                
             }
 
             it("checkout head", function() {
@@ -377,33 +397,31 @@ describe("Dev Action Executor", function() {
             });
 
             it("checkout branch", function() {
+                return assertCleanCheckout("conflict-AA");
+            });
 
-                let targetBranch = "conflict-AA";
-                let action = new actionTypes.CleanCheckoutAction(
-                    testRepoSetupName,
-                    targetBranch
-                );
+            it("checkout refspec", function() {
+                return assertCleanCheckout("HEAD~2");
+            })
 
-                let targetSha
-                return repo.revparse([targetBranch])
+            it("checkout sha", function() {
+                
+                let targetSha;
+                return repo.revparse(["conflict-MM"])
                 .then(result => {
-                    targetSha = result;
+                    targetSha = result.trim();
+
+                    return new actionTypes.CleanCheckoutAction(
+                        testRepoSetupName,
+                        targetSha
+                    );
                 })
-                .then(() => {
+                .then(action => {
                     return action.executeBy(actionExecutor);
                 })
                 .then(() => {
                     return assertCleanAt(targetSha);
-                })
-                .should.be.fulfilled;
-            });
-
-            it("checkout refspec", function() {
-                fail();
-            })
-
-            it("checkout sha", function() {
-                fail();
+                });
             })
         })
     });
