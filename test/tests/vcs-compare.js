@@ -143,6 +143,15 @@ describe("VCS Compare", function() {
         });
 
         describe("Equal", function() {
+
+            const testForReferencename = (referenceName) => {
+                return executeStage(stageMap[referenceName], stageMap, actionExecutor)
+                .then(() => {
+                    return vcsManager.diff(referenceName);
+                })
+                .should.eventually.equal(true);
+            }
+
             it("clean stage and working directory", function() {
                 const referenceName = "clean";
                 utils.notImplemented();
@@ -155,11 +164,7 @@ describe("VCS Compare", function() {
     
             it("dirty working directory", function() {
                 const referenceName = "dirty";
-                return executeStage(stageMap[referenceName], stageMap, actionExecutor)
-                .then(() => {
-                    return vcsManager.diff(referenceName);
-                })
-                .should.eventually.equal(true);
+                return testForReferencename(referenceName);
             });
     
             it("merged", function() {
