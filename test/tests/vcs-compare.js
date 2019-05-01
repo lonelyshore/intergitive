@@ -158,8 +158,8 @@ describe("VCS Compare", function() {
             });
     
             it("dirty stage", function() {
-                const referenceName = "dirty-stage";
-                utils.notImplemented();
+                const referenceName = "dirtyStage";
+                return testForReferencename(referenceName);
             });
     
             it("dirty working directory", function() {
@@ -168,34 +168,33 @@ describe("VCS Compare", function() {
             });
     
             it("merged", function() {
-                const referenceName = "merged";
-                utils.notImplemented();
-
+                const referenceName = "merge";
+                return testForReferencename(referenceName);
             });
     
             it("merging conflict", function() {
                 const referenceName = "conflict";
-                utils.notImplemented();
+                return testForReferencename(referenceName);
             });
     
             it("merging conflict editted", function() {
-                const referenceName = "conflict-edit";
-                utils.notImplemented();
+                const referenceName = "conclictEdit";
+                return testForReferencename(referenceName);
             });
 
             it("merging conflict staged", function() {
-                const referenceName = "conflict-staged";
-                utils.notImplemented();
+                const referenceName = "conflictResolveStage";
+                return testForReferencename(referenceName);
             });
     
             it("merging conflict resolved", function() {
-                const referenceName = "conflict-resolved";
-                utils.notImplemented();                
+                const referenceName = "conflictResolve";
+                return testForReferencename(referenceName); 
             });
     
             it("detached head", function() {
                 const referenceName = "detached";
-                utils.notImplemented();
+                return testForReferencename(referenceName);
             });
         });
     
