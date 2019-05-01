@@ -30,7 +30,13 @@ const executeContents = function(contents, actionExecutor) {
     let executions = Promise.resolve();
     contents.forEach(item => {
         if (item instanceof Action) {
-            executions = executions.then(() => item.executeBy(actionExecutor));
+            executions = executions.then(() => {
+                return item.executeBy(actionExecutor)
+                .catch(err => {
+                    console.error(`[execute ${item.klass}] ${err.message}`);
+                    throw err;
+                });
+            });
         }
     })
 
@@ -101,6 +107,10 @@ Promise.resolve()
 
         executions = executions.then(() => {
             return refMaker.save(action.name)
+            .catch(err => {
+                console.error(`[save${action.name}] ${err.message}`);
+                throw err;
+            });
         });
     })
 

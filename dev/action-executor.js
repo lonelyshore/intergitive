@@ -24,6 +24,10 @@ class DevActionExecutor extends ActionExecutor {
                 }
             });
         })
+        .catch(err => {
+            console.error("[executeStaging] " + err.message);
+            throw err;
+        });
     }
 
     executeMerge(repoSetupName, withBranch) {
@@ -35,7 +39,11 @@ class DevActionExecutor extends ActionExecutor {
                     throw err;
                 }
             });
-        });
+        })
+        .catch(err => {
+            console.error("[executeMerge] " + err.message);
+            throw err;
+        });;
     }
 
     executeContinueMerge(repoSetupName) {
@@ -43,7 +51,11 @@ class DevActionExecutor extends ActionExecutor {
         .then(repo => {
             return repo.env("GIT_EDITOR", "true") // skip editor so the script can continue execution without user interaction
             .merge(["--continue"]);
-        });
+        })
+        .catch(err => {
+            console.error("[executeContinueMerge] " + err.message);
+            throw err;
+        });;
     }
 
     executeCleanCheckout(repoSetupName, revSpec) {
@@ -54,6 +66,10 @@ class DevActionExecutor extends ActionExecutor {
                 return repo.clean("f", ["-d"]);
             })
         })
+        .catch(err => {
+            console.error("[executeCleanCheckout] " + err.message);
+            throw err;
+        });
     }
 
     [getRepo](repoSetupName) {
