@@ -13,6 +13,7 @@ const vcs = require("../../lib/repo-vcs");
 
 const Action = require("../../lib/config-action").Action;
 const ActionExecutor = require("../../dev/action-executor").DevActionExecutor;
+const AssetLoader = require("../../lib/asset-loader").AssetLoader;
 const RepoSetup = require("../../lib/config-level").RepoVcsSetup;
 const SCHEMA = require("../../dev/config-schema").LEVEL_CONFIG_SCHEMA;
 
@@ -26,7 +27,11 @@ describe("VCS Compare", function() {
 
         const checkedRepoPath = path.join(workingPath, "repo");
         const referenceStorePath = path.join(workingPath, "repo-store");
-        const referenceStoreName = "compare-test-local-ref";
+        const referenceStoreName = "compare-vcs-local-ref";
+
+        const archivePath = path.join(utils.RESOURCES_PATH, "repo-archive");
+        const referenceArchivePath = path.join(archivePath, "compare-vcs-local-ref.zip");
+        const checkedArchivePath = path.join(archivePath, "compare-vcs.zip");
 
         let checkedRepo;
         let vcsManager;
@@ -37,13 +42,10 @@ describe("VCS Compare", function() {
 
             const assetStorePath = path.join(utils.RESOURCES_PATH, "vcs-compare", "assets");
             const yamlPath = path.join(utils.RESOURCES_PATH, "vcs-compare", "generate.yaml");
-            const archivePath = path.join(utils.RESOURCES_PATH, "repo-archive");
-            const referenceArchivePath = path.join(archivePath, "compare-test-local-ref.zip");
-            const checkedArchivePath = path.join(archivePath, "compare-vcs.zip");
             
             return Promise.resolve()
             .then(() => {
-                return fs.emptyDir(playgroundPath)
+                return fs.emptyDir(workingPath)
                 .then(() => fs.emptyDir(referenceStorePath))
                 .then(() => zip.extractArchiveTo(referenceArchivePath, referenceStorePath))
                 .then(() => zip.extractArchiveTo(checkedArchivePath, workingPath))
@@ -79,7 +81,7 @@ describe("VCS Compare", function() {
                     )
                 };
 
-                const actionExecutor = new ActionExecutor(
+                actionExecutor = new ActionExecutor(
                     workingPath,
                     assetLoader,
                     repoSetups
