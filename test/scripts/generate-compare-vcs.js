@@ -60,14 +60,8 @@ Promise.resolve()
 .then(() => {
     return fs.emptyDir(workingPath)
     .then(() => {
-        return fs.emptyDir(sourceRepoPath);
-    })
-    .then(() => {
         return fs.emptyDir(refStorePath);
     })
-    .then(() => {
-        return zip.extractArchiveTo(path.join(resoruceBasePath, "repo-archive", "compare-vcs.zip"), workingPath);
-    });
 })
 .then(() => {
     return RefMaker.create(sourceRepoPath, refStorePath, refName)
@@ -87,7 +81,11 @@ Promise.resolve()
         actionMap[action.name] = action.contents;
     });
 
-    let executions = Promise.resolve();
+    let executions = fs.emptyDir(sourceRepoPath)
+    .then(() => {
+        return zip.extractArchiveTo(path.join(resoruceBasePath, "repo-archive", "compare-vcs.zip"), workingPath);
+    });
+
     config.actions.forEach(action => {
         let contents = action.contents;
         if (contents.length !== 0 && ("replay" in contents[0])) {
@@ -102,7 +100,7 @@ Promise.resolve()
         executions = executions.then(() => executeContents(contents, actionExecutor));
 
         executions = executions.then(() => {
-            return refMaker.save(action.name);
+            return refMaker.save(action.name)
         });
     })
 
