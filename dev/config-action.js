@@ -24,16 +24,15 @@ class UnstageAllAction extends upstream.Action {
  * @inheritdoc
  */
 class MergeAction extends upstream.Action {
-    constructor(repoSetupName, toBranch, fromBranch) {
+    constructor(repoSetupName, withBranch) {
         super();
         this.klass = "MergeAction";
         this.repoSetupName = repoSetupName;
-        this.toBranch = toBranch;
-        this.fromBranch = fromBranch;
+        this.withBranch = withBranch;
     }
 
     executeBy(actionExecutor) {
-        return actionExecutor.executeMerge(this.repoSetupName, this.toBranch, this.fromBranch);
+        return actionExecutor.executeMerge(this.repoSetupName, this.withBranch);
     }
 }
 

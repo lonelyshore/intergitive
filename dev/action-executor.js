@@ -25,10 +25,10 @@ class DevActionExecutor extends ActionExecutor {
         })
     }
 
-    executeMerge(repoSetupName, toBranch, fromBranch) {
+    executeMerge(repoSetupName, withBranch) {
         return this[getRepo](repoSetupName)
         .then(repo => {
-            return repo.mergeFromTo(fromBranch, toBranch);
+            return repo.merge([withBranch]);
         });
     }
 

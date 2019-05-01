@@ -252,12 +252,11 @@ describe("Dev Action Executor", function() {
 
             it("merge branches", function() {
                 
-                const toBranch = "mergable";
-                const fromBranch = "master";
+                const toBranch = "master";
+                const fromBranch = "mergable";
 
                 let action = new actionTypes.MergeAction(
                     testRepoSetupName,
-                    toBranch,
                     fromBranch
                 );
 
