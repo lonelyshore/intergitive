@@ -154,7 +154,8 @@ describe("VCS Compare", function() {
 
             it("clean stage and working directory", function() {
                 const referenceName = "clean";
-                utils.notImplemented();
+                return vcsManager.diff(referenceName)
+                .should.eventually.equal(true);
             });
     
             it("dirty stage", function() {
