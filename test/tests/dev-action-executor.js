@@ -335,11 +335,13 @@ describe("Dev Action Executor", function() {
                     fromBranch
                 );
 
-                let continueAction = new actionTypes.ContinueMergeAction(
+                let stageAllAction = new actionTypes.StageAllAction(
                     testRepoSetupName
                 );
 
-                fail();
+                let continueAction = new actionTypes.ContinueMergeAction(
+                    testRepoSetupName
+                );
 
                 let toSha;
                 let fromSha;
@@ -353,6 +355,9 @@ describe("Dev Action Executor", function() {
                 })
                 .then(() => {
                     return fs.writeFile(path.join(repoPath, "a.txt"), "");
+                })
+                .then(() => {
+                    return stageAllAction.executeBy(actionExecutor);
                 })
                 .then(() => {
                     return continueAction.executeBy(actionExecutor);

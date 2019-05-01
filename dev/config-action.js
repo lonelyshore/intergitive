@@ -36,11 +36,18 @@ class MergeAction extends upstream.Action {
     }
 }
 
+/**
+ * @inheritdoc
+ */
 class ContinueMergeAction extends upstream.Action {
     constructor(repoSetupName) {
         super();
         this.klass = "ContinueMergeAction";
         this.repoSetupName = repoSetupName;
+    }
+
+    executeBy(actionExecutor) {
+        return actionExecutor.executeContinueMerge(this.repoSetupName);
     }
 }
 

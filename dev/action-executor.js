@@ -38,6 +38,14 @@ class DevActionExecutor extends ActionExecutor {
         });
     }
 
+    executeContinueMerge(repoSetupName) {
+        return this[getRepo](repoSetupName) 
+        .then(repo => {
+            return repo.env("GIT_EDITOR", "true") // skip editor so the script can continue execution without user interaction
+            .merge(["--continue"]);
+        });
+    }
+
     executeCleanCheckout(repoSetupName, revSpec) {
         return this[getRepo](repoSetupName)
         .then(repo => {
