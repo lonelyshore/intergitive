@@ -3,6 +3,7 @@
 const path = require("path");
 const fs = require("fs-extra");
 const yaml = require("js-yaml");
+const simpleGit = require("simple-git/promise");
 const utils = require("./test-utils");
 
 const chai = require("chai");
@@ -77,7 +78,7 @@ describe("VCS Compare #core", function() {
         const referenceArchivePath = path.join(archivePath, "compare-vcs-local-ref.zip");
         const checkedArchivePath = path.join(archivePath, "compare-vcs.zip");
 
-        let checkedRepo;
+        
         let vcsManager;
         let stageMap = {};
         let actionExecutor;
@@ -147,14 +148,14 @@ describe("VCS Compare #core", function() {
             const testForReferencename = (referenceName) => {
                 return executeStage(stageMap[referenceName], stageMap, actionExecutor)
                 .then(() => {
-                    return vcsManager.diff(referenceName);
+                    return vcsManager.equivalent(referenceName);
                 })
                 .should.eventually.equal(true);
             }
 
             it("clean stage and working directory", function() {
                 const referenceName = "clean";
-                return vcsManager.diff(referenceName)
+                return vcsManager.equivalent(referenceName)
                 .should.eventually.equal(true);
             });
     
@@ -201,6 +202,90 @@ describe("VCS Compare #core", function() {
     
         describe("Different", function() {
     
+            let repo;
+
+            beforeEach("Initialize repo", function() {
+                repo = simpleGit(checkedRepoPath);
+            })
+
+            it("differ working tree", function() {
+
+                return vcsManager.equivalent("dirty")
+                .should.eventually.equal(false, "clean should differ from dirty tree")
+                .then(() => {
+                    return fs.writeFile(
+                        path.join(checkedRepoPath, "random"),
+                        "fjfdkjviome"
+                    )
+                    .then(() => {
+                        return vcsManager.equivalent("clean");
+                    });
+                })
+                .should.eventually.equal(false, "dirty working tree should differ from clean");
+            });
+
+            it("differ index", function() {
+
+                return vcsManager.equivalent("dirtyStage")
+                .should.eventually.equal(false, "clean should differ from dirty stage")
+                .then(() => {
+                    return fs.writeFile(
+                        path.join(checkedRepoPath, "random"),
+                        "fjfdkjviome"
+                    )
+                    .then(() => {
+                        return repo.add(["random"]);
+                    })
+                    .then(() => {
+                        return vcsManager.equivalent("clean");
+                    })
+                    .should.eventually.equal(false, "staged a new file should differ from clean")
+                    .then(() => {
+                        return vcsManager.equivalent("dirtyStage")
+                    })
+                    .should.eventually.equal(false, "staging different file should result inequivalence");
+                })
+                .then(() => {
+                    return repo.checkout(["-f"])
+                    .then(() => {
+                        return fs.remove(
+                            path.join(checkedRepoPath, "random")
+                        )
+                    })
+                    .then(() => {
+                        return vcsManager.equivalent("clean");
+                    })
+                    .should.eventually.equal(true, "cleared repo should be equivalent to clean");
+                })
+                .then(() => {
+                    return fs.remove(
+                        path.join(checkedRepoPath, "first_file")
+                    )
+                    .then(() => {
+                        return repo.add(["first_file"]);
+                    })
+                    .then(() => {
+                        return vcsManager.equivalent("clean")
+                        .should.eventually.equal(false, "staging removed file should differ from clean");
+                    })
+                    .then(() => {
+                        return vcsManager.equivalent("dirtyStage")
+                        .should.eventually.equal(false, "different stage results in inequivalence");
+                    });
+                })
+            });
+
+            it("differ branch", function() {
+
+            });
+
+            it("different branch list", function() {
+
+            });
+
+            it("differ HEAD", function() {
+
+            });
         });
     });
 });
