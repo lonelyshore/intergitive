@@ -20,7 +20,7 @@ const SCHEMA = require("../../dev/config-schema").LEVEL_CONFIG_SCHEMA;
 chai.use(chaiAsPromised);
 chai.should();
 
-describe("VCS Compare", function() {
+describe("VCS Compare #core", function() {
 
     /**
      * 

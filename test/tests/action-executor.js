@@ -19,7 +19,7 @@ chai.use(chaiAsPromised);
 chai.should();
 
 
-describe("Action Executor", function() {
+describe("Action Executor #core", function() {
 
     let actionExecutor;
     const testRepoSetupName = "test-repo";
