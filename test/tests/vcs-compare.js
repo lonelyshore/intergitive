@@ -123,6 +123,7 @@ describe("VCS Compare #core", function() {
                     config.actions.forEach(action => {
                         stageMap[action.name] = action.contents;
                     });
+                    stageMap["clean"] = [];
                 })
             })
             .then(() => {
