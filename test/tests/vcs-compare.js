@@ -151,6 +151,9 @@ describe("VCS Compare #core", function() {
         describe("Equal", function() {
 
             const testForReferencename = (referenceName) => {
+                if (!(referenceName in stageMap)) {
+                    throw new Error(`Cannot find find referenceName ${referenceName}`);
+                }
                 return executeStage(stageMap[referenceName], stageMap, actionExecutor)
                 .then(() => {
                     return vcsManager.equivalent(referenceName);
@@ -201,9 +204,20 @@ describe("VCS Compare #core", function() {
                 return testForReferencename(referenceName);
             });
     
-            it("merging conflict", function() {
-                const referenceName = "conflict";
-                return testForReferencename(referenceName);
+            it("merging conflict both added", function() {
+                return testForReferencename("conflictAA");
+            });
+
+            it("merging conflict both modified", function() {
+                return testForReferencename("conflictMM");
+            });
+
+            it("merging conflict modified and removed", function() {
+                return testForReferencename("conflictMR");
+            })
+
+            it("merging conflict mixed", function(){
+                return testForReferencename("conflictMixed");
             });
     
             it("merging conflict editted", function() {
