@@ -1,50 +1,97 @@
 actions:
-  - name: dirty
+  - name: dirtyAdd
     contents:
-    - !cleanCheckout
-      repoSetupName: compare
-      commitish: master
     - !writeFile
       sourceAssetIds:
-        - file/dirty
+        - file/dirtyAdd
+      destinationPaths:
+        - repo/folder/some_new
+  - name: dirtyRemove
+    contents:
+    - !removeeFile
+      - repo/folder/first_file
+  - name: dirtyModify
+    contents:
+    - !writeFile
+      sourceAssetIds:
+        - file/dirtyModify
       destinationPaths:
         - repo/folder/forth
-  - name: dirtyStage
+  - name: dirtyAddStage
     contents:
     - replay:
-      - dirty
+      - dirtyAdd
     - !stageAll
       repoSetupName: compare
+  - name: dirtyRemoveStage
+    contents:
+    - replay:
+      - dirtyRemove
+    - !stageAll
+      repoSetupName: compare      
+  - name: dirtyModifyStage
+    contents:
+    - replay:
+      - dirtyModify
+    - !stageAll
+      repoSetupName: compare
+  - name: dirtyMixStage
+    contents:
+    - replay:
+      - dirtyAdd
+      - dirtyRemove
+      - dirtyModify
+    - !stageAll
+      repoSetupName: compare      
   - name: merge
     contents:
     - !merge
       repoSetupName: compare
       withBranch: second_branch
-  - name: conflict
+  - name: conflictAA
     contents:
     - !merge
       repoSetupName: compare
-      withBranch: merge_conflict
+      withBranch: "conflict-AA"
+  - name: conflictMM
+    contents:
+    - !merge
+      repoSetupName: compare
+      withBranch: "conflict-MM"
+  - name: conflictMR
+    contents:
+    - !merge
+      repoSetupName: compare
+      withBranch: "conflict-MR"
+  - name: conflictMixed
+    contents:
+    - !merge
+      repoSetupName: compare
+      withBranch: "conflict-mixed"
   - name: conclictEdit
     contents:
     - replay:
-      - conflict
+      - conflictMixed
     - !writeFile
       sourceAssetIds:
-        - file/resolveConflict
+        - file/resolveConflictAA
+        - file/resolveConflictMM
+        - file/resolveConflictMR
       destinationPaths:
+        - repo/folder/fifth
         - repo/first_file
+        - repo/second_file
   - name: conflictResolveStage
     contents:
     - replay:
-      - conflict
+      - conflictMixed
       - conflictEdit
     - !stageAll
       repoSetupName: compare
   - name: conflictResolve
     contents:
     - replay:
-      - conflict
+      - conflictMixed
       - conflictEdit
       - conflictResolveStage
     - !continueMerge
