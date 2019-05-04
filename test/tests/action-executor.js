@@ -389,7 +389,35 @@ describe("Action Executor #core", function() {
             });
 
             it("failed action still effective", function() {
-                utils.notImplemented();
+                
+                let existsFiles = [
+                    "removed",
+                    "folder/removed",
+                    "untouched",
+                    "folder/untouched"
+                ];
+
+                let action = new actionTypes.RemoveFileAction(
+                    ["removed", "folder/removed", "notExists"]
+                );
+
+                return initializeFolder(existsFiles, utils.PLAYGROUND_PATH)
+                .then(() => {
+                    return action.executeBy(actionExecutor)
+                    .should.eventually.be.rejected;
+                })
+                .then(() => {
+                    return Promise.all([
+                        fs.access(path.join(utils.PLAYGROUND_PATH, "removed"))
+                        .should.eventually.be.rejected,
+                        fs.access(path.join(utils.PLAYGROUND_PATH, "folder/removed"))
+                        .should.eventually.be.rejected,
+                        fs.access(path.join(utils.PLAYGROUND_PATH, "untouched"))
+                        .should.eventually.be.fulfilled,
+                        fs.access(path.join(utils.PLAYGROUND_PATH, "folder/untouched"))
+                        .should.eventually.be.fulfilled
+                    ]);
+                });
             })
         })
     });
