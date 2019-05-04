@@ -319,7 +319,26 @@ describe("Action Executor #core", function() {
         describe("Remove File", function() {
 
             it("remove single", function() {
-                utils.notImplemented();
+                
+                let files = [
+                    "removed",
+                    "untouched"
+                ];
+
+                let action = new actionTypes.RemoveFileAction(["removed"]);
+
+                return initializeFolder(files, utils.PLAYGROUND_PATH)
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return Promise.all([
+                        fs.exists(path.join(utils.PLAYGROUND_PATH, "removed"))
+                        .should.eventually.be.false,
+                        fs.exists(path.join(utils.PLAYGROUND_PATH, "untouched"))
+                        .should.eventually.be.true
+                    ]);
+                });
             });
 
             it("remove multiple", function() {
