@@ -59,7 +59,14 @@ describe("VCS Compare #core", function() {
         return executions;
     }
 
-    const executeStage = function(contents, stageMap, actionExecutor) {
+    const executeStage = function(stageName, stageMap, actionExecutor) {
+
+        if (!(stageName in stageMap)) {
+            return Promise.reject(new Error(`Cannot find find stageName ${stageName}`));
+        }
+
+        let contents = stageMap[stageName];
+
         let executions = Promise.resolve();
         executions = tryApplyReplay(executions, contents, stageMap, actionExecutor);
         executions = executions.then(() => executeContents(contents, actionExecutor));
@@ -151,10 +158,8 @@ describe("VCS Compare #core", function() {
         describe("Equal", function() {
 
             const testForReferencename = (referenceName) => {
-                if (!(referenceName in stageMap)) {
-                    throw new Error(`Cannot find find referenceName ${referenceName}`);
-                }
-                return executeStage(stageMap[referenceName], stageMap, actionExecutor)
+
+                return executeStage(referenceName, stageMap, actionExecutor)
                 .then(() => {
                     return vcsManager.equivalent(referenceName);
                 })
@@ -243,10 +248,27 @@ describe("VCS Compare #core", function() {
     
         describe("Different", function() {
     
-            let repo;
+            describe("Dirty Combination", function() {
+                let names = [ 
+                    "clean", 
+                    "dirtyAdd", "dirtyRemove", "dirtyModify", "dirtyMixed",
+                    "dirtyAddStage", "dirtyRemoveStage", "dirtyModifyStage", "dirtyMixedStage"
+                ];
 
-            beforeEach("Initialize repo", function() {
-                repo = simpleGit(checkedRepoPath);
+                for (let i = 0; i < names.length; i++) {
+                    for (let j = 0; j < names.length; j++) {
+                        if (i !== j) {
+                            it(`Template ${names[i]} against ${names[j]}`, function() {
+                                let referenceName = names[i];
+                                return executeStage(names[j], stageMap, actionExecutor)
+                                .then(() => {
+                                    return vcsManager.equivalent(referenceName)
+                                })
+                                .should.eventually.equal(false, `expect reference ${names[i]} to differ from monitored path ${names[j]}`);
+                            })
+                        }
+                    }
+                }
             })
 
             it("differ working tree", function() {
