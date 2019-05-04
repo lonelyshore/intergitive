@@ -342,7 +342,32 @@ describe("Action Executor #core", function() {
             });
 
             it("remove multiple", function() {
-                utils.notImplemented();
+                
+                let files = [
+                    "removed",
+                    "folder/removed",
+                    "untouched",
+                    "folder/untouched",
+                ];
+
+                let action = new actionTypes.RemoveFileAction(["removed", "folder/removed"]);
+
+                return initializeFolder(files, utils.PLAYGROUND_PATH)
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return Promise.all([
+                        fs.exists(path.join(utils.PLAYGROUND_PATH, "removed"))
+                        .should.eventually.equal(false, "<removed> still exists"),
+                        fs.exists(path.join(utils.PLAYGROUND_PATH, "folder/removed"))
+                        .should.eventually.equal(false, "<folderremoved> still exists"),
+                        fs.exists(path.join(utils.PLAYGROUND_PATH, "untouched"))
+                        .should.eventually.equal(true, "<untouched> got removed"),
+                        fs.exists(path.join(utils.PLAYGROUND_PATH, "folder/untouched"))
+                        .should.eventually.equal(true, "<folder/untouched> got removed"),
+                    ])
+                })
             });
 
             it("any target not exist should fail", function() {
