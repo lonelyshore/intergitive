@@ -8,8 +8,9 @@ actions:
         - repo/folder/some_new
   - name: dirtyRemove
     contents:
-    - !removeeFile
-      - repo/folder/first_file
+    - !removeFile
+      targetPaths:
+        - repo/folder/first_file
   - name: dirtyModify
     contents:
     - !writeFile
