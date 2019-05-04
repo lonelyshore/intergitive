@@ -78,10 +78,16 @@ describe("VCS Compare #core", function() {
         const referenceArchivePath = path.join(archivePath, "compare-vcs-local-ref.zip");
         const checkedArchivePath = path.join(archivePath, "compare-vcs.zip");
 
-        
+        let repo;
         let vcsManager;
         let stageMap = {};
         let actionExecutor;
+
+        let resetCheckRepo = function() {
+            return fs.emptyDir(checkedRepoPath)
+            .then(() => zip.extractArchiveTo(checkedArchivePath, workingPath))
+            .then(() => repo = simpleGit(checkedRepoPath));
+        }
 
         before(function() {
 
@@ -139,8 +145,7 @@ describe("VCS Compare #core", function() {
         });
 
         beforeEach("Reset Checked Repository", function() {
-            return fs.emptyDir(checkedRepoPath)
-            .then(() => zip.extractArchiveTo(checkedArchivePath, workingPath));
+            return resetCheckRepo()
         });
 
         describe("Equal", function() {
@@ -150,7 +155,7 @@ describe("VCS Compare #core", function() {
                 .then(() => {
                     return vcsManager.equivalent(referenceName);
                 })
-                .should.eventually.equal(true);
+                .should.eventually.equal(true, `${referenceName} is not equal`);
             }
 
             it("clean stage and working directory", function() {
@@ -158,15 +163,37 @@ describe("VCS Compare #core", function() {
                 return vcsManager.equivalent(referenceName)
                 .should.eventually.equal(true);
             });
-    
-            it("dirty stage", function() {
-                const referenceName = "dirtyStage";
-                return testForReferencename(referenceName);
+
+            it("dirty working directory", function() {
+                return testForReferencename("dirtyAdd")
+                .then(() => {
+                    return fs.remove(path.join(checkedRepoPath, "folder", "some_new"));
+                })
+                .then(() => testForReferencename("dirtyRemove"))
+                .then(() => {
+                    return repo.checkout(["-f"]);
+                })
+                .then(() => testForReferencename("dirtyModify"))
+                .then(() => {
+                    return repo.checkout(["-f"]);
+                })
+                .then(() => testForReferencename("dirtyMixed"));
             });
     
-            it("dirty working directory", function() {
-                const referenceName = "dirty";
-                return testForReferencename(referenceName);
+            it("dirty stage", function() {
+                return testForReferencename("dirtyAddStage")
+                .then(() => {
+                    return repo.checkout(["-f"]);
+                })
+                .then(() => testForReferencename("dirtyRemoveStage"))
+                .then(() => {
+                    return repo.checkout(["-f"]);
+                })
+                .then(() => testForReferencename("dirtyModifyStage"))
+                .then(() => {
+                    return repo.checkout(["-f"]);
+                })
+                .then(() => testForReferencename("dirtyMixedStage"));
             });
     
             it("merged", function() {
