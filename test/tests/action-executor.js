@@ -371,8 +371,26 @@ describe("Action Executor #core", function() {
             });
 
             it("any target not exist should fail", function() {
-                utils.notImplemented();
+                
+                let existsFiles = [
+                    "removed",
+                    "untouched"
+                ];
+
+                let action = new actionTypes.RemoveFileAction(
+                    ["removed", "notExists"]
+                );
+
+                return initializeFolder(existsFiles, utils.PLAYGROUND_PATH)
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .should.eventually.be.rejected;
             });
+
+            it("failed action still effective", function() {
+                utils.notImplemented();
+            })
         })
     });
 
