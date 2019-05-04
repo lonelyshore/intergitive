@@ -43,7 +43,47 @@ describe("Action Executor #core", function() {
     })
 
     describe("File Operations", function() {
-            
+
+        /**
+         * 
+         * @param {string} str
+         * @returns {string} 
+         */
+        const reverseString = function(str) {
+            return str.split("").reverse().join("");
+        }
+
+        const initializeFolder = function(fileSubPaths, baseFolderPath) {
+
+            let operations = fileSubPaths.map(fileSubPath => {
+
+                let filePath = path.join(baseFolderPath, fileSubPath);
+
+                let parsed = path.parse(filePath);
+
+                return fs.ensureDir(parsed.dir)
+                .then(() => { 
+                    return fs.exists(filePath);
+                })
+                .then(exists => {
+                    let next = Promise.resolve();
+                    if (exists) {
+                        next = next.then(() => {
+                            return fs.remove(filePath);
+                        });
+                    }
+                    
+                    next = next.then(() => {
+                        return fs.writeFile(filePath, reverseString(parsed.name));
+                    });
+
+                    return next;
+                });
+            });
+
+            return Promise.all(operations);
+        };
+
         beforeEach("Initialize Playground", function() {
             return fs.emptyDir(utils.PLAYGROUND_PATH);
         });
@@ -53,46 +93,6 @@ describe("Action Executor #core", function() {
         });
 
         describe("Write File", function() {
-
-            /**
-             * 
-             * @param {string} str
-             * @returns {string} 
-             */
-            const reverseString = function(str) {
-                return str.split("").reverse().join("");
-            }
-
-            const initializeFolder = function(fileSubPaths, baseFolderPath) {
-
-                let operations = fileSubPaths.map(fileSubPath => {
-
-                    let filePath = path.join(baseFolderPath, fileSubPath);
-
-                    let parsed = path.parse(filePath);
-
-                    return fs.ensureDir(parsed.dir)
-                    .then(() => { 
-                        return fs.exists(filePath);
-                    })
-                    .then(exists => {
-                        let next = Promise.resolve();
-                        if (exists) {
-                            next = next.then(() => {
-                                return fs.remove(filePath);
-                            });
-                        }
-                        
-                        next = next.then(() => {
-                            return fs.writeFile(filePath, reverseString(parsed.name));
-                        });
-
-                        return next;
-                    });
-                });
-
-                return Promise.all(operations);
-            };
 
             const appendFolderName = function(fileSubPaths, folderName) {
                 let ret = [];
@@ -315,6 +315,21 @@ describe("Action Executor #core", function() {
                 
             });
         });
+
+        describe("Remove File", function() {
+
+            it("remove single", function() {
+                utils.notImplemented();
+            });
+
+            it("remove multiple", function() {
+                utils.notImplemented();
+            });
+
+            it("any target not exist should fail", function() {
+                utils.notImplemented();
+            });
+        })
     });
 
     describe("Git Operations", function() {
