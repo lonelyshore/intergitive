@@ -273,7 +273,7 @@ describe("VCS Compare #core", function() {
 
             it("differ working tree", function() {
 
-                return vcsManager.equivalent("dirty")
+                return vcsManager.equivalent("dirtyAdd")
                 .should.eventually.equal(false, "clean should differ from dirty tree")
                 .then(() => {
                     return fs.writeFile(
@@ -289,7 +289,7 @@ describe("VCS Compare #core", function() {
 
             it("differ index", function() {
 
-                return vcsManager.equivalent("dirtyStage")
+                return vcsManager.equivalent("dirtyAddStage")
                 .should.eventually.equal(false, "clean should differ from dirty stage")
                 .then(() => {
                     return fs.writeFile(
@@ -304,7 +304,7 @@ describe("VCS Compare #core", function() {
                     })
                     .should.eventually.equal(false, "staged a new file should differ from clean")
                     .then(() => {
-                        return vcsManager.equivalent("dirtyStage")
+                        return vcsManager.equivalent("dirtyAddStage")
                     })
                     .should.eventually.equal(false, "staging different file should result inequivalence");
                 })
@@ -332,7 +332,7 @@ describe("VCS Compare #core", function() {
                         .should.eventually.equal(false, "staging removed file should differ from clean");
                     })
                     .then(() => {
-                        return vcsManager.equivalent("dirtyStage")
+                        return vcsManager.equivalent("dirtyAddStage")
                         .should.eventually.equal(false, "different stage results in inequivalence");
                     });
                 })
