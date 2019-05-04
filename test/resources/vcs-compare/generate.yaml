@@ -10,7 +10,7 @@ actions:
     contents:
     - !removeFile
       targetPaths:
-        - repo/folder/first_file
+        - repo/first_file
   - name: dirtyModify
     contents:
     - !writeFile
@@ -18,6 +18,12 @@ actions:
         - file/dirtyModify
       destinationPaths:
         - repo/folder/forth
+  - name: dirtyMixed
+    contents:
+    - replay:
+      - dirtyAdd
+      - dirtyRemove
+      - dirtyModify
   - name: dirtyAddStage
     contents:
     - replay:
@@ -36,7 +42,7 @@ actions:
       - dirtyModify
     - !stageAll
       repoSetupName: compare
-  - name: dirtyMixStage
+  - name: dirtyMixedStage
     contents:
     - replay:
       - dirtyAdd
