@@ -245,6 +245,14 @@ describe("VCS Compare #core", function() {
                 const referenceName = "detached";
                 return testForReferencename(referenceName);
             });
+
+            it.only("New Commit", function() {
+                return repo.reset(["--hard", "HEAD^"])
+                .then(() => repo.add(["-A"]))
+                .then(() => repo.commit(["Add fifth"]))
+                .then(() => vcsManager.equivalent("clean"))
+                .should.eventually.equal(true, "Creating a commit with same files and message should be equivalent")
+            })
         });
     
         describe("Different", function() {
