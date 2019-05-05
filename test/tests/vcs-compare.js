@@ -259,7 +259,8 @@ describe("VCS Compare #core", function() {
                 for (let i = 0; i < names.length; i++) {
                     for (let j = 0; j < names.length; j++) {
                         if (i !== j) {
-                            it(`Template ${names[i]} against ${names[j]}`, function() {
+                            let additionalTag = i !== 0 && j !== 0 ? " #extensive" : "";
+                            it(`template ${names[i]} against ${names[j]}${additionalTag}`, function() {
                                 let referenceName = names[i];
                                 return executeStage(names[j], stageMap, actionExecutor)
                                 .then(() => {
@@ -340,7 +341,12 @@ describe("VCS Compare #core", function() {
             });
 
             it("differ branch", function() {
-
+                return repo.checkout(["-f", "master~0"])
+                .then(() => vcsManager.equivalent("clean"))
+                .should.eventually.equal(false, "expect different after being detached")
+                .then(() => repo.checkout(["-f", "second_branch"]))
+                .then(() => vcsManager.equivalent("clean"))
+                .should.eventually.equal(false, "expect different after checking out another branch");
             });
 
             it("different branch list", function() {
