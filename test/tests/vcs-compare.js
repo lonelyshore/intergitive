@@ -350,7 +350,15 @@ describe("VCS Compare #core", function() {
             });
 
             it("different branch list", function() {
-
+                return repo.branch(["new_branch"])
+                .then(() => vcsManager.equivalent("clean"))
+                .should.eventually.equal(false, "expect different after create a new branch")
+                .then(() => repo.branch(["-D", "new_branch"]))
+                .then(() => vcsManager.equivalent("clean"))
+                .should.eventually.equal(true, "expect to be equivalent to clean after delete the branch just created")
+                .then(() => repo.branch(["-D", "second_branch"]))
+                .then(() => vcsManager.equivalent("clean"))
+                .should.eventually.equal(false, "expect to differ from clean after remove a branch");
             });
 
             it("differ HEAD", function() {
