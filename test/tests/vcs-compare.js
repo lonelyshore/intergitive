@@ -361,7 +361,7 @@ describe("VCS Compare #core", function() {
                 .should.eventually.equal(false, "expect to differ from clean after remove a branch");
             });
 
-            it.only("differ HEAD", function() {
+            it("differ HEAD", function() {
                 let currentSha;
                 return repo.revparse(["HEAD"])
                 .then(result => currentSha = result.trim())
