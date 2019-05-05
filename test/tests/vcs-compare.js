@@ -361,8 +361,18 @@ describe("VCS Compare #core", function() {
                 .should.eventually.equal(false, "expect to differ from clean after remove a branch");
             });
 
-            it("differ HEAD", function() {
-
+            it.only("differ HEAD", function() {
+                let currentSha;
+                return repo.revparse(["HEAD"])
+                .then(result => currentSha = result.trim())
+                .then(() => repo.reset(["--soft", "HEAD^"]))
+                .then(() => vcsManager.equivalent("clean"))
+                .should.eventually.equal(false, "expect to differ from clean after reset HEAD")
+                .then(() => {
+                    return repo.reset(["--soft", currentSha]);
+                })
+                .then(() => vcsManager.equivalent("clean"))
+                .should.eventually.equal(true, "expect to be equivalent to clean after reset back");
             });
         });
     });
