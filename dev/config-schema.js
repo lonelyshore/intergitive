@@ -114,12 +114,35 @@ let cleanCheckoutActionType = new yaml.Type("!cleanCheckout", {
     instanceOf: actionConfig.CleanCheckoutAction
 });
 
+let gitCommandActionType = new yaml.Type("!git", {
+    kind: "mapping",
+
+    resolve: function(data) {
+        return data !== null
+            && "repoSetupName" in data
+            && isString(data.repoSetupName)
+            && "command" in data
+            && isString(data.command);
+    },
+
+    construct: function(data) {
+        return new actionConfig.GitCommandAction(
+            data.repoSetupName,
+            data.command,
+            data.arguments || []
+        );
+    },
+
+    instanceOf: actionConfig.GitCommandAction,
+});
+
 let schema = yaml.Schema.create(upstream.LEVEL_CONFIG_SCHEMA, [
     unstageActionType,
     unstageAllActionType,
     mergeActionType,
     continueMergeActionType,
-    cleanCheckoutActionType
+    cleanCheckoutActionType,
+    gitCommandActionType
 ]);
 
 module.exports.LEVEL_CONFIG_SCHEMA = schema;

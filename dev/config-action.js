@@ -90,3 +90,4 @@ module.exports.UnstageAllAction = UnstageAllAction;
 module.exports.MergeAction = MergeAction;
 module.exports.ContinueMergeAction = ContinueMergeAction;
 module.exports.CleanCheckoutAction = CleanCheckoutAction;
+module.exports.GitCommandAction = GitCommandAction;
