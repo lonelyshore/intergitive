@@ -4,8 +4,8 @@ const fs = require("fs-extra");
 const path = require("path");
 const yaml = require("js-yaml");
 
-const ACTION_SCHEMAS = require("./dev/config-schema").LEVEL_CONFIG_SCHEMA;
-const ActionExecutor = require("./dev/action-executor").DevActionExecutor;
+const ACTION_SCHEMAS = require("./config-schema").LEVEL_CONFIG_SCHEMA;
+const ActionExecutor = require("./action-executor").DevActionExecutor;
 const Action = require("../lib/config-action").Action;
 const AssetLoader = require("../lib/asset-loader").AssetLoader;
 const RepoSetup = require("../lib/config-level").RepoVcsSetup;

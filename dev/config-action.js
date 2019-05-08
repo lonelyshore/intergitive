@@ -70,7 +70,7 @@ class CleanCheckoutAction extends upstream.Action {
 /**
  * @inheritdoc
  */
-class GitCommandAction extends upstream.Actiont {
+class GitCommandAction extends upstream.Action {
     constructor(repoSetupName, command, commandArguments) {
         super();
         this.klass = "GitCommandAction";
