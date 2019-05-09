@@ -33,7 +33,7 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
     assetLoader.setBundlePath();
     
     const repoSetups = {
-        compare: new RepoSetup(
+        repo: new RepoSetup(
             sourceRepoPath,
             undefined,
             undefined
@@ -60,9 +60,6 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
         return RefMaker.create(sourceRepoPath, refStorePath, refName)
         .then(result => {
             refMaker = result;
-        })
-        .then(() => {
-            return refMaker.save("clean");
         });
     })
     .then(() => {
