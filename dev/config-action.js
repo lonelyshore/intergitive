@@ -80,7 +80,7 @@ class GitCommandAction extends upstream.Action {
     }
 
     executeBy(actionExecutor) {
-        return actionExecutor.executeGitCommand(this.repoSetupName, this.command, this.commandArguments);
+        return actionExecutor.executeGitCommand(this.repoSetupName, this.command, this.arguments);
     }
 }
 
