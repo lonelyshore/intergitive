@@ -1,0 +1,36 @@
+actions:
+  - name: base
+    contents:
+    - !git
+      repoSetupName: repo
+      command: init
+    - !git
+      repoSetupName: repo
+      command: addConfig
+      arguments:
+        - user.name
+        - test-repo
+    - !git
+      repoSetupName: repo
+      command: addConfig
+      arguments:
+        - user.email
+        - test-repo@some.mail.server
+    - !writeFile
+      sourceAssetIds:
+        - file/base/first_file/v1
+      destinationPaths:
+        - repo/first_file
+    - !stageAll
+      repoSetupName: repo
+    - !git
+      repoSetupName: repo
+      command: commit
+      arguments:
+        - commit
+    - !git
+      repoSetupName: repo
+      command: branch
+      arguments:
+        - "second_branch"
+

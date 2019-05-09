@@ -1,0 +1,4 @@
+asset_index:
+  mode: "ondisk"
+  assets:
+    v1: "v1.txt"
