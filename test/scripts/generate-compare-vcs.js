@@ -8,7 +8,7 @@ const zip = require("../../lib/simple-archive");
 
 const resoruceBasePath = path.resolve(__dirname, "../resources");
 const assetStorePath = path.join(resoruceBasePath, "vcs-compare", "assets");
-const yamlSubPath = path.join("vcs-compare", "generate.yaml");
+const yamlSubPath = path.join("vcs-compare", "generate-testing-ref-repo.yaml");
 
 const workingPath = path.resolve(__dirname, "../playground/generate-vcs-repo");
 

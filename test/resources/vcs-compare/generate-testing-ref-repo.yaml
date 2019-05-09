@@ -29,19 +29,19 @@ actions:
     - replay:
       - dirtyAdd
     - !stageAll
-      repoSetupName: compare
+      repoSetupName: repo
   - name: dirtyRemoveStage
     contents:
     - replay:
       - dirtyRemove
     - !stageAll
-      repoSetupName: compare      
+      repoSetupName: repo      
   - name: dirtyModifyStage
     contents:
     - replay:
       - dirtyModify
     - !stageAll
-      repoSetupName: compare
+      repoSetupName: repo
   - name: dirtyMixedStage
     contents:
     - replay:
@@ -49,31 +49,31 @@ actions:
       - dirtyRemove
       - dirtyModify
     - !stageAll
-      repoSetupName: compare      
+      repoSetupName: repo      
   - name: merge
     contents:
     - !merge
-      repoSetupName: compare
+      repoSetupName: repo
       withBranch: second_branch
   - name: conflictAA
     contents:
     - !merge
-      repoSetupName: compare
+      repoSetupName: repo
       withBranch: "conflict-AA"
   - name: conflictMM
     contents:
     - !merge
-      repoSetupName: compare
+      repoSetupName: repo
       withBranch: "conflict-MM"
   - name: conflictMR
     contents:
     - !merge
-      repoSetupName: compare
+      repoSetupName: repo
       withBranch: "conflict-MR"
   - name: conflictMixed
     contents:
     - !merge
-      repoSetupName: compare
+      repoSetupName: repo
       withBranch: "conflict-mixed"
   - name: conclictEdit
     contents:
@@ -94,7 +94,7 @@ actions:
       - conflictMixed
       - conflictEdit
     - !stageAll
-      repoSetupName: compare
+      repoSetupName: repo
   - name: conflictResolve
     contents:
     - replay:
@@ -102,11 +102,11 @@ actions:
       - conflictEdit
       - conflictResolveStage
     - !continueMerge
-      repoSetupName: compare
+      repoSetupName: repo
   - name: detached
     contents:
     - !cleanCheckout
-      repoSetupName: compare
+      repoSetupName: repo
       commitish: "ea38d"
       
 
