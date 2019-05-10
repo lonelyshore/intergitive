@@ -18,7 +18,7 @@ actions:
         - test-repo@some.mail.server
     - !writeFile
       sourceAssetIds:
-        - file/base/first_file/v1
+        - file/base/first_file:v1
       destinationPaths:
         - repo/first_file
     - !stageAll
@@ -32,5 +32,5 @@ actions:
       repoSetupName: repo
       command: branch
       arguments:
-        - "second_branch"
+        - second_branch: null
 
