@@ -105,7 +105,7 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
             executions = executions.then(() => {
                 return refMaker.save(stage.name)
                 .catch(err => {
-                    console.error(`[save${stage.name}] ${err.message}`);
+                    console.error(`[save ${stage.name}] ${err.message}`);
                     throw err;
                 });
             });
