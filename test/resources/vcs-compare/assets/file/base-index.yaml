@@ -2,3 +2,13 @@ asset_index:
   mode: "ondisk"
   assets:
     first_file:v1: "first_v1.txt"
+    first_file:v2: "first_v2.txt"
+    first_file:v3: "first_v3.txt"
+    second_file:v1: "second_v1.txt"
+    second_file:v2: "second_v2.txt"
+    third_file:v1: "third_v1.txt"
+    forth_file:v1: "forth_v1.txt"
+    fifth_file:v1: "fifth_v1.txt"
+    fifth_file:v2: "fifth_v2.txt"
+    sixth_file:v1: "sixth_v1.txt"
+    seventh_file:v1: "seventh_v1.txt"
