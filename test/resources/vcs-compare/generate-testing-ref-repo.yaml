@@ -1,4 +1,5 @@
-actions:
+perStageReset: true
+stages:
   - name: dirtyAdd
     contents:
     - !writeFile

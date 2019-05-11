@@ -69,22 +69,24 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
         });
     })
     .then(config => {
-        let actionMap = {};
-        config.actions.forEach(action => {
-            actionMap[action.name] = action.contents;
+        let stageMap = {};
+        config.stages.forEach(stage => {
+            stageMap[stage.name] = stage.contents;
         });
     
         let executions = Promise.resolve();
     
-        config.actions.forEach(action => {
+        config.stages.forEach(stage => {
     
-            executions = executions.then(() => initializeRepo(sourceRepoPath));
+            if (config.perStageReset) {
+                executions = executions.then(() => initializeRepo(sourceRepoPath));
+            }
     
-            let contents = action.contents;
+            let contents = stage.contents;
             if (contents.length !== 0 && ("replay" in contents[0])) {
                 let replayContents = [];
                 contents[0]["replay"].forEach(replayName => {
-                    replayContents = replayContents.concat(actionMap[replayName]);
+                    replayContents = replayContents.concat(stageMap[replayName]);
                 });
     
                 executions = executions.then(() => executeContents(replayContents, actionExecutor));
@@ -93,9 +95,9 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
             executions = executions.then(() => executeContents(contents, actionExecutor));
     
             executions = executions.then(() => {
-                return refMaker.save(action.name)
+                return refMaker.save(stage.name)
                 .catch(err => {
-                    console.error(`[save${action.name}] ${err.message}`);
+                    console.error(`[save${stage.name}] ${err.message}`);
                     throw err;
                 });
             });
