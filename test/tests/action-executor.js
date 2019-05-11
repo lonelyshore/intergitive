@@ -419,6 +419,34 @@ describe("Action Executor #core", function() {
                     ]);
                 });
             })
+        });
+
+        describe.only("Move File", function() {
+
+            it("move a file", function() {
+
+                let sourceName = "source";
+                let targetName = "target";
+                let sourcePath = path.join(utils.PLAYGROUND_PATH, sourceName);
+                let targetPath = path.join(utils.PLAYGROUND_PATH, targetName);
+                let content = "some contents";
+
+                let action = new actionTypes.MoveFileAction(
+                    sourceName,
+                    targetName
+                );
+
+                return fs.writeFile(sourcePath, content)
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return Promise.all([
+                        fs.exists(sourcePath).should.eventually.equal(false, `${sourcePath} should not exist`),
+                        fs.exists(targetPath).should.eventually.equal(true, `${targetPath} should exists`)
+                    ]);
+                });
+            });
         })
     });
 
