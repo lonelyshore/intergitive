@@ -1,5 +1,6 @@
-actions:
-  - name: base
+perStageReset: false
+stages:
+  - name: init
     contents:
     - !git
       repoSetupName: repo
@@ -16,6 +17,8 @@ actions:
       arguments:
         - user.email
         - test-repo@some.mail.server
+  - name: base1
+    contents:
     - !writeFile
       sourceAssetIds:
         - file/base/first_file:v1
@@ -28,9 +31,237 @@ actions:
       command: commit
       arguments:
         - commit
+    - !writeFile
+      sourceAssetIds:
+        - file/base/second_file:v1
+      destinationPaths:
+        - repo/second_file
+    - !stageAll
+      repoSetupName: repo
+    - !git
+      repoSetupName: repo
+      command: commit
+      arguments:
+        - commit
     - !git
       repoSetupName: repo
       command: branch
       arguments:
-        - second_branch: null
+        - "second-branch": null
+  - name: base2
+    contents:
+      - !writeFile
+        sourceAssetIds:
+          - file/base/third_file:v1
+        destinationPaths:
+          - repo/folder/third
+      - !stageAll
+        repoSetupName: repo
+      - !git
+        repoSetupName: repo
+        command: commit
+        arguments:
+          - commit
+      - !writeFile
+        sourceAssetIds:
+          - file/base/forth_file:v1
+        destinationPaths:
+          - repo/folder/forth
+      - !stageAll
+        repoSetupName: repo
+      - !git
+        repoSetupName: repo
+        command: commit
+        arguments:
+          - commit
+  - name: base3
+    contents:
+      - !git
+        repoSetupName: repo
+        command: branch
+        arguments:
+          - conflict-AA
+      - !git
+        repoSetupName: repo
+        command: branch
+        arguments:
+          - conflict-MR
+      - !git
+        repoSetupName: repo
+        command: branch
+        arguments:
+          - conflict-MM      
+      - !git
+        repoSetupName: repo
+        command: branch
+        arguments:
+          - conflict-mixed
+  - name: base4
+    contents:
+      - !writeFile
+        sourceAssetIds:
+          - file/base/first_file:v2
+        destinationPaths:
+          - repo/first_file
+      - !stageAll
+        repoSetupName: repo
+      - !git
+        repoSetupName: repo
+        command: commit
+        arguments:
+          - commit
+      - !removeFile
+        targetPaths:
+          - repo/second_file
+      - !stageAll
+        repoSetupName: repo
+      - !git
+        repoSetupName: repo
+        command: commit
+        arguments:
+          - "remove second file"
+      - !writeFile
+        sourceAssetIds:
+          - file/base/fifth_file:v1
+        destinationPaths:
+          - repo/folder/fifth
+      - !stageAll
+        repoSetupName: repo
+      - !git
+        repoSetupName: repo
+        command: commit
+        arguments:
+          - "add fifth"
+  - name: growSecond
+    contents:
+      - !cleanCheckout
+        repoSetupName: repo
+        commitish: "second-branch"
+      - !writeFile
+        sourceAssetIds:
+          - file/base/sixth_file:v1
+        destinationPaths:
+          - repo/second_folder/sixth_file
+      - !stageAll
+        repoSetupName: repo
+      - !git
+        repoSetupName: repo
+        command: commit
+        arguments:
+          - "add sixth"
+      - !writeFile
+        sourceAssetIds:
+          - file/base/seventh_file:v1
+        destinationPaths:
+          - repo/second_folder/seventh_file
+      - !stageAll
+        repoSetupName: repo
+      - !git
+        repoSetupName: repo
+        command: commit
+        arguments:
+          - "add seventh"          
+  - name: growSecond2
+    contents:
+      - !removeFile
+        targetPaths:
+          - repo/second_folder/sixth_file
+      - !stageAll
+        repoSetupName: repo
+      - !git
+        repoSetupName: repo
+        command: commit
+        arguments:
+          - "remove sixth"
+  - name: growSecond3
+    contents:
+      - !removeFile
+        targetPaths:
+          - repo/second_folder/sixth_file
+      - !stageAll
+        repoSetupName: repo
+      - !git
+        repoSetupName: repo
+        command: commit
+        arguments:
+          - "remove sixth"
+  - name: growSecond4
+    contents:
+      - !moveFile
+        sourcePath: repo/second_folder/sixth_file
+        targetPath: repo/second_folder/periodic_table
+      - !stageAll
+        repoSetupName: repo
+      - !git
+        repoSetupName: repo
+        command: commit
+        arguments:
+          - "rename"
+  - name: conflict-AA
+    contents:
+      - !cleanCheckout
+        repoSetupName: repo
+        commitish: "conflict-AA"
+      - !writeFile
+        sourceAssetIds:
+          - file/base/fifth_file:v2
+        targetPaths:
+          - repo/folder/fifth
+      - !stageAll
+        repoSetupName: repo
+      - !git
+        repoSetupName: repo
+        command: commit
+        arguments:
+          - "add fifth"
+  - name: conflict-MM
+    contents:
+      - !cleanCheckout
+        repoSetupName: repo
+        commitish: "conflict-MM"
+      - !writeFile
+        sourceAssetIds:
+          - file/base/first_file:v3
+        targetPaths:
+          - repo/first_file
+      - !stageAll
+        repoSetupName: repo
+      - !git
+        repoSetupName: repo
+        command: commit
+        arguments:
+          - "modify first"
+  - name: conflict-MR
+    contents:
+      - !cleanCheckout
+        repoSetupName: repo
+        commitish: "conflict-MR"
+      - !removeFile
+        targetPaths:
+          - repo/second_file
+      - !stageAll
+        repoSetupName: repo
+      - !git
+        repoSetupName: repo
+        command: commit
+        arguments:
+          - "remove second"
+  - name: conflict-mixed
+      - !cleanCheckout
+        repoSetupName: repo
+        commitish: "conflict-mixed"  
+      - !merge
+        repoSetupName: repo
+        withBranch: "conflict-AA"
+      - !merge
+        repoSetupName: repo
+        withBranch: "conflict-MM"
+      - !merge
+        repoSetupName: repo
+        withBranch: "conflict-MR"
+  - name: reset
+    contents:
+      - !cleanCheckout
+        repoSetupName: repo
+        commitish: master
 
