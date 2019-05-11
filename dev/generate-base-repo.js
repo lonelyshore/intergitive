@@ -89,10 +89,18 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
                     replayContents = replayContents.concat(stageMap[replayName]);
                 });
     
-                executions = executions.then(() => executeContents(replayContents, actionExecutor));
+                executions = executions.then(() => executeContents(replayContents, actionExecutor))
+                .catch(err => {
+                    console.error(`error when replaying ${stage.name}`);
+                    throw err;
+                });
             }
     
-            executions = executions.then(() => executeContents(contents, actionExecutor));
+            executions = executions.then(() => executeContents(contents, actionExecutor))
+            .catch(err => {
+                console.error(`error when executing contents of ${stage.name}`)
+                throw err;
+            });;
     
             executions = executions.then(() => {
                 return refMaker.save(stage.name)
