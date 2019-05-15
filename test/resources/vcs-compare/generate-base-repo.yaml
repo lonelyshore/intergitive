@@ -80,22 +80,22 @@ stages:
         repoSetupName: repo
         command: branch
         arguments:
-          - conflict-AA
+          - "conflict-AA": null
       - !git
         repoSetupName: repo
         command: branch
         arguments:
-          - conflict-MR
+          - "conflict-MR": null
       - !git
         repoSetupName: repo
         command: branch
         arguments:
-          - conflict-MM      
+          - "conflict-MM": null
       - !git
         repoSetupName: repo
         command: branch
         arguments:
-          - conflict-mixed
+          - "conflict-mixed": null
   - name: base4
     contents:
       - !writeFile
@@ -175,20 +175,8 @@ stages:
           - "remove sixth"
   - name: growSecond3
     contents:
-      - !removeFile
-        targetPaths:
-          - repo/second_folder/sixth_file
-      - !stageAll
-        repoSetupName: repo
-      - !git
-        repoSetupName: repo
-        command: commit
-        arguments:
-          - "remove sixth"
-  - name: growSecond4
-    contents:
       - !moveFile
-        sourcePath: repo/second_folder/sixth_file
+        sourcePath: repo/second_folder/seventh_file
         targetPath: repo/second_folder/periodic_table
       - !stageAll
         repoSetupName: repo
