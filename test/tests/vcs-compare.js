@@ -352,7 +352,7 @@ describe("VCS Compare #core", function() {
                 return repo.checkout(["-f", "master~0"])
                 .then(() => vcsManager.equivalent("clean"))
                 .should.eventually.equal(false, "expect different after being detached")
-                .then(() => repo.checkout(["-f", "second_branch"]))
+                .then(() => repo.checkout(["-f", "second-branch"]))
                 .then(() => vcsManager.equivalent("clean"))
                 .should.eventually.equal(false, "expect different after checking out another branch");
             });
@@ -364,7 +364,7 @@ describe("VCS Compare #core", function() {
                 .then(() => repo.branch(["-D", "new_branch"]))
                 .then(() => vcsManager.equivalent("clean"))
                 .should.eventually.equal(true, "expect to be equivalent to clean after delete the branch just created")
-                .then(() => repo.branch(["-D", "second_branch"]))
+                .then(() => repo.branch(["-D", "second-branch"]))
                 .then(() => vcsManager.equivalent("clean"))
                 .should.eventually.equal(false, "expect to differ from clean after remove a branch");
             });
