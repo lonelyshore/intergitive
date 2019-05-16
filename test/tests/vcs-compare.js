@@ -99,7 +99,7 @@ describe("VCS Compare #core", function() {
         before(function() {
 
             const assetStorePath = path.join(utils.RESOURCES_PATH, "vcs-compare", "assets");
-            const yamlPath = path.join(utils.RESOURCES_PATH, "vcs-compare", "generate.yaml");
+            const yamlPath = path.join(utils.RESOURCES_PATH, "vcs-compare", "generate-testing-ref-repo.yaml");
             
             return Promise.resolve()
             .then(() => {
@@ -120,8 +120,8 @@ describe("VCS Compare #core", function() {
                     return yaml.safeLoad(content, { schema: SCHEMA });
                 })
                 .then(config => {
-                    config.actions.forEach(action => {
-                        stageMap[action.name] = action.contents;
+                    config.stages.forEach(stage => {
+                        stageMap[stage.name] = stage.contents;
                     });
                     stageMap["clean"] = [];
                 })
@@ -131,7 +131,7 @@ describe("VCS Compare #core", function() {
                 assetLoader.setBundlePath();
 
                 const repoSetups = {
-                    compare: new RepoSetup(
+                    repo: new RepoSetup(
                         checkedRepoPath,
                         undefined,
                         undefined
@@ -246,7 +246,7 @@ describe("VCS Compare #core", function() {
                 return testForReferencename(referenceName);
             });
 
-            it.only("New Commit", function() {
+            it("New Commit", function() {
                 return repo.reset(["--hard", "HEAD^"])
                 .then(() => repo.add(["-A"]))
                 .then(() => repo.commit(["Add fifth"]))

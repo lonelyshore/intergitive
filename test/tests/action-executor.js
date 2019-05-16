@@ -421,7 +421,7 @@ describe("Action Executor #core", function() {
             })
         });
 
-        describe.only("Move File", function() {
+        describe("Move File", function() {
 
             it("move a file", function() {
 
