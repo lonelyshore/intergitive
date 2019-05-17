@@ -73,6 +73,92 @@ describe("VCS Compare #core", function() {
         return executions;
     }
 
+    describe.only("Build Tree Equal", function() {
+            
+        const workingPath = path.join(utils.PLAYGROUND_PATH, "compare-vcs");
+
+        const checkedRepoPath = path.join(workingPath, "repo");
+        const referenceStorePath = path.join(workingPath, "repo-store");
+        const referenceStoreName = "compare-vcs-grow-local-ref";
+
+        const archivePath = path.join(utils.RESOURCES_PATH, "repo-archive");
+        const referenceArchivePath = path.join(archivePath, "compare-vcs-grow-local-ref.zip");
+
+        let repo;
+        let vcsManager;
+        let actionExecutor;
+
+        let resetCheckRepo = function() {
+            return fs.emptyDir(checkedRepoPath)
+            .then(() => repo = simpleGit(checkedRepoPath));
+        }
+
+        before(function() {
+
+            const assetStorePath = path.join(utils.RESOURCES_PATH, "vcs-compare", "assets");
+            
+            
+            return Promise.resolve()
+            .then(() => {
+                return fs.emptyDir(workingPath)
+                .then(() => fs.emptyDir(checkedRepoPath))
+                .then(() => fs.emptyDir(referenceStorePath))
+                .then(() => zip.extractArchiveTo(referenceArchivePath, referenceStorePath))
+            })
+            .then(() => {
+                return vcs.RepoReferenceManager.create(checkedRepoPath, referenceStorePath, referenceStoreName)
+                .then((manager) => {
+                    vcsManager = manager;
+                });
+            })
+            .then(() => {
+                const assetLoader = new AssetLoader(assetStorePath);
+                assetLoader.setBundlePath();
+
+                const repoSetups = {
+                    repo: new RepoSetup(
+                        checkedRepoPath,
+                        undefined,
+                        undefined
+                    )
+                };
+
+                actionExecutor = new ActionExecutor(
+                    workingPath,
+                    assetLoader,
+                    repoSetups
+                );
+
+            });
+        });
+
+        after("Clean Up", function() {
+            return fs.remove(workingPath)
+        });
+
+        const yamlPath = path.join(utils.RESOURCES_PATH, "vcs-compare", "generate-base-repo.yaml");
+
+        let content = fs.readFileSync(yamlPath);
+        let config = yaml.safeLoad(content, { schema: SCHEMA });
+
+        let stageMap = {}
+        config.stages.forEach(stage => {
+
+            stageMap[stage.name] = stage.contents
+
+            it(`execute ${stage.name} should equal`, function() {
+
+                return executeStage(stage.name, stageMap, actionExecutor)
+                .then(() => {
+                    return vcsManager.equivalent(stage.name);
+                })
+                .should.eventually.equal(true, `${stage.name} is not equal`);
+            })
+        });
+
+
+    })
+
     describe("Local", function() {
 
         const workingPath = path.join(utils.PLAYGROUND_PATH, "compare-vcs");
@@ -247,7 +333,7 @@ describe("VCS Compare #core", function() {
             });
 
             it("New Commit", function() {
-                return repo.reset(["--hard", "HEAD^"])
+                return repo.reset(["--mixed", "HEAD^"])
                 .then(() => repo.add(["-A"]))
                 .then(() => repo.commit(["Add fifth"]))
                 .then(() => vcsManager.equivalent("clean"))
