@@ -88,15 +88,9 @@ describe("VCS Compare #core", function() {
         let vcsManager;
         let actionExecutor;
 
-        let resetCheckRepo = function() {
-            return fs.emptyDir(checkedRepoPath)
-            .then(() => repo = simpleGit(checkedRepoPath));
-        }
-
         before(function() {
 
             const assetStorePath = path.join(utils.RESOURCES_PATH, "vcs-compare", "assets");
-            
             
             return Promise.resolve()
             .then(() => {
@@ -104,6 +98,12 @@ describe("VCS Compare #core", function() {
                 .then(() => fs.emptyDir(checkedRepoPath))
                 .then(() => fs.emptyDir(referenceStorePath))
                 .then(() => zip.extractArchiveTo(referenceArchivePath, referenceStorePath))
+            })
+            .then(() => {
+                repo = simpleGit(checkedRepoPath);
+                return repo.init(false)
+                .then(() => repo.addConfig("user.name", "test"))
+                .then(() => repo.addConfig("user.email", "test@test.server"))
             })
             .then(() => {
                 return vcs.RepoReferenceManager.create(checkedRepoPath, referenceStorePath, referenceStoreName)
@@ -146,14 +146,17 @@ describe("VCS Compare #core", function() {
 
             stageMap[stage.name] = stage.contents
 
-            it(`execute ${stage.name} should equal`, function() {
+            if (stage.name !== "init") {
+                it(`execute ${stage.name} should equal`, function() {
 
-                return executeStage(stage.name, stageMap, actionExecutor)
-                .then(() => {
-                    return vcsManager.equivalent(stage.name);
+                    return executeStage(stage.name, stageMap, actionExecutor)
+                    .then(() => {
+                        return vcsManager.equivalent(stage.name);
+                    })
+                    .should.eventually.equal(true, `${stage.name} is not equal`);
                 })
-                .should.eventually.equal(true, `${stage.name} is not equal`);
-            })
+            }
+
         });
 
 
