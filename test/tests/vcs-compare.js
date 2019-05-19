@@ -73,7 +73,7 @@ describe("VCS Compare #core", function() {
         return executions;
     }
 
-    describe("Build Tree Equal", function() {
+    describe.only("Build Tree Equal", function() {
             
         const workingPath = path.join(utils.PLAYGROUND_PATH, "compare-vcs");
 
