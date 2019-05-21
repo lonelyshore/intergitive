@@ -110,7 +110,7 @@ stages:
     contents:
     - !cleanCheckout
       repoSetupName: repo
-      commitish: "fed7d7f"
+      commitish: "end-of-base"
       
 
         
