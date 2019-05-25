@@ -15,6 +15,8 @@ chai.should();
 describe("Worktree Diff #core", function() {
     describe("Text Diff", function() {
 
+        function eolNotConvert(text) { return text; }
+
         const multiLinesArr = [
             'first1\nsecond1\r\nthird1\n',
             'first_fjdifjeiojs2\r\nsecond_fjdkslfjkdslkl2\nthird_fjdklfjioejfkld2\r\n',
@@ -30,6 +32,7 @@ describe("Worktree Diff #core", function() {
             eol.toLf,
             eol.toCr,
             eol.toCrLf,
+            eolNotConvert,
             eol.toRandom
         ];
 
@@ -53,15 +56,15 @@ describe("Worktree Diff #core", function() {
 
         describe.only("Equal", function() {
             describe('Same Equals', function() {
-                eolFuncs.forEach(eolFunc => {
-                    for (let i = 0; i < multiLinesArr.length; i++) {
-                        let content = eolFunc(multiLinesArr[i]);
-                        let testCase = `multi-line ${i}`;
+                eolFuncs.forEach((eolFunc, eolIndex) => {
+                    multiLinesArr.forEach((multiLines, multiLinesIndex) => {
+                        let content = eolFunc(multiLines);
+                        let testCase = `multi-line ${multiLinesIndex}, eol ${eolIndex}`;
                         it(testCase, function() {
                             return initPath(content, content)
                             .then(() => assertEqual(testCase));
                         });
-                    }
+                    })
     
                     let emptyLinesConverted = eolFunc(emptyLines);
                     it('empty lines', function() {
@@ -79,7 +82,34 @@ describe("Worktree Diff #core", function() {
                     return initPath(singleLine, singleLine)
                     .then(() => assertEqual('single line'));
                 })
-            })
+            });
+
+            describe('EOL Insensitive', function() {
+                for (let sourceEolIndex = 0; sourceEolIndex < eolFuncs.length - 1; sourceEolIndex++) {
+                    for (let refEolIndex = 0; refEolIndex < eolFuncs.length - 1; refEolIndex++) {
+                        if (sourceEolIndex !== refEolIndex) {
+                            multiLinesArr.forEach((multiLines, multiLinesIndex) => {
+                                let sourceContent = eolFuncs[sourceEolIndex](multiLines);
+                                let refContent = eolFuncs[refEolIndex](multiLines);
+                                let testCase = `multi-line ${multiLinesIndex}, source eol: ${sourceEolIndex}, ref eol: ${refEolIndex}`;
+
+                                it(testCase, function() {
+                                    return initPath(sourceContent, refContent)
+                                    .then(() => assertEqual(testCase));
+                                })
+                            });
+
+                            let emptyLinesSource = eolFuncs[sourceEolIndex](emptyLines);
+                            let emptyLinesRef = eolFuncs[refEolIndex](emptyLines);
+                            let testCase = `empty lines, source eol: ${sourceEolIndex}, ref eol: ${refEolIndex}`;
+                            it(testCase, function() {
+                                return initPath(emptyLinesSource, emptyLinesRef)
+                                .then(() => assertEqual(testCase));
+                            });
+                        }
+                    }
+                }
+            });
         })
 
         describe("Different", function() {
