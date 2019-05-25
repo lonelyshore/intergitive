@@ -67,9 +67,10 @@ describe("Worktree Diff #core", function() {
                     })
     
                     let emptyLinesConverted = eolFunc(emptyLines);
-                    it('empty lines', function() {
+                    let testCase = `empty lines, eol ${eolIndex}`;
+                    it(testCase, function() {
                         return initPath(emptyLinesConverted, emptyLinesConverted)
-                        .then(() => assertEqual('empty lines'));
+                        .then(() => assertEqual(testCase));
                     });
                 })
 
