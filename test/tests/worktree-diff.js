@@ -42,7 +42,11 @@ describe.only("Worktree Diff #core", function() {
 
         function initPath(sourceContent, refContent) {
             return fs.writeFile(sourcePath, sourceContent)
-            .then(() => fs.writeFile(refPath, refContent));
+            .then(() => fs.writeFile(refPath, refContent))
+            .catch(err => {
+                console.error('init path error: ' + err);
+                throw err;
+            });
         }
 
         function assertEqualily(testCase, equality) {
@@ -58,11 +62,37 @@ describe.only("Worktree Diff #core", function() {
             return assertEqualily(testCase, false);
         }
 
-        beforeEach("Ensure playground", function() {
-            return fs.emptyDir(basePath);
+        before("Ensure playground", function() {
+            return fs.emptyDir(basePath)
+            .catch(err => {
+                console.error('before each error: ' + err);
+                throw err;
+            });
+        })
+
+        let output;
+        const originalLog = console.log;
+        beforeEach("Avoid log directly", function() {
+            output = '';
+            console.log = (msg) => {
+                output += msg + '\n';
+            };
+        });
+
+        afterEach("Log if needed", function() {
+            console.log = originalLog;
+            if (this.currentTest.state === 'failed') {
+                console.log(output);
+            }
+        });
+
+        after("Clean up", function() {
+            console.log = originalLog;
+            return fs.remove(basePath);
         })
 
         describe("Equal", function() {
+
             describe('Same Equals', function() {
                 eolFuncs.forEach((eolFunc, eolIndex) => {
                     multiLinesArr.forEach((multiLines, multiLinesIndex) => {
