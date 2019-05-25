@@ -1,7 +1,5 @@
 "use strict";
 
-"use strict";
-
 const path = require("path");
 const fs = require("fs-extra");
 const zip = require("../../lib/simple-archive");
