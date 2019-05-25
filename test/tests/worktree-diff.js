@@ -12,7 +12,7 @@ const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
-describe("Worktree Diff #core", function() {
+describe.only("Worktree Diff #core", function() {
     describe("Text Diff", function() {
 
         function eolNotConvert(text) { return text; }
@@ -45,16 +45,24 @@ describe("Worktree Diff #core", function() {
             .then(() => fs.writeFile(refPath, refContent));
         }
 
-        function assertEqual(testCase) {
+        function assertEqualily(testCase, equality) {
             return vcs.textFilesEqual(sourcePath, refPath)
-            .should.eventually.equal(true, `Expect equal for ${testCase}`);
+            .should.eventually.equal(equality, `Expect ${equality ? 'equal' : 'inequal'} for ${testCase}`);
+        }
+
+        function assertEqual(testCase) {
+            return assertEqualily(testCase, true);
+        }
+
+        function assertInequal(testCase) {
+            return assertEqualily(testCase, false);
         }
 
         beforeEach("Ensure playground", function() {
             return fs.emptyDir(basePath);
         })
 
-        describe.only("Equal", function() {
+        describe("Equal", function() {
             describe('Same Equals', function() {
                 eolFuncs.forEach((eolFunc, eolIndex) => {
                     multiLinesArr.forEach((multiLines, multiLinesIndex) => {
@@ -114,7 +122,39 @@ describe("Worktree Diff #core", function() {
         })
 
         describe("Different", function() {
+            let contents = Object.assign([], multiLinesArr);
+            let contentNames = [];
+            for (let i = 0; i < contents.length; i++) {
+                contentNames.push(`multi-line ${i}`);
+            }
 
+            contents.push(empty);
+            contentNames.push('empty');
+
+            contents.push(emptyLines);
+            contentNames.push('empty lines');
+
+            contents.push(singleLine);
+            contentNames.push('single line');
+
+            eolFuncs.forEach((sourceEol, sourceEolIndex) => {
+                eolFuncs.forEach((refEol, refEolIndex) => {
+                    contents.forEach((sourceContent, sourceIndex) => {
+                        contents.forEach((refContent, refIndex) => {
+                            if (sourceIndex !== refIndex) {
+                                let sourceContentConverted = sourceEol(sourceContent);
+                                let refContentConverted = refEol(refContent);
+                                let testCase = `source: ${contentNames[sourceIndex]}, source eol: ${sourceEolIndex}, ref: ${contentNames[refIndex]}, ref eol: ${refEolIndex}`;
+
+                                it(testCase, function() {
+                                    return initPath(sourceContentConverted, refContentConverted)
+                                    .then(() => assertInequal(testCase));
+                                })
+                            }
+                        })
+                    })
+                })
+            })
         })
     })
 })
