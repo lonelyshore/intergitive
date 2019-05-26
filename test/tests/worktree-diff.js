@@ -12,7 +12,7 @@ const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
-describe.only("Worktree Diff #core", function() {
+describe("Worktree Diff #core", function() {
     describe("Text Diff", function() {
 
         function eolNotConvert(text) { return text; }
