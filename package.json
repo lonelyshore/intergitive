@@ -20,7 +20,8 @@
   },
   "scripts": {
     "test": "mocha --recursive \"./test/tests/*.js\"",
-    "test-core": "mocha --recursive \"./test/tests/*.js\" --grep \"#core\""
+    "test-core": "mocha --recursive \"./test/tests/*.js\" --grep \"#core\"",
+    "start": "electron ."
   },
   "author": "zedaizd",
   "license": "ISC"
