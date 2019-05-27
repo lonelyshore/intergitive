@@ -12,8 +12,9 @@
     "adm-zip": "^0.4.13",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "electron": "^5.0.2",
+    "electron": "^4.2.2",
     "electron-packager": "^13.1.1",
+    "electron-rebuild": "^1.8.5",
     "mocha": "^6.1.4",
     "seedrandom": "^3.0.1",
     "simple-git": "^1.110.0"
@@ -21,7 +22,8 @@
   "scripts": {
     "test": "mocha --recursive \"./test/tests/*.js\"",
     "test-core": "mocha --recursive \"./test/tests/*.js\" --grep \"#core\"",
-    "start": "electron ."
+    "start": "electron .",
+    "rebuild": "electron-rebuild -f --version 4.2.2 -w nodegit"
   },
   "author": "zedaizd",
   "license": "ISC"
