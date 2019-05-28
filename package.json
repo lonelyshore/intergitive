@@ -13,6 +13,7 @@
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "electron": "^4.2.2",
+    "electron-mocha": "^8.0.2",
     "electron-packager": "^13.1.1",
     "electron-rebuild": "^1.8.5",
     "mocha": "^6.1.4",
@@ -23,7 +24,9 @@
     "test": "mocha --recursive \"./test/tests/*.js\"",
     "test-core": "mocha --recursive \"./test/tests/*.js\" --grep \"#core\"",
     "start": "electron .",
-    "rebuild": "electron-rebuild -f --version 4.2.2 -w nodegit"
+    "rebuild": "electron-rebuild -f --version 4.2.2 -w nodegit",
+    "etest": "electron-mocha --renderer --recursive \"./test/tests/*.js\"",
+    "etest-core": "electron-mocha --renderer --recursive \"./test/tests/*.js\" --grep \"#core\""
   },
   "author": "zedaizd",
   "license": "ISC"
