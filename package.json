@@ -26,7 +26,8 @@
     "start": "electron .",
     "rebuild": "electron-rebuild -f --version 4.2.2 -w nodegit",
     "etest": "electron-mocha --renderer --recursive \"./test/tests/*.js\"",
-    "etest-core": "electron-mocha --renderer --recursive \"./test/tests/*.js\" --grep \"#core\""
+    "etest-core": "electron-mocha --renderer --recursive \"./test/tests/*.js\" --grep \"#core\"",
+    "build-win64": "electron-packager . intergitive --platform=win32 --arch=x64"
   },
   "author": "zedaizd",
   "license": "ISC"
