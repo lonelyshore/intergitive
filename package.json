@@ -6,7 +6,8 @@
   "dependencies": {
     "fs-extra": "^8.0.0",
     "js-yaml": "^3.13.1",
-    "nodegit": "^0.24.3"
+    "nodegit": "^0.24.3",
+    "vue": "^2.6.10"
   },
   "devDependencies": {
     "adm-zip": "^0.4.13",
