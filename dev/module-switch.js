@@ -36,7 +36,7 @@ function wrapper(args) {
             return printWhichModule(args[1]);
 
         case 'versions':
-            return versionsModule(args[1]);
+            return listModuleVersions(args[1]);
     
         default:
             return new Promise.reject(new Error("Unexcepted arguments: " + args.join(', ')));
@@ -123,15 +123,23 @@ function printWhichModule(moduleName) {
     });
 }
 
-function versionsModule(moduleName) {
+function listModuleVersions(moduleName) {
     let modulePath = path.join(cachePath, moduleName);
     return fs.exists(modulePath)
     .then(exists => {
         if (exists) {
-            return fs.readdir(modulePath)
+            let currentVersion;
+            return whichModuleVersion(moduleName)
+            .then(version => currentVersion = version)
+            .then(() => fs.readdir(modulePath))
             .then(envNames => {
                 envNames.forEach(envName => {
-                    console.log(envName)
+                    if (currentVersion === envName) {
+                        console.log('* ' + envName);
+                    }
+                    else {
+                        console.log('  ' + envName);
+                    }
                 });
             });
         }
