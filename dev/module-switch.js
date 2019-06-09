@@ -8,35 +8,38 @@ let cachePath = path.resolve(__dirname, '../.module_cache');
 let configPath = path.join(cachePath, '.config');
 let modulePath = path.resolve(__dirname, '../node_modules');
 
-switch (args[0]) {
-    case 'save':
-        saveModule(args[1], args[2]);
-        break;
+wrapper(args)
+.catch(err => {
+    console.error(err);
+})
 
-    case 'load':
-        loadModule(args[1], args[2]);
-        break;
-
-    case 'drop':
-        if (args.length === 3) {
-            dropModuleEnvironment(args[1]);
-        }
-        else {
-            dropModule(args[1]);
-        }
-        break;
-
-    case 'ls':
-        listModules();
-        break;
-
-    case 'version':
-        listModule(args[1]);
-        break;
-
-    default:
-        throw new Error("Unexcepted arguments: " + args.join(', '));
+function wrapper(args) {
+    switch (args[0]) {
+        case 'save':
+            return saveModule(args[1], args[2]);
+    
+        case 'load':
+            return loadModule(args[1], args[2]);
+    
+        case 'drop':
+            if (args.length === 3) {
+                return dropModuleEnvironment(args[1]);
+            }
+            else {
+                return dropModule(args[1]);
+            }
+    
+        case 'ls':
+            return listModules();
+    
+        case 'version':
+            return listModule(args[1]);
+    
+        default:
+            return new Promise.reject(new Error("Unexcepted arguments: " + args.join(', ')));
+    }
 }
+
 
 function saveModule(moduleName, envName) {
     let storePath = path.join(cachePath, moduleName, envName);
@@ -123,11 +126,11 @@ function printModuleVersion(moduleName, config) {
 }
 
 function updateConfig(moduleName, envName) {
-    return fs.readFile(cachePath)
+    return fs.readFile(configPath)
     .then(configRaw => {
         let config = JSON.parse(configRaw);
         config[moduleName] = envName;
-        return JSON.stringify(cofnig);
+        return JSON.stringify(config);
     })
     .then(configRaw => {
         fs.writeFile(configPath, configRaw);
