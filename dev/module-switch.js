@@ -38,11 +38,28 @@ function wrapper(args) {
         case 'versions':
             return listModuleVersions(args[1]);
     
+        case 'help':
+            printUsage();
+            return Promise.resolve();
+        
         default:
-            return new Promise.reject(new Error("Unexcepted arguments: " + args.join(', ')));
+            printUsage();
+            return Promise.reject(new Error("Unexcepted arguments: " + args.join(', ')));
     }
 }
 
+function printUsage() {
+    console.log(`
+  Usage:
+    save <module> <environment>: cache a module environment for later use
+    load <module> <environment>: load a previously saved module environment, and set it to be active
+    drop <module> [environment]: remove all cached module environments, 
+                                 or when [environment] is provided, remove the specified environment
+    ls: list all cached modules and their current environment
+    which <module>: show the active environment for the module
+    versions <module>: list all available environments for the module. Active environment is marked by "*"
+    help: show this help info`);
+}
 
 function saveModule(moduleName, envName) {
     let storePath = path.join(cachePath, moduleName, envName);
