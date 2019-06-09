@@ -33,7 +33,7 @@ function wrapper(args) {
             return listModules();
     
         case 'which':
-            return whichModule(args[1]);
+            return printWhichModule(args[1]);
 
         case 'versions':
             return versionsModule(args[1]);
@@ -111,16 +111,15 @@ function listModules() {
     .then(configRaw => {
         let config = JSON.parse(configRaw);
         Object.keys(config).forEach(moduleName => {
-            printModuleVersion(moduleName, config);
+            printModuleVersion(moduleName, config[moduleName]);
         })
     })
 }
 
-function whichModule(moduleName) {
-    return fs.readFile(configPath)
-    .then(configRaw => {
-        let config = JSON.parse(configRaw);
-        printModuleVersion(moduleName, config);
+function printWhichModule(moduleName) {
+    return whichModuleVersion(moduleName)
+    .then(version => {
+        printModuleVersion(moduleName, version);
     });
 }
 
@@ -143,8 +142,16 @@ function versionsModule(moduleName) {
     
 }
 
-function printModuleVersion(moduleName, config) {
-    console.log(`${moduleName}: ${config[moduleName] || "not installed"}`);
+function whichModuleVersion(moduleName) {
+    return fs.readFile(configPath)
+    .then(configRaw => {
+        let config = JSON.parse(configRaw);
+        return config[moduleName];
+    });
+}
+
+function printModuleVersion(moduleName, moduleVersion) {
+    console.log(`${moduleName}: ${moduleVersion || 'not installed'}`);
 }
 
 function updateConfig(moduleName, envName) {
