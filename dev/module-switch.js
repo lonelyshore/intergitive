@@ -32,8 +32,11 @@ function wrapper(args) {
         case 'ls':
             return listModules();
     
-        case 'version':
-            return listModule(args[1]);
+        case 'which':
+            return whichModule(args[1]);
+
+        case 'versions':
+            return versionsModule(args[1]);
     
         default:
             return new Promise.reject(new Error("Unexcepted arguments: " + args.join(', ')));
@@ -113,12 +116,31 @@ function listModules() {
     })
 }
 
-function listModule(moduleName) {
+function whichModule(moduleName) {
     return fs.readFile(configPath)
     .then(configRaw => {
         let config = JSON.parse(configRaw);
         printModuleVersion(moduleName, config);
     });
+}
+
+function versionsModule(moduleName) {
+    let modulePath = path.join(cachePath, moduleName);
+    return fs.exists(modulePath)
+    .then(exists => {
+        if (exists) {
+            return fs.readdir(modulePath)
+            .then(envNames => {
+                envNames.forEach(envName => {
+                    console.log(envName)
+                });
+            });
+        }
+        else {
+            console.log('not installed');
+        }
+    })
+    
 }
 
 function printModuleVersion(moduleName, config) {
