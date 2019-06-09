@@ -59,12 +59,21 @@ function saveModule(moduleName, envName) {
 function loadModule(moduleName, envName) {
     let storePath = path.join(cachePath, moduleName, envName);
     let targetPath = path.join(modulePath, moduleName);
-    return fs.emptyDir(targetPath)
-    .then(() => {
-        return fs.copy(storePath, targetPath);
-    })
-    .then(() => {
-        return updateConfig(moduleName, envName);
+    return whichModuleVersion(moduleName)
+    .then(currentVersion => {
+        if (currentVersion === envName) {
+            console.log(`Not loading ${envName} for ${moduleName} because it is current version`);
+            return Promise.resolve();
+        }
+        else {
+            return fs.emptyDir(targetPath)
+            .then(() => {
+                return fs.copy(storePath, targetPath);
+            })
+            .then(() => {
+                return updateConfig(moduleName, envName);
+            })
+        }
     })
 }
 
