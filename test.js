@@ -21,9 +21,9 @@ let initializeRepo = (sourceRepoPath) => {
 let gen = require("./dev/generate-base-repo");
 
 myConsole.log(gen)
-gen.generateBaseRepo(
-    workingPath,
-    assetStorePath,
-    path.join(resoruceBasePath, yamlSubPath),
-    initializeRepo
-);
+// gen.generateBaseRepo(
+//     workingPath,
+//     assetStorePath,
+//     path.join(resoruceBasePath, yamlSubPath),
+//     initializeRepo
+// );

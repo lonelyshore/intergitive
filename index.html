@@ -2,15 +2,23 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="playground/static/level.css">
     <title>Hello World!</title>
   </head>
   <body>
     
     <div id="level">
-      {{ message }}
+      <ul>
+        <li
+          v-bind:is="step.componentType"
+          v-for="(step, key) in steps"
+          v-bind:stepsKey="step.key"
+        ></li>
+      </ul>
     </div>
 
 
-    <script type="text/javascript" src="./lib/render-level.js"></script>
+    <!-- <script type="text/javascript" src="./lib/render-level.js"></script> -->
+    <script>require('./lib/render-level.js');</script>
   </body>
 </html>
