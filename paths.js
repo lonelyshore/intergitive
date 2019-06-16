@@ -9,4 +9,4 @@ const runAndTest = {
 const result = runAndTest;
 
 module.exports.RESOURCES_PATH = result.RESOURCES_PATH;
-module.exports.BUNDLE_PATH = rsult.BUNDLE_PATH;
+module.exports.BUNDLE_PATH = result.BUNDLE_PATH;
