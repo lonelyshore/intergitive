@@ -11,8 +11,8 @@
     <div id="level">
       <ul v-if="state.stepsReady">
         <li
-          v-for="(step, key) in steps"
-          v-bind:is="step.componentType"
+          v-for="(renderStep, key) in renderSteps"
+          v-bind:is="renderStep.step.componentType"
           v-bind:steps-key="key"
           v-bind:key="`level-step-${key}`"
         ></li>
