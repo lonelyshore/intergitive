@@ -9,12 +9,12 @@
   <body>
     
     <div id="level">
-      <ul>
+      <ul v-if="state.stepsReady">
         <li
-          v-bind:is="step.componentType"
           v-for="(step, key) in steps"
-          v-bind:stepsKey="step.key"
-          v-bind:key="`level-step-${step.key}`"
+          v-bind:is="step.componentType"
+          v-bind:steps-key="key"
+          v-bind:key="`level-step-${key}`"
         ></li>
       </ul>
     </div>
