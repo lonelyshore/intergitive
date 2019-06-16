@@ -1,0 +1,5 @@
+asset_index:
+  mode: "infile"
+  asset:
+    elaborate: "解說"
+    

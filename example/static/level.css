@@ -1,0 +1,14 @@
+.elaborate {
+    position: relative;
+    background: red;
+}
+  
+.elaborate .title {
+    position: absolute;
+    background: white;
+    font: bold 1em/2em sans-serif;
+    padding: 0 0.5em;
+    text-align: center;
+    top: -1em;
+    left: 1.5em;
+}

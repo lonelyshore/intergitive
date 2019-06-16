@@ -1,5 +1,5 @@
 const path = require('path');
-const runAndTestBasePath = path.resolve(__dirname, './playground');
+const runAndTestBasePath = path.resolve(__dirname, './example');
 
 const runAndTest = {
     RESOURCES_PATH: path.join(runAndTestBasePath, "resources"),
