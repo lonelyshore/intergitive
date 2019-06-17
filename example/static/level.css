@@ -1,6 +1,17 @@
+/* @font-face {
+    font-family: "sans-serif";
+    font-style: normal;
+    font-weight: normal;
+    src: local("Microsoft JhengHezi"), local("Heiti TC"), local("WenQuanYi Zen Hei");
+} */
+
 .elaborate {
     position: relative;
-    background: red;
+    padding: 2em 1em;
+    /* color: #6F879C; */
+    /* background: rgba(136, 204, 255, 0.18); */
+    border-radius: 2px;
+    border: 2px solid #08f;
 }
   
 .elaborate .title {
