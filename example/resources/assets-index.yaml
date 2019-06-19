@@ -1,5 +1,5 @@
 asset_index:
-  mode: "infile"
+  mode: "ondisk"
   assets:
     description:elaborate:example: "description_elaborate_example.html"
-    
+    description:illustrate:example: "description_illstrate_example.html"
