@@ -4,7 +4,7 @@ const runAndTestBasePath = path.resolve(__dirname, './example');
 const runAndTest = {
     RESOURCES_PATH: path.join(runAndTestBasePath, "resources"),
     BUNDLE_PATH: [],
-    STATIC_PATH: path.join(path.relative(runAndTestBasePath, __dirname), 'static'),
+    STATIC_PATH: path.join(path.relative(__dirname, runAndTestBasePath), 'static'),
 };
 
 const result = runAndTest;

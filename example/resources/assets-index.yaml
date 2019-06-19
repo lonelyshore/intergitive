@@ -2,4 +2,4 @@ asset_index:
   mode: "ondisk"
   assets:
     description:elaborate:example: "description_elaborate_example.html"
-    description:illustrate:example: "description_illstrate_example.html"
+    description:illustrate:example: "description_illustrate_example.html"
