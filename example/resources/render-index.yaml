@@ -2,4 +2,4 @@ asset_index:
   mode: "infile"
   assets:
     elaborate: "解說"
-    
+    illustrate: "圖解"
