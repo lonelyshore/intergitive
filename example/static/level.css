@@ -5,16 +5,13 @@
     src: local("Microsoft JhengHezi"), local("Heiti TC"), local("WenQuanYi Zen Hei");
 } */
 
-.elaborate {
+.level-block {
     position: relative;
-    padding: 2em 1em;
-    /* color: #6F879C; */
-    /* background: rgba(136, 204, 255, 0.18); */
-    border-radius: 2px;
-    border: 2px solid #08f;
+    padding: 1em 2em;
+    margin: 2em 1em;
 }
-  
-.elaborate .title {
+
+.level-block .title {
     position: absolute;
     background: white;
     font: bold 1em/2em sans-serif;
@@ -24,21 +21,12 @@
     left: 1.5em;
 }
 
-.illustrate {
-    position: relative;
-    padding: 2em 1em;
-    /* color: #6F879C; */
-    /* background: rgba(136, 204, 255, 0.18); */
+.elaborate {
     border-radius: 2px;
     border: 2px solid #08f;
 }
-  
-.illustrate .title {
-    position: absolute;
-    background: white;
-    font: bold 1em/2em sans-serif;
-    padding: 0 0.5em;
-    text-align: center;
-    top: -1em;
-    left: 1.5em;
+
+.illustrate {
+    border-radius: 2px;
+    border: 2px solid #08f;
 }
