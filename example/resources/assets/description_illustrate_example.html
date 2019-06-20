@@ -1,5 +1,21 @@
 <img src="{{ images/illustrate_illustrate }}"></img>
 <p>
-這是一個關於圖解步驟的簡單範例。
-示範了將 "iamges/illustrate_illustrate" 這一代號所指涉的字串 "${{ images/illustrate_illustrate }}" 代換成目標路徑 "{{ images/illustrate_illustrate }}"
+    這是一個關於圖解步驟的簡單範例。<br>
+    示範了將 "\{\{ iamges/illustrate_illustrate \}\}" 代換成目標路徑 "{{ images/illustrate_illustrate }}"<br>
+    如果使用 "$\{\{ images/illustrate_illustrate \}\}" 將會得到相對路徑 "${{images/illustrate_illustrate}}"
+</p>
+<p>
+    如果想要跳脫地輸入 "\{\{\}\}" 的符號，必須在 "{" 前加入跳脫字元 "\"，例如<br>
+    <code>
+        \\{\\{
+    </code>
+
+    想要跳脫地輸入 "\\{" 與 "\\}"，只要重複跳脫字元 "\" 就可以了，例如<br>
+    <code>
+        \\\{
+    </code><br>
+    或<br>
+    <code>
+        \\\}
+    </code>    
 </p>
