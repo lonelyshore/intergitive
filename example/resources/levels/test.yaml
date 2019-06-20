@@ -3,3 +3,5 @@ steps:
     descriptionId: "assets/description:elaborate:example"
   - !illustrate # illustrate that IllustrateStep puts out illustrations
     descriptionId: "assets/description:illustrate:example"
+  - !instruct # instruct the user to take action
+    descriptionId: "assets/description:instruct:example"

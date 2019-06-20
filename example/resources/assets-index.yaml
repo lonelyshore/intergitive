@@ -3,3 +3,4 @@ asset_index:
   assets:
     description:elaborate:example: "description_elaborate_example.html"
     description:illustrate:example: "description_illustrate_example.html"
+    description:instruct:example: "description_instruct_example.html"
