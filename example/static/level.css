@@ -30,3 +30,9 @@
     border-radius: 2px;
     border: 2px solid #08f;
 }
+
+.instruct {
+    border-radius: 2px;
+    color: #6F879C;
+    background: rgba(136, 204, 255, 0.18);
+}
