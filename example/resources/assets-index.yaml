@@ -4,3 +4,5 @@ asset_index:
     description:elaborate:example: "description_elaborate_example.html"
     description:illustrate:example: "description_illustrate_example.html"
     description:instruct:example: "description_instruct_example.html"
+    description:verifyInput: "description_verify_input.html"
+    localized_answer: "絕妙好辭"
