@@ -37,6 +37,16 @@
     background: rgba(136, 204, 255, 0.18);
 }
 
+.verify {
+    border-radius: 2px;
+    color: #6F879C;
+    background: rgba(136, 204, 255, 0.18);
+}
+
+.verify[appending] {
+    margin-top: -2em;
+}
+
 [blocked] {
     pointer-events: none;
     opacity: 0.4;
