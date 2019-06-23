@@ -36,7 +36,7 @@ describe("Dev Action Executor", function() {
 
         let repoSetups = {
             [testRepoSetupName]: new RepoVcsSetup(
-                repoPath,
+                path.relative(utils.PLAYGROUND_PATH, repoPath),
                 "",
                 ""
             )

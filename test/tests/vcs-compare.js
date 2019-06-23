@@ -117,7 +117,7 @@ describe("VCS Compare #core", function() {
 
                 const repoSetups = {
                     repo: new RepoSetup(
-                        checkedRepoPath,
+                        path.relative(workingPath, checkedRepoPath),
                         undefined,
                         undefined
                     )
@@ -221,7 +221,7 @@ describe("VCS Compare #core", function() {
 
                 const repoSetups = {
                     repo: new RepoSetup(
-                        checkedRepoPath,
+                        path.relative(workingPath, checkedRepoPath),
                         undefined,
                         undefined
                     )

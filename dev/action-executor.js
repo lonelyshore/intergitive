@@ -1,6 +1,7 @@
 "use strict";
 
 const simpleGit = require("simple-git/promise");
+const path = require('path');
 const ActionExecutor = require("../lib/action-executor").ActionExecutor;
 
 const getRepo = Symbol("getRepo");
@@ -90,7 +91,7 @@ class DevActionExecutor extends ActionExecutor {
         }
         else {
             if (!("devRepo" in setup)) {
-                setup.devRepo = simpleGit(setup.workingPath);
+                setup.devRepo = simpleGit(path.join(this.fileSystemBaseFolder, setup.workingPath));
                 setup.devRepo.silent(true);
             }
 

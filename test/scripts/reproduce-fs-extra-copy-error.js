@@ -44,7 +44,7 @@ function generate(workingPath, assetStorePath, yamlPath, initializeRepo) {
     
     const repoSetups = {
         repo: new RepoSetup(
-            sourceRepoPath,
+            path.relative(workingPath, sourceRepoPath),
             undefined,
             undefined
         )
