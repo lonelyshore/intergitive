@@ -4,3 +4,5 @@ asset_index:
     elaborate: "解說"
     illustrate: "圖解"
     instruct: "操作指引"
+    verifyInputPlaceholder: "請輸入答案"
+    verifyInputSubmitText: "確認"
