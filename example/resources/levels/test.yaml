@@ -9,4 +9,4 @@ steps:
     answer: "2"
   - !verifyInput
     descriptionId: "assets/description:verifyInput"
-    answer: "{{ assets/localized_answer }}"
+    answer: "${{ assets/localized_answer }}"
