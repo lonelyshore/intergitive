@@ -11,10 +11,16 @@
     <div id="level">
         <div
           v-for="(stepKey) in renderSteps"
-          v-bind:is="stepStates[stepKey].step.componentType"
+          is="blockable"
           v-bind:step-key="stepKey"
-          v-bind:key="`level-step-${stepKey}`"
-        ></li>
+          v-bind:key="`blockable-${stepKey}`">
+          <div          
+            v-bind:is="stepStates[stepKey].step.componentType"
+            v-bind:step-key="stepKey"
+            v-bind:key="`level-step-${stepKey}`"
+          ></div>
+        </div>
+
     </div>
 
 

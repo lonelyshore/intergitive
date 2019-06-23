@@ -36,3 +36,8 @@
     color: #6F879C;
     background: rgba(136, 204, 255, 0.18);
 }
+
+[blocked] {
+    pointer-events: none;
+    opacity: 0.4;
+}
