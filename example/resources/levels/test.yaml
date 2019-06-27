@@ -1,12 +1,19 @@
-steps:
-  - !elaborate # elaborate this is an example
-    descriptionId: "assets/description:elaborate:example"
-  - !illustrate # illustrate that IllustrateStep puts out illustrations
-    descriptionId: "assets/description:illustrate:example"
-  - !instruct # instruct the user to take action
-    descriptionId: "assets/description:instruct:example"
-  - !verifyInput
-    answer: "2"
-  - !verifyInput
-    descriptionId: "assets/description:verifyInput"
-    answer: "${{ assets/localized_answer }}"
+!level
+  repoVcsSetups:
+    local: 
+      !repoVcs
+        workingPath: "local"
+        referenceStoreName: "test-local"
+        checkpointStoreName: "test-local"
+  steps:
+    - !elaborate # elaborate this is an example
+      descriptionId: "assets/description:elaborate:example"
+    - !illustrate # illustrate that IllustrateStep puts out illustrations
+      descriptionId: "assets/description:illustrate:example"
+    - !instruct # instruct the user to take action
+      descriptionId: "assets/description:instruct:example"
+    - !verifyInput
+      answer: "2"
+    - !verifyInput
+      descriptionId: "assets/description:verifyInput"
+      answer: "${{ assets/localized_answer }}"
