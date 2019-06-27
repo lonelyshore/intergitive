@@ -1,46 +1,46 @@
-"use strict";
+'use strict';
 
-const path = require("path");
-const fs = require("fs-extra");
-const zip = require("../../lib/simple-archive");
-const simpleGitCtor = require("simple-git/promise");
-const utils = require("./test-utils");
-const AssetLoader = require("../../lib/asset-loader").AssetLoader;
-const ActionExecutor = require("../../lib/action-executor").ActionExecutor;
-const RepoVcsSetup = require("../../lib/config-level").RepoVcsSetup;
-const actionTypes = require("../../lib/config-action");
+const path = require('path');
+const fs = require('fs-extra');
+const zip = require('../../lib/simple-archive');
+const simpleGitCtor = require('simple-git/promise');
+const utils = require('./test-utils');
+const AssetLoader = require('../../lib/asset-loader').AssetLoader;
+const ActionExecutor = require('../../lib/action-executor').ActionExecutor;
+const RepoVcsSetup = require('../../lib/config-level').RepoVcsSetup;
+const actionTypes = require('../../lib/config-action');
 
-const chai = require("chai");
-const chaiAsPromised = require("chai-as-promised");
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
 
 chai.use(chaiAsPromised);
 chai.should();
 
 
-describe("Action Executor #core", function() {
+describe('Action Executor #core', function() {
 
     let actionExecutor;
-    const testRepoSetupName = "test-repo";
-    const repoParentPath = path.join(utils.PLAYGROUND_PATH, "repo");
-    const repoArchiveName = "action-executor";
+    const testRepoSetupName = 'test-repo';
+    const repoParentPath = path.join(utils.PLAYGROUND_PATH, 'repo');
+    const repoArchiveName = 'action-executor';
     const repoPath = path.join(repoParentPath, repoArchiveName);    
 
     before(function() {
-        let assetLoader = new AssetLoader(path.join(utils.RESOURCES_PATH, "action-executor/resources"));
+        let assetLoader = new AssetLoader(path.join(utils.RESOURCES_PATH, 'action-executor/resources'));
         assetLoader.setBundlePath();
 
         let repoSetups = {
             [testRepoSetupName]: new RepoVcsSetup(
                 path.relative(utils.PLAYGROUND_PATH, repoPath),
-                "",
-                ""
+                '',
+                ''
             )
         };
 
         actionExecutor = new ActionExecutor(utils.PLAYGROUND_PATH, assetLoader, repoSetups);
     })
 
-    describe("File Operations", function() {
+    describe('File Operations', function() {
 
         /**
          * 
@@ -48,7 +48,7 @@ describe("Action Executor #core", function() {
          * @returns {string} 
          */
         const reverseString = function(str) {
-            return str.split("").reverse().join("");
+            return str.split('').reverse().join('');
         }
 
         const initializeFolder = function(fileSubPaths, baseFolderPath) {
@@ -82,20 +82,20 @@ describe("Action Executor #core", function() {
             return Promise.all(operations);
         };
 
-        beforeEach("Initialize Playground", function() {
+        beforeEach('Initialize Playground', function() {
             return fs.emptyDir(utils.PLAYGROUND_PATH);
         });
 
-        afterEach("Remove Playground", function() {
+        afterEach('Remove Playground', function() {
             return fs.remove(utils.PLAYGROUND_PATH);
         });
 
-        describe("Write File", function() {
+        describe('Write File', function() {
 
             const appendFolderName = function(fileSubPaths, folderName) {
                 let ret = [];
                 fileSubPaths.forEach(fileSubPath => {
-                    ret.push(folderName + "/" + path.basename(fileSubPath));
+                    ret.push(folderName + '/' + path.basename(fileSubPath));
                 });
 
                 return ret;
@@ -115,7 +115,7 @@ describe("Action Executor #core", function() {
                         return false;
                     }
                     else {
-                        return fs.readFile(path.join(baseFolder, fileSubPath), "utf8")
+                        return fs.readFile(path.join(baseFolder, fileSubPath), 'utf8')
                         .then(fileContent => {
                             return fileContent === content;
                         });
@@ -143,10 +143,10 @@ describe("Action Executor #core", function() {
                 });
             }
 
-            it("files not overwritting", function() {
+            it('files not overwritting', function() {
                 
-                let targets = ["manyFiles1", "manyFiles2"]
-                let keys = appendFolderName(targets, "write-file");
+                let targets = ['manyFiles1', 'manyFiles2']
+                let keys = appendFolderName(targets, 'write-file');
                 
                 let action = new actionTypes.WriteFileAction(
                     keys,
@@ -164,10 +164,10 @@ describe("Action Executor #core", function() {
                 .should.eventually.equal(true);
             });
 
-            it("files overwritting", function() {
+            it('files overwritting', function() {
 
-                let targets = ["manyFilesOverwritting1", "manyFilesOverwritting2"];
-                let keys = appendFolderName(targets, "write-file");
+                let targets = ['manyFilesOverwritting1', 'manyFilesOverwritting2'];
+                let keys = appendFolderName(targets, 'write-file');
 
                 let action = new actionTypes.WriteFileAction(
                     keys,
@@ -189,11 +189,11 @@ describe("Action Executor #core", function() {
 
             });
 
-            it("files inside path not overwritting", function() {
+            it('files inside path not overwritting', function() {
                 
-                let targets = ["manyFilesInPath1", "manyFilesInPath2"];
-                let keys = appendFolderName(targets, "write-file");
-                let destinations = appendFolderName(targets, "parent");
+                let targets = ['manyFilesInPath1', 'manyFilesInPath2'];
+                let keys = appendFolderName(targets, 'write-file');
+                let destinations = appendFolderName(targets, 'parent');
 
                 let action = new actionTypes.WriteFileAction(
                     keys,
@@ -212,11 +212,11 @@ describe("Action Executor #core", function() {
 
             });
 
-            it("files inside path overwritting", function() {
+            it('files inside path overwritting', function() {
                 
-                let targets = ["manyFilesInPathOverwritting1", "manyFilesInPathOverwritting2"];
-                let keys = appendFolderName(targets, "write-file");
-                let destinations = appendFolderName(targets, "parent");
+                let targets = ['manyFilesInPathOverwritting1', 'manyFilesInPathOverwritting2'];
+                let keys = appendFolderName(targets, 'write-file');
+                let destinations = appendFolderName(targets, 'parent');
 
                 let action = new actionTypes.WriteFileAction(
                     keys,
@@ -238,11 +238,11 @@ describe("Action Executor #core", function() {
 
             });
 
-            it("unrelated files intact", function() {
+            it('unrelated files intact', function() {
                 
-                let targets = ["manyFiles1", "manyFiles2"];
-                let keys = appendFolderName(targets, "write-file");
-                let untouched = ["untouched1", "untouched2"];
+                let targets = ['manyFiles1', 'manyFiles2'];
+                let keys = appendFolderName(targets, 'write-file');
+                let untouched = ['untouched1', 'untouched2'];
 
                 let action = new actionTypes.WriteFileAction(
                     keys,
@@ -270,10 +270,10 @@ describe("Action Executor #core", function() {
                 .should.eventually.deep.equal([true, true]);
             })
 
-            it("source not exist should fail", function() {
+            it('source not exist should fail', function() {
                 
-                let targets = ["not-exists"];
-                let keys = appendFolderName(targets, "write-file");
+                let targets = ['not-exists'];
+                let keys = appendFolderName(targets, 'write-file');
 
                 let action = new actionTypes.WriteFileAction(
                     keys,
@@ -288,10 +288,10 @@ describe("Action Executor #core", function() {
                 
             });
 
-            it("source not exist destination untouched", function() {
+            it('source not exist destination untouched', function() {
                 
-                let targets = ["not-exists"];
-                let keys = appendFolderName(targets, "write-file");
+                let targets = ['not-exists'];
+                let keys = appendFolderName(targets, 'write-file');
 
                 let action = new actionTypes.WriteFileAction(
                     keys,
@@ -314,16 +314,16 @@ describe("Action Executor #core", function() {
             });
         });
 
-        describe("Remove File", function() {
+        describe('Remove File', function() {
 
-            it("remove single", function() {
+            it('remove single', function() {
                 
                 let files = [
-                    "removed",
-                    "untouched"
+                    'removed',
+                    'untouched'
                 ];
 
-                let action = new actionTypes.RemoveFileAction(["removed"]);
+                let action = new actionTypes.RemoveFileAction(['removed']);
 
                 return initializeFolder(files, utils.PLAYGROUND_PATH)
                 .then(() => {
@@ -331,24 +331,24 @@ describe("Action Executor #core", function() {
                 })
                 .then(() => {
                     return Promise.all([
-                        fs.exists(path.join(utils.PLAYGROUND_PATH, "removed"))
+                        fs.exists(path.join(utils.PLAYGROUND_PATH, 'removed'))
                         .should.eventually.be.false,
-                        fs.exists(path.join(utils.PLAYGROUND_PATH, "untouched"))
+                        fs.exists(path.join(utils.PLAYGROUND_PATH, 'untouched'))
                         .should.eventually.be.true
                     ]);
                 });
             });
 
-            it("remove multiple", function() {
+            it('remove multiple', function() {
                 
                 let files = [
-                    "removed",
-                    "folder/removed",
-                    "untouched",
-                    "folder/untouched",
+                    'removed',
+                    'folder/removed',
+                    'untouched',
+                    'folder/untouched',
                 ];
 
-                let action = new actionTypes.RemoveFileAction(["removed", "folder/removed"]);
+                let action = new actionTypes.RemoveFileAction(['removed', 'folder/removed']);
 
                 return initializeFolder(files, utils.PLAYGROUND_PATH)
                 .then(() => {
@@ -356,27 +356,27 @@ describe("Action Executor #core", function() {
                 })
                 .then(() => {
                     return Promise.all([
-                        fs.exists(path.join(utils.PLAYGROUND_PATH, "removed"))
-                        .should.eventually.equal(false, "<removed> still exists"),
-                        fs.exists(path.join(utils.PLAYGROUND_PATH, "folder/removed"))
-                        .should.eventually.equal(false, "<folderremoved> still exists"),
-                        fs.exists(path.join(utils.PLAYGROUND_PATH, "untouched"))
-                        .should.eventually.equal(true, "<untouched> got removed"),
-                        fs.exists(path.join(utils.PLAYGROUND_PATH, "folder/untouched"))
-                        .should.eventually.equal(true, "<folder/untouched> got removed"),
+                        fs.exists(path.join(utils.PLAYGROUND_PATH, 'removed'))
+                        .should.eventually.equal(false, '<removed> still exists'),
+                        fs.exists(path.join(utils.PLAYGROUND_PATH, 'folder/removed'))
+                        .should.eventually.equal(false, '<folderremoved> still exists'),
+                        fs.exists(path.join(utils.PLAYGROUND_PATH, 'untouched'))
+                        .should.eventually.equal(true, '<untouched> got removed'),
+                        fs.exists(path.join(utils.PLAYGROUND_PATH, 'folder/untouched'))
+                        .should.eventually.equal(true, '<folder/untouched> got removed'),
                     ])
                 })
             });
 
-            it("any target not exist should fail", function() {
+            it('any target not exist should fail', function() {
                 
                 let existsFiles = [
-                    "removed",
-                    "untouched"
+                    'removed',
+                    'untouched'
                 ];
 
                 let action = new actionTypes.RemoveFileAction(
-                    ["removed", "notExists"]
+                    ['removed', 'notExists']
                 );
 
                 return initializeFolder(existsFiles, utils.PLAYGROUND_PATH)
@@ -386,17 +386,17 @@ describe("Action Executor #core", function() {
                 .should.eventually.be.rejected;
             });
 
-            it("failed action still effective", function() {
+            it('failed action still effective', function() {
                 
                 let existsFiles = [
-                    "removed",
-                    "folder/removed",
-                    "untouched",
-                    "folder/untouched"
+                    'removed',
+                    'folder/removed',
+                    'untouched',
+                    'folder/untouched'
                 ];
 
                 let action = new actionTypes.RemoveFileAction(
-                    ["removed", "folder/removed", "notExists"]
+                    ['removed', 'folder/removed', 'notExists']
                 );
 
                 return initializeFolder(existsFiles, utils.PLAYGROUND_PATH)
@@ -406,28 +406,28 @@ describe("Action Executor #core", function() {
                 })
                 .then(() => {
                     return Promise.all([
-                        fs.access(path.join(utils.PLAYGROUND_PATH, "removed"))
+                        fs.access(path.join(utils.PLAYGROUND_PATH, 'removed'))
                         .should.eventually.be.rejected,
-                        fs.access(path.join(utils.PLAYGROUND_PATH, "folder/removed"))
+                        fs.access(path.join(utils.PLAYGROUND_PATH, 'folder/removed'))
                         .should.eventually.be.rejected,
-                        fs.access(path.join(utils.PLAYGROUND_PATH, "untouched"))
+                        fs.access(path.join(utils.PLAYGROUND_PATH, 'untouched'))
                         .should.eventually.be.fulfilled,
-                        fs.access(path.join(utils.PLAYGROUND_PATH, "folder/untouched"))
+                        fs.access(path.join(utils.PLAYGROUND_PATH, 'folder/untouched'))
                         .should.eventually.be.fulfilled
                     ]);
                 });
             })
         });
 
-        describe("Move File", function() {
+        describe('Move File', function() {
 
-            it("move a file", function() {
+            it('move a file', function() {
 
-                let sourceName = "source";
-                let targetName = "target";
+                let sourceName = 'source';
+                let targetName = 'target';
                 let sourcePath = path.join(utils.PLAYGROUND_PATH, sourceName);
                 let targetPath = path.join(utils.PLAYGROUND_PATH, targetName);
-                let content = "some contents";
+                let content = 'some contents';
 
                 let action = new actionTypes.MoveFileAction(
                     sourceName,
@@ -448,13 +448,13 @@ describe("Action Executor #core", function() {
         })
     });
 
-    describe("Git Operations", function() {
+    describe('Git Operations', function() {
 
-        const archivePath = path.join(utils.ARCHIVE_RESOURCES_PATH, repoArchiveName + ".zip");
+        const archivePath = path.join(utils.ARCHIVE_RESOURCES_PATH, repoArchiveName + '.zip');
 
         let repo;
 
-        beforeEach("Load Testing Repos", function(){
+        beforeEach('Load Testing Repos', function(){
 
             this.timeout(5000);
 
@@ -466,27 +466,27 @@ describe("Action Executor #core", function() {
                 repo = simpleGitCtor(repoPath);
             })
             .then(() => {
-                return repo.checkout(["-f", "master"]);
+                return repo.checkout(['-f', 'master']);
             })
             .then(() => {
-                return repo.clean("f", ["-d"]);
+                return repo.clean('f', ['-d']);
             });
 
         });
 
-        after("Clear Testing Repo", function() {
+        after('Clear Testing Repo', function() {
             return fs.remove(repoParentPath);
         })
 
-        describe("Stage", function() {
+        describe('Stage', function() {
 
-            it("stage single file", function() {
+            it('stage single file', function() {
 
-                let action = new actionTypes.StageAction(testRepoSetupName, ["newFile"]);
+                let action = new actionTypes.StageAction(testRepoSetupName, ['newFile']);
 
-                return fs.writeFile(path.join(repoPath, "newFile"), "newFileContent")
+                return fs.writeFile(path.join(repoPath, 'newFile'), 'newFileContent')
                 .then(() => {
-                    return fs.writeFile(path.join(repoPath, "otherFile"), "otherFileContent");
+                    return fs.writeFile(path.join(repoPath, 'otherFile'), 'otherFileContent');
                 })
                 .then(() => {
                     return action.executeBy(actionExecutor);
@@ -495,38 +495,38 @@ describe("Action Executor #core", function() {
                     return repo.status();
                 })
                 .should.eventually.deep.include({ 
-                    created: ["newFile"],
-                    not_added: ["otherFile"]
+                    created: ['newFile'],
+                    not_added: ['otherFile']
                 });
             });
 
-            it("stage multiple files", function() {
+            it('stage multiple files', function() {
                 
                 let action = new actionTypes.StageAction(
                     testRepoSetupName,
-                    [ "a.txt", "c.txt", "newFile", "d.txt", "renamed" ]
+                    [ 'a.txt', 'c.txt', 'newFile', 'd.txt', 'renamed' ]
                 );
 
-                return fs.readFile(path.join(repoPath, "a.txt"))
+                return fs.readFile(path.join(repoPath, 'a.txt'))
                 .then(aContent => {
                     return fs.writeFile(
-                        path.join(repoPath, "a.txt"),
-                        aContent + " appended to ensure changing"
+                        path.join(repoPath, 'a.txt'),
+                        aContent + ' appended to ensure changing'
                     );
                 })
                 .then(() => {
-                    return fs.remove(path.join(repoPath, "c.txt"));
+                    return fs.remove(path.join(repoPath, 'c.txt'));
                 })
                 .then(() => {
                     return fs.writeFile(
-                        path.join(repoPath, "newFile"),
-                        "some"
+                        path.join(repoPath, 'newFile'),
+                        'some'
                     );
                 })
                 .then(() => {
                     return fs.rename(
-                        path.join(repoPath, "d.txt"),
-                        path.join(repoPath, "renamed")
+                        path.join(repoPath, 'd.txt'),
+                        path.join(repoPath, 'renamed')
                     );
                 })
                 .then(() => {
@@ -540,33 +540,33 @@ describe("Action Executor #core", function() {
                     return status;
                 })
                 .should.eventually.deep.include({
-                    created: [ "newFile" ],
-                    deleted: [ "c.txt" ],
-                    modified: [ "a.txt" ],
-                    renamed: [ { from: "d.txt", to: "renamed" } ]
+                    created: [ 'newFile' ],
+                    deleted: [ 'c.txt' ],
+                    modified: [ 'a.txt' ],
+                    renamed: [ { from: 'd.txt', to: 'renamed' } ]
                 });
             });
 
-            it("stage with pattern", function() {
+            it('stage with pattern', function() {
                 
                 let action = new actionTypes.StageAction(
                     testRepoSetupName,
-                    ["*.txt"]
+                    ['*.txt']
                 );
 
                 return fs.writeFile(
-                    path.join(repoPath, "not_added"),
-                    "some"
+                    path.join(repoPath, 'not_added'),
+                    'some'
                 )
                 .then(() => {
                     return fs.writeFile(
-                        path.join(repoPath, "new1.txt"),
-                        "some"
+                        path.join(repoPath, 'new1.txt'),
+                        'some'
                     )
                     .then(() => {
                         return fs.writeFile(
-                            path.join(repoPath, "new2.txt"),
-                            "someOther"
+                            path.join(repoPath, 'new2.txt'),
+                            'someOther'
                         );
                     });
                 })
@@ -577,18 +577,18 @@ describe("Action Executor #core", function() {
                     return repo.status();
                 })
                 .should.eventually.deep.include({
-                    created: [ "new1.txt", "new2.txt" ]
+                    created: [ 'new1.txt', 'new2.txt' ]
                 });
 
             });
 
-            it("stage all", function() {
+            it('stage all', function() {
                 
                 let action = new actionTypes.StageAllAction(testRepoSetupName);
 
-                let fileNames = [ "a.txt", "c.txt", "d.txt", "e.txt", "f.txt" ];
-                let addedFolder = path.join(repoPath, "newFolder", "newFolder2");
-                let addedFile = path.join(addedFolder, "newFile")
+                let fileNames = [ 'a.txt', 'c.txt', 'd.txt', 'e.txt', 'f.txt' ];
+                let addedFolder = path.join(repoPath, 'newFolder', 'newFolder2');
+                let addedFile = path.join(addedFolder, 'newFile')
 
                 let removeAll = () => {
                     let removes = [];
@@ -602,7 +602,7 @@ describe("Action Executor #core", function() {
                 .then(() => {
                     return fs.ensureDir(addedFolder)
                     .then(() => {
-                        return fs.writeFile(addedFile, "some content");
+                        return fs.writeFile(addedFile, 'some content');
                     });
                 })
                 .then(() => {
@@ -613,18 +613,18 @@ describe("Action Executor #core", function() {
                 })
                 .should.eventually.deep.include({
                     deleted: fileNames,
-                    created: [ "newFolder/newFolder2/newFile" ]
+                    created: [ 'newFolder/newFolder2/newFile' ]
                 });
             });
 
-            it("stage not matching no error", function() {
+            it('stage not matching no error', function() {
                 
                 let action = new actionTypes.StageAction(
                     testRepoSetupName,
-                    [ "not_exists" ]
+                    [ 'not_exists' ]
                 );
 
-                return fs.writeFile(path.join(repoPath, "newFile"), "some content")
+                return fs.writeFile(path.join(repoPath, 'newFile'), 'some content')
                 .then(() => {
                     return action.executeBy(actionExecutor);
                 })
@@ -632,11 +632,46 @@ describe("Action Executor #core", function() {
                     return repo.status();
                 })
                 .should.eventually.deep.include({
-                    not_added: [ "newFile" ]
+                    not_added: [ 'newFile' ]
                 });
 
             });
 
         });
     });
+
+    describe.only('Repository Operations', function() {
+        describe('Load Reference Operation', function() {
+
+            describe('File System Aspect', function() {
+                it('load into empty', function() {
+                    utils.notImplemented();
+                });
+        
+                it('load into non-empty replace original', function() {
+                    utils.notImplemented();
+                });
+        
+                it('extra files are removed by loading', function() {
+                    utils.notImplemented();
+                });
+            });
+
+            describe('git Properties Aspect', function() {
+                it('work tree status recoverd', function() {
+                    utils.notImplemented();
+                });
+
+                it('stage status recoverd', function() {
+                    utils.notImplemented();
+                });
+
+                it('merge conflict status recoverd', function() {
+                    utils.notImplemented();
+                });
+            });
+
+        });
+        
+    })
 });
