@@ -26,6 +26,7 @@ describe('Action Executor #core', function() {
     const repoParentPath = path.join(utils.PLAYGROUND_PATH, 'repo');
     const repoArchiveName = 'action-executor';
     const workingPath = path.join(repoParentPath, repoArchiveName);    
+    const repoStorePath = path.join(utils.PLAYGROUND_PATH, 'repoStore');
 
     before(function() {
         let assetLoader = new AssetLoader(path.join(utils.RESOURCES_PATH, 'action-executor', 'resources'));
@@ -671,12 +672,12 @@ describe('Action Executor #core', function() {
             before('Load Reference Store', function() {
                 return zip.extractArchiveTo(
                     path.join(utils.ARCHIVE_RESOURCES_PATH, referenceName) + '.zip', 
-                    path.join(utils.PLAYGROUND_PATH, 'repoStore')
+                    repoStorePath
                 )
                 .then(() => {
                     return RepoReferenceManager.create(
                         workingPath,
-                        path.join(utils.PLAYGROUND_PATH, 'repoStore'),
+                        repoStorePath,
                         referenceName
                     );
                 });
@@ -685,6 +686,11 @@ describe('Action Executor #core', function() {
             beforeEach('Clean Working Directory', function() {
                 fs.emptyDirSync(workingPath);
             });
+
+            after('Clean Up', function() {
+                return fs.remove(workingPath)
+                .then(() => fs.remove(repoStorePath));
+            })
 
 
             describe('File System Aspect', function() {
