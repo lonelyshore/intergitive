@@ -2,12 +2,14 @@
 
 const path = require('path');
 const fs = require('fs-extra');
+const eol = require('../../lib/text-eol');
 const zip = require('../../lib/simple-archive');
 const simpleGitCtor = require('simple-git/promise');
 const utils = require('./test-utils');
 const AssetLoader = require('../../lib/asset-loader').AssetLoader;
 const ActionExecutor = require('../../lib/action-executor').ActionExecutor;
 const RepoVcsSetup = require('../../lib/config-level').RepoVcsSetup;
+const RepoReferenceManager = require('../../lib/repo-vcs').RepoReferenceManager;
 const actionTypes = require('../../lib/config-action');
 
 const chai = require('chai');
@@ -23,15 +25,15 @@ describe('Action Executor #core', function() {
     const testRepoSetupName = 'test-repo';
     const repoParentPath = path.join(utils.PLAYGROUND_PATH, 'repo');
     const repoArchiveName = 'action-executor';
-    const repoPath = path.join(repoParentPath, repoArchiveName);    
+    const workingPath = path.join(repoParentPath, repoArchiveName);    
 
     before(function() {
-        let assetLoader = new AssetLoader(path.join(utils.RESOURCES_PATH, 'action-executor/resources'));
+        let assetLoader = new AssetLoader(path.join(utils.RESOURCES_PATH, 'action-executor', 'resources'));
         assetLoader.setBundlePath();
 
         let repoSetups = {
             [testRepoSetupName]: new RepoVcsSetup(
-                path.relative(utils.PLAYGROUND_PATH, repoPath),
+                path.relative(utils.PLAYGROUND_PATH, workingPath),
                 '',
                 ''
             )
@@ -458,12 +460,12 @@ describe('Action Executor #core', function() {
 
             this.timeout(5000);
 
-            return fs.emptyDir(repoPath)
+            return fs.emptyDir(workingPath)
             .then(() => {
                 return zip.extractArchiveTo(archivePath, repoParentPath);
             })
             .then(() => {
-                repo = simpleGitCtor(repoPath);
+                repo = simpleGitCtor(workingPath);
             })
             .then(() => {
                 return repo.checkout(['-f', 'master']);
@@ -484,9 +486,9 @@ describe('Action Executor #core', function() {
 
                 let action = new actionTypes.StageAction(testRepoSetupName, ['newFile']);
 
-                return fs.writeFile(path.join(repoPath, 'newFile'), 'newFileContent')
+                return fs.writeFile(path.join(workingPath, 'newFile'), 'newFileContent')
                 .then(() => {
-                    return fs.writeFile(path.join(repoPath, 'otherFile'), 'otherFileContent');
+                    return fs.writeFile(path.join(workingPath, 'otherFile'), 'otherFileContent');
                 })
                 .then(() => {
                     return action.executeBy(actionExecutor);
@@ -507,26 +509,26 @@ describe('Action Executor #core', function() {
                     [ 'a.txt', 'c.txt', 'newFile', 'd.txt', 'renamed' ]
                 );
 
-                return fs.readFile(path.join(repoPath, 'a.txt'))
+                return fs.readFile(path.join(workingPath, 'a.txt'))
                 .then(aContent => {
                     return fs.writeFile(
-                        path.join(repoPath, 'a.txt'),
+                        path.join(workingPath, 'a.txt'),
                         aContent + ' appended to ensure changing'
                     );
                 })
                 .then(() => {
-                    return fs.remove(path.join(repoPath, 'c.txt'));
+                    return fs.remove(path.join(workingPath, 'c.txt'));
                 })
                 .then(() => {
                     return fs.writeFile(
-                        path.join(repoPath, 'newFile'),
+                        path.join(workingPath, 'newFile'),
                         'some'
                     );
                 })
                 .then(() => {
                     return fs.rename(
-                        path.join(repoPath, 'd.txt'),
-                        path.join(repoPath, 'renamed')
+                        path.join(workingPath, 'd.txt'),
+                        path.join(workingPath, 'renamed')
                     );
                 })
                 .then(() => {
@@ -536,7 +538,6 @@ describe('Action Executor #core', function() {
                     return repo.status();
                 })
                 .then(status => {
-                    let dummy = status;
                     return status;
                 })
                 .should.eventually.deep.include({
@@ -555,17 +556,17 @@ describe('Action Executor #core', function() {
                 );
 
                 return fs.writeFile(
-                    path.join(repoPath, 'not_added'),
+                    path.join(workingPath, 'not_added'),
                     'some'
                 )
                 .then(() => {
                     return fs.writeFile(
-                        path.join(repoPath, 'new1.txt'),
+                        path.join(workingPath, 'new1.txt'),
                         'some'
                     )
                     .then(() => {
                         return fs.writeFile(
-                            path.join(repoPath, 'new2.txt'),
+                            path.join(workingPath, 'new2.txt'),
                             'someOther'
                         );
                     });
@@ -587,13 +588,13 @@ describe('Action Executor #core', function() {
                 let action = new actionTypes.StageAllAction(testRepoSetupName);
 
                 let fileNames = [ 'a.txt', 'c.txt', 'd.txt', 'e.txt', 'f.txt' ];
-                let addedFolder = path.join(repoPath, 'newFolder', 'newFolder2');
+                let addedFolder = path.join(workingPath, 'newFolder', 'newFolder2');
                 let addedFile = path.join(addedFolder, 'newFile')
 
                 let removeAll = () => {
                     let removes = [];
                     fileNames.forEach(fileName => {
-                        removes.push(fs.remove(path.join(repoPath, fileName)));
+                        removes.push(fs.remove(path.join(workingPath, fileName)));
                     });
                     return Promise.all(removes);
                 };
@@ -624,7 +625,7 @@ describe('Action Executor #core', function() {
                     [ 'not_exists' ]
                 );
 
-                return fs.writeFile(path.join(repoPath, 'newFile'), 'some content')
+                return fs.writeFile(path.join(workingPath, 'newFile'), 'some content')
                 .then(() => {
                     return action.executeBy(actionExecutor);
                 })
@@ -641,11 +642,64 @@ describe('Action Executor #core', function() {
     });
 
     describe.only('Repository Operations', function() {
+
+        const referenceName = 'compare-vcs-local-ref';
+        let repoReferenceManager;
+
         describe('Load Reference Operation', function() {
+
+            before('Create Specialized ActionExecutor', function() {
+
+                let assetLoader = new AssetLoader(path.join(utils.RESOURCES_PATH, 'action-executor/resources'));
+                assetLoader.setBundlePath();
+
+                let repoSetups = {
+                    [testRepoSetupName]: new RepoVcsSetup(
+                        path.relative(utils.PLAYGROUND_PATH, workingPath),
+                        referenceName,
+                        ''
+                    )
+                };
+
+                actionExecutor = new ActionExecutor(utils.PLAYGROUND_PATH, assetLoader, repoSetups);
+            });
+
+            before('Initialize Working Path', function() {
+                return fs.ensureDir(workingPath);
+            })
+
+            before('Load Reference Store', function() {
+                return zip.extractArchiveTo(
+                    path.join(utils.ARCHIVE_RESOURCES_PATH, referenceName) + '.zip', 
+                    path.join(utils.PLAYGROUND_PATH, 'repoStore')
+                )
+                .then(() => {
+                    return RepoReferenceManager.create(
+                        workingPath,
+                        path.join(utils.PLAYGROUND_PATH, 'repoStore'),
+                        referenceName
+                    );
+                });
+            });
+
+            beforeEach('Clean Working Directory', function() {
+                fs.emptyDirSync(workingPath);
+            });
+
 
             describe('File System Aspect', function() {
                 it('load into empty', function() {
-                    utils.notImplemented();
+                    
+                    let action = new actionTypes.LoadReferenceAction(
+                        testRepoSetupName,
+                        'clean'
+                    );
+
+                    return action.executeBy(actionExecutor)
+                    .then(() => {
+                        return repoReferenceManager.equivaluent('clean');
+                    })
+                    .should.eventually.equal(true);
                 });
         
                 it('load into non-empty replace original', function() {
