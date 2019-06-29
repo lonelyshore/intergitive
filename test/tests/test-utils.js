@@ -11,14 +11,16 @@ function generateRepoHistorySummary(workingPath) {
 
     let refCommits = [];
     
-    return repo.raw(['show-ref', '-d'])
+    return repo.raw(['show-ref', '-d', '--head'])
     .then(result => {
-        let lines = result.split('\n');
-        lines.forEach(line => {
-            if (line !== null && line.length !== 0) {
-                refCommits.push(line);
-            }
-        });
+        if (result) {
+            let lines = result.split('\n');
+            lines.forEach(line => {
+                if (line !== null && line.length !== 0) {
+                    refCommits.push(line);
+                }
+            });
+        }
     })
     .then(() => {
         refCommits.sort((a, b) => a < b);
@@ -34,15 +36,17 @@ function generateIndexDiffSummary(workingPath) {
     let diffs = [];
     return repo.raw(['diff-index', '--cached', 'HEAD'])
     .then(result => {
-        let lines = result.split('\n');
-        lines.forEach(line => {
-            if (line !== null && line.length !== 0) {
-                let tokens = line.split('\t');
-                let filename = tokens[1];
-                let diff = tokens[0];
-                diffs.push(`${filename} ${diff}`);
-            }
-        })
+        if (result) {
+            let lines = result.split('\n');
+            lines.forEach(line => {
+                if (line !== null && line.length !== 0) {
+                    let tokens = line.split('\t');
+                    let filename = tokens[1];
+                    let diff = tokens[0];
+                    diffs.push(`${filename} ${diff}`);
+                }
+            })
+        }
     })
     .then(() => {
         diffs.sort((a, b) => a < b);
