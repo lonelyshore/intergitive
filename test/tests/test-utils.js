@@ -48,7 +48,7 @@ function generateIndexDiffSummary(workingPath) {
         diffs.sort((a, b) => a < b);
     })
     .then(() => {
-        return diff;
+        return diffs;
     })
 }
 
@@ -84,6 +84,7 @@ function getAllFilesRecursive(currentPath, shouldExplore) {
 }
 
 function generateWorktreeSummary(workingPath) {
+
     let repo = new simpleGitCtor(workingPath);
     let summary = [];
 
@@ -129,7 +130,7 @@ function areGitRepoSame(first, second) {
         return compareSummaries(summaries, 'RepoHistory');
     })
     .then(historySame => {
-        if (historySame) {
+        if (!historySame) {
             throw 'breaking';
         }
     })
@@ -147,7 +148,7 @@ function areGitRepoSame(first, second) {
             return false;
         }
         else {
-            console.error(err);
+            console.error(err, err.stack);
             return false;
         }
     })
