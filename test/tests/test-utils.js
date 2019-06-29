@@ -56,6 +56,12 @@ function generateIndexDiffSummary(workingPath) {
     })
 }
 
+function getRepoStatus(workingPath) {
+    let repo = new simpleGitCtor(workingPath);
+
+    return repo.raw(['status']);
+}
+
 function getAllFilesRecursive(currentPath, shouldExplore) {
 
     let results = [];
@@ -150,6 +156,20 @@ function areGitRepoSame(first, second) {
     })
     .then(summaries => {
         return compareSummaries(summaries, 'RepoIndex');
+    })
+    .then(indexSame => {
+        if (!indexSame) {
+            throw 'breaking';
+        }
+    })
+    .then(() => {
+        return Promise.all([
+            getRepoStatus(first),
+            getRepoStatus(second)
+        ])
+    })
+    .then(statuses => {
+        return statuses[0] === statuses[1];
     })
     .catch(err => {
         if (err === 'breaking') {
