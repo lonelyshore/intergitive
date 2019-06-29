@@ -62,10 +62,12 @@ function getAllFilesRecursive(currentPath, shouldExplore) {
         
         dirents.forEach(dirent => {
             let childPath = path.join(currentPath, dirent.name);
-            if (dirent.isDirectory() && shouldExplore(currentPath, dirent.name)) {
-                children.push(
-                    getAllFilesRecursive(childPath, shouldExplore)
-                );
+            if (dirent.isDirectory()) {
+                if (shouldExplore(currentPath, dirent.name)) {
+                    children.push(
+                        getAllFilesRecursive(childPath, shouldExplore)
+                    );
+                }
             }
             else {
                 results.push(childPath);
@@ -76,7 +78,7 @@ function getAllFilesRecursive(currentPath, shouldExplore) {
     })
     .then(childrenResults => {
         childrenResults.forEach(childResults => {
-            results.concat(childResults);
+            results = results.concat(childResults);
         })
 
         return results;
@@ -112,6 +114,8 @@ function generateWorktreeSummary(workingPath) {
                 })
             )
         })
+
+        return Promise.all(calcHashes);
     })
     .then(() => {
         summary.sort((a, b) => a < b);
@@ -156,7 +160,7 @@ function areGitRepoSame(first, second) {
 
 function compareSummaries(summaries, kind) {
     if (summaries.length !== 2) {
-        console.log(`[${kind}] summary of ${first} and ${second} should have length of 2`);
+        console.log(`[${kind}] summaries should have length of 2`);
         return false;
     }
 
@@ -164,7 +168,7 @@ function compareSummaries(summaries, kind) {
     let secondSummary = summaries[1];
 
     if (firstSummary.length !== secondSummary.length) {
-        console.log(`[${kind}] ${first} and ${second} have different number of entries`);
+        console.log(`[${kind}] have different number of entries`);
         return false;
     }
 
@@ -173,7 +177,7 @@ function compareSummaries(summaries, kind) {
         let secondEntry = secondSummary[i];
 
         if (firstEntry !== secondEntry) {
-            console.log(`[${kind}] ${first} and ${second} have at least one different entry`);
+            console.log(`[${kind}] have at least one different entry`);
             return false;
         }
     }
