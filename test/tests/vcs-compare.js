@@ -179,8 +179,14 @@ describe("VCS Compare #core", function() {
         let actionExecutor;
 
         let resetCheckRepo = function() {
-            return fs.emptyDir(checkedRepoPath)
+            return fs.remove(checkedRepoPath)
             .then(() => zip.extractArchiveTo(checkedArchivePath, workingPath))
+            .then(() => {
+                return fs.move(
+                    path.join(workingPath, 'compare-vcs'),
+                    checkedRepoPath
+                )
+            })
             .then(() => repo = simpleGit(checkedRepoPath));
         }
 
@@ -195,6 +201,12 @@ describe("VCS Compare #core", function() {
                 .then(() => fs.emptyDir(referenceStorePath))
                 .then(() => zip.extractArchiveTo(referenceArchivePath, referenceStorePath))
                 .then(() => zip.extractArchiveTo(checkedArchivePath, workingPath))
+                .then(() => {
+                    return fs.move(
+                        path.join(workingPath, 'compare-vcs'),
+                        checkedRepoPath
+                    );
+                })
             })
             .then(() => {
                 return vcs.RepoReferenceManager.create(checkedRepoPath, referenceStorePath, referenceStoreName)
