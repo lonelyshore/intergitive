@@ -17,21 +17,18 @@ const RepoSetup = require("../lib/config-level").RepoVcsSetup;
  * @returns {Promise<any>}
  */
 
- /**
-  * @callback InitializeRepoSaverCb
-  * @param {string} sourceRepoPath the path to the repository that will be saved
-  * @returns {Promise<any>}
-  */
-
 /**
  * 
- * @callback ResetRepoCb
+ * @callback PreStageCb
+ * @param {string} sourceRepoPath
+ * @param {string} stageName
  * @returns {Promise<any>}
  */
 
  /**
-  * @callback SaveRepoCb
-  * @param {string} stepName
+  * @callback PostStageCb
+  * @param {string} sourceRepoPath
+  * @param {string} stageName
   * @returns {Promise<any>}
   */
 
@@ -39,9 +36,8 @@ const RepoSetup = require("../lib/config-level").RepoVcsSetup;
   * @typedef Options
   * @type {Object}
   * @property {InitializeRepoCb} initializeRepo
-  * @property {InitializeRepoSaverCb} initializeRepoSaver
-  * @property {ResetRepoCb} resetRepo
-  * @property {SaveRepoCb} saveRepo
+  * @property {PreStageCb} preStage
+  * @property {PostStageCb} postStage
   */
 
 /**
@@ -53,13 +49,6 @@ const RepoSetup = require("../lib/config-level").RepoVcsSetup;
 module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPath, options) {
 
     const sourceRepoPath = path.join(workingPath, "repo");
-    const refStorePath = path.join(workingPath, "repo-store");
-    const refName = "generated-ref-repo";
-
-    // RefMaker.create(sourceRepoPath, refStorePath, refName)
-    // .then(result => {
-    //     refMaker = result;
-    // });
 
     const assetLoader = new AssetLoader(assetStorePath);
     assetLoader.setBundlePath();
@@ -81,19 +70,7 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
     Promise.resolve()
     .then(() => {
         return fs.emptyDir(workingPath)
-        .then(() => {
-            return fs.emptyDir(refStorePath);
-        })
         .then(() => options.initializeRepo(sourceRepoPath));
-    })
-    .then(() => {
-        if (options.initializeRepoSaver) {
-            return options.initializeRepoSaver(sourceRepoPath);
-        }
-        else {
-            return null;
-        }
-
     })
     .then(() => {
         return fs.readFile(yamlPath)
@@ -111,8 +88,12 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
     
         config.stages.forEach(stage => {
     
-            if (config.perStageReset && options.resetRepo) {
-                executions = executions.then(() => options.resetRepo());
+            if (options.preStage) {
+                executions = executions.then(() => options.preStage())
+                .catch(err => {
+                    console.error(`[Pre-${stage.name}] ${err.message}`);
+                    throw err;                    
+                });
             }
     
             let contents = stage.contents;
@@ -135,15 +116,15 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
                 throw err;
             });;
     
-            executions = executions.then(() => {
-                if (options.saveRepo) {
-                    return options.saveRepo(stage.name)
+            if (options.postStage) {
+                executions = executions.then(() => {
+                    return options.postStage(stage.name)
                     .catch(err => {
-                        console.error(`[save ${stage.name}] ${err.message}`);
+                        console.error(`[Post-${stage.name}] ${err.message}`);
                         throw err;
                     });
-                }
-            });
+                });
+            }
         })
     
         return executions;
