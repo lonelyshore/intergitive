@@ -43,11 +43,6 @@ let postStage = (sourceRepoPath, stageName) => {
     return refMaker.save(stageName);
 }
 
-let initializeRepo = (sourceRepoPath) => {
-    return fs.emptyDir(sourceRepoPath)
-
-}
-
 require("../../dev/generate-base-repo").generateBaseRepo(
     workingPath,
     assetStorePath,
