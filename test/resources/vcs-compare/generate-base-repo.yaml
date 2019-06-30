@@ -19,6 +19,13 @@ stages:
         - "--local"        
         - user.email
         - test-repo@some.mail.server
+    - !git
+      repoSetupName: repo
+      arguments:
+        - config
+        - "--local"
+        - core.autocrlf
+        - input
   - name: base1
     contents:
     - !writeFile
