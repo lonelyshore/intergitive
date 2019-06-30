@@ -1,0 +1,6 @@
+Nothing is decompressed:
+https://github.com/cthackers/adm-zip/issues/274
+
+Corrupted header when decompressing using 7-zip
+https://github.com/cthackers/adm-zip/issues/269
+https://github.com/cthackers/adm-zip/pull/267

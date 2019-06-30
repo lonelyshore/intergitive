@@ -23,23 +23,30 @@ describe.only("Test Utils", function() {
         const testdataPath =
             path.join(testdataBasePath, testdataName);
 
-        const workingPath =
-            path.join(utils.PLAYGROUND_PATH, 'test-folder-equality');
+        let wait = (resolve, shouldWait) => {
+            if (shouldWait()) {
+                setTimeout(() => wait(resolve), 10);
+            }
+            else {
+                resolve();
+            }
+        }
 
-        const firstOperandName = 'first';
-        const secondOperandName = 'second';
+        after('Clean up playground', function() {
+            return fs.remove(utils.PLAYGROUND_PATH);
+        });
 
-        let testdataEntryNames = [];
+        it('GENERATE TESTS', function() {
 
-        before('Initialize playground', function() {
-            return fs.emptyDir(utils.PLAYGROUND_PATH);
-        })
+            let testdataEntryNames = [];
 
-        before('Load testdata', function() {
-            return fs.emptyDir(testdataBasePath)
+            return fs.emptyDir(utils.PLAYGROUND_PATH)
+            .then(() => {
+                return fs.emptyDir(testdataBasePath)
+            })
             .then(() => {
                 return zip.extractArchiveTo(
-                    path.join(utils.ARCHIVE_RESOURCES_PATH, testdataName),
+                    path.join(utils.ARCHIVE_RESOURCES_PATH, testdataName) + '.zip',
                     testdataBasePath
                 );
             })
@@ -48,80 +55,120 @@ describe.only("Test Utils", function() {
                 .then(childNames => {
                     childNames.forEach(childName => {
                         if (childName.endsWith('.zip')) {
-                            testdataEntryNames.push(childName);
+                            testdataEntryNames.push(childName.replace(/\.zip$/, ''));
                         }
                     });
                 });
-            });
-        });
-
-        after('Clean up playground', function() {
-            return fs.remove(utils.PLAYGROUND_PATH);
-        });
-
-        beforeEach('Clean up working path', function() {
-            return fs.emptyDir(workingPath);
-        })
-
-        function LoadsRepositoryFromDataset(repoName, loadedName) {
-            return zip.extractArchiveTo(
-                path.join(testdataPath, repoName),
-                workingPath
-            )
-            .then(() => {
-                return fs.move(
-                    path.join(workingPath, repoName),
-                    path.join(workingPath, loadedName)
-                )
-            });
-        }
-
-        function LoadsFirstAndSecond(firstSourceName, secondSourceName) {
-            return LoadsRepositoryFromDataset(firstSourceName, firstOperandName)
-            .then(() => {
-                return LoadsRepositoryFromDataset(secondSourceName, secondOperandName);
-            });
-        }
-
-        describe("Equal", function() {
-
-            testdataEntryNames.forEach(testdataEntryName => {
-                it(`${testdataEntryName}`, function() {
-                    return LoadsFirstAndSecond(testdataEntryName, testdataEntryName)
-                    .then(() => {
-                        return utils.areDirectorySame(
-                            path.join(workingPath, firstOperandName),
-                            path.join(workingPath, secondOperandName)
-                        );
-                    })
-                    .should.eventually.equal(true, 'Expect duplicated repositories equal to each other');
-                })
             })
-
+            .then(() => {
+                createTests(testdataEntryNames);
+            });
         });
+    });
+});
 
-        describe("Different", function() {
+function createTests(testdataEntryNames) {
 
-            for (let i = 0; i < testdataEntryNames.length; i++) {
-                for (let j = i + 1; j < testdataEntryNames.length; j++) {
-                    let firstName = testdataEntryNames[i];
-                    let secondName = testdataEntryNames[j];
+    describe("Test Utils", function() {
+        describe("Folder Equality", function() {
 
-                    it(`${firstName} V.S. ${secondName}`, function() {
-                        return LoadsFirstAndSecond(
-                            firstName,
-                            secondName
-                        )
+            const testdataName = 'compare-vcs-version-archives';
+            const testdataBasePath =
+                path.join(utils.PLAYGROUND_PATH, 'testdata');
+            const testdataPath =
+                path.join(testdataBasePath, testdataName);
+    
+            const workingPath =
+                path.join(utils.PLAYGROUND_PATH, 'test-folder-equality');
+    
+            const firstOperandName = 'first';
+            const secondOperandName = 'second';
+
+            before('Initialize playground', function() {
+                return fs.emptyDir(utils.PLAYGROUND_PATH);
+            })
+    
+            before('Load testdata', function() {
+                return fs.emptyDir(testdataBasePath)
+                .then(() => {
+                    return zip.extractArchiveTo(
+                        path.join(utils.ARCHIVE_RESOURCES_PATH, testdataName) + '.zip',
+                        testdataBasePath
+                    );
+                });
+            });
+    
+            beforeEach('Clean up working path', function() {
+                return fs.emptyDir(workingPath);
+            })
+    
+            after('Clean up playground', function() {
+                return fs.remove(utils.PLAYGROUND_PATH);
+            });
+
+            function LoadsRepositoryFromDataset(repoName, loadedName) {
+                return zip.extractArchiveTo(
+                    path.join(testdataPath, repoName) + '.zip',
+                    workingPath
+                )
+                .catch(err => {
+                    let dummy = 0;
+                })
+                .then(() => {
+                    return fs.move(
+                        path.join(workingPath, repoName),
+                        path.join(workingPath, loadedName)
+                    )
+                });
+            }
+    
+            function LoadsFirstAndSecond(firstSourceName, secondSourceName) {
+                return LoadsRepositoryFromDataset(firstSourceName, firstOperandName)
+                .then(() => {
+                    return LoadsRepositoryFromDataset(secondSourceName, secondOperandName);
+                });
+            }
+
+            describe("Equal", function() {
+                testdataEntryNames.forEach(testdataEntryName => {
+                    it(`${testdataEntryName}`, function() {
+
+                        return LoadsFirstAndSecond(testdataEntryName, testdataEntryName)
                         .then(() => {
                             return utils.areDirectorySame(
                                 path.join(workingPath, firstOperandName),
                                 path.join(workingPath, secondOperandName)
-                            )
+                            );
                         })
-                        .should.eventually.equal(false, 'Expect different repositories are not equal');
+                        .should.eventually.equal(true, 'Expect duplicated repositories equal to each other');
                     })
+                })
+    
+            });
+    
+            describe.skip("Different", function() {
+    
+                for (let i = 0; i < testdataEntryNames.length; i++) {
+                    for (let j = i + 1; j < testdataEntryNames.length; j++) {
+                        let firstName = testdataEntryNames[i];
+                        let secondName = testdataEntryNames[j];
+    
+                        it(`${firstName} V.S. ${secondName}`, function() {
+                            return LoadsFirstAndSecond(
+                                firstName,
+                                secondName
+                            )
+                            .then(() => {
+                                return utils.areDirectorySame(
+                                    path.join(workingPath, firstOperandName),
+                                    path.join(workingPath, secondOperandName)
+                                )
+                            })
+                            .should.eventually.equal(false, 'Expect different repositories are not equal');
+                        })
+                    }
                 }
-            }
+            });
         });
-    });
-});
+    });    
+}
