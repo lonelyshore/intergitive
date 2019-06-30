@@ -2,6 +2,7 @@
 
 const fs = require("fs-extra");
 const path = require("path");
+const utils = require('../tests/test-utils');
 const zip = require("../../lib/simple-archive");
 const RefMaker = require('../../lib/repo-vcs').RepoReferenceMaker;
 
@@ -23,9 +24,18 @@ let createRefMaker = (sourceRepoPath) => {
 }
 
 let resetRepo = (sourceRepoPath) => {
-    return fs.emptyDir(sourceRepoPath)
+    return fs.remove(sourceRepoPath)
     .then(() => {
-        return zip.extractArchiveTo(path.join(resoruceBasePath, "repo-archive", "compare-vcs.zip"), path.dirname(sourceRepoPath));
+        return zip.extractArchiveTo(
+            path.join(utils.ARCHIVE_RESOURCES_PATH, "compare-vcs.zip"),
+            path.dirname(sourceRepoPath)
+        );
+    })
+    .then(() => {
+        return fs.move(
+            path.join(path.dirname(sourceRepoPath), 'compare-vcs'),
+            sourceRepoPath
+        )
     });
 }
 

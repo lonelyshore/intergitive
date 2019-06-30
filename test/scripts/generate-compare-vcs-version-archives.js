@@ -2,6 +2,7 @@
 
 const fs = require("fs-extra");
 const path = require("path");
+const utils = require('../tests/test-utils');
 const zip = require("../../lib/simple-archive");
 
 const resoruceBasePath = path.resolve(__dirname, "../resources");
@@ -13,9 +14,18 @@ const archivePath = path.join(workingPath, "compare-vcs-version-archives");
 
 
 let resetRepo = (sourceRepoPath) => {
-    return fs.emptyDir(sourceRepoPath)
+    return fs.remove(sourceRepoPath)
     .then(() => {
-        return zip.extractArchiveTo(path.join(resoruceBasePath, "repo-archive", "compare-vcs.zip"), path.dirname(sourceRepoPath));
+        return zip.extractArchiveTo(
+            path.join(utils.ARCHIVE_RESOURCES_PATH, "compare-vcs.zip"),
+            path.dirname(sourceRepoPath)
+        );
+    })
+    .then(() => {
+        return fs.move(
+            path.join(path.dirname(sourceRepoPath), 'compare-vcs'),
+            sourceRepoPath
+        )
     });
 }
 
@@ -50,6 +60,6 @@ require("../../dev/generate-base-repo").generateBaseRepo(
 .then(() => {
     return zip.archivePathTo(
         archivePath,
-        path.join(archivePath) + '.zip'
+        archivePath + '.zip'
     );
 });
