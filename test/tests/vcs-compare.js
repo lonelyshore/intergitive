@@ -81,8 +81,7 @@ describe("VCS Compare #core", function() {
         const referenceStorePath = path.join(workingPath, "repo-store");
         const referenceStoreName = "compare-vcs-grow-local-ref";
 
-        const archivePath = path.join(utils.RESOURCES_PATH, "repo-archive");
-        const referenceArchivePath = path.join(archivePath, "compare-vcs-grow-local-ref.zip");
+        const referenceArchivePath = path.join(utils.ARCHIVE_RESOURCES_PATH, referenceStoreName + '.zip');
 
         let repo;
         let vcsManager;
