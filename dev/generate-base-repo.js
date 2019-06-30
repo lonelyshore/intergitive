@@ -9,7 +9,6 @@ const ActionExecutor = require("./action-executor").DevActionExecutor;
 const Action = require("../lib/config-action").Action;
 const AssetLoader = require("../lib/asset-loader").AssetLoader;
 const RepoSetup = require("../lib/config-level").RepoVcsSetup;
-const RefMaker = require("../lib/repo-vcs").RepoReferenceMaker;
 
 /**
  * 
@@ -17,17 +16,50 @@ const RefMaker = require("../lib/repo-vcs").RepoReferenceMaker;
  * @param {string} sourceRepoPath the path to the generated repository
  * @returns {Promise<any>}
  */
+
+ /**
+  * @callback InitializeRepoSaverCb
+  * @param {string} sourceRepoPath the path to the repository that will be saved
+  * @returns {Promise<any>}
+  */
+
+/**
+ * 
+ * @callback ResetRepoCb
+ * @returns {Promise<any>}
+ */
+
+ /**
+  * @callback SaveRepoCb
+  * @param {string} stepName
+  * @returns {Promise<any>}
+  */
+
+ /**
+  * @typedef Options
+  * @type {Object}
+  * @property {InitializeRepoCb} initializeRepo
+  * @property {InitializeRepoSaverCb} initializeRepoSaver
+  * @property {ResetRepoCb} resetRepo
+  * @property {SaveRepoCb} saveRepo
+  */
+
 /**
  * @param {string} workingPath the working directory
  * @param {string} assetStorePath the path to the asset store
  * @param {string} yamlPath the path to the yaml config file
- * @param {InitializeRepoCb} initializeRepo
+ * @param {Options} options
  */
-module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPath, initializeRepo) {
+module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPath, options) {
 
     const sourceRepoPath = path.join(workingPath, "repo");
     const refStorePath = path.join(workingPath, "repo-store");
     const refName = "generated-ref-repo";
+
+    // RefMaker.create(sourceRepoPath, refStorePath, refName)
+    // .then(result => {
+    //     refMaker = result;
+    // });
 
     const assetLoader = new AssetLoader(assetStorePath);
     assetLoader.setBundlePath();
@@ -46,21 +78,22 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
         repoSetups
     );
     
-    let refMaker;
-    
     Promise.resolve()
     .then(() => {
         return fs.emptyDir(workingPath)
         .then(() => {
             return fs.emptyDir(refStorePath);
         })
-        .then(() => initializeRepo(sourceRepoPath));
+        .then(() => options.initializeRepo(sourceRepoPath));
     })
     .then(() => {
-        return RefMaker.create(sourceRepoPath, refStorePath, refName)
-        .then(result => {
-            refMaker = result;
-        });
+        if (options.initializeRepoSaver) {
+            return options.initializeRepoSaver(sourceRepoPath);
+        }
+        else {
+            return null;
+        }
+
     })
     .then(() => {
         return fs.readFile(yamlPath)
@@ -78,8 +111,8 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
     
         config.stages.forEach(stage => {
     
-            if (config.perStageReset) {
-                executions = executions.then(() => initializeRepo(sourceRepoPath));
+            if (config.perStageReset && options.resetRepo) {
+                executions = executions.then(() => options.resetRepo());
             }
     
             let contents = stage.contents;
@@ -103,11 +136,13 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
             });;
     
             executions = executions.then(() => {
-                return refMaker.save(stage.name)
-                .catch(err => {
-                    console.error(`[save ${stage.name}] ${err.message}`);
-                    throw err;
-                });
+                if (options.saveRepo) {
+                    return options.saveRepo(stage.name)
+                    .catch(err => {
+                        console.error(`[save ${stage.name}] ${err.message}`);
+                        throw err;
+                    });
+                }
             });
         })
     
