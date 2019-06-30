@@ -1,4 +1,3 @@
-perStageReset: false
 stages:
   - name: init
     contents:
