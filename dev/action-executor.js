@@ -73,10 +73,10 @@ class DevActionExecutor extends ActionExecutor {
         });
     }
 
-    executeGitCommand(repoSetupName, command, commandArguments) {
+    executeGitCommand(repoSetupName, commandArguments) {
         return this[getRepo](repoSetupName)
         .then(repo => {
-            return repo[command](...commandArguments);
+            return repo.raw(commandArguments);
         })
         .catch(err => {
             console.error(`[executeGitCommand] error occured when executing ${command} with arguments [${commandArguments.join([","])}]\nerror: ` + err.message);

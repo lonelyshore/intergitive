@@ -140,14 +140,11 @@ let gitCommandActionType = new yaml.Type(
             return data !== null
                 && "repoSetupName" in data
                 && isString(data.repoSetupName)
-                && "command" in data
-                && isString(data.command);
         },
 
         construct: function(data) {
             return new actionConfig.GitCommandAction(
                 data.repoSetupName,
-                data.command,
                 data.arguments || []
             );
         },
