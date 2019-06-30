@@ -111,9 +111,6 @@ function createTests(testdataEntryNames) {
                     path.join(testdataPath, repoName) + '.zip',
                     workingPath
                 )
-                .catch(err => {
-                    let dummy = 0;
-                })
                 .then(() => {
                     return fs.move(
                         path.join(workingPath, repoName),
@@ -146,7 +143,7 @@ function createTests(testdataEntryNames) {
     
             });
     
-            describe.skip("Different", function() {
+            describe("Different", function() {
     
                 for (let i = 0; i < testdataEntryNames.length; i++) {
                     for (let j = i + 1; j < testdataEntryNames.length; j++) {

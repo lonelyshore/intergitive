@@ -183,8 +183,11 @@ function areGitRepoSame(first, second) {
 }
 
 function compareSummaries(summaries, kind) {
+    let isDebug = false;
+
     if (summaries.length !== 2) {
-        console.log(`[${kind}] summaries should have length of 2`);
+        if (isDebug)
+            console.log(`[${kind}] summaries should have length of 2`);
         return false;
     }
 
@@ -192,7 +195,8 @@ function compareSummaries(summaries, kind) {
     let secondSummary = summaries[1];
 
     if (firstSummary.length !== secondSummary.length) {
-        console.log(`[${kind}] have different number of entries`);
+        if (isDebug)
+            console.log(`[${kind}] have different number of entries`);
         return false;
     }
 
@@ -201,7 +205,8 @@ function compareSummaries(summaries, kind) {
         let secondEntry = secondSummary[i];
 
         if (firstEntry !== secondEntry) {
-            console.log(`[${kind}] have at least one different entry`);
+            if (isDebug)
+                console.log(`[${kind}] have at least one different entry`);
             return false;
         }
     }
