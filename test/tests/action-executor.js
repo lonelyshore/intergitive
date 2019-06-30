@@ -642,7 +642,7 @@ describe('Action Executor #core', function() {
         });
     });
 
-    describe.only('Repository Operations', function() {
+    describe.skip('Repository Operations', function() {
 
         const referenceName = 'compare-vcs-local-ref';
         let repoReferenceManager;

@@ -10,13 +10,12 @@ const assetStorePath = path.join(resoruceBasePath, "vcs-compare", "assets");
 const yamlSubPath = path.join("vcs-compare", "generate-testing-ref-repo.yaml");
 
 const workingPath = path.resolve(__dirname, "../playground/generate-vcs-repo");
+const refStorePath = path.join(workingPath, "repo-store");
+const refName = 'compare-vcs-local-ref';
 
 let refMaker;
 
 let createRefMaker = (sourceRepoPath) => {
-    const refStorePath = path.join(workingPath, "repo-store");
-    const refName = 'generate-ref-repo';
-
     return RefMaker.create(sourceRepoPath, refStorePath, refName)
     .then(result => {
         refMaker = result;
@@ -52,4 +51,10 @@ require("../../dev/generate-base-repo").generateBaseRepo(
         preStage: preStage,
         postStage: postStage
     }
-);
+)
+.then(() => {
+    return zip.archivePathTo(
+        path.join(refStorePath, refName),
+        path.join(workingPath, refName) + '.zip'
+    );
+});

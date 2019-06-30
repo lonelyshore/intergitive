@@ -67,7 +67,7 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
         repoSetups
     );
     
-    Promise.resolve()
+    return Promise.resolve()
     .then(() => {
         return fs.emptyDir(workingPath)
         .then(() => options.initializeRepo(sourceRepoPath));
