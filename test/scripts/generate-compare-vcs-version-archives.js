@@ -26,6 +26,10 @@ let initializeRepo = (sourceRepoPath) => {
     });
 }
 
+let preStage = (sourceRepoPath, stageName) => {
+    return resetRepo(sourceRepoPath);
+}
+
 let postStage = (sourceRepoPath, stageName) => {
     return zip.archivePathTo(
         sourceRepoPath,
@@ -39,6 +43,7 @@ require("../../dev/generate-base-repo").generateBaseRepo(
     path.join(resoruceBasePath, yamlSubPath),
     {
         initializeRepo: initializeRepo,
+        preStage: preStage,
         postStage: postStage
     }
 )
