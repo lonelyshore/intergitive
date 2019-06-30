@@ -55,7 +55,7 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
     
     const repoSetups = {
         repo: new RepoSetup(
-            sourceRepoPath,
+            path.relative(workingPath, sourceRepoPath),
             undefined,
             undefined
         )
@@ -89,9 +89,10 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
         config.stages.forEach(stage => {
     
             if (options.preStage) {
-                executions = executions.then(() => options.preStage())
+                executions = executions.then(() => options.preStage(sourceRepoPath, stage.name))
                 .catch(err => {
                     console.error(`[Pre-${stage.name}] ${err.message}`);
+                    console.error(err.stack);
                     throw err;                    
                 });
             }
@@ -118,7 +119,7 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
     
             if (options.postStage) {
                 executions = executions.then(() => {
-                    return options.postStage(stage.name)
+                    return options.postStage(sourceRepoPath, stage.name)
                     .catch(err => {
                         console.error(`[Post-${stage.name}] ${err.message}`);
                         throw err;
@@ -145,6 +146,7 @@ function executeContents(contents, actionExecutor) {
                 return item.executeBy(actionExecutor)
                 .catch(err => {
                     console.error(`[execute ${item.klass}] ${err.message}`);
+                    console.error(err.stack);
                     throw err;
                 });
             });

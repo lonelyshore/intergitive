@@ -48,7 +48,6 @@ require("../../dev/generate-base-repo").generateBaseRepo(
     {
         initializeRepo: initializeRepo,
         preStage: preStage,
-        postStage: postStage
-        
+        postStage: postStage,
     }
 );
