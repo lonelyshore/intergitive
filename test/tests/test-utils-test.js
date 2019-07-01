@@ -14,22 +14,13 @@ const zip = require('../../lib/simple-archive');
 chai.use(chaiAsPromised);
 chai.should();
 
-describe.only('Prepare test-utils tests', function() {
+const testdataName = 'compare-vcs-version-archives';
+const testdataBasePath =
+    path.join(utils.PLAYGROUND_PATH, 'testdata');
+const testdataPath =
+    path.join(testdataBasePath, testdataName);
 
-    const testdataName = 'compare-vcs-version-archives';
-    const testdataBasePath =
-        path.join(utils.PLAYGROUND_PATH, 'testdata');
-    const testdataPath =
-        path.join(testdataBasePath, testdataName);
-
-    let wait = (resolve, shouldWait) => {
-        if (shouldWait()) {
-            setTimeout(() => wait(resolve), 10);
-        }
-        else {
-            resolve();
-        }
-    }
+describe('Prepare test-utils tests', function() {
 
     after('Clean up playground', function() {
         return fs.remove(utils.PLAYGROUND_PATH);
@@ -70,12 +61,6 @@ function createTests(testdataEntryNames) {
 
     describe("Test Utils", function() {
         describe("Folder Equality", function() {
-
-            const testdataName = 'compare-vcs-version-archives';
-            const testdataBasePath =
-                path.join(utils.PLAYGROUND_PATH, 'testdata');
-            const testdataPath =
-                path.join(testdataBasePath, testdataName);
     
             const workingPath =
                 path.join(utils.PLAYGROUND_PATH, 'test-folder-equality');
