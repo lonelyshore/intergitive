@@ -14,58 +14,57 @@ const zip = require('../../lib/simple-archive');
 chai.use(chaiAsPromised);
 chai.should();
 
-describe.only("Test Utils", function() {
-    describe("Folder Equality", function() {
+describe.only('Prepare test-utils tests', function() {
 
-        const testdataName = 'compare-vcs-version-archives';
-        const testdataBasePath =
-            path.join(utils.PLAYGROUND_PATH, 'testdata');
-        const testdataPath =
-            path.join(testdataBasePath, testdataName);
+    const testdataName = 'compare-vcs-version-archives';
+    const testdataBasePath =
+        path.join(utils.PLAYGROUND_PATH, 'testdata');
+    const testdataPath =
+        path.join(testdataBasePath, testdataName);
 
-        let wait = (resolve, shouldWait) => {
-            if (shouldWait()) {
-                setTimeout(() => wait(resolve), 10);
-            }
-            else {
-                resolve();
-            }
+    let wait = (resolve, shouldWait) => {
+        if (shouldWait()) {
+            setTimeout(() => wait(resolve), 10);
         }
+        else {
+            resolve();
+        }
+    }
 
-        after('Clean up playground', function() {
-            return fs.remove(utils.PLAYGROUND_PATH);
-        });
+    after('Clean up playground', function() {
+        return fs.remove(utils.PLAYGROUND_PATH);
+    });
 
-        it('GENERATE TESTS', function() {
+    it('GENERATE TESTS', function() {
 
-            let testdataEntryNames = [];
+        let testdataEntryNames = [];
 
-            return fs.emptyDir(utils.PLAYGROUND_PATH)
-            .then(() => {
-                return fs.emptyDir(testdataBasePath)
-            })
-            .then(() => {
-                return zip.extractArchiveTo(
-                    path.join(utils.ARCHIVE_RESOURCES_PATH, testdataName) + '.zip',
-                    testdataBasePath
-                );
-            })
-            .then(() => {
-                return fs.readdir(testdataPath)
-                .then(childNames => {
-                    childNames.forEach(childName => {
-                        if (childName.endsWith('.zip')) {
-                            testdataEntryNames.push(childName.replace(/\.zip$/, ''));
-                        }
-                    });
+        return fs.emptyDir(utils.PLAYGROUND_PATH)
+        .then(() => {
+            return fs.emptyDir(testdataBasePath)
+        })
+        .then(() => {
+            return zip.extractArchiveTo(
+                path.join(utils.ARCHIVE_RESOURCES_PATH, testdataName) + '.zip',
+                testdataBasePath
+            );
+        })
+        .then(() => {
+            return fs.readdir(testdataPath)
+            .then(childNames => {
+                childNames.forEach(childName => {
+                    if (childName.endsWith('.zip')) {
+                        testdataEntryNames.push(childName.replace(/\.zip$/, ''));
+                    }
                 });
-            })
-            .then(() => {
-                createTests(testdataEntryNames);
             });
+        })
+        .then(() => {
+            createTests(testdataEntryNames);
         });
     });
 });
+
 
 function createTests(testdataEntryNames) {
 
