@@ -132,7 +132,8 @@ function createTests(testdataEntryNames) {
             .then(() => {
                 return utils.areDirectorySame(
                     originalPath,
-                    restoredPath
+                    restoredPath,
+                    true
                 ).should.eventually.equal(true, `expect equal for ${testdataEntryName}`);
             })
         }
@@ -153,7 +154,7 @@ function createTests(testdataEntryNames) {
                         return refMaker.save('backup');
                     })
                     .then(() => {
-                        return fs.emptyDir(path.join(workingPath, restoredName))
+                        return fs.ensureDir(path.join(workingPath, restoredName))
                         .then(() => {
                             return vcs.RepoReferenceManager.create(
                                 path.join(workingPath, restoredName),
@@ -181,6 +182,43 @@ function createTests(testdataEntryNames) {
 
         describe('Save & Restore Repo Checkpoints', function() {
 
+            describe('Save & Restore Equal Original', function() {
+
+                function SaveAndRestore(workingPath, originalName, restoredName) {
+                    let storeName = 'backup';
+                    let checkpointName = 'backup';
+                    return vcs.RepoCheckpointManager.create(
+                        path.join(workingPath, originalName),
+                        repoStorePath,
+                        storeName
+                    )
+                    .then(checkPointManager => {
+                        return checkPointManager.backup(checkpointName);
+                    })
+                    .then(() => {
+                        return fs.ensureDir(path.join(workingPath, restoredName))
+                        .then(() => {
+                            return vcs.RepoCheckpointManager.create(
+                                path.join(workingPath, restoredName),
+                                repoStorePath,
+                                storeName
+                            )
+                        })
+                    })
+                    .then(checkPointManager => {
+                        return checkPointManager.restore(checkpointName);
+                    })
+                }
+
+                testdataEntryNames.forEach(testdataEntryName => {
+                    it(`${testdataEntryName}`, function() {
+                        return SaveAndRestoreEqualOriginal(
+                            testdataEntryName,
+                            SaveAndRestore
+                        );
+                    })
+                })
+            })
         });
         
     });
