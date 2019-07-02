@@ -19,7 +19,7 @@ const testdataBasePath =
 const testdataPath =
     path.join(testdataBasePath, testdataName);
 
-describe.only('Prepare Repo Save & Restore Tests', function() {
+describe('Prepare Repo Save & Restore Tests', function() {
 
     after('Clean up playground', function() {
         return fs.remove(utils.PLAYGROUND_PATH);
@@ -64,6 +64,8 @@ function createTests(testdataEntryNames) {
 
     describe('Save & Restore Repo', function() {
 
+        this.timeout(4000);
+
         const workingPath =
             path.join(utils.PLAYGROUND_PATH, 'test-folder-equality');
 
@@ -73,7 +75,7 @@ function createTests(testdataEntryNames) {
         const originalPath = path.join(workingPath, originalName);
         const restoredPath = path.join(workingPath, restoredName);
 
-        const repoStorePath = path.join(utils.PLAYGROUND_PATH, 'repoStores');
+        const repoStorePath = path.join(workingPath, 'repoStores');
 
         before('Initialize playground', function() {
             return fs.emptyDir(utils.PLAYGROUND_PATH);
@@ -166,7 +168,6 @@ function createTests(testdataEntryNames) {
                 }
 
                 testdataEntryNames.forEach((testdataEntryName, index) => {
-                    if (index > 0) return;
                     it(`${testdataEntryName}`, function() {
                         return SaveAndRestoreEqualOriginal(
                             testdataEntryName,
