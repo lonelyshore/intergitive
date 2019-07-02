@@ -165,10 +165,11 @@ function createTests(testdataEntryNames) {
                     })
                 }
 
-                testdataEntryNames.forEach(testdataEntryName, () => {
+                testdataEntryNames.forEach((testdataEntryName, index) => {
+                    if (index > 0) return;
                     it(`${testdataEntryName}`, function() {
                         return SaveAndRestoreEqualOriginal(
-                            testdataName,
+                            testdataEntryName,
                             SaveAndRestore
                         )
                     })

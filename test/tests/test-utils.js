@@ -135,13 +135,13 @@ function generateWorktreeSummary(workingPath) {
     });
 }
 
-function areGitRepoSame(first, second) {
+function areGitRepoSame(first, second, isVerbose) {
     return Promise.all([
         generateRepoHistorySummary(first),
         generateRepoHistorySummary(second)
     ])
     .then(summaries => {
-        return compareSummaries(summaries, 'RepoHistory');
+        return compareSummaries(summaries, 'RepoHistory', isVerbose);
     })
     .then(historySame => {
         if (!historySame) {
@@ -155,7 +155,7 @@ function areGitRepoSame(first, second) {
         ])
     })
     .then(summaries => {
-        return compareSummaries(summaries, 'RepoIndex');
+        return compareSummaries(summaries, 'RepoIndex', isVerbose);
     })
     .then(indexSame => {
         if (!indexSame) {
@@ -169,7 +169,11 @@ function areGitRepoSame(first, second) {
         ])
     })
     .then(statuses => {
-        return statuses[0] === statuses[1];
+        let areStatusesSame = statuses[0] === statuses[1];
+        if (!areStatusesSame && isVerbose) {
+            console.log('[RepoStatus] repos have different "git status" result')
+        }
+        return areStatusesSame;
     })
     .catch(err => {
         if (err === 'breaking') {
@@ -182,11 +186,9 @@ function areGitRepoSame(first, second) {
     })
 }
 
-function compareSummaries(summaries, kind) {
-    let isDebug = false;
-
+function compareSummaries(summaries, kind, isVerbose) {
     if (summaries.length !== 2) {
-        if (isDebug)
+        if (isVerbose)
             console.log(`[${kind}] summaries should have length of 2`);
         return false;
     }
@@ -195,7 +197,7 @@ function compareSummaries(summaries, kind) {
     let secondSummary = summaries[1];
 
     if (firstSummary.length !== secondSummary.length) {
-        if (isDebug)
+        if (isVerbose)
             console.log(`[${kind}] have different number of entries`);
         return false;
     }
@@ -205,7 +207,7 @@ function compareSummaries(summaries, kind) {
         let secondEntry = secondSummary[i];
 
         if (firstEntry !== secondEntry) {
-            if (isDebug)
+            if (isVerbose)
                 console.log(`[${kind}] have at least one different entry`);
             return false;
         }
@@ -214,27 +216,29 @@ function compareSummaries(summaries, kind) {
     return true;
 }
 
-function areWorkingTreeSame(first, second) {
+function areWorkingTreeSame(first, second, isVerbose) {
     return Promise.all([
         generateWorktreeSummary(first),
         generateWorktreeSummary(second)
     ])
     .then(summaries => {
-        return compareSummaries(summaries, 'WorkTree');
+        return compareSummaries(summaries, 'WorkTree', isVerbose);
     })
 }
 
-function areDirectorySame(firstDir, secondDir) {
+function areDirectorySame(firstDir, secondDir, isVerbose) {
+    isVerbose = isVerbose || false;
+
     return Promise.all([
         fs.pathExists(path.join(firstDir, '.git')),
         fs.pathExists(path.join(secondDir, '.git'))
     ])
     .then(areGitRepos => {
         if (areGitRepos.every(value => value === true)) {
-            return areGitRepoSame(firstDir, secondDir)
+            return areGitRepoSame(firstDir, secondDir, isVerbose)
             .then(areSame => {
                 if (areSame) {
-                    return areWorkingTreeSame(firstDir, secondDir);
+                    return areWorkingTreeSame(firstDir, secondDir, isVerbose);
                 }
                 else {
                     return false;
@@ -242,9 +246,12 @@ function areDirectorySame(firstDir, secondDir) {
             });
         }
         else if (areGitRepos.every(value => value === false)) {
-            return areWorkingTreeSame(firstDir, secondDir);
+            return areWorkingTreeSame(firstDir, secondDir, isVerbose);
         }
         else {
+            if (isVerbose) {
+                console.log('One is git repo but the other is not');
+            }
             return false;
         }
     })
