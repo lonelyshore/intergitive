@@ -19,7 +19,7 @@ const testdataBasePath =
 const testdataPath =
     path.join(testdataBasePath, testdataName);
 
-describe.only('Prepare Repo Save & Restore Tests', function() {
+describe('Prepare Repo Save & Restore Tests', function() {
 
     after('Clean up playground', function() {
         return fs.remove(utils.PLAYGROUND_PATH);
@@ -137,6 +137,37 @@ function createTests(testdataEntryNames) {
                 ).should.eventually.equal(true, `expect equal for ${testdataEntryName}`);
             })
         }
+
+        function SaveAndRestoreToDirtyFolderEqualOriginal_1(originalName, saveAndRestore) {
+            let randomFilePath = 
+            path.join(restoredPath, 'fdjsinoivndiowjfidjsfkljioewjfklds');
+
+            return LoadsRepositoryFromDataset(originalName, restoredName)
+            .then(() => {
+                return fs.writeFile(randomFilePath, 'fjdiovneiniosfiodfjioe')
+            })
+            .then(() => {
+                return SaveAndRestoreEqualOriginal(
+                    originalName,
+                    saveAndRestore
+                );
+            })
+            .then(() => {
+                return fs.exists(randomFilePath)
+                .should.eventually.equal(false, 'expect the random dirty file does not exists after restored');
+            })
+        }
+
+        function SaveAndRestoreToDirtyFolderEqualOriginal_2(targetOriginName, dirtyOriginName, saveAndRestore) {
+
+            return LoadsRepositoryFromDataset(dirtyOriginName, restoredName)
+            .then(() => {
+                return SaveAndRestoreEqualOriginal(
+                    targetOriginName,
+                    saveAndRestore
+                );
+            });
+        }
             
         describe('Save & Restore Reference Repo', function() {
 
@@ -173,6 +204,21 @@ function createTests(testdataEntryNames) {
                         )
                     })
                 })
+
+                it('dirty path got cleaned up', function() {
+                    return SaveAndRestoreToDirtyFolderEqualOriginal_1(
+                        testdataEntryNames[0],
+                        SaveAndRestore
+                    );
+                });
+
+                it('restore resets repository', function() {
+                    return SaveAndRestoreToDirtyFolderEqualOriginal_2(
+                        testdataEntryNames[testdataEntryNames.length - 1],
+                        testdataEntryNames[Math.ceil(testdataEntryNames.length / 2)],
+                        SaveAndRestore
+                    );
+                });    
             })
 
         });
@@ -211,7 +257,22 @@ function createTests(testdataEntryNames) {
                             SaveAndRestore
                         );
                     })
-                })
+                });
+
+                it('dirty path got cleaned up', function() {
+                    return SaveAndRestoreToDirtyFolderEqualOriginal_1(
+                        testdataEntryNames[testdataEntryNames.length - 1],
+                        SaveAndRestore
+                    );
+                });
+
+                it('restore resets repository', function() {
+                    return SaveAndRestoreToDirtyFolderEqualOriginal_2(
+                        testdataEntryNames[Math.ceil(testdataEntryNames.length / 3)],
+                        testdataEntryNames[Math.ceil(testdataEntryNames.length * 2 / 3)],
+                        SaveAndRestore
+                    );
+                });                
             })
         });
         
