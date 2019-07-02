@@ -19,7 +19,7 @@ const testdataBasePath =
 const testdataPath =
     path.join(testdataBasePath, testdataName);
 
-describe('Prepare Repo Save & Restore Tests', function() {
+describe.only('Prepare Repo Save & Restore Tests', function() {
 
     after('Clean up playground', function() {
         return fs.remove(utils.PLAYGROUND_PATH);
@@ -154,14 +154,11 @@ function createTests(testdataEntryNames) {
                         return refMaker.save('backup');
                     })
                     .then(() => {
-                        return fs.ensureDir(path.join(workingPath, restoredName))
-                        .then(() => {
-                            return vcs.RepoReferenceManager.create(
-                                path.join(workingPath, restoredName),
-                                repoStorePath,
-                                refStoreName
-                            )
-                        });
+                        return vcs.RepoReferenceManager.create(
+                            path.join(workingPath, restoredName),
+                            repoStorePath,
+                            refStoreName
+                        )
                     })
                     .then(refManager => {
                         return refManager.restore('backup');
@@ -196,14 +193,11 @@ function createTests(testdataEntryNames) {
                         return checkPointManager.backup(checkpointName);
                     })
                     .then(() => {
-                        return fs.ensureDir(path.join(workingPath, restoredName))
-                        .then(() => {
-                            return vcs.RepoCheckpointManager.create(
-                                path.join(workingPath, restoredName),
-                                repoStorePath,
-                                storeName
-                            )
-                        })
+                        return vcs.RepoCheckpointManager.create(
+                            path.join(workingPath, restoredName),
+                            repoStorePath,
+                            storeName
+                        )
                     })
                     .then(checkPointManager => {
                         return checkPointManager.restore(checkpointName);
