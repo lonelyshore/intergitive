@@ -19,7 +19,7 @@ const testdataBasePath =
 const testdataPath =
     path.join(testdataBasePath, testdataName);
 
-describe('Prepare Repo Save & Restore Tests', function() {
+describe.only('Prepare Repo Save & Restore Tests', function() {
 
     after('Clean up playground', function() {
         return fs.remove(utils.PLAYGROUND_PATH);
@@ -88,6 +88,19 @@ function createTests(testdataEntryNames) {
                     path.join(utils.ARCHIVE_RESOURCES_PATH, testdataName) + '.zip',
                     testdataBasePath
                 );
+            })
+            .then(() => {
+                let decompressions = [];
+                testdataEntryNames.forEach(testdataEntryName => {
+                    decompressions.push(
+                        zip.extractArchiveTo(
+                            path.join(testdataPath, testdataEntryName) + '.zip',
+                            testdataBasePath
+                        )
+                    )
+                });
+
+                return Promise.all(decompressions);
             });
         });
 
@@ -100,16 +113,32 @@ function createTests(testdataEntryNames) {
         });
 
         function LoadsRepositoryFromDataset(repoName, loadedName) {
-            return zip.extractArchiveTo(
-                path.join(testdataPath, repoName) + '.zip',
-                workingPath
-            )
+            let loadedPath = path.join(workingPath, loadedName);
+
+            return fs.emptyDir(loadedPath)
             .then(() => {
-                return fs.move(
-                    path.join(workingPath, repoName),
-                    path.join(workingPath, loadedName)
-                )
+                return fs.copy(
+                    path.join(testdataBasePath, repoName),
+                    loadedPath
+                );
             });
+        }
+
+        function VerifyOriginalAndRestoredEqual() {
+
+            return Promise.all([
+                fs.exists(originalPath)
+                .should.eventually.equal(true, `original missing for ${testdataEntryName}`),
+                fs.exists(restoredPath)
+                .should.eventually.equal(true, `restored missing for ${testdataEntryName}`)
+            ])
+            .then(() => {
+                return utils.areDirectorySame(
+                    originalPath,
+                    restoredPath,
+                    true
+                ).should.eventually.equal(true, `expect equal for ${testdataEntryName}`);
+            })
         }
 
         function SaveAndRestoreEqualOriginal(testdataEntryName, saveAndRestore) {
@@ -122,20 +151,18 @@ function createTests(testdataEntryNames) {
                 )
             })
             .then(() => {
-                return Promise.all([
-                    fs.exists(originalPath)
-                    .should.eventually.equal(true, `original missing for ${testdataEntryName}`),
-                    fs.exists(restoredPath)
-                    .should.eventually.equal(true, `restored missing for ${testdataEntryName}`)
-                ])
+                return VerifyOriginalAndRestoredEqual();
+            })
+        }
+
+        function RestoreEqualToOriginal(testdataEntryName, restore) {
+            return LoadsRepositoryFromDataset(testdataEntryName, originalName)
+            .then(() => {
+                return restore(restoredPath, testdataEntryName);
             })
             .then(() => {
-                return utils.areDirectorySame(
-                    originalPath,
-                    restoredPath,
-                    true
-                ).should.eventually.equal(true, `expect equal for ${testdataEntryName}`);
-            })
+                return VerifyOriginalAndRestoredEqual();
+            });
         }
 
         function SaveAndRestoreToDirtyFolderEqualOriginal_1(originalName, saveAndRestore) {
@@ -171,7 +198,67 @@ function createTests(testdataEntryNames) {
             
         describe('Save & Restore Reference Repo', function() {
 
-            describe('Save & Restore Equal Original', function() {
+            describe('Save All & Restore Each', function() {
+
+                before('Save All', function() {
+
+                    this.enableTimeouts(false);
+
+                    let shuffuled = testdataEntryNames.slice();
+
+                    utils.shuffle(shuffuled);
+
+                    let saveThread = Promise.resolve();
+
+                    shuffuled.forEach(testdataEntryName => {
+                        saveThread = saveThread.then(() => {
+                            return vcs.RepoReferenceMaker.create(
+                                path.join(testdataBasePath, testdataEntryName),
+                                path.join(testdataBasePath, 'stores'),
+                                'ref-store'
+                            )
+                            .then(maker => {
+                                return maker.save(testdataEntryName)
+                            })
+                            
+                        });
+                    });
+
+                    return saveThread;
+
+                });
+
+                function Restore(restorePath, referenceName) {
+                    return vcs.RepoReferenceManager.create(
+                        restorePath,
+                        path.join(testdataBasePath, 'stores'),
+                        'ref-store'
+                    )
+                    .then(manager => {
+                        return manager.restore(referenceName);
+                    })
+                }
+
+                let shuffuled = testdataEntryNames.slice();
+
+                utils.shuffle(shuffuled);
+
+                shuffuled.forEach(testdataEntryName => {
+                    it(`${testdataEntryName}`, function() {
+                        return LoadsRepositoryFromDataset(testdataEntryName, originalName)
+                        .then(() => {
+                            return RestoreEqualToOriginal(
+                                testdataEntryName, 
+                                Restore
+                            );
+                        })
+                    }) 
+                })
+
+                
+            })
+
+            describe.skip('Save & Restore Equal Original', function() {
 
                 function SaveAndRestore(workingPath, originalName, restoredName) {
 
@@ -223,7 +310,7 @@ function createTests(testdataEntryNames) {
 
         });
 
-        describe('Save & Restore Repo Checkpoints', function() {
+        describe.skip('Save & Restore Repo Checkpoints', function() {
 
             describe('Save & Restore Equal Original', function() {
 

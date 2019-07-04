@@ -3,6 +3,8 @@
 const fs = require('fs-extra');
 const path = require("path");
 const simpleGitCtor = require('simple-git/promise');
+const random = require('seedrandom');
+let rng = random('seed');
 
 const resourcesPath = path.resolve(__dirname, "../resources");
 
@@ -257,8 +259,21 @@ function areDirectorySame(firstDir, secondDir, isVerbose) {
     })
 }
 
+function shuffle(array) {
+    
+    for (let i = array.length - 1; i > 0; i--) {
+        let randomIndex = Math.abs(rng.int32()) % (i + 1); // floor([0, i]
+        let swap = array[i];
+        array[i] = array[randomIndex];
+        array[randomIndex] = swap;
+    }
+  
+    return array;
+}
+
 module.exports.PLAYGROUND_PATH = path.resolve(__dirname, "../playground");
 module.exports.RESOURCES_PATH = resourcesPath;
 module.exports.ARCHIVE_RESOURCES_PATH = path.join(resourcesPath, "repo-archive");
 module.exports.notImplemented = function() { throw new Error("Not Implemented"); }
 module.exports.areDirectorySame = areDirectorySame;
+module.exports.shuffle = shuffle;
