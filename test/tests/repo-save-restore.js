@@ -19,7 +19,7 @@ const testdataBasePath =
 const testdataPath =
     path.join(testdataBasePath, testdataName);
 
-describe.only('Prepare Repo Save & Restore Tests', function() {
+describe('Prepare Repo Save & Restore Tests', function() {
 
     after('Clean up playground', function() {
         return fs.remove(utils.PLAYGROUND_PATH);
@@ -199,9 +199,9 @@ function createTests(testdataEntryNames) {
             });
         }
 
-        describe.skip('Save & Restore Reference Repo', function() {
+        describe('Save & Restore Reference Repo', function() {
 
-            describe('Save All & Restore Each', function() {
+            describe.skip('Save All & Restore Each', function() {
 
                 before('Save All', function() {
 
