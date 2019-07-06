@@ -82,6 +82,9 @@ function createTests(testdataEntryNames) {
         })
 
         before('Load testdata', function() {
+
+            this.enableTimeouts(false);
+
             return fs.emptyDir(testdataBasePath)
             .then(() => {
                 return zip.extractArchiveTo(
@@ -124,7 +127,7 @@ function createTests(testdataEntryNames) {
             });
         }
 
-        function VerifyOriginalAndRestoredEqual() {
+        function VerifyOriginalAndRestoredEqual(testdataEntryName) {
 
             return Promise.all([
                 fs.exists(originalPath)
@@ -151,7 +154,7 @@ function createTests(testdataEntryNames) {
                 )
             })
             .then(() => {
-                return VerifyOriginalAndRestoredEqual();
+                return VerifyOriginalAndRestoredEqual(testdataEntryName);
             })
         }
 
@@ -161,7 +164,7 @@ function createTests(testdataEntryNames) {
                 return restore(restoredPath, testdataEntryName);
             })
             .then(() => {
-                return VerifyOriginalAndRestoredEqual();
+                return VerifyOriginalAndRestoredEqual(testdataEntryName);
             });
         }
 
@@ -195,7 +198,7 @@ function createTests(testdataEntryNames) {
                 );
             });
         }
-            
+
         describe('Save & Restore Reference Repo', function() {
 
             describe('Save All & Restore Each', function() {
