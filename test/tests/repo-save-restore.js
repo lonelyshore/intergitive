@@ -201,7 +201,7 @@ function createTests(testdataEntryNames) {
 
         describe('Save & Restore Reference Repo', function() {
 
-            describe.skip('Save All & Restore Each', function() {
+            describe('Save All & Restore Each', function() {
 
                 before('Save All', function() {
 
