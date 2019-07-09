@@ -23,7 +23,7 @@ const testingStorageTypes = [
     vcs.STORAGE_TYPE.GIT
 ];
 
-describe.only('Prepare Repo Save & Restore Tests', function() {
+describe('Prepare Repo Save & Restore Tests', function() {
 
     after('Clean up playground', function() {
         return fs.remove(utils.PLAYGROUND_PATH);
@@ -69,7 +69,7 @@ describe.only('Prepare Repo Save & Restore Tests', function() {
  */
 function createTests(testdataEntryNames, testingStorageType) {
 
-    describe('Save & Restore Repo', function() {
+    describe(`Save & Restore Repo, type: ${testingStorageType}`, function() {
 
         this.timeout(4000);
 
