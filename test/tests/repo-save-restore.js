@@ -18,6 +18,10 @@ const testdataBasePath =
     path.join(utils.PLAYGROUND_PATH, 'testdata');
 const testdataPath =
     path.join(testdataBasePath, testdataName);
+const testingStorageTypes = [
+    vcs.STORAGE_TYPE.ARCHIVE,
+    vcs.STORAGE_TYPE.GIT
+];
 
 describe.only('Prepare Repo Save & Restore Tests', function() {
 
@@ -25,34 +29,37 @@ describe.only('Prepare Repo Save & Restore Tests', function() {
         return fs.remove(utils.PLAYGROUND_PATH);
     });
 
-    it('GENERATE TESTS', function() {
+    testingStorageTypes.forEach(testingStorageType => {
+        it(`GENERATE TESTS ${testingStorageType}`, function() {
 
-        let testdataEntryNames = [];
-
-        return fs.emptyDir(utils.PLAYGROUND_PATH)
-        .then(() => {
-            return fs.emptyDir(testdataBasePath)
-        })
-        .then(() => {
-            return zip.extractArchiveTo(
-                path.join(utils.ARCHIVE_RESOURCES_PATH, testdataName) + '.zip',
-                testdataBasePath
-            );
-        })
-        .then(() => {
-            return fs.readdir(testdataPath)
-            .then(childNames => {
-                childNames.forEach(childName => {
-                    if (childName.endsWith('.zip')) {
-                        testdataEntryNames.push(childName.replace(/\.zip$/, ''));
-                    }
+            let testdataEntryNames = [];
+    
+            return fs.emptyDir(utils.PLAYGROUND_PATH)
+            .then(() => {
+                return fs.emptyDir(testdataBasePath)
+            })
+            .then(() => {
+                return zip.extractArchiveTo(
+                    path.join(utils.ARCHIVE_RESOURCES_PATH, testdataName) + '.zip',
+                    testdataBasePath
+                );
+            })
+            .then(() => {
+                return fs.readdir(testdataPath)
+                .then(childNames => {
+                    childNames.forEach(childName => {
+                        if (childName.endsWith('.zip')) {
+                            testdataEntryNames.push(childName.replace(/\.zip$/, ''));
+                        }
+                    });
                 });
+            })
+            .then(() => {
+                createTests(testdataEntryNames, testingStorageType);
             });
-        })
-        .then(() => {
-            createTests(testdataEntryNames);
         });
-    });
+    })
+
 
 })
 
@@ -60,7 +67,7 @@ describe.only('Prepare Repo Save & Restore Tests', function() {
  * 
  * @param {Array<String>} testdataEntryNames 
  */
-function createTests(testdataEntryNames) {
+function createTests(testdataEntryNames, testingStorageType) {
 
     describe('Save & Restore Repo', function() {
 
@@ -218,7 +225,8 @@ function createTests(testdataEntryNames) {
                             return vcs.RepoReferenceMaker.create(
                                 path.join(testdataBasePath, testdataEntryName),
                                 path.join(testdataBasePath, 'stores'),
-                                'ref-store'
+                                'ref-store',
+                                testingStorageType
                             )
                             .then(maker => {
                                 return maker.save(testdataEntryName)
@@ -235,7 +243,8 @@ function createTests(testdataEntryNames) {
                     return vcs.RepoReferenceManager.create(
                         restorePath,
                         path.join(testdataBasePath, 'stores'),
-                        'ref-store'
+                        'ref-store',
+                        testingStorageType
                     )
                     .then(manager => {
                         return manager.restore(referenceName);
@@ -269,7 +278,8 @@ function createTests(testdataEntryNames) {
                     return vcs.RepoReferenceMaker.create(
                         path.join(workingPath, originalName),
                         repoStorePath,
-                        refStoreName
+                        refStoreName,
+                        testingStorageType
                     )
                     .then(refMaker => {
                         return refMaker.save('backup');
@@ -278,7 +288,8 @@ function createTests(testdataEntryNames) {
                         return vcs.RepoReferenceManager.create(
                             path.join(workingPath, restoredName),
                             repoStorePath,
-                            refStoreName
+                            refStoreName,
+                            testingStorageType
                         )
                     })
                     .then(refManager => {
@@ -323,7 +334,8 @@ function createTests(testdataEntryNames) {
                     return vcs.RepoCheckpointManager.create(
                         path.join(workingPath, originalName),
                         repoStorePath,
-                        storeName
+                        storeName,
+                        testingStorageType
                     )
                     .then(checkPointManager => {
                         return checkPointManager.backup(checkpointName);
@@ -332,7 +344,8 @@ function createTests(testdataEntryNames) {
                         return vcs.RepoCheckpointManager.create(
                             path.join(workingPath, restoredName),
                             repoStorePath,
-                            storeName
+                            storeName,
+                            testingStorageType
                         )
                     })
                     .then(checkPointManager => {

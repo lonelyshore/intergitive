@@ -5,6 +5,7 @@ const fs = require("fs-extra");
 const yaml = require("js-yaml");
 const simpleGit = require("simple-git/promise");
 const utils = require("./test-utils");
+const devParams = require('../../dev/parameters');
 
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
@@ -105,7 +106,7 @@ describe("VCS Compare #core", function() {
                 .then(() => repo.addConfig("user.email", "test@test.server"))
             })
             .then(() => {
-                return vcs.RepoReferenceManager.create(checkedRepoPath, referenceStorePath, referenceStoreName)
+                return vcs.RepoReferenceManager.create(checkedRepoPath, referenceStorePath, referenceStoreName, devParams.defaultRepoStorageType)
                 .then((manager) => {
                     vcsManager = manager;
                 });
@@ -209,7 +210,7 @@ describe("VCS Compare #core", function() {
                 })
             })
             .then(() => {
-                return vcs.RepoReferenceManager.create(checkedRepoPath, referenceStorePath, referenceStoreName)
+                return vcs.RepoReferenceManager.create(checkedRepoPath, referenceStorePath, referenceStoreName, devParams.defaultRepoStorageType)
                 .then((manager) => {
                     vcsManager = manager;
                 });

@@ -4,6 +4,7 @@ const fs = require("fs-extra");
 const path = require("path");
 const zip = require('../../lib/simple-archive');
 const RefMaker = require('../../lib/repo-vcs').RepoReferenceMaker;
+const devParams = require('../../dev/parameters');
 
 const resoruceBasePath = path.resolve(__dirname, "../resources");
 const assetStorePath = path.join(resoruceBasePath, "vcs-compare", "assets");
@@ -20,7 +21,7 @@ let refMaker;
 let createRefMaker = (sourceRepoPath) => {
     createdRepoPath = sourceRepoPath;
 
-    return RefMaker.create(sourceRepoPath, refStorePath, refName)
+    return RefMaker.create(sourceRepoPath, refStorePath, refName, devParams.defaultRepoStorageType)
     .then(result => {
         refMaker = result;
     });

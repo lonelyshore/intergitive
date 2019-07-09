@@ -4,6 +4,8 @@ const fs = require("fs-extra");
 const path = require("path");
 const utils = require('../tests/test-utils');
 const zip = require("../../lib/simple-archive");
+const devParams = require('../../dev/parameters');
+
 const RefMaker = require('../../lib/repo-vcs').RepoReferenceMaker;
 
 const resoruceBasePath = path.resolve(__dirname, "../resources");
@@ -17,7 +19,7 @@ const refName = 'compare-vcs-local-ref';
 let refMaker;
 
 let createRefMaker = (sourceRepoPath) => {
-    return RefMaker.create(sourceRepoPath, refStorePath, refName)
+    return RefMaker.create(sourceRepoPath, refStorePath, refName, devParams.defaultRepoStorageType)
     .then(result => {
         refMaker = result;
     });

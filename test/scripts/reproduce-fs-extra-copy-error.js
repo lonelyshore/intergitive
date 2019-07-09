@@ -4,6 +4,8 @@ const fs = require("fs-extra");
 const path = require("path");
 const yaml = require("js-yaml");
 
+const devParams = require('../../dev/parameters');
+
 const ACTION_SCHEMAS = require("../../dev/config-schema").LEVEL_CONFIG_SCHEMA;
 const ActionExecutor = require("../../dev/action-executor").DevActionExecutor;
 const Action = require("../../lib/config-action").Action;
@@ -67,7 +69,7 @@ function generate(workingPath, assetStorePath, yamlPath, initializeRepo) {
         .then(() => initializeRepo(sourceRepoPath));
     })
     .then(() => {
-        return RefMaker.create(sourceRepoPath, refStorePath, refName)
+        return RefMaker.create(sourceRepoPath, refStorePath, refName, devParams.defaultRepoStorageType)
         .then(result => {
             refMaker = result;
         });

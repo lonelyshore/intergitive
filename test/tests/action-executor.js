@@ -2,9 +2,12 @@
 
 const path = require('path');
 const fs = require('fs-extra');
+const simpleGitCtor = require('simple-git/promise');
+
 const eol = require('../../lib/text-eol');
 const zip = require('../../lib/simple-archive');
-const simpleGitCtor = require('simple-git/promise');
+const devParams = require('../../dev/parameters');
+
 const utils = require('./test-utils');
 const AssetLoader = require('../../lib/asset-loader').AssetLoader;
 const ActionExecutor = require('../../lib/action-executor').ActionExecutor;
@@ -678,7 +681,8 @@ describe('Action Executor #core', function() {
                     return RepoReferenceManager.create(
                         workingPath,
                         repoStorePath,
-                        referenceName
+                        referenceName,
+                        devParams.defaultRepoStorageType
                     );
                 });
             });
