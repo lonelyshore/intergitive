@@ -3,17 +3,18 @@
 const fs = require("fs-extra");
 const path = require("path");
 const zip = require('../../lib/simple-archive');
+const STORAGE_TYPE = require('../../lib/repo-vcs').STORAGE_TYPE;
 const RefMaker = require('../../lib/repo-vcs').RepoReferenceMaker;
-const devParams = require('../../dev/parameters');
 
 const resoruceBasePath = path.resolve(__dirname, "../resources");
 const assetStorePath = path.join(resoruceBasePath, "vcs-compare", "assets");
 const yamlSubPath = path.join("vcs-compare", "generate-base-repo.yaml");
 
+const storageType = STORAGE_TYPE.GIT;
 
 const workingPath = path.resolve(__dirname, "../playground/generate-vcs-repo");
 const refStorePath = path.join(workingPath, "repo-store");
-const refName = 'compare-vcs-grow-local-ref';
+const refName = `compare-vcs-grow-local-ref-${storageType.toLowerCase()}`;
 
 let createdRepoPath;
 let refMaker;
@@ -21,7 +22,7 @@ let refMaker;
 let createRefMaker = (sourceRepoPath) => {
     createdRepoPath = sourceRepoPath;
 
-    return RefMaker.create(sourceRepoPath, refStorePath, refName, devParams.defaultRepoStorageType)
+    return RefMaker.create(sourceRepoPath, refStorePath, refName, storageType)
     .then(result => {
         refMaker = result;
     });
@@ -52,12 +53,14 @@ require("../../dev/generate-base-repo").generateBaseRepo(
 .then(() => {
     return zip.archivePathTo(
         path.join(refStorePath, refName),
-        path.join(workingPath, refName) + '.zip'
+        path.join(workingPath, refName) + '.zip',
+        false
     );
 })
 .then(() => {
     return zip.archivePathTo(
         createdRepoPath,
-        path.join(workingPath, 'compare-vcs') + '.zip'
+        path.join(workingPath, 'compare-vcs') + '.zip',
+        false
     )
 });

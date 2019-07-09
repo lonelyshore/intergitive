@@ -5,7 +5,6 @@ const fs = require("fs-extra");
 const yaml = require("js-yaml");
 const simpleGit = require("simple-git/promise");
 const utils = require("./test-utils");
-const devParams = require('../../dev/parameters');
 
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
@@ -22,9 +21,23 @@ const SCHEMA = require("../../dev/config-schema").LEVEL_CONFIG_SCHEMA;
 chai.use(chaiAsPromised);
 chai.should();
 
+describe.only('Prepare VCS Compare #core', function() {
+
+    let testingStorageTypes = [
+        vcs.STORAGE_TYPE.ARCHIVE,
+        vcs.STORAGE_TYPE.GIT
+    ];
+
+    it('GENERATE_TESTS', function() {
+        testingStorageTypes.forEach(testingStorageType => {
+            createTests(testingStorageType);
+        })
+    });
+});
+
 function createTests(storageType) {
 
-    describe.only("VCS Compare #core", function() {
+    describe(`VCS Compare #core - ${storageType} storage`, function() {
 
         /**
          * 
@@ -183,13 +196,7 @@ function createTests(storageType) {
     
             let resetCheckRepo = function() {
                 return fs.remove(checkedRepoPath)
-                .then(() => zip.extractArchiveTo(checkedArchivePath, workingPath))
-                .then(() => {
-                    return fs.move(
-                        path.join(workingPath, 'compare-vcs'),
-                        checkedRepoPath
-                    )
-                })
+                .then(() => zip.extractArchiveTo(checkedArchivePath, checkedRepoPath))
                 .then(() => repo = simpleGit(checkedRepoPath));
             }
     
@@ -203,13 +210,7 @@ function createTests(storageType) {
                     return fs.emptyDir(workingPath)
                     .then(() => fs.emptyDir(referenceStorePath))
                     .then(() => zip.extractArchiveTo(referenceArchivePath, path.join(referenceStorePath, referenceStoreName)))
-                    .then(() => zip.extractArchiveTo(checkedArchivePath, workingPath))
-                    .then(() => {
-                        return fs.move(
-                            path.join(workingPath, 'compare-vcs'),
-                            checkedRepoPath
-                        );
-                    })
+                    .then(() => zip.extractArchiveTo(checkedArchivePath, checkedRepoPath));
                 })
                 .then(() => {
                     return vcs.RepoReferenceManager.create(checkedRepoPath, referenceStorePath, referenceStoreName, storageType)
