@@ -21,7 +21,7 @@ const SCHEMA = require("../../dev/config-schema").LEVEL_CONFIG_SCHEMA;
 chai.use(chaiAsPromised);
 chai.should();
 
-describe.only('Prepare VCS Compare #core', function() {
+describe('Prepare VCS Compare #core', function() {
 
     let testingStorageTypes = [
         vcs.STORAGE_TYPE.ARCHIVE,
@@ -38,6 +38,8 @@ describe.only('Prepare VCS Compare #core', function() {
 function createTests(storageType) {
 
     describe(`VCS Compare #core - ${storageType} storage`, function() {
+
+        this.timeout(4000);
 
         /**
          * 
