@@ -2,13 +2,19 @@
 
 const path = require("path");
 const fs = require("fs-extra");
+const assert = require('assert');
 const utils = require("./test-utils");
+
 
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
 
 const zip = require("../../lib/simple-archive");
 const vcs = require("../../lib/repo-vcs");
+
+const ActionExecutor = require("../../dev/action-executor").DevActionExecutor;
+const AssetLoader = require("../../lib/asset-loader").AssetLoader;
+const RepoSetup = require("../../lib/config-level").RepoVcsSetup;
 
 chai.use(chaiAsPromised);
 chai.should();
@@ -23,14 +29,14 @@ const testingStorageTypes = [
     // vcs.STORAGE_TYPE.GIT
 ];
 
-describe('Prepare Repo Save & Restore Tests', function() {
+describe.only('Prepare Repo Save & Restore Tests', function() {
 
     after('Clean up playground', function() {
         return fs.remove(utils.PLAYGROUND_PATH);
     });
 
     testingStorageTypes.forEach(testingStorageType => {
-        it(`GENERATE TESTS ${testingStorageType}`, function() {
+        it.skip(`GENERATE TESTS ${testingStorageType}`, function() {
 
             let testdataEntryNames = [];
     
@@ -58,10 +64,230 @@ describe('Prepare Repo Save & Restore Tests', function() {
                 createTests(testdataEntryNames, testingStorageType);
             });
         });
+
+        it(`GENERATE NEW TESTS - ${testingStorageType}`, function() {
+            createNewTests(testingStorageType);
+        })
     })
 
 
 })
+
+function createNewTests(testingStorageType) {
+
+    const perSuiteResourcePath = path.join(utils.PLAYGROUND_PATH, 'test-save-and-restore-relate-resources');
+    const createdRepoName = 'repo';
+
+    const repoCreationPath = path.join(perSuiteResourcePath, 'created-repo', createdRepoName);
+
+    const repoReplacementPath = path.join(perSuiteResourcePath, 'repo-replacement');
+    const repoCreationConfigPath = path.join(utils.RESOURCES_PATH, "vcs-compare", "generate-base-repo.yaml");
+    
+    const testUnitWorkingPath = path.join(utils.PLAYGROUND_PATH, 'working-path');
+    const testUnitRepoReplayPath = path.join(testUnitWorkingPath, 'repo-replay', createdRepoName);
+    const testUnitRepoRestorePath = path.join(testUnitWorkingPath, 'restored');
+
+    function createRepoCreationActionExecutor(createdRepoPath) {
+
+        assert(createdRepoPath.endsWith(createdRepoName));
+
+        let assetLoader = new AssetLoader(
+            path.join(utils.RESOURCES_PATH, "vcs-compare", "assets")
+        );
+
+        assetLoader.setBundlePath();
+
+        let repoSetups = {
+            repo: new RepoSetup(
+                createdRepoName,
+                undefined,
+                undefined
+            )
+        };
+
+        return new ActionExecutor(
+            path.resolve(createdRepoPath, '../'),
+            assetLoader,
+            repoSetups
+        );
+    }
+
+    const repoCreationConfigExecutor = new utils.RepoArchiveConfigExecutor();
+
+    const repoCreationConfig = repoCreationConfigExecutor.loadConfigSync(
+        repoCreationConfigPath
+    );
+
+    function buildRepoAndSave(stageNames, stageMap, repoCreationPath, saver) {
+
+        let repoCreationActionExecutor = createRepoCreationActionExecutor(
+            repoCreationPath
+        );
+
+        let executions = Promise.resolve();
+
+        stageNames.forEach(stageName => {
+            executions = executions.then(() => {
+                return repoCreationConfigExecutor.executeStage(stageName, stageMap, repoCreationActionExecutor);
+            })
+            .then(() => {
+                return saver(stageName);
+            });
+        });
+
+        return executions;
+    }
+
+    /**
+     * 
+     * @param {Array<string>} stageNames 
+     * @param {Object} stageMap 
+     * @param {String} finalStageName 
+     * @param {String} repoCreationPath 
+     */
+    function buildRepoUpTo(stageNames, stageMap, finalStageName, repoCreationPath) {
+        let subStageNames = [];
+        for (var i = 0; i < stageNames.length; i++) {
+            let stageName = stageNames[i];
+            
+            subStageNames.push(stageNames[i]);
+
+            if (stageName === finalStageName) {
+                break;
+            }
+        }
+
+        return buildRepoAndSave(stageNames, stageMap, repoCreationPath, (refName) => Promise.resolve());
+    }
+
+    describe(`Save & Restore References - ${testingStorageType}`, function () {
+
+        const storePath = path.join(perSuiteResourcePath, 'repo-store');
+        const refStoreName = 'references';
+
+        before('Save references', function() {
+            let refMaker = vcs.RepoReferenceMaker.create(
+                repoCreationPath,
+                storePath,
+                refStoreName,
+                testingStorageType
+            );
+
+            return Promise.resolve()
+            .then(() => {
+                return fs.emptyDir(perSuiteResourcePath)
+                .then(() => {
+                    return fs.emptyDir(repoCreationPath);
+                })
+                .then(() => {
+                    fs.emptyDir(storePath);
+                });
+            })
+            .then(() => {
+                return buildRepoAndSave(
+                    repoCreationConfig.stageNames,
+                    repoCreationConfig.stageMap,
+                    repoCreationPath,
+                    (refName) => {
+                        return refMaker.save(refName)
+                        .then(() => {
+                            return fs.copy(
+                                repoCreationPath,
+                                path.join(repoReplacementPath, refName)
+                            );
+                        });
+                    }
+                );
+            });
+        });
+
+        after('Clean up', function() {
+            return fs.remove(perSuiteResourcePath);
+        });
+
+        let injectReplacementOrder = utils.shuffle(repoCreationConfig.stageNames);
+        let restoreOrder = utils.shuffle(repoCreationConfig.stageNames);
+
+        restoreOrder.forEach((restoredName, testIndex) => {
+
+            let refManager;
+
+            describe('Replayed And Restored Should Equal', function() {
+                before('Initialization', function() {
+                    return vcs.RepoReferenceManager.create(
+                        testUnitRepoRestorePath,
+                        storePath,
+                        refStoreName
+                    )
+                    .then(result => {
+                        refManager = result;
+                    });
+                });
+
+                describe(`${restoredName}`, function() {
+
+                    before('Replay', function() {
+                        return fs.emptyDir(testUnitWorkingPath)
+                        .then(() => {
+                            return fs.emptyDir(testUnitRepoReplayPath);
+                        })
+                        .then(() => {
+                            return buildRepoUpTo(
+                                repoCreationConfig.stageNames,
+                                repoCreationConfig.stageMap,
+                                restoredName,
+                                testUnitRepoReplayPath
+                            );
+                        });
+                    });
+
+                    beforeEach('Clear restored path', function() {
+                        return fs.remove(testUnitRepoRestorePath);
+                    });
+    
+                    after('Clean up', function() {
+                        return fs.remove(testUnitWorkingPath);
+                    });
+    
+                    it('Restore to empty', function() {
+                        return refManager.restore(restoredName)
+                        .then(() => {
+                            return utils.areDirectorySame(
+                                testUnitRepoReplayPath,
+                                testUnitRepoRestorePath,
+                            );
+                        })
+                        .should.eventually.equal(true);
+                    });
+
+                    it('Restore to dirty', function() {
+                        let injectedName = injectReplacementOrder[testIndex];
+
+                        return fs.copy(
+                            path.join(repoReplacementPath, injectedName),
+                            testUnitRepoRestorePath
+                        )
+                        .then(() => {
+                            return refManager.restore(restoredName)
+                        })
+                        .then(() => {
+                            return utils.areDirectorySame(
+                                testUnitRepoReplayPath,
+                                testUnitRepoRestorePath
+                            );
+                        })
+                        .should.eventually.equal(true);
+                    })
+                });
+            });
+
+
+        })
+
+    });
+
+
+}
 
 /**
  * 

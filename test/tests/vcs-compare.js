@@ -105,19 +105,19 @@ function createTests(storageType) {
             });
     
             const yamlPath = path.join(utils.RESOURCES_PATH, "vcs-compare", "generate-base-repo.yaml");
-            let stageMap = 
-                archiveCreationConfigExecutor.loadConfigIntoStageMapSync(
+            let config = 
+                archiveCreationConfigExecutor.loadConfigSync(
                     yamlPath
                 );
             
-            Object.keys(stageMap).forEach(stageName => {
+            config.stageNames.forEach(stageName => {
     
                 if (stageName !== "init") {
                     it(`execute ${stageName} should equal`, function() {
     
                         return archiveCreationConfigExecutor.executeStage(
                             stageName,
-                            stageMap,
+                            config.stageMap,
                             actionExecutor
                         )
                         .then(() => {
@@ -174,10 +174,10 @@ function createTests(storageType) {
                     });
                 })
                 .then(() => {
-                    return archiveCreationConfigExecutor.loadConfigIntoStageMap(yamlPath);
+                    return archiveCreationConfigExecutor.loadConfig(yamlPath);
                 })
                 .then(result => {
-                    stageMap = result;
+                    stageMap = result.stageMap;
                     stageMap["clean"] = [];
                 })
                 .then(() => {

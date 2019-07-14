@@ -337,28 +337,33 @@ module.exports.RepoArchiveConfigExecutor = class RepoArchiveConfigExecutor {
         return executions;
     }
 
-    loadConfigIntoStageMapSync(configPath) {
+    loadConfigSync(configPath) {
         let content = fs.readFileSync(configPath);
-        return this.loadStageMapFromConfigContent(content);
+        return this.loadConfigFromContent(content);
     }
 
-    loadConfigIntoStageMap(configPath) {
+    loadConfig(configPath) {
         return fs.readFile(configPath)
         .then(content => {
-            return this.loadStageMapFromConfigContent(content);
+            return this.loadConfigFromContent(content);
         })
     }
 
-    loadStageMapFromConfigContent(content) {
+    loadConfigFromContent(content) {
 
         let config = yaml.safeLoad(content, { schema: this.SCHEMA });
 
         let stageMap = {};
+        let stageNames = [];
         config.stages.forEach(stage => {
+            stageNames.push(stage.name);
             stageMap[stage.name] = stage.contents;
         })
 
-        return stageMap;
+        return {
+            stageMap: stageMap,
+            stageNames: stageNames
+        };
     }
 
 }
