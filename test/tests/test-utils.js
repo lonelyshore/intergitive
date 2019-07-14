@@ -1,7 +1,8 @@
 "use strict"
 
 const fs = require('fs-extra');
-const path = require("path");
+const path = require('path');
+const yaml = require('js-yaml');
 const simpleGitCtor = require('simple-git/promise');
 const random = require('seedrandom');
 let rng = random('seed');
@@ -271,9 +272,76 @@ function shuffle(array) {
     return array;
 }
 
+
+
 module.exports.PLAYGROUND_PATH = path.resolve(__dirname, "../playground");
 module.exports.RESOURCES_PATH = resourcesPath;
 module.exports.ARCHIVE_RESOURCES_PATH = path.join(resourcesPath, "repo-archive");
 module.exports.notImplemented = function() { throw new Error("Not Implemented"); }
 module.exports.areDirectorySame = areDirectorySame;
 module.exports.shuffle = shuffle;
+module.exports.RepoArchiveConfigExecutor = class RepoArchiveConfigExecutor {
+
+    /**
+     * 
+     * @param {Array<Any>} contents 
+     * @param {ActionExecutor} actionExecutor 
+     */
+    executeContents(contents, actionExecutor) {
+        let executions = Promise.resolve();
+        contents.forEach(item => {
+            if (item instanceof Action) {
+                executions = executions.then(() => {
+                    return item.executeBy(actionExecutor)
+                        .catch(err => {
+                            console.error(`[execute ${item.klass}] ${err.message}`);
+                            throw err;
+                        });
+                });
+            }
+        })
+
+        return executions;
+    }
+
+    tryApplyReplay(executions, contents, stageMap, actionExecutor) {
+
+        if (contents.length !== 0 && ("replay" in contents[0])) {
+            let replayContents = [];
+            contents[0]["replay"].forEach(replayName => {
+                replayContents = replayContents.concat(stageMap[replayName]);
+            });
+
+            executions = executions.then(() => this.executeContents(replayContents, actionExecutor));
+        }
+
+        return executions;
+    }
+
+    executeStage(stageName, stageMap, actionExecutor) {
+
+        if (!(stageName in stageMap)) {
+            return Promise.reject(new Error(`Cannot find find stageName ${stageName}`));
+        }
+
+        let contents = stageMap[stageName];
+
+        let executions = Promise.resolve();
+        executions = this.tryApplyReplay(executions, contents, stageMap, actionExecutor);
+        executions = executions.then(() => this.executeContents(contents, actionExecutor));
+        return executions;
+    }
+
+    loadConfigIntoStageMapSync(configPath) {
+        let content = fs.readFileSync(configPath);
+        let config = yaml.safeLoad(content, { schema: SCHEMA });
+
+        let stageMap = {};
+        config.stages.forEach(stage => {
+            stageMap[stage.name] = stage.contents;
+        })
+
+        return stageMap;
+    }
+
+}
