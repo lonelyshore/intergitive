@@ -25,7 +25,7 @@ describe('Prepare VCS Compare #core', function() {
 
     let testingStorageTypes = [
         vcs.STORAGE_TYPE.ARCHIVE,
-        vcs.STORAGE_TYPE.GIT
+        // vcs.STORAGE_TYPE.GIT
     ];
 
     it('GENERATE_TESTS', function() {

@@ -20,7 +20,7 @@ const testdataPath =
     path.join(testdataBasePath, testdataName);
 const testingStorageTypes = [
     vcs.STORAGE_TYPE.ARCHIVE,
-    vcs.STORAGE_TYPE.GIT
+    // vcs.STORAGE_TYPE.GIT
 ];
 
 describe('Prepare Repo Save & Restore Tests', function() {
