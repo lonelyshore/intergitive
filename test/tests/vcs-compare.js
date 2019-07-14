@@ -12,16 +12,15 @@ const chaiAsPromised = require("chai-as-promised");
 const zip = require("../../lib/simple-archive");
 const vcs = require("../../lib/repo-vcs");
 
-const Action = require("../../lib/config-action").Action;
 const ActionExecutor = require("../../dev/action-executor").DevActionExecutor;
 const AssetLoader = require("../../lib/asset-loader").AssetLoader;
 const RepoSetup = require("../../lib/config-level").RepoVcsSetup;
-const SCHEMA = require("../../dev/config-schema").LEVEL_CONFIG_SCHEMA;
+
 
 chai.use(chaiAsPromised);
 chai.should();
 
-describe('Prepare VCS Compare #core', function() {
+describe.only('Prepare VCS Compare #core', function() {
 
     let testingStorageTypes = [
         vcs.STORAGE_TYPE.ARCHIVE,
@@ -41,57 +40,9 @@ function createTests(storageType) {
 
         this.timeout(4000);
 
-        /**
-         * 
-         * @param {Array<Any>} contents 
-         * @param {ActionExecutor} actionExecutor 
-         */
-        const executeContents = function(contents, actionExecutor) {
-            let executions = Promise.resolve();
-            contents.forEach(item => {
-                if (item instanceof Action) {
-                    executions = executions.then(() => {
-                        return item.executeBy(actionExecutor)
-                        .catch(err => {
-                            console.error(`[execute ${item.klass}] ${err.message}`);
-                            throw err;
-                        });
-                    });
-                }
-            })
+        const archiveCreationConfigExecutor = new utils.RepoArchiveConfigExecutor();
     
-            return executions;
-        }
-    
-        const tryApplyReplay = function(executions, contents, stageMap, actionExecutor) {
-    
-            if (contents.length !== 0 && ("replay" in contents[0])) {
-                let replayContents = [];
-                contents[0]["replay"].forEach(replayName => {
-                    replayContents = replayContents.concat(stageMap[replayName]);
-                });
-    
-                executions = executions.then(() => executeContents(replayContents, actionExecutor));
-            }
-    
-            return executions;
-        }
-    
-        const executeStage = function(stageName, stageMap, actionExecutor) {
-    
-            if (!(stageName in stageMap)) {
-                return Promise.reject(new Error(`Cannot find find stageName ${stageName}`));
-            }
-    
-            let contents = stageMap[stageName];
-    
-            let executions = Promise.resolve();
-            executions = tryApplyReplay(executions, contents, stageMap, actionExecutor);
-            executions = executions.then(() => executeContents(contents, actionExecutor));
-            return executions;
-        }
-    
-        describe("Build Tree Equal", function() {
+        describe.only("Build Tree Equal", function() {
                 
             const workingPath = path.join(utils.PLAYGROUND_PATH, "compare-vcs");
     
@@ -154,23 +105,25 @@ function createTests(storageType) {
             });
     
             const yamlPath = path.join(utils.RESOURCES_PATH, "vcs-compare", "generate-base-repo.yaml");
+            let stageMap = 
+                archiveCreationConfigExecutor.loadConfigIntoStageMapSync(
+                    yamlPath
+                );
+            
+            Object.keys(stageMap).forEach(stageName => {
     
-            let content = fs.readFileSync(yamlPath);
-            let config = yaml.safeLoad(content, { schema: SCHEMA });
+                if (stageName !== "init") {
+                    it(`execute ${stageName} should equal`, function() {
     
-            let stageMap = {}
-            config.stages.forEach(stage => {
-    
-                stageMap[stage.name] = stage.contents
-    
-                if (stage.name !== "init") {
-                    it(`execute ${stage.name} should equal`, function() {
-    
-                        return executeStage(stage.name, stageMap, actionExecutor)
+                        return archiveCreationConfigExecutor.executeStage(
+                            stageName,
+                            stageMap,
+                            actionExecutor
+                        )
                         .then(() => {
-                            return vcsManager.equivalent(stage.name);
+                            return vcsManager.equivalent(stageName);
                         })
-                        .should.eventually.equal(true, `${stage.name} is not equal`);
+                        .should.eventually.equal(true, `${stageName} is not equal`);
                     })
                 }
     

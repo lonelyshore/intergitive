@@ -282,6 +282,11 @@ module.exports.areDirectorySame = areDirectorySame;
 module.exports.shuffle = shuffle;
 module.exports.RepoArchiveConfigExecutor = class RepoArchiveConfigExecutor {
 
+    constructor() {
+        this.SCHEMA = require("../../dev/config-schema").LEVEL_CONFIG_SCHEMA;
+        this.Action = require("../../lib/config-action").Action;
+    }
+
     /**
      * 
      * @param {Array<Any>} contents 
@@ -290,7 +295,7 @@ module.exports.RepoArchiveConfigExecutor = class RepoArchiveConfigExecutor {
     executeContents(contents, actionExecutor) {
         let executions = Promise.resolve();
         contents.forEach(item => {
-            if (item instanceof Action) {
+            if (item instanceof this.Action) {
                 executions = executions.then(() => {
                     return item.executeBy(actionExecutor)
                         .catch(err => {
@@ -334,7 +339,7 @@ module.exports.RepoArchiveConfigExecutor = class RepoArchiveConfigExecutor {
 
     loadConfigIntoStageMapSync(configPath) {
         let content = fs.readFileSync(configPath);
-        let config = yaml.safeLoad(content, { schema: SCHEMA });
+        let config = yaml.safeLoad(content, { schema: this.SCHEMA });
 
         let stageMap = {};
         config.stages.forEach(stage => {
