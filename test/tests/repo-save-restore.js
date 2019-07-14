@@ -157,7 +157,7 @@ function createNewTests(testingStorageType) {
             }
         }
 
-        return buildRepoAndSave(stageNames, stageMap, repoCreationPath, (refName) => Promise.resolve());
+        return buildRepoAndSave(subStageNames, stageMap, repoCreationPath, (refName) => Promise.resolve());
     }
 
     describe(`Save & Restore References - ${testingStorageType}`, function () {
@@ -166,12 +166,10 @@ function createNewTests(testingStorageType) {
         const refStoreName = 'references';
 
         before('Save references', function() {
-            let refMaker = vcs.RepoReferenceMaker.create(
-                repoCreationPath,
-                storePath,
-                refStoreName,
-                testingStorageType
-            );
+
+            this.enableTimeouts(false);
+
+            let refMaker;
 
             return Promise.resolve()
             .then(() => {
@@ -181,6 +179,17 @@ function createNewTests(testingStorageType) {
                 })
                 .then(() => {
                     fs.emptyDir(storePath);
+                });
+            })
+            .then(() => {
+                return vcs.RepoReferenceMaker.create(
+                    repoCreationPath,
+                    storePath,
+                    refStoreName,
+                    testingStorageType
+                )
+                .then(result => {
+                    refMaker = result;
                 });
             })
             .then(() => {
@@ -205,28 +214,38 @@ function createNewTests(testingStorageType) {
             return fs.remove(perSuiteResourcePath);
         });
 
-        let injectReplacementOrder = utils.shuffle(repoCreationConfig.stageNames);
-        let restoreOrder = utils.shuffle(repoCreationConfig.stageNames);
+        let injectReplacementOrder = utils.inplaceShuffle(repoCreationConfig.stageNames.slice(0));
+        let restoreOrder = utils.inplaceShuffle(repoCreationConfig.stageNames.slice(0));
 
-        restoreOrder.forEach((restoredName, testIndex) => {
 
+
+        describe('Replayed And Restored Should Equal', function() {
             let refManager;
 
-            describe('Replayed And Restored Should Equal', function() {
-                before('Initialization', function() {
-                    return vcs.RepoReferenceManager.create(
-                        testUnitRepoRestorePath,
-                        storePath,
-                        refStoreName
-                    )
-                    .then(result => {
-                        refManager = result;
-                    });
+            before('Initialization', function() {
+                return vcs.RepoReferenceManager.create(
+                    testUnitRepoRestorePath,
+                    storePath,
+                    refStoreName,
+                    testingStorageType
+                )
+                .then(result => {
+                    refManager = result;
                 });
+            });
+
+            restoreOrder.forEach((restoredName, testIndex) => {
+
+                if (testIndex !== 0) {
+                    return;
+                }
 
                 describe(`${restoredName}`, function() {
 
                     before('Replay', function() {
+
+                        this.enableTimeouts(false);
+
                         return fs.emptyDir(testUnitWorkingPath)
                         .then(() => {
                             return fs.emptyDir(testUnitRepoReplayPath);
@@ -255,6 +274,7 @@ function createNewTests(testingStorageType) {
                             return utils.areDirectorySame(
                                 testUnitRepoReplayPath,
                                 testUnitRepoRestorePath,
+                                true
                             );
                         })
                         .should.eventually.equal(true);
@@ -273,16 +293,17 @@ function createNewTests(testingStorageType) {
                         .then(() => {
                             return utils.areDirectorySame(
                                 testUnitRepoReplayPath,
-                                testUnitRepoRestorePath
+                                testUnitRepoRestorePath,
+                                true
                             );
                         })
                         .should.eventually.equal(true);
                     })
                 });
+
             });
 
-
-        })
+        });
 
     });
 
@@ -442,7 +463,7 @@ function createTests(testdataEntryNames, testingStorageType) {
 
                     let shuffuled = testdataEntryNames.slice();
 
-                    utils.shuffle(shuffuled);
+                    utils.inplaceShuffle(shuffuled);
 
                     let saveThread = Promise.resolve();
 
@@ -479,7 +500,7 @@ function createTests(testdataEntryNames, testingStorageType) {
 
                 let shuffuled = testdataEntryNames.slice();
 
-                utils.shuffle(shuffuled);
+                utils.inplaceShuffle(shuffuled);
 
                 shuffuled.forEach(testdataEntryName => {
                     it(`${testdataEntryName}`, function() {
