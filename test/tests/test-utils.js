@@ -339,6 +339,18 @@ module.exports.RepoArchiveConfigExecutor = class RepoArchiveConfigExecutor {
 
     loadConfigIntoStageMapSync(configPath) {
         let content = fs.readFileSync(configPath);
+        return this.loadStageMapFromConfigContent(content);
+    }
+
+    loadConfigIntoStageMap(configPath) {
+        return fs.readFile(configPath)
+        .then(content => {
+            return this.loadStageMapFromConfigContent(content);
+        })
+    }
+
+    loadStageMapFromConfigContent(content) {
+
         let config = yaml.safeLoad(content, { schema: this.SCHEMA });
 
         let stageMap = {};

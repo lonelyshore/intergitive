@@ -174,16 +174,11 @@ function createTests(storageType) {
                     });
                 })
                 .then(() => {
-                    return fs.readFile(yamlPath)
-                    .then(content => {
-                        return yaml.safeLoad(content, { schema: SCHEMA });
-                    })
-                    .then(config => {
-                        config.stages.forEach(stage => {
-                            stageMap[stage.name] = stage.contents;
-                        });
-                        stageMap["clean"] = [];
-                    })
+                    return archiveCreationConfigExecutor.loadConfigIntoStageMap(yamlPath);
+                })
+                .then(result => {
+                    stageMap = result;
+                    stageMap["clean"] = [];
                 })
                 .then(() => {
                     const assetLoader = new AssetLoader(assetStorePath);
@@ -219,7 +214,7 @@ function createTests(storageType) {
     
                 const testForReferencename = (referenceName) => {
     
-                    return executeStage(referenceName, stageMap, actionExecutor)
+                    return archiveCreationConfigExecutor.executeStage(referenceName, stageMap, actionExecutor)
                     .then(() => {
                         return vcsManager.equivalent(referenceName);
                     })
@@ -329,7 +324,7 @@ function createTests(storageType) {
                                 let additionalTag = i !== 0 && j !== 0 ? " #extensive" : "";
                                 it(`template ${names[i]} against ${names[j]}${additionalTag}`, function() {
                                     let referenceName = names[i];
-                                    return executeStage(names[j], stageMap, actionExecutor)
+                                    return archiveCreationConfigExecutor.executeStage(names[j], stageMap, actionExecutor)
                                     .then(() => {
                                         return vcsManager.equivalent(referenceName)
                                     })
