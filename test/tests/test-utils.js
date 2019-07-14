@@ -260,7 +260,7 @@ function areDirectorySame(firstDir, secondDir, isVerbose) {
     })
 }
 
-function shuffle(array) {
+function inplaceShuffle(array) {
     
     for (let i = array.length - 1; i > 0; i--) {
         let randomIndex = Math.abs(rng.int32()) % (i + 1); // floor([0, i]
@@ -279,7 +279,7 @@ module.exports.RESOURCES_PATH = resourcesPath;
 module.exports.ARCHIVE_RESOURCES_PATH = path.join(resourcesPath, "repo-archive");
 module.exports.notImplemented = function() { throw new Error("Not Implemented"); }
 module.exports.areDirectorySame = areDirectorySame;
-module.exports.shuffle = shuffle;
+module.exports.inplaceShuffle = inplaceShuffle;
 module.exports.RepoArchiveConfigExecutor = class RepoArchiveConfigExecutor {
 
     constructor() {
