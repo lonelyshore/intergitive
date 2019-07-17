@@ -302,7 +302,7 @@ function createTests(testdataEntryNames, testingStorageTypes) {
 
         after('Clean up', function() {
             return fs.remove(utils.PLAYGROUND_PATH);
-        })
+        });
 
         testingStorageTypes.forEach(testingStorageType => {
 
@@ -322,10 +322,6 @@ function createTests(testdataEntryNames, testingStorageTypes) {
 
                 beforeEach('Clean up working path', function () {
                     return fs.emptyDir(workingPath);
-                })
-
-                after('Clean up playground', function () {
-                    return fs.remove(utils.PLAYGROUND_PATH);
                 });
 
                 function loadsRepositoryFromSnapshot(repoName, loadedPath) {
@@ -447,7 +443,7 @@ function createTests(testdataEntryNames, testingStorageTypes) {
 
                         before('Initialize', function() {
                             return fs.emptyDir(perSuiteResourcePath);
-                        })
+                        });
 
                         before('Save all replays', function () {
 
@@ -516,6 +512,10 @@ function createTests(testdataEntryNames, testingStorageTypes) {
 
                     describe('Save & Restore Separatedly', function () {
 
+                        before('Initialize', function() {
+                            return fs.emptyDir(perSuiteResourcePath);
+                        });
+
                         testdataEntryNames.forEach(testdataEntryName => {
                             it(`${testdataEntryName}`, function () {
                                 return saveAndRestoreEqualOriginal(
@@ -535,7 +535,7 @@ function createTests(testdataEntryNames, testingStorageTypes) {
                         path.join(perSuiteResourcePath, 'repo-store');
                     const refStoreName = 'references';
 
-                    function SaveSnapshot(sourcePath, snapshotName) {
+                    function saveSnapshot(sourcePath, snapshotName) {
                         return vcs.RepoReferenceMaker.create(
                             sourcePath,
                             storePath,
@@ -547,7 +547,7 @@ function createTests(testdataEntryNames, testingStorageTypes) {
                         });
                     }
 
-                    function RestoreSnapshot(restoredPath, snapshotName) {
+                    function restoreSnapshot(restoredPath, snapshotName) {
                         return vcs.RepoReferenceManager.create(
                             restoredPath,
                             storePath,
@@ -559,64 +559,67 @@ function createTests(testdataEntryNames, testingStorageTypes) {
                         });
                     }
 
-                    function SaveAndRestore(originalPath, restoredPath) {
+                    function saveAndRestore(originalPath, restoredPath) {
 
                         let bridgingSnapshotName = 'backup-ref';
-                        return SaveSnapshot(originalPath, bridgingSnapshotName)
+                        return saveSnapshot(originalPath, bridgingSnapshotName)
                         .then(() => {
-                            return RestoreSnapshot(restoredPath, bridgingSnapshotName);
+                            return restoreSnapshot(restoredPath, bridgingSnapshotName);
                         });
 
                     }
 
                     testForSaveAllAndRestoreEach(
-                        SaveSnapshot,
-                        RestoreSnapshot
+                        saveSnapshot,
+                        restoreSnapshot
                     );
 
-                    testForSaveAndRestoreSeparatedly(SaveAndRestore);
+                    testForSaveAndRestoreSeparatedly(saveAndRestore);
 
                 });
 
                 describe('Save & Restore Repo Checkpoints', function () {
 
-                    describe('Save & Restore Equal Original', function () {
+                    const storePath = path.join(perSuiteResourcePath, 'repo-store');
+                    const checkpointStoreName = 'checkpoints';
 
-                        function SaveAndRestore(workingPath, originalName, restoredName) {
-                            let storeName = 'backup';
-                            let checkpointName = 'backup';
-                            return vcs.RepoCheckpointManager.create(
-                                path.join(workingPath, originalName),
-                                storePath,
-                                storeName,
-                                testingStorageType
-                            )
-                                .then(checkPointManager => {
-                                    return checkPointManager.backup(checkpointName);
-                                })
-                                .then(() => {
-                                    return vcs.RepoCheckpointManager.create(
-                                        path.join(workingPath, restoredName),
-                                        repoStorePath,
-                                        storeName,
-                                        testingStorageType
-                                    )
-                                })
-                                .then(checkPointManager => {
-                                    return checkPointManager.restore(checkpointName);
-                                })
-                        }
-
-                        testdataEntryNames.forEach(testdataEntryName => {
-                            it(`${testdataEntryName}`, function () {
-                                return saveAndRestoreEqualOriginal(
-                                    testdataEntryName,
-                                    SaveAndRestore
-                                );
-                            })
+                    function saveSnapshot(sourcePath, snapshotName) {
+                        return vcs.RepoCheckpointManager.create(
+                            sourcePath,
+                            storePath,
+                            checkpointStoreName,
+                            testingStorageType
+                        )
+                        .then(manager => {
+                            return manager.backup(snapshotName);
                         });
+                    }
 
-                    })
+                    function restoreSnapshot(restoredPath, snapshotName) {
+                        return vcs.RepoCheckpointManager.create(
+                            restoredPath,
+                            storePath,
+                            checkpointStoreName,
+                            testingStorageType
+                        )
+                        .then(checkPointManager => {
+                            return checkPointManager.restore(snapshotName);
+                        });
+                    }
+
+                    function saveAndRestore(originalPath, restoredPath) {
+                        let bridgingSnapshotName = 'backup';
+
+                        return saveSnapshot(originalPath, bridgingSnapshotName)
+                        .then(() => {
+                            return restoreSnapshot(restoredPath, bridgingSnapshotName);
+                        });
+                    }
+
+                    testForSaveAllAndRestoreEach(saveSnapshot, restoreSnapshot);
+
+                    testForSaveAndRestoreSeparatedly(saveAndRestore);
+                    
                 });
 
             });
