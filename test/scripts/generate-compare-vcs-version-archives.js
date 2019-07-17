@@ -2,6 +2,7 @@
 
 const fs = require("fs-extra");
 const path = require("path");
+const simpleGit = require('simple-git/promise');
 const utils = require('../tests/test-utils');
 const zip = require("../../lib/simple-archive");
 
@@ -18,14 +19,8 @@ let resetRepo = (sourceRepoPath) => {
     .then(() => {
         return zip.extractArchiveTo(
             path.join(utils.ARCHIVE_RESOURCES_PATH, "compare-vcs.zip"),
-            path.dirname(sourceRepoPath)
-        );
-    })
-    .then(() => {
-        return fs.move(
-            path.join(path.dirname(sourceRepoPath), 'compare-vcs'),
             sourceRepoPath
-        )
+        );
     });
 }
 
@@ -57,6 +52,34 @@ require("../../dev/generate-base-repo").generateBaseRepo(
         postStage: postStage
     }
 )
+.then(() => {
+    let initRepoPath = path.join(archivePath, 'init');
+    return fs.mkdirp(initRepoPath)
+    .then(() => {
+        return simpleGit(initRepoPath)
+    })
+    .then(repo => {
+        return repo.raw(['init'])
+        .then(() => {
+            return repo.raw(['config', '--local', 'user.name', 'test-repo']);
+        })
+        .then(() => {
+            return repo.raw(['config', '--local', 'user.email', 'test-repo@some.mail.server']);
+        })
+        .then(() => {
+            return repo.raw(['config', '--local', 'core.autocrlf', 'input']);
+        });
+    })
+    .then(() => {
+        return zip.archivePathTo(
+            initRepoPath,
+            initRepoPath + '.zip'
+        );
+    })
+    .then(() => {
+        return fs.remove(initRepoPath);
+    });
+})
 .then(() => {
     return zip.archivePathTo(
         archivePath,
