@@ -508,75 +508,73 @@ function createTests(testdataEntryNames, testingStorageTypes) {
                     });
                 }
 
+                /**
+                 * 
+                 * @param {SaveAndRestoreSnapshot} saveAndRestoreSnapshot 
+                 */
+                function testForSaveAndRestoreSeparatedly(saveAndRestoreSnapshot) {
+
+                    describe('Save & Restore Separatedly', function () {
+
+                        testdataEntryNames.forEach(testdataEntryName => {
+                            it(`${testdataEntryName}`, function () {
+                                return saveAndRestoreEqualOriginal(
+                                    testdataEntryName,
+                                    saveAndRestoreSnapshot
+                                )
+                            })
+                        });
+
+                    });
+
+                }
+
                 describe('Repository Reference Manager', function () {
 
                     const storePath =
                         path.join(perSuiteResourcePath, 'repo-store');
                     const refStoreName = 'references';
 
+                    function SaveSnapshot(sourcePath, snapshotName) {
+                        return vcs.RepoReferenceMaker.create(
+                            sourcePath,
+                            storePath,
+                            refStoreName,
+                            testingStorageType
+                        )
+                        .then(maker => {
+                            return maker.save(snapshotName)
+                        });
+                    }
+
+                    function RestoreSnapshot(restoredPath, snapshotName) {
+                        return vcs.RepoReferenceManager.create(
+                            restoredPath,
+                            storePath,
+                            refStoreName,
+                            testingStorageType
+                        )
+                        .then(manager => {
+                            return manager.restore(snapshotName);
+                        });
+                    }
+
+                    function SaveAndRestore(originalPath, restoredPath) {
+
+                        let bridgingSnapshotName = 'backup-ref';
+                        return SaveSnapshot(originalPath, bridgingSnapshotName)
+                        .then(() => {
+                            return RestoreSnapshot(restoredPath, bridgingSnapshotName);
+                        });
+
+                    }
+
                     testForSaveAllAndRestoreEach(
-                        (sourcePath, snapshotName) => {
-                            return vcs.RepoReferenceMaker.create(
-                                sourcePath,
-                                storePath,
-                                refStoreName,
-                                testingStorageType
-                            )
-                            .then(maker => {
-                                return maker.save(snapshotName)
-                            })
-                        },
-                        (restoredPath, referenceName) => {
-                            return vcs.RepoReferenceManager.create(
-                                restoredPath,
-                                storePath,
-                                refStoreName,
-                                testingStorageType
-                            )
-                            .then(manager => {
-                                return manager.restore(referenceName);
-                            })
-                        }
-                    )
+                        SaveSnapshot,
+                        RestoreSnapshot
+                    );
 
-                    describe('Save & Restore Separatedly', function () {
-
-                        function SaveAndRestore(originalPath, restoredPath) {
-
-                            let refStoreName = 'backup';
-                            let refName = 'backup-ref';
-                            return vcs.RepoReferenceMaker.create(
-                                originalPath,
-                                storePath,
-                                refStoreName,
-                                testingStorageType
-                            )
-                            .then(refMaker => {
-                                return refMaker.save(refName);
-                            })
-                            .then(() => {
-                                return vcs.RepoReferenceManager.create(
-                                    restoredPath,
-                                    storePath,
-                                    refStoreName,
-                                    testingStorageType
-                                )
-                            })
-                            .then(refManager => {
-                                return refManager.restore(refName);
-                            });
-
-                        }
-
-                        testdataEntryNames.forEach(testdataEntryName => {
-                            it(`${testdataEntryName}`, function () {
-                                return saveAndRestoreEqualOriginal(
-                                    testdataEntryName,
-                                    SaveAndRestore
-                                )
-                            })
-                        })
-                    })
+                    testForSaveAndRestoreSeparatedly(SaveAndRestore);
 
                 });
 
