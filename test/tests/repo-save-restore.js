@@ -31,7 +31,7 @@ const testingStorageTypes = [
 describe.only('Prepare Repo Save & Restore Tests', function() {
 
     const createdRepoName = 'repo';
-    const repoCreationPath = path.join(perSuiteResourcePath, 'created-repo', createdRepoName);
+    const repoCreationPath = path.join(utils.PLAYGROUND_PATH, 'created-repo', createdRepoName);
     const repoCreationConfigPath = path.join(utils.RESOURCES_PATH, "vcs-compare", "generate-base-repo.yaml");
 
     function createRepoCreationActionExecutor(createdRepoPath) {
@@ -88,13 +88,13 @@ describe.only('Prepare Repo Save & Restore Tests', function() {
                 return repoCreationConfigExecutor.executeStage(stageName, repoCreationConfig.stageMap, repoCreationActionExecutor)
                 .then(() => {
                     return fs.copy(
-                        createdRepoPath,
+                        repoCreationPath,
                         stageSnapshotPath
                     );
                 })
                 .then(() => {
                     return utils.areDirectorySame(
-                        createdRepoPath,
+                        repoCreationPath,
                         stageSnapshotPath
                     )
                 })
@@ -105,7 +105,7 @@ describe.only('Prepare Repo Save & Restore Tests', function() {
 
     });
 
-    it(`GENERATE TESTS ${testingStorageType}`, function() {
+    it(`GENERATE TESTS`, function() {
         return createTests(repoCreationConfig.stageNames, testingStorageTypes);
     });
 
@@ -328,7 +328,7 @@ function createTests(testdataEntryNames, testingStorageTypes) {
                     return fs.remove(utils.PLAYGROUND_PATH);
                 });
 
-                function LoadsRepositoryFromSnapshot(repoName, loadedPath) {
+                function loadsRepositoryFromSnapshot(repoName, loadedPath) {
                     return fs.emptyDir(loadedPath)
                         .then(() => {
                             return fs.copy(
@@ -338,7 +338,7 @@ function createTests(testdataEntryNames, testingStorageTypes) {
                         });
                 }
 
-                function VerifyOriginalAndRestoredEqual(testdataEntryName) {
+                function verifyOriginalAndRestoredEqual(testdataEntryName) {
 
                     return Promise.all([
                         fs.exists(originalPath)
@@ -355,8 +355,20 @@ function createTests(testdataEntryNames, testingStorageTypes) {
                         })
                 }
 
-                function SaveAndRestoreEqualOriginal(testdataEntryName, saveAndRestore) {
-                    return LoadsRepositoryFromSnapshot(testdataEntryName, originalPath)
+                /**
+                 * @callback SaveAndRestoreSnapshot
+                 * @param {String} sourcePath
+                 * @param {String} restoredPath
+                 * @returns {Promise<Any>}
+                 */
+
+                /**
+                 * 
+                 * @param {String} testdataEntryName 
+                 * @param {SaveAndRestoreSnapshot} saveAndRestore 
+                 */
+                function saveAndRestoreEqualOriginal(testdataEntryName, saveAndRestore) {
+                    return loadsRepositoryFromSnapshot(testdataEntryName, originalPath)
                         .then(() => {
                             return saveAndRestore(
                                 originalPath,
@@ -364,27 +376,72 @@ function createTests(testdataEntryNames, testingStorageTypes) {
                             )
                         })
                         .then(() => {
-                            return VerifyOriginalAndRestoredEqual(testdataEntryName);
+                            return verifyOriginalAndRestoredEqual(testdataEntryName);
                         })
                 }
 
-                function RestoreEqualToOriginal(testsedEntryName, restore) {
-                    return LoadsRepositoryFromSnapshot(testsedEntryName, originalPath)
+                
+                /** 
+                 * @callback RestoreSnapshot
+                 * @param {String} restoredPath
+                 * @param {String} restoredSnapshotName
+                 * @returns {Promise<Any>}
+                */
+
+                /**
+                 * 
+                 * @param {String} testsedEntryName 
+                 * @param {RestoreSnapshot} restore 
+                 */
+                function restoreEqualToOriginal(testsedEntryName, restore) {
+                    return loadsRepositoryFromSnapshot(testsedEntryName, originalPath)
                         .then(() => {
                             return restore(restoredPath, testsedEntryName);
                         })
                         .then(() => {
-                            return VerifyOriginalAndRestoredEqual(testsedEntryName);
+                            return verifyOriginalAndRestoredEqual(testsedEntryName);
                         });
+                }
+
+                /**
+                 * 
+                 * @callback PreSaveSnapshot
+                 * @param {string} sourcePath
+                 * @param {string} snapshotName
+                 * @returns {Promise<Any>}
+                 */
+                
+                /**
+                 * 
+                 * @param {PreSaveSnapshot} preSaveSnapshot 
+                 */
+                function preSaveAllReplays(preSaveSnapshot) {
+                    
+                    let savingOrder =
+                        utils.inplaceShuffle(testdataEntryNames.slice());
+
+                    let saveThread = Promise.resolve();
+
+                    savingOrder.forEach(testdataEntryName => {
+
+                        saveThread = saveThread.then(() => {
+
+                            return preSaveSnapshot(
+                                path.join(repoSnapshotsPath, testdataEntryName),
+                                testdataEntryName
+                            );
+
+                        });
+
+                    });
+
+                    return saveThread;
+
                 }
 
                 const perSuiteResourcePath = path.join(utils.PLAYGROUND_PATH, 'test-suite-scoped-resources');
 
-                describe('Repository Reference Manager', function () {
-
-                    const storePath =
-                        path.join(perSuiteResourcePath, 'repo-store');
-                    const refStoreName = 'references';
+                function testForSaveAllAndRestoreEach(preSaveSnapshot, restoreSnapshot) {
 
                     describe('Save All & Restore Each', function () {
 
@@ -396,46 +453,11 @@ function createTests(testdataEntryNames, testingStorageTypes) {
 
                             this.enableTimeouts(false);
 
-                            let savingOrder =
-                                utils.inplaceShuffle(testdataEntryNames.slice());
-
-                            let saveThread = Promise.resolve();
-
-                            savingOrder.forEach(testdataEntryName => {
-
-                                saveThread = saveThread.then(() => {
-
-                                    return vcs.RepoReferenceMaker.create(
-                                        path.join(repoSnapshotsPath, testdataEntryName),
-                                        storePath,
-                                        refStoreName,
-                                        testingStorageType
-                                    )
-                                    .then(maker => {
-                                        return maker.save(testdataEntryName)
-                                    })
-
-                                });
-
-                            });
-
-                            return saveThread;
-
+                            return preSaveAllReplays(preSaveSnapshot);
                         });
 
-                        function restoreFunction(restoredPath, referenceName) {
-                            return vcs.RepoReferenceManager.create(
-                                restoredPath,
-                                storePath,
-                                refStoreName,
-                                testingStorageType
-                            )
-                            .then(manager => {
-                                return manager.restore(referenceName);
-                            })
-                        }
-
                         describe('Restore to empty directory', function() {
+
                             let restoreOrder = utils.inplaceShuffle(
                                 testdataEntryNames.slice(0)
                             );
@@ -444,9 +466,9 @@ function createTests(testdataEntryNames, testingStorageTypes) {
 
                                 it(`${restoredName}`, function () {
 
-                                    return RestoreEqualToOriginal(
+                                    return restoreEqualToOriginal(
                                         restoredName,
-                                        restoreFunction
+                                        restoreSnapshot
                                     );
 
                                 });
@@ -467,14 +489,14 @@ function createTests(testdataEntryNames, testingStorageTypes) {
                                 
                                 it(`${restoredName}`, function() {
 
-                                    return LoadsRepositoryFromSnapshot(
+                                    return loadsRepositoryFromSnapshot(
                                         injectionOrder[restoredIndex],
                                         restoredPath
                                     )
                                     .then(() => {
-                                        return RestoreEqualToOriginal(
+                                        return restoreEqualToOriginal(
                                             restoredName,
-                                            restoreFunction
+                                            restoreSnapshot
                                         );
                                     });
                                 });
@@ -484,6 +506,38 @@ function createTests(testdataEntryNames, testingStorageTypes) {
                         });
 
                     });
+                }
+
+                describe('Repository Reference Manager', function () {
+
+                    const storePath =
+                        path.join(perSuiteResourcePath, 'repo-store');
+                    const refStoreName = 'references';
+
+                    testForSaveAllAndRestoreEach(
+                        (sourcePath, snapshotName) => {
+                            return vcs.RepoReferenceMaker.create(
+                                sourcePath,
+                                storePath,
+                                refStoreName,
+                                testingStorageType
+                            )
+                            .then(maker => {
+                                return maker.save(snapshotName)
+                            })
+                        },
+                        (restoredPath, referenceName) => {
+                            return vcs.RepoReferenceManager.create(
+                                restoredPath,
+                                storePath,
+                                refStoreName,
+                                testingStorageType
+                            )
+                            .then(manager => {
+                                return manager.restore(referenceName);
+                            })
+                        }
+                    )
 
                     describe('Save & Restore Separatedly', function () {
 
@@ -516,7 +570,7 @@ function createTests(testdataEntryNames, testingStorageTypes) {
 
                         testdataEntryNames.forEach(testdataEntryName => {
                             it(`${testdataEntryName}`, function () {
-                                return SaveAndRestoreEqualOriginal(
+                                return saveAndRestoreEqualOriginal(
                                     testdataEntryName,
                                     SaveAndRestore
                                 )
@@ -535,7 +589,7 @@ function createTests(testdataEntryNames, testingStorageTypes) {
                             let checkpointName = 'backup';
                             return vcs.RepoCheckpointManager.create(
                                 path.join(workingPath, originalName),
-                                repoStorePath,
+                                storePath,
                                 storeName,
                                 testingStorageType
                             )
@@ -557,7 +611,7 @@ function createTests(testdataEntryNames, testingStorageTypes) {
 
                         testdataEntryNames.forEach(testdataEntryName => {
                             it(`${testdataEntryName}`, function () {
-                                return SaveAndRestoreEqualOriginal(
+                                return saveAndRestoreEqualOriginal(
                                     testdataEntryName,
                                     SaveAndRestore
                                 );
