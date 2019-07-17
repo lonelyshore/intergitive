@@ -139,54 +139,68 @@ function generateWorktreeSummary(workingPath) {
 }
 
 function areGitRepoSame(first, second, isVerbose) {
-    return Promise.all([
-        generateRepoHistorySummary(first),
-        generateRepoHistorySummary(second)
-    ])
-    .then(summaries => {
-        return compareSummaries(summaries, 'RepoHistory', isVerbose);
-    })
-    .then(historySame => {
-        if (!historySame) {
-            throw 'breaking';
-        }
-    })
-    .then(() => {
+    let isRepositoryEmpty = false;
+
+    let checkHistorySame = () => {
         return Promise.all([
-            generateIndexDiffSummary(first),
-            generateIndexDiffSummary(second)
+            generateRepoHistorySummary(first),
+            generateRepoHistorySummary(second)
         ])
-    })
-    .then(summaries => {
-        return compareSummaries(summaries, 'RepoIndex', isVerbose);
-    })
-    .then(indexSame => {
-        if (!indexSame) {
-            throw 'breaking';
-        }
-    })
-    .then(() => {
-        return Promise.all([
-            getRepoStatus(first),
-            getRepoStatus(second)
-        ])
-    })
-    .then(statuses => {
-        let areStatusesSame = statuses[0] === statuses[1];
-        if (!areStatusesSame && isVerbose) {
-            console.log('[RepoStatus] repos have different "git status" result')
-        }
-        return areStatusesSame;
-    })
-    .catch(err => {
-        if (err === 'breaking') {
-            return false;
+        .then(summaries => {
+            if (summaries[0].length === 0) {
+                isRepositoryEmpty = true;
+            }
+            return compareSummaries(summaries, 'RepoHistory', isVerbose);
+        });
+    }
+
+    return checkHistorySame()
+    .then(isHistorySame => {
+        if (isHistorySame) {
+            if (isRepositoryEmpty) {
+                return true;
+            }
+            else {
+                return Promise.all([
+                    generateIndexDiffSummary(first),
+                    generateIndexDiffSummary(second)
+                ])
+                .then(summaries => {
+                    return compareSummaries(summaries, 'RepoIndex', isVerbose);
+                })
+                .then(indexSame => {
+                    if (!indexSame) {
+                        throw 'breaking';
+                    }
+                })
+                .then(() => {
+                    return Promise.all([
+                        getRepoStatus(first),
+                        getRepoStatus(second)
+                    ])
+                })
+                .then(statuses => {
+                    let areStatusesSame = statuses[0] === statuses[1];
+                    if (!areStatusesSame && isVerbose) {
+                        console.log('[RepoStatus] repos have different "git status" result')
+                    }
+                    return areStatusesSame;
+                })
+                .catch(err => {
+                    if (err === 'breaking') {
+                        return false;
+                    }
+                    else {
+                        console.error(err, err.stack);
+                        return false;
+                    }
+                })
+            }
         }
         else {
-            console.error(err, err.stack);
             return false;
         }
-    })
+    });
 }
 
 function compareSummaries(summaries, kind, isVerbose) {
