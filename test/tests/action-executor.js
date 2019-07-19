@@ -719,6 +719,52 @@ describe('Action Executor #core', function() {
                 .should.eventually.equal(true);
             });
 
+            it('load multiple times do not break', function() {
+                let action1 = new actionTypes.LoadReferenceAction(
+                    testRepoSetupName,
+                    'clean'
+                );
+
+                let action2 = new actionTypes.LoadReferenceAction(
+                    testRepoSetupName,
+                    'conflictResolveStage'
+                );
+
+                let action3 = new actionTypes.LoadReferenceAction(
+                    testRepoSetupName,
+                    'detached'
+                );
+
+                let isRestored = () => {
+                    return fs.exists(restoredPath)
+                    .should.eventually.equal(true)
+                    .then(() => {
+                        return fs.exists(path.join(restoredPath, '.git'));
+                    })
+                    .should.eventually.equal(true);
+                };
+
+                return action1.executeBy(actionExecutor)
+                .then(() => {
+                    return isRestored();
+                })
+                .then(() => {
+                    return fs.remove(restoredPath);
+                })
+                .then(() => {
+                    return action2.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return isRestored();
+                })
+                .then(() => {
+                    return action3.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return isRestored();
+                })
+            })
+
             it('save and load checkpoint', function() {
 
                 let checkpointName = 'check';
