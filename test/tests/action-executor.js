@@ -651,7 +651,7 @@ describe('Action Executor #core', function() {
         });
     });
 
-    describe.only('Repository Operations', function() {
+    describe('Repository Operations', function() {
 
         describe('Load Reference Operation', function() {
 
@@ -783,7 +783,10 @@ describe('Action Executor #core', function() {
                 .then(() => {
                     return fs.writeFile(
                         path.join(restoredPath, '123'),
-                        'ABC'
+                        'ABC',
+                        {
+                            encoding: 'utf8'
+                        }
                     );
                 })
                 .then(() => {
@@ -802,7 +805,10 @@ describe('Action Executor #core', function() {
                 })
                 .then(() => {
                     return fs.readFile(
-                        path.join(restoredPath, '123')
+                        path.join(restoredPath, '123'),
+                        {
+                            encoding: 'utf8'
+                        }
                     )
                     .should.eventually.equal('ABC');
                 });
