@@ -651,7 +651,7 @@ describe('Action Executor #core', function() {
         });
     });
 
-    describe('Repository Operations', function() {
+    describe.only('Repository Operations', function() {
 
         describe('Load Reference Operation', function() {
 
@@ -701,7 +701,7 @@ describe('Action Executor #core', function() {
 
             // We don't need to verify restored cotent, it is covered by
             // repo-save-restore
-            it('load to correct location', function() {
+            it('load reference to correct location', function() {
                 
                 let action = new actionTypes.LoadReferenceAction(
                     testRepoSetupName,
