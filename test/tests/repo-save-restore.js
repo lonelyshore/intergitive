@@ -28,7 +28,7 @@ const testingStorageTypes = [
     // vcs.STORAGE_TYPE.GIT
 ];
 
-describe.only('Prepare Repo Save & Restore Tests', function() {
+describe('Prepare Repo Save & Restore Tests', function() {
 
     const createdRepoName = 'repo';
     const repoCreationPath = path.join(utils.PLAYGROUND_PATH, 'created-repo', createdRepoName);

@@ -29,7 +29,7 @@ describe('Action Executor #core', function() {
     const repoParentPath = path.join(utils.PLAYGROUND_PATH, 'repo');
     const repoArchiveName = 'action-executor';
     const workingPath = path.join(repoParentPath, repoArchiveName);    
-    const repoStorePath = path.join(utils.PLAYGROUND_PATH, 'repoStore');
+    const repoStoreCollectionPath = path.join(utils.PLAYGROUND_PATH, 'repoStore');
 
     before(function() {
         let assetLoader = new AssetLoader(path.join(utils.RESOURCES_PATH, 'action-executor', 'resources'));
@@ -645,12 +645,13 @@ describe('Action Executor #core', function() {
         });
     });
 
-    describe.skip('Repository Operations', function() {
-
-        const referenceName = 'compare-vcs-local-ref';
-        let repoReferenceManager;
+    describe.only('Repository Operations', function() {
 
         describe('Load Reference Operation', function() {
+
+            const refStoreName = 'compare-vcs-local-ref-' + devParams.defaultRepoStorageType;
+            const checkpointStoreName = 'checkpoint-store';
+            const restoredPath = workingPath;
 
             before('Create Specialized ActionExecutor', function() {
 
@@ -659,82 +660,97 @@ describe('Action Executor #core', function() {
 
                 let repoSetups = {
                     [testRepoSetupName]: new RepoVcsSetup(
-                        path.relative(utils.PLAYGROUND_PATH, workingPath),
-                        referenceName,
-                        ''
+                        path.relative(utils.PLAYGROUND_PATH, restoredPath),
+                        refStoreName,
+                        checkpointStoreName
                     )
                 };
 
                 actionExecutor = new ActionExecutor(utils.PLAYGROUND_PATH, assetLoader, repoSetups);
             });
 
-            before('Initialize Working Path', function() {
-                return fs.ensureDir(workingPath);
-            })
-
             before('Load Reference Store', function() {
-                return zip.extractArchiveTo(
-                    path.join(utils.ARCHIVE_RESOURCES_PATH, referenceName) + '.zip', 
-                    repoStorePath
-                )
+                return fs.emptyDir(repoStoreCollectionPath)
                 .then(() => {
-                    return RepoReferenceManager.create(
-                        workingPath,
-                        repoStorePath,
-                        referenceName,
-                        devParams.defaultRepoStorageType
+                    return zip.extractArchiveTo(
+                        path.join(utils.ARCHIVE_RESOURCES_PATH, refStoreName) + '.zip', 
+                        path.join(repoStoreCollectionPath, refStoreName)
                     );
                 });
             });
 
             beforeEach('Clean Working Directory', function() {
-                fs.emptyDirSync(workingPath);
+                fs.emptyDirSync(restoredPath);
             });
 
             after('Clean Up', function() {
-                return fs.remove(workingPath)
-                .then(() => fs.remove(repoStorePath));
+                return fs.remove(restoredPath)
+                .then(() => fs.remove(repoStoreCollectionPath));
             })
 
+            // We don't need to verify restored cotent, it is covered by
+            // repo-save-restore
+            it('load to correct location', function() {
+                
+                let action = new actionTypes.LoadReferenceAction(
+                    testRepoSetupName,
+                    'clean'
+                );
 
-            describe('File System Aspect', function() {
-                it('load into empty', function() {
-                    
-                    let action = new actionTypes.LoadReferenceAction(
-                        testRepoSetupName,
-                        'clean'
+                return action.executeBy(actionExecutor)
+                .then(() => {
+                    return fs.exists(restoredPath);
+                })
+                .should.eventually.equal(true)
+                .then(() => {
+                    return fs.exists(path.join(restoredPath, '.git'));
+                })
+                .should.eventually.equal(true);
+            });
+
+            it('save and load checkpoint', function() {
+
+                let checkpointName = 'check';
+
+                let backupAction = new actionTypes.SaveCheckpointAction(
+                    testRepoSetupName,
+                    checkpointName
+                );
+
+                let restoreAction = new actionTypes.LoadCheckpointAction(
+                    testRepoSetupName,
+                    checkpointName
+                );
+
+                return fs.emptyDir(restoredPath)
+                .then(() => {
+                    return fs.writeFile(
+                        path.join(restoredPath, '123'),
+                        'ABC'
                     );
-
-                    return action.executeBy(actionExecutor)
-                    .then(() => {
-                        return repoReferenceManager.equivaluent('clean');
-                    })
-                    .should.eventually.equal(true);
+                })
+                .then(() => {
+                    return backupAction.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return fs.remove(restoredPath);
+                })
+                .then(() => {
+                    return restoreAction.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return fs.readdir(restoredPath)
+                    .should.eventually.have.length(1)
+                    .and.include.members(['123']);
+                })
+                .then(() => {
+                    return fs.readFile(
+                        path.join(restoredPath, '123')
+                    )
+                    .should.eventually.equal('ABC');
                 });
-        
-                it('load into non-empty replace original', function() {
-                    utils.notImplemented();
-                });
-        
-                it('extra files are removed by loading', function() {
-                    utils.notImplemented();
-                });
-            });
-
-            describe('git Properties Aspect', function() {
-                it('work tree status recoverd', function() {
-                    utils.notImplemented();
-                });
-
-                it('stage status recoverd', function() {
-                    utils.notImplemented();
-                });
-
-                it('merge conflict status recoverd', function() {
-                    utils.notImplemented();
-                });
-            });
-
+            })
+                
         });
         
     })
