@@ -54,6 +54,7 @@ function generate(workingPath, assetStorePath, yamlPath, initializeRepo) {
     
     const actionExecutor = new ActionExecutor(
         workingPath,
+        undefined,
         assetLoader,
         repoSetups
     );

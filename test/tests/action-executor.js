@@ -29,7 +29,8 @@ describe('Action Executor #core', function() {
     const repoParentPath = path.join(utils.PLAYGROUND_PATH, 'repo');
     const repoArchiveName = 'action-executor';
     const workingPath = path.join(repoParentPath, repoArchiveName);    
-    const repoStoreCollectionPath = path.join(utils.PLAYGROUND_PATH, 'repoStore');
+    const repoStoreCollectionName = 'repo-store';
+    const repoStoreCollectionPath = path.join(utils.PLAYGROUND_PATH, repoStoreCollectionName);
 
     before(function() {
         let assetLoader = new AssetLoader(path.join(utils.RESOURCES_PATH, 'action-executor', 'resources'));
@@ -43,7 +44,12 @@ describe('Action Executor #core', function() {
             )
         };
 
-        actionExecutor = new ActionExecutor(utils.PLAYGROUND_PATH, assetLoader, repoSetups);
+        actionExecutor = new ActionExecutor(
+            utils.PLAYGROUND_PATH, 
+            repoStoreCollectionName,
+            assetLoader,
+            repoSetups
+        );
     })
 
     describe('File Operations', function() {
@@ -645,7 +651,7 @@ describe('Action Executor #core', function() {
         });
     });
 
-    describe.only('Repository Operations', function() {
+    describe('Repository Operations', function() {
 
         describe('Load Reference Operation', function() {
 
@@ -666,7 +672,12 @@ describe('Action Executor #core', function() {
                     )
                 };
 
-                actionExecutor = new ActionExecutor(utils.PLAYGROUND_PATH, assetLoader, repoSetups);
+                actionExecutor = new ActionExecutor(
+                    utils.PLAYGROUND_PATH,
+                    repoStoreCollectionName,
+                    assetLoader,
+                    repoSetups
+                );
             });
 
             before('Load Reference Store', function() {

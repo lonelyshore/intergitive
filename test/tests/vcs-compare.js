@@ -93,6 +93,7 @@ function createTests(storageType) {
     
                     actionExecutor = new ActionExecutor(
                         workingPath,
+                        undefined,
                         assetLoader,
                         repoSetups
                     );
@@ -194,6 +195,7 @@ function createTests(storageType) {
     
                     actionExecutor = new ActionExecutor(
                         workingPath,
+                        undefined,
                         assetLoader,
                         repoSetups
                     );

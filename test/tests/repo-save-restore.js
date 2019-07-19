@@ -28,7 +28,7 @@ const testingStorageTypes = [
     // vcs.STORAGE_TYPE.GIT
 ];
 
-describe('Prepare Repo Save & Restore Tests', function() {
+describe.only('Prepare Repo Save & Restore Tests', function() {
 
     const createdRepoName = 'repo';
     const repoCreationPath = path.join(utils.PLAYGROUND_PATH, 'created-repo', createdRepoName);
@@ -54,6 +54,7 @@ describe('Prepare Repo Save & Restore Tests', function() {
 
         return new ActionExecutor(
             path.resolve(createdRepoPath, '../'),
+            undefined,
             assetLoader,
             repoSetups
         );

@@ -42,7 +42,12 @@ describe("Dev Action Executor", function() {
             )
         };
 
-        actionExecutor = new ActionExecutor(utils.PLAYGROUND_PATH, assetLoader, repoSetups);
+        actionExecutor = new ActionExecutor(
+            utils.PLAYGROUND_PATH,
+            undefined,
+            assetLoader,
+            repoSetups
+        );
     })
 
     describe("File Operations", function() {

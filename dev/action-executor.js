@@ -10,8 +10,8 @@ const getRepo = Symbol("getRepo");
  * @inheritdoc
  */
 class DevActionExecutor extends ActionExecutor {
-    constructor(fileSystemBaseFolder, assetLoader, repoSetups) {
-        super(fileSystemBaseFolder, assetLoader, repoSetups);
+    constructor(fileSystemBaseFolder, repoStoreSubPath, assetLoader, repoSetups) {
+        super(fileSystemBaseFolder, repoStoreSubPath, assetLoader, repoSetups);
     }
 
     executeStaging(repoSetupName, pathSpecs) {

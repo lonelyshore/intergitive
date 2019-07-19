@@ -63,6 +63,7 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
     
     const actionExecutor = new ActionExecutor(
         workingPath,
+        undefined,
         assetLoader,
         repoSetups
     );
