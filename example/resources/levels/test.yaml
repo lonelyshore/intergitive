@@ -6,6 +6,9 @@
         referenceStoreName: "test-local-ref"
         checkpointStoreName: "test-local-checkpoints"
   steps:
+    - !loadReference
+      repoSetupName: local
+      referenceName: conflictMixed
     - !elaborate # elaborate this is an example
       descriptionId: "assets/description:elaborate:example"
     - !illustrate # illustrate that IllustrateStep puts out illustrations
