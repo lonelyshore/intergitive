@@ -6,3 +6,4 @@ asset_index:
     instruct: "操作指引"
     verifyInputPlaceholder: "請輸入答案"
     verifyInputSubmitText: "確認"
+    loadReference: "載入 git 倉庫中..."

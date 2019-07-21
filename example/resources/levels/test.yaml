@@ -3,8 +3,8 @@
     local: 
       !repoVcs
         workingPath: "local"
-        referenceStoreName: "test-local"
-        checkpointStoreName: "test-local"
+        referenceStoreName: "test-local-ref"
+        checkpointStoreName: "test-local-checkpoints"
   steps:
     - !elaborate # elaborate this is an example
       descriptionId: "assets/description:elaborate:example"

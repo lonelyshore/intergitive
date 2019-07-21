@@ -6,3 +6,4 @@ asset_index:
     description:instruct:example: "description_instruct_example.html"
     description:verifyInput: "description_verify_input.html"
     localized_answer: "絕妙好辭"
+    archive:test-local-ref: "local/compare-vcs-local-ref-archive.zip"
