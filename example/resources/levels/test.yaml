@@ -9,6 +9,9 @@
     - !loadReference
       repoSetupName: local
       referenceName: conflictMixed
+    - !checkpoint
+      repoSetupName: local
+      checkpointName: kerker
     - !elaborate # elaborate this is an example
       descriptionId: "assets/description:elaborate:example"
     - !illustrate # illustrate that IllustrateStep puts out illustrations
@@ -17,9 +20,6 @@
       descriptionId: "assets/description:instruct:example"
     - !verifyInput
       answer: "2"
-    - !checkpoint
-      repoSetupName: local
-      checkpointName: kerker
     - !verifyInput
       descriptionId: "assets/description:verifyInput"
       answer: "${{ assets/localized_answer }}"
