@@ -17,6 +17,9 @@
       descriptionId: "assets/description:instruct:example"
     - !verifyInput
       answer: "2"
+    - !checkpoint
+      repoSetupName: local
+      checkpointName: kerker
     - !verifyInput
       descriptionId: "assets/description:verifyInput"
       answer: "${{ assets/localized_answer }}"
