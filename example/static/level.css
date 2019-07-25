@@ -7,18 +7,18 @@
 
 .level-block {
     position: relative;
-    padding: 1em 2em;
-    margin: 2em 1em;
+    padding: 1rem 2rem;
+    margin: 2rem 1rem;
 }
 
 .level-block .title {
     position: absolute;
     background: white;
-    font: bold 1em/2em sans-serif;
-    padding: 0 0.5em;
+    font: bold 1rem/2rem sans-serif;
+    padding: 0 0.5rem;
     text-align: center;
-    top: -1em;
-    left: 1.5em;
+    top: -1rem;
+    left: 1.5rem;
 }
 
 .elaborate {
@@ -44,7 +44,16 @@
 }
 
 .verify[appending] {
-    margin-top: -2em;
+    margin-top: -2rem;
+}
+
+.processing-box {
+    height: 1.5rem;
+}
+
+.inline-img {
+    height: 100%;
+    vertical-align: middle;
 }
 
 [blocked] {
