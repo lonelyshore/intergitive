@@ -51,6 +51,10 @@
     height: 1.5rem;
 }
 
+.right {
+    float: right;
+}
+
 .inline-img {
     height: 100%;
     vertical-align: middle;

@@ -9,3 +9,8 @@ asset_index:
     loadReference: "載入 git 倉庫中..."
     checkpointSaving: "保存檢查點中..."
     checkpointLoading: "還原檢查點中..."
+    checkpointReadyToLoad: "檢查點準備就緒 (ง •̀_•́)ง"
+    operationFailed: "操作發生了一些問題，請再試一次"
+    checkpointSaveButton: "儲存檢查點"
+    checkpointLoadButton: "讀取"
+    checkpointReadyToSave: "--> 抵達檢查點進行存檔 <--"
