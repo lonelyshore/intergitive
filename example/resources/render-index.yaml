@@ -13,4 +13,4 @@ asset_index:
     operationFailed: "操作發生了一些問題，請再試一次"
     checkpointSaveButton: "儲存檢查點"
     checkpointLoadButton: "讀取"
-    checkpointReadyToSave: "--> 抵達檢查點進行存檔 <--"
+    checkpointReadyToSave: "存檔點"
