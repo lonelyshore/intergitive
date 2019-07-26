@@ -812,7 +812,7 @@ describe('Action Executor #core', function() {
                 });
             });
 
-            it.only('load reference then compare should be equal', function() {
+            it('load reference then compare should be equal', function() {
                 let loadAction = new actionTypes.LoadReferenceAction(
                     testRepoSetupName,
                     'clean'
