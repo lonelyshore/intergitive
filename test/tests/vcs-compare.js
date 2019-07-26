@@ -20,7 +20,7 @@ const RepoSetup = require("../../lib/config-level").RepoVcsSetup;
 chai.use(chaiAsPromised);
 chai.should();
 
-describe('Prepare VCS Compare #core', function() {
+describe.only('Prepare VCS Compare #core', function() {
 
     let testingStorageTypes = [
         vcs.STORAGE_TYPE.ARCHIVE,
@@ -311,7 +311,7 @@ function createTests(storageType) {
                 })
             });
         
-            describe("Different", function() {
+            describe.only("Different", function() {
         
                 describe("Dirty Combination", function() {
                     let names = [ 
@@ -437,6 +437,22 @@ function createTests(storageType) {
                     })
                     .then(() => vcsManager.equivalent("clean"))
                     .should.eventually.equal(true, "expect to be equivalent to clean after reset back");
+                });
+
+                it("should differ from empty", function() {
+                    return fs.emptyDir(checkedRepoPath)
+                    .then(() => {
+                        return vcsManager.equivalent('clean');
+                    })
+                    .should.eventually.equal(false, 'clean should not equal to an empty repo');
+                });
+
+                it("should differ from not existed", function() {
+                    return fs.remove(checkedRepoPath)
+                    .then(() => {
+                        return vcsManager.equivalent('clean');
+                    })
+                    .should.eventually.equal(false, 'clean should not equal to a repo that is not existed');
                 });
             });
         });
