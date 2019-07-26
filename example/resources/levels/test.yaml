@@ -8,7 +8,10 @@
   steps:
     - !loadReference
       repoSetupName: local
-      referenceName: conflictMixed
+      referenceName: clean
+    - !verifyRepo
+      repoSetupName: local
+      referenceName: clean
     - !checkpoint
       repoSetupName: local
       checkpointName: kerker

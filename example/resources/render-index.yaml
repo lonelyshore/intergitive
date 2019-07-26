@@ -6,6 +6,7 @@ asset_index:
     instruct: "操作指引"
     verifyInputPlaceholder: "請輸入答案"
     verifyInputSubmitText: "確認"
+    verifyRepoDescription: "檢查 git 倉庫是否正確..."
     loadReference: "載入 git 倉庫中..."
     checkpointSaving: "保存檢查點中..."
     checkpointLoading: "還原檢查點中..."
