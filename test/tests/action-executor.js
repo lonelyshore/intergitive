@@ -653,11 +653,9 @@ describe('Action Executor #core', function() {
 
     describe('Repository Operations', function() {
 
-        describe('Load Reference Operation', function() {
-
+        describe('Local', function() {
             const refStoreName = 'compare-vcs-local-ref-' + devParams.defaultRepoStorageType;
             const checkpointStoreName = 'checkpoint-store';
-            const restoredPath = workingPath;
 
             before('Create Specialized ActionExecutor', function() {
 
@@ -666,7 +664,7 @@ describe('Action Executor #core', function() {
 
                 let repoSetups = {
                     [testRepoSetupName]: new RepoVcsSetup(
-                        path.relative(utils.PLAYGROUND_PATH, restoredPath),
+                        path.relative(utils.PLAYGROUND_PATH, workingPath),
                         refStoreName,
                         checkpointStoreName
                     )
@@ -691,11 +689,11 @@ describe('Action Executor #core', function() {
             });
 
             beforeEach('Clean Working Directory', function() {
-                fs.emptyDirSync(restoredPath);
+                fs.emptyDirSync(workingPath);
             });
 
             after('Clean Up', function() {
-                return fs.remove(restoredPath)
+                return fs.remove(workingPath)
                 .then(() => fs.remove(repoStoreCollectionPath));
             })
 
@@ -710,11 +708,11 @@ describe('Action Executor #core', function() {
 
                 return action.executeBy(actionExecutor)
                 .then(() => {
-                    return fs.exists(restoredPath);
+                    return fs.exists(workingPath);
                 })
                 .should.eventually.equal(true)
                 .then(() => {
-                    return fs.exists(path.join(restoredPath, '.git'));
+                    return fs.exists(path.join(workingPath, '.git'));
                 })
                 .should.eventually.equal(true);
             });
@@ -736,10 +734,10 @@ describe('Action Executor #core', function() {
                 );
 
                 let isRestored = () => {
-                    return fs.exists(restoredPath)
+                    return fs.exists(workingPath)
                     .should.eventually.equal(true)
                     .then(() => {
-                        return fs.exists(path.join(restoredPath, '.git'));
+                        return fs.exists(path.join(workingPath, '.git'));
                     })
                     .should.eventually.equal(true);
                 };
@@ -749,7 +747,7 @@ describe('Action Executor #core', function() {
                     return isRestored();
                 })
                 .then(() => {
-                    return fs.remove(restoredPath);
+                    return fs.remove(workingPath);
                 })
                 .then(() => {
                     return action2.executeBy(actionExecutor);
@@ -763,7 +761,7 @@ describe('Action Executor #core', function() {
                 .then(() => {
                     return isRestored();
                 })
-            })
+            });
 
             it('save and load checkpoint', function() {
 
@@ -779,10 +777,10 @@ describe('Action Executor #core', function() {
                     checkpointName
                 );
 
-                return fs.emptyDir(restoredPath)
+                return fs.emptyDir(workingPath)
                 .then(() => {
                     return fs.writeFile(
-                        path.join(restoredPath, '123'),
+                        path.join(workingPath, '123'),
                         'ABC',
                         {
                             encoding: 'utf8'
@@ -793,27 +791,53 @@ describe('Action Executor #core', function() {
                     return backupAction.executeBy(actionExecutor);
                 })
                 .then(() => {
-                    return fs.remove(restoredPath);
+                    return fs.remove(workingPath);
                 })
                 .then(() => {
                     return restoreAction.executeBy(actionExecutor);
                 })
                 .then(() => {
-                    return fs.readdir(restoredPath)
+                    return fs.readdir(workingPath)
                     .should.eventually.have.length(1)
                     .and.include.members(['123']);
                 })
                 .then(() => {
                     return fs.readFile(
-                        path.join(restoredPath, '123'),
+                        path.join(workingPath, '123'),
                         {
                             encoding: 'utf8'
                         }
                     )
                     .should.eventually.equal('ABC');
                 });
+            });
+
+            it.only('load reference then compare should be equal', function() {
+                let loadAction = new actionTypes.LoadReferenceAction(
+                    testRepoSetupName,
+                    'clean'
+                );
+
+                let compareActionEqual = new actionTypes.CompareReferenceAction(
+                    testRepoSetupName,
+                    'clean'
+                );
+
+                let compareActionUnequal = new actionTypes.CompareReferenceAction(
+                    testRepoSetupName,
+                    'dirtyAdd'
+                );
+
+                return loadAction.executeBy(actionExecutor)
+                .then(() => {
+                    return compareActionEqual.executeBy(actionExecutor);
+                })
+                .should.eventually.equal(true)
+                .then(() => {
+                    return compareActionUnequal.executeBy(actionExecutor);
+                })
+                .should.eventually.equal(false);
             })
-                
         });
         
     })
