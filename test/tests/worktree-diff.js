@@ -33,7 +33,7 @@ describe("Worktree Diff #core", function() {
             eol.toCr,
             eol.toCrLf,
             eolNotConvert,
-            eol.toRandom
+            utils.eolToRandom
         ];
 
         const basePath = utils.PLAYGROUND_PATH;

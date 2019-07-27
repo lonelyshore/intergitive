@@ -5,6 +5,7 @@ const path = require('path');
 const yaml = require('js-yaml');
 const simpleGitCtor = require('simple-git/promise');
 const random = require('seedrandom');
+const eol = require('../../lib/text-eol');
 let rng = random('seed');
 
 const resourcesPath = path.resolve(__dirname, "../resources");
@@ -286,6 +287,38 @@ function inplaceShuffle(array) {
     return array;
 }
 
+/**
+ * 
+ * @param {string} target 
+ */
+function randomConvert(target) {
+
+    function getEolRandomly() {
+        let val = rng.quick();
+        if (val < 0.333) {
+            return '\n';
+        }
+        else if (val < 0.666) {
+            return '\r';
+        }
+        else {
+            return '\r\n';
+        }
+    }
+
+    if (!eol.eolReg.test(target)) {
+        return target;
+    }
+
+    let lines = target.split(eol.eolReg);
+    
+    let ret = lines[0];
+    lines.slice(1).forEach(line => {
+        ret += getEolRandomly() + line;
+    });
+
+    return ret;
+}
 
 
 module.exports.PLAYGROUND_PATH = path.resolve(__dirname, "../playground");
@@ -294,6 +327,7 @@ module.exports.ARCHIVE_RESOURCES_PATH = path.join(resourcesPath, "repo-archive")
 module.exports.notImplemented = function() { throw new Error("Not Implemented"); }
 module.exports.areDirectorySame = areDirectorySame;
 module.exports.inplaceShuffle = inplaceShuffle;
+module.exports.eolToRandom = randomConvert;
 module.exports.RepoArchiveConfigExecutor = class RepoArchiveConfigExecutor {
 
     constructor() {
