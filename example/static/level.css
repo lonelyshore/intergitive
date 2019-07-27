@@ -47,6 +47,12 @@
     margin-top: -2rem;
 }
 
+.autoplay {
+    border-radius: 2px;
+    color: #6F879C;
+    background: rgba(136, 204, 255, 0.18);
+}
+
 .processing-box {
     height: 1.5rem;
 }
