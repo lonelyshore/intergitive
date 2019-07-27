@@ -49,7 +49,7 @@ describe.only("AssetLoader #core", function() {
 
             it('text content from file', function() {
                 return assetLoader.getFullAssetPath(`${assets}/text:from-file`)
-                .should.eventually.equal('content of text:from-file');
+                .should.eventually.equal('The quick brown fox jumps over the lazy dog.');
             })
     
             it("ondisk path correctly routed", function() {
@@ -95,13 +95,13 @@ describe.only("AssetLoader #core", function() {
                 .equal("\"DOUBLE QUOTE\"");
             });
 
-            it('default fallback text content from file', function() {
-                return assetLoader.loadTextContent("assets/default_fallback_text_from_file")
+            it('redirect fallback text content from file', function() {
+                return assetLoader.loadTextContent("assets/redirect_fallback_text_from_file")
                 .should.eventually
                 .equal("\'SINGLE QUOTE\'");
             });
 
-            it("ondisk redirect fallback", function() {
+            it("redirect fallback asset path", function() {
                 return assetLoader.getFullAssetPath(`${assets}/redirect_fallback_asset_path`)
                 .should.eventually
                 .equal(

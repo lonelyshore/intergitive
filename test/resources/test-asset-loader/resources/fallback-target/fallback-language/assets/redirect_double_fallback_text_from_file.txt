@@ -1,0 +1,1 @@
+content of redirect_double_fallback_text_from_file

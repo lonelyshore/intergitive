@@ -1,4 +1,0 @@
-asset_index:
-  mode: "infile"
-  assets:
-    redirect_double_fallback: "double_fallback"

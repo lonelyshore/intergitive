@@ -1,0 +1,27 @@
+asset_index:
+  assets: # an array of key value pairs, mandatory
+    raw:
+      text:raw: "test-course->test-language->infile-assets"
+      not_in_use: "this is not used..."
+    paths:
+      text:from-file: "text_from_file.txt"
+      picture: "picture.png"
+  fallbacks: # optional
+    default: # optional
+      path_replacement: ["fallback-target", "test-language"] # mandatory when .fallbacks.default exists; the new base path of the remapped keys
+      keys: # mandatory when fallback/default exists. an array of remapped keys
+        - "default_fallback_raw_text"
+        - "default_fallback_text_from_file"
+        - "default_fallback_asset_path"
+        - "default_double_fallback_asset_path"
+        - "default_not_found"
+        - "default_cyclic"
+    redirects: # optional. an array of key value paris. each value is the new base path of the remapped key
+      redirect_fallback_raw_text: ["fallback-target", "test-language"]
+      redirect_fallback_text_from_file: ["fallback-target", "test-language"]
+      redirect_fallback_asset_path: ["fallback-target", "test-language"]
+      redirect_double_fallback_raw_text: ["fallback-target", "test-language"]
+      redirect_double_fallback_text_from_file: ["fallback-target", "test-language"]
+      redirect_not_found: [ fallback-target, test-language ]
+      redirect_container_not_found: [ not_exist, not_exist ]
+      redirect_cyclic: ["fallback-target", "test-language"]
