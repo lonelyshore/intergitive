@@ -14,7 +14,7 @@ asset_index:
     startOperationButton: "執行"
     operationReady: "準備進行"
     operationRunning: "操作進行中"
-    operationFailed: "操作發生了一些問題，請再試一次"
+    operationFailed: "啊喔，操作發生了一些問題，請再試一次 (╥_╥)"
     operationCompleted: "操作成功"
     checkpointSaveButton: "儲存檢查點"
     checkpointLoadButton: "讀取"
