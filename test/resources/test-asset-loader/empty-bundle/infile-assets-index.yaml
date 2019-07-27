@@ -1,5 +1,0 @@
-asset_index:
-  mode: "infile"
-  assets:
-    first: "first-asset"
-    second: "second-asset"

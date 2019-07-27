@@ -71,7 +71,7 @@ function generateAssets(basePath, assetNamePairs) {
             fs.exists(assetPath)
             .then(isExist => {
                 if (!isExist) {
-                    return fs.writeFile(assetPath, assetNamePair.key)
+                    return fs.writeFile(assetPath, `content of ${assetNamePair.key}`)
                 }
             })
         );

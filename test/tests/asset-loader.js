@@ -11,13 +11,12 @@ const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
-describe("AssetLoader #core", function() {
+describe.only("AssetLoader #core", function() {
     describe("Load Assets", function() {
 
         const resourcePath = path.join(utils.RESOURCES_PATH, "/test-asset-loader/resources");
         
-        const infileAssets = "infile-assets";
-        const ondiskAssets = "ondisk-assets";
+        const assets = "assets";
         const testCourceTestLanguageSubPath =
             path.join("test-course", "test-language");
         const testCourceTestLanguagePath = 
@@ -30,11 +29,11 @@ describe("AssetLoader #core", function() {
             path.join("fallback-target", "fallback-language");
         const fallbackTargetFallbackLanguagePath =
             path.join(resourcePath, fallbackTargetFallbackLanguageSubPath);
-        let router;
+        let assetLoader;
 
         beforeEach(function() {
-            router = new AssetLoader(resourcePath);
-            router.setBundlePath(
+            assetLoader = new AssetLoader(resourcePath);
+            assetLoader.setBundlePath(
                 "test-course",
                 "test-language"
             );
@@ -42,69 +41,73 @@ describe("AssetLoader #core", function() {
 
         describe("Direct Load", function() {
 
-            it("infile correct load", function() {
-                return router.loadInfileAsset("infile-assets/text")
+            it('raw text correct load', function() {
+                return assetLoader.loadTextContent(`${assets}/text:raw`)
                     .should.eventually
-                    .equal("test-course->test-language->infile-assets");
+                    .equal("test-course->test-language->assets");
             });
+
+            it('text content from file', function() {
+                return assetLoader.getFullAssetPath(`${assets}/text:from-file`)
+                .should.eventually.equal('content of text:from-file');
+            })
     
             it("ondisk path correctly routed", function() {
-                return router.getFullAssetPath(`${ondiskAssets}/picture`)
+                return assetLoader.getFullAssetPath(`${assets}/picture`)
                     .should.eventually
                     .equal(
                         path.join(
                             testCourceTestLanguagePath, 
-                            ondiskAssets,
-                            "asset1.png"))
-                    .then(() => {
-                        return router.getFullAssetPath(`${ondiskAssets}/text`)
-                            .should.eventually.equal(
-                                path.join(
-                                    testCourceTestLanguagePath, 
-                                    ondiskAssets,
-                                    "asset2.txt"));
-                    });
+                            assets,
+                            "picture.png"));
             });
+
         });
 
         describe("Simple Fallbacks", function() {
 
-            it("infile default fallback", function() {
-                return router.loadInfileAsset("infile-assets/default_fallback1")
-                .should.eventually
-                .equal("fallback text")
-                .then(() => {
-                    return router.loadInfileAsset("infile-assets/default_fallback2")
-                    .should.eventually
-                    .equal("多國語言にほんごالعربيةTiếng việtไทย");
-                });
+            it('default fallback to raw text', function() {
+                return assetLoader.loadTextContent("assets/default_fallback_raw_text")
+                .should.eventually.equal("fallback text");
             });
 
-            it("ondisk default fallback", function() {
-                return router.getFullAssetPath(`${ondiskAssets}/default_fallback`)
+            it('default fallback text content from file', function() {
+                return assetLoader.loadTextContent("assets/default_fallback_text_from_file")
+                .should.eventually
+                .equal("多國語言にほんごالعربيةTiếng việtไทย");
+            });
+
+            it("default fallback asset path", function() {
+                return assetLoader.getFullAssetPath(`${assets}/default_fallback_asset_path`)
                 .should.eventually
                 .equal(
                     path.join(
                         fallbackTargetTestLanguagePath,
-                        ondiskAssets,
+                        assets,
                         "asset1.png"
                     )
                 );
             });
 
-            it("infile redirect fallback", function() {
-                return router.loadInfileAsset("infile-assets/redirect_fallback")
+            it("redirect fallback to raw text", function() {
+                return assetLoader.loadTextContent("assets/redirect_fallback_raw_text")
                 .should.eventually
                 .equal("\"DOUBLE QUOTE\"");
             });
 
+            it('default fallback text content from file', function() {
+                return assetLoader.loadTextContent("assets/default_fallback_text_from_file")
+                .should.eventually
+                .equal("\'SINGLE QUOTE\'");
+            });
+
             it("ondisk redirect fallback", function() {
-                return router.getFullAssetPath(`${ondiskAssets}/redirect_fallback`)
+                return assetLoader.getFullAssetPath(`${assets}/redirect_fallback_asset_path`)
                 .should.eventually
                 .equal(
                     path.join(
                         fallbackTargetTestLanguagePath,
-                        ondiskAssets,
+                        assets,
                         "asset2.txt"
                     )
                 );
@@ -113,19 +116,25 @@ describe("AssetLoader #core", function() {
         });
 
         describe("Double Fallbacks", function() {
-            it("infile double fallback", function() {
-                return router.loadInfileAsset("infile-assets/redirect_double_fallback")
+            it("double fallback to raw text", function() {
+                return assetLoader.loadTextContent("assets/redirect_double_fallback_raw_text")
                 .should.eventually
                 .equal("double_fallback");
             });
 
-            it("ondisk double fallback", function() {
-                return router.getFullAssetPath(`${ondiskAssets}/default_double_fallback`)
+            it("double fallback to text content from file", function() {
+                return assetLoader.loadTextContent("assets/redirect_double_fallback_text_from_file")
+                .should.eventually
+                .equal("content of redirect_double_fallback_text_from_file");
+            });
+
+            it("default double fallback to asset path", function() {
+                return assetLoader.getFullAssetPath(`${assets}/default_double_fallback_asset_path`)
                 .should.eventually
                 .equal(
                     path.join(
                         fallbackTargetFallbackLanguagePath,
-                        ondiskAssets,
+                        assets,
                         "default_double_fallback.txt"
                     )
                 );
@@ -134,44 +143,44 @@ describe("AssetLoader #core", function() {
 
         describe("Handle Not Found", function() {
 
-            it("infile not found", function() {
-                return router.loadInfileAsset(`${infileAssets}/not_exists`)
+            it("text content not found", function() {
+                return assetLoader.loadTextContent(`${assets}/not_exists`)
                 .should.be.eventually.rejectedWith(NotFoundError)
                 .and.include({
-                    startingContainerPath: path.join(testCourceTestLanguageSubPath, infileAssets),
-                    finalContainerPath: path.join(testCourceTestLanguageSubPath, infileAssets),
+                    startingContainerPath: path.join(testCourceTestLanguageSubPath, assets),
+                    finalContainerPath: path.join(testCourceTestLanguageSubPath, assets),
                     assetName: "not_exists"
                 });
             });
 
-            it("ondisk not found", function() {
-                return router.getFullAssetPath(`${ondiskAssets}/not_exists`)
+            it("asset path not found", function() {
+                return assetLoader.getFullAssetPath(`${assets}/not_exists`)
                 .should.be.eventually.rejectedWith(NotFoundError)
                 .and.include({
-                    startingContainerPath: path.join(testCourceTestLanguageSubPath, ondiskAssets),
-                    finalContainerPath: path.join(testCourceTestLanguageSubPath, ondiskAssets),
+                    startingContainerPath: path.join(testCourceTestLanguageSubPath, assets),
+                    finalContainerPath: path.join(testCourceTestLanguageSubPath, assets),
                     assetName: "not_exists"                   
                 });
             });
 
-            it("infile fallback not found", function() {
+            it("text content fallback not found", function() {
                 let assetName = "redirect_not_found";
-                return router.loadInfileAsset(`${infileAssets}/${assetName}`)
+                return assetLoader.loadTextContent(`${assets}/${assetName}`)
                 .should.be.eventually.rejectedWith(NotFoundError)
                 .and.include({
-                    startingContainerPath: path.join(testCourceTestLanguageSubPath, infileAssets),
-                    finalContainerPath: path.join(fallbackTargetTestLanguageSubPath, infileAssets),
+                    startingContainerPath: path.join(testCourceTestLanguageSubPath, assets),
+                    finalContainerPath: path.join(fallbackTargetTestLanguageSubPath, assets),
                     assetName: assetName
                 });
             });
 
-            it("ondisk fallback not found", function() {
+            it("asset path fallback not found", function() {
                 let assetName = "default_not_found";
-                return router.getFullAssetPath(`${ondiskAssets}/${assetName}`)
+                return assetLoader.getFullAssetPath(`${assets}/${assetName}`)
                 .should.be.eventually.rejectedWith(NotFoundError)
                 .and.include({
-                    startingContainerPath: path.join(testCourceTestLanguageSubPath, ondiskAssets),
-                    finalContainerPath: path.join(fallbackTargetTestLanguageSubPath, ondiskAssets),
+                    startingContainerPath: path.join(testCourceTestLanguageSubPath, assets),
+                    finalContainerPath: path.join(fallbackTargetTestLanguageSubPath, assets),
                     assetName: assetName
                 });
             });
@@ -180,7 +189,7 @@ describe("AssetLoader #core", function() {
         describe("Handle Container Not Found", function() {
 
             it("direct load not found", function() {
-                return router.loadInfileAsset("not-exists/not-exists")
+                return assetLoader.loadTextContent("not-exists/not-exists")
                 .should.be.eventually.rejectedWith(NotFoundError)
                 .and.include({
                     startingContainerPath: path.join(testCourceTestLanguageSubPath, "not-exists"),
@@ -189,14 +198,14 @@ describe("AssetLoader #core", function() {
                 });
             });
 
-            it("fallback not found", function() {
+            it("fallback to not existing container", function() {
                 let assetName = "redirect_container_not_found";
 
-                return router.loadInfileAsset(`${infileAssets}/${assetName}`)
+                return assetLoader.loadTextContent(`${assets}/${assetName}`)
                 .should.be.eventually.rejectedWith(NotFoundError)
                 .and.include({
-                    startingContainerPath: path.join(testCourceTestLanguageSubPath, infileAssets),
-                    finalContainerPath: path.join("not_exist", "not_exist", infileAssets),
+                    startingContainerPath: path.join(testCourceTestLanguageSubPath, assets),
+                    finalContainerPath: path.join("not_exist", "not_exist", assets),
                     assetName: assetName
                 });
             });
@@ -208,10 +217,10 @@ describe("AssetLoader #core", function() {
             it("cycle in redirect", function() {
                 let assetName = "redirect_cyclic";
 
-                return router.loadInfileAsset(`${infileAssets}/${assetName}`)
+                return assetLoader.loadTextContent(`${assets}/${assetName}`)
                 .should.be.eventually.rejectedWith(CyclicFallbackError)
                 .and.include({
-                    startingContainerPath: path.join(testCourceTestLanguageSubPath, infileAssets),
+                    startingContainerPath: path.join(testCourceTestLanguageSubPath, assets),
                     assetName: assetName
                 });
             });
@@ -219,10 +228,10 @@ describe("AssetLoader #core", function() {
             it("cycle in default fallback", function() {
                 let assetName = "default_cyclic";
 
-                return router.getFullAssetPath(`${ondiskAssets}/${assetName}`)
+                return assetLoader.getFullAssetPath(`${assets}/${assetName}`)
                 .should.be.eventually.rejectedWith(CyclicFallbackError)
                 .and.include({
-                    startingContainerPath: path.join(testCourceTestLanguageSubPath, ondiskAssets),
+                    startingContainerPath: path.join(testCourceTestLanguageSubPath, assets),
                     assetName: assetName
                 });
             });
@@ -241,21 +250,22 @@ describe("AssetLoader #core", function() {
             assetLoader.setBundlePath();
         });
 
-        it("infile asset", function() {
-            return Promise.all([
-                assetLoader.loadInfileAsset("infile-assets/first")
-                .should.eventually.equal("first-asset"),
-                assetLoader.loadInfileAsset("infile-assets/second")
-                .should.eventually.equal("second-asset")
-            ]);
+        it("raw text content", function() {
+            return assetLoader.loadTextContent('assets/text:raw')
+                .should.eventually.equal('raw content');
         });
 
-        it("ondisk asset", function() {
+        it("text content from file", function() {
+            return assetLoader.loadTextContent('assets/text:from-file')
+                .should.eventually.equal('content of text:from-file');
+        });
+
+        it("asset path", function() {
             return Promise.all([
-                assetLoader.getFullAssetPath("ondisk-assets/first")
-                .should.eventually.equal(path.join(basePath, "ondisk-assets/first-asset.txt")),
-                assetLoader.getFullAssetPath("ondisk-assets/second")
-                .should.eventually.equal(path.join(basePath, "ondisk-assets/second-asset.txt"))
+                assetLoader.getFullAssetPath("assets/other")
+                .should.eventually.equal(path.join(basePath, "assets/other.txt")),
+                assetLoader.getFullAssetPath("assets/text:from-file")
+                .should.eventually.equal(path.join(basePath, "assets/text-from-file.txt"))
             ]);
         });
     })

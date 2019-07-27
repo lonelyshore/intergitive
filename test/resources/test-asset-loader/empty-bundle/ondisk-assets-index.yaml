@@ -1,5 +1,0 @@
-asset_index:
-  mode: "ondisk"
-  assets:
-    first: "first-asset.txt"
-    second: "second-asset.txt"
