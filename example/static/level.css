@@ -5,6 +5,10 @@
     src: local("Microsoft JhengHezi"), local("Heiti TC"), local("WenQuanYi Zen Hei");
 } */
 
+.level[non-interactable] {
+    pointer-events: none;
+}
+
 .level-block {
     position: relative;
     padding: 1rem 2rem;
