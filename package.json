@@ -4,6 +4,7 @@
   "description": "An interactive git tutorial",
   "main": "main.js",
   "dependencies": {
+    "adm-zip": "^0.4.13",
     "fs-extra": "^8.0.0",
     "js-yaml": "^3.13.1",
     "nodegit": "^0.24.3",
@@ -11,7 +12,6 @@
     "vue": "^2.6.10"
   },
   "devDependencies": {
-    "adm-zip": "^0.4.13",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "electron": "^4.2.2",
@@ -23,16 +23,16 @@
     "simple-git": "^1.110.0"
   },
   "scripts": {
-    "==== Node ====":"",
+    "==== Node ====": "",
     "test": "npm run \"load-native-node\" && mocha --recursive \"./test/tests/*.js\"",
     "test-core": "npm run \"load-native-node\" && mocha --recursive \"./test/tests/*.js\" --grep \"#core\"",
-    "==== Electron ====":"",
+    "==== Electron ====": "",
     "start": "npm run \"load-native-electron\" && electron .",
     "rebuild": "npm run \"load-native-electron\" && electron-rebuild -f --version 4.2.2 -w nodegit",
     "etest": "npm run \"load-native-electron\" && electron-mocha --renderer --recursive \"./test/tests/*.js\"",
     "etest-core": "npm run \"load-native-electron\" && electron-mocha --renderer --recursive \"./test/tests/*.js\" --grep \"#core\"",
     "etest-core-debug": "npm run \"load-native-electron\" && electron-mocha --interactive --inspect --renderer --recursive \"./test/tests/*.js\" --grep \"#core\"",
-    "==== Build =====":"",
+    "==== Build =====": "",
     "build-win64": "npm run \"load-native-electron\" && electron-packager . intergitive --platform=win32 --arch=x64",
     "build-win64-dev": "npm run \"load-native-electron\" && electron-packager . intergitive --platform=win32 --arch=x64 --prune=false",
     "load-native-node": "node \"./dev/module-switch.js\" load nodegit node-10-11",
