@@ -40,7 +40,6 @@ describe.skip('Prepare test-utils tests', function() {
                 testdataBasePath
             );
         })
-
         .then(() => {
             return fs.readdir(testdataPath)
             .then(childNames => {

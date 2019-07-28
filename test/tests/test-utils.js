@@ -7,8 +7,10 @@ const simpleGitCtor = require('simple-git/promise');
 const random = require('seedrandom');
 const eol = require('../../lib/text-eol');
 let rng = random('seed');
+const normalizePathSep = require('../../lib/noarmalize-path-sep');
 
 const resourcesPath = path.resolve(__dirname, "../resources");
+const pathSepRegEx = new RegExp(path.sep, 'g');
 
 function generateRepoHistorySummary(workingPath) {
     let repo = new simpleGitCtor(workingPath);
@@ -112,8 +114,9 @@ function generateWorktreeSummary(workingPath) {
     )
     .then(files => {
         files.forEach((file, index) => {
-            files[index] = path.relative(workingPath, file).replace(path.sep, '/');
-        })
+            files[index] = 
+                normalizePathSep.posix(path.relative(workingPath, file));
+        });
 
         return files;
     })
