@@ -44,11 +44,11 @@ describe.only("AssetLoader #core", function() {
             it('raw text correct load', function() {
                 return assetLoader.loadTextContent(`${assets}/text:raw`)
                     .should.eventually
-                    .equal("test-course->test-language->assets");
+                    .equal("test-course->test-language->infile-assets");
             });
 
             it('text content from file', function() {
-                return assetLoader.getFullAssetPath(`${assets}/text:from-file`)
+                return assetLoader.loadTextContent(`${assets}/text:from-file`)
                 .should.eventually.equal('The quick brown fox jumps over the lazy dog.');
             })
     
