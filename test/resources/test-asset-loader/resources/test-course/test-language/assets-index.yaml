@@ -1,15 +1,14 @@
-asset_index:
-  assets: # an array of key value pairs, mandatory
-    raw:
-      text:raw: "test-course->test-language->infile-assets"
-      not_in_use: "this is not used..."
-    paths:
-      text:from-file: "text_from_file.txt"
-      picture: "picture.png"
-  fallbacks: # optional
-    default: # optional
-      path_replacement: ["fallback-target", "test-language"] # mandatory when .fallbacks.default exists; the new base path of the remapped keys
-      keys: # mandatory when fallback/default exists. an array of remapped keys
+asset_index: # comprised by three parts: infile, ondisk, and fallbacks. All optional
+  infile: # a dictionary of infile texts. optional
+    text:raw: "test-course->test-language->infile-assets"
+    not_in_use: "this is not used..."
+  ondisk: # a dictionary of ondisk asset paths. optional
+    text:from-file: "text_from_file.txt"
+    picture: "picture.png"
+  fallbacks: # redirecting queries to other asset indices. optional
+    default: # enumerates set of assets that are redirected to a default asset. optional
+      path_replacement: ["fallback-target", "test-language"] # the new base path of the remapped keys; mandatory when .fallbacks.default exists.
+      keys: # an array of remapped keys. mandatory when fallback/default exists.
         - "default_fallback_raw_text"
         - "default_fallback_text_from_file"
         - "default_fallback_asset_path"

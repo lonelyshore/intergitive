@@ -1,4 +1,3 @@
 asset_index:
-  mode: "ondisk"
-  assets:
+  ondisk:
     illustrate_illustrate: "illustrate_fig_1.png"

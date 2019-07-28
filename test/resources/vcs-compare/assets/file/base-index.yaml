@@ -1,6 +1,5 @@
 asset_index:
-  mode: "ondisk"
-  assets:
+  ondisk:
     first_file:v1: "first_v1.txt"
     first_file:v2: "first_v2.txt"
     first_file:v3: "first_v3.txt"

@@ -1,4 +1,3 @@
 asset_index:
-  mode: "ondisk"
-  assets:
+  ondisk:
     test-local-ref: "local/compare-vcs-local-ref-archive.zip"

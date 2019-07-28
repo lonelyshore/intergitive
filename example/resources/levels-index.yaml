@@ -1,4 +1,3 @@
 asset_index:
-  mode: "ondisk"
-  assets:
+  ondisk:
     test: "test.yaml"

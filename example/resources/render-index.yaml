@@ -1,6 +1,5 @@
 asset_index:
-  mode: "infile"
-  assets:
+  infile:
     elaborate: "解說"
     illustrate: "圖解"
     instruct: "操作指引"

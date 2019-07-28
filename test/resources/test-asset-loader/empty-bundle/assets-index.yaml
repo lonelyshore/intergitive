@@ -1,7 +1,6 @@
 asset_index:
-  assets:
-    raw:
-      text:raw: "raw content"
-    paths:
-      other: "other.txt"
-      text:from-file: "text-from-file.txt"
+  infile:
+    text:raw: "raw content"
+  ondisk:  
+    other: "other.txt"
+    text:from-file: "text-from-file.txt"

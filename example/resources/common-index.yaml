@@ -1,4 +1,3 @@
 asset_index:
-  mode: "ondisk"
-  assets:
+  ondisk:
     img_correct: "img_correct.png"

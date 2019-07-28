@@ -1,6 +1,5 @@
 asset_index:
-  mode: "ondisk"
-  assets:
+  ondisk:
     manyFiles1: "many-files-1.txt"
     manyFiles2: "many-files-2.txt"
     manyFilesOverwritting1: "many-files-overwritting-1.txt"

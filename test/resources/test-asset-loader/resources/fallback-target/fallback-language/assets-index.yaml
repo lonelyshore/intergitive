@@ -1,10 +1,9 @@
 asset_index:
-  assets:
-    raw:
-      redirect_double_fallback_raw_text: "double_fallback"
-    paths:
-      redirect_double_fallback_text_from_file: "redirect_double_fallback_text_from_file.txt"
-      default_double_fallback_asset_path: "default_double_fallback.txt"
+  infile:
+    redirect_double_fallback_raw_text: "double_fallback"
+  ondisk:
+    redirect_double_fallback_text_from_file: "redirect_double_fallback_text_from_file.txt"
+    default_double_fallback_asset_path: "default_double_fallback.txt"
   fallbacks:
     default:
       path_replacement: ["test-course", "test-language"]

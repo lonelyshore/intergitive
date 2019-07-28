@@ -1,14 +1,13 @@
 asset_index:
-  assets:
-    raw:
-      default_fallback_raw_text: "fallback text"
-      redirect_fallback_raw_text: "\"DOUBLE QUOTE\""
-      not_in_used_fallback: "this is not used..."
-    paths:
-      default_fallback_text_from_file: "text_from_file.txt"
-      default_fallback_asset_path: "asset1.png"
-      redirect_fallback_text_from_file: "redirect_text_from_file.txt"
-      redirect_fallback_asset_path: "asset2.txt"
+  infile:
+    default_fallback_raw_text: "fallback text"
+    redirect_fallback_raw_text: "\"DOUBLE QUOTE\""
+    not_in_used_fallback: "this is not used..."
+  ondisk:
+    default_fallback_text_from_file: "text_from_file.txt"
+    default_fallback_asset_path: "asset1.png"
+    redirect_fallback_text_from_file: "redirect_text_from_file.txt"
+    redirect_fallback_asset_path: "asset2.txt"
   fallbacks:
     default:
       path_replacement: ["", "fallback-language"]
