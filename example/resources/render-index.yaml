@@ -11,6 +11,7 @@ asset_index:
     checkpointLoading: "還原檢查點中..."
     checkpointReadyToLoad: "檢查點準備就緒 (ง •̀_•́)ง"
     startOperationButton: "執行"
+    operationStatus: "狀態"
     operationReady: "準備進行"
     operationRunning: "操作進行中"
     operationFailed: "啊喔，操作發生了一些問題，請再試一次 (╥_╥)"
@@ -18,3 +19,4 @@ asset_index:
     checkpointSaveButton: "儲存檢查點"
     checkpointLoadButton: "讀取"
     checkpointReadyToSave: "存檔點"
+    openWorkingPathDescription: "開啟位於 {} 的工作目錄"

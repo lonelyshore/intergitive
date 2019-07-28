@@ -9,6 +9,8 @@
     - !loadReference
       repoSetupName: local
       referenceName: clean
+    - !openWorkingPath
+      repoSetupName: local
     - !verifyRepo
       repoSetupName: local
       referenceName: clean
