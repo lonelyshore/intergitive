@@ -11,7 +11,7 @@ const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
-describe("AssetLoader #core", function() {
+describe.only("AssetLoader #core", function() {
     describe("Load Assets", function() {
 
         const resourcePath = path.join(utils.RESOURCES_PATH, "/test-asset-loader/resources");
@@ -162,6 +162,24 @@ describe("AssetLoader #core", function() {
                     assetName: "not_exists"                   
                 });
             });
+
+            it('asset path not found even if raw asset matches', function() {
+                let assetName = 'text:raw';
+                let targetKey = `${assets}/${assetName}`;
+
+                return assetLoader.loadTextContent(targetKey)
+                .then()
+                .should.be.fulfilled
+                .then(() => {
+                    return assetLoader.getFullAssetPath(targetKey);
+                })
+                .should.be.eventually.rejectedWith(NotFoundError)
+                .and.include({
+                    startingContainerPath: path.join(testCourceTestLanguageSubPath, assets),
+                    finalContainerPath: path.join(testCourceTestLanguageSubPath, assets),
+                    assetName: assetName
+                });               
+            })
 
             it("text content fallback not found", function() {
                 let assetName = "redirect_not_found";
