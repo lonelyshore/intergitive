@@ -11,7 +11,7 @@ const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
-describe.only("AssetLoader #core", function() {
+describe("AssetLoader #core", function() {
     describe("Load Assets", function() {
 
         const resourcePath = path.join(utils.RESOURCES_PATH, "/test-asset-loader/resources");
