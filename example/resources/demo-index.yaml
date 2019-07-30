@@ -1,0 +1,90 @@
+asset_index:
+  infile:
+    description:elaborate:intro: |+2
+      .md
+      這是一個關於互動式 git 教學的示範展示。
+      在這個展示中，將會融合說明與操作指引，逐步展示這個互動式教學的核心機制，順便引導操作 git 進行合併  
+
+      這個教學系統的一個關卡主要是由**「區塊」**為基本構成單位，
+      例如本區塊就是一個**「解說」**區塊，顧名思義用來進行解說  
+
+      雖然在這個展示裡將會指引使用 git 命令進行操作，但是正式版中將會是針對 GUI 介面的教學
+    description:instruct:simple-example: |+2
+      .md
+      **「操作指引」**區塊會給出指示，使用者按照指示操作並驗證結果後可以繼續進行教學
+
+      請回答，1+1=?
+    description:illustrate:explain-blocking: |+2
+      .md
+      **「圖解」**區塊可以搭配圖片說明 ~~其實跟解說好像有點重複~~  
+      ![blocking]({{demo/image:blocking}})  
+      如上圖所示，還沒完成的「操作指引」區塊會阻擋教學的進度，被阻擋的區塊以半透明呈現(如圖左)。  
+      一旦完成檢核，就可以解鎖進度(如圖右)  
+
+      請再拿下面的操作指引練手驗證這件事情
+    description:verify-input:puzzle: |+2
+      .md
+      黃絹幼婦外孫韲臼
+    answer:puzzle: "絕妙好辭"
+    description:elaborate:explain-load-reference: |+2
+      .md
+      熟悉了基本操作後，現在開始進入正題  
+
+      既然是 git 教學，一定少不了 git 倉庫(repository)  
+      前一步的**「載入 git 倉庫」**區塊就是負責載入預先設計好的 git 倉庫。
+      通常這個步驟會在一個教學關卡的第一步進行
+
+      為了方便使用者快速開啟工作目錄所在位置，設計了開啟工作目錄的區塊，也就是下一個區塊。
+      請在下一個區塊中按下「執行」開啟目錄所在位置
+    description:instruct:count-local-branch: |+2
+      .md
+      現在我們有了現成的倉庫，應該如何取得本地分支列表呢？
+      
+      請在倉庫的工作目錄開啟慣用的指令介面(git bash, cmd, PowerShell, whatever)，並輸入  
+
+          git branch  
+
+      就會得到目前本地分支的列表，以及當前分支名稱。  
+
+      成功後，請回答本地分支的數量
+    description:instruct:merge: |+2
+      .md
+      接下來要進行合併，並且驗證合併結果。
+      請在指令介面輸入  
+
+          git merge second-branch
+
+      完成後，請按下「執行」檢查操作是否正確
+    description:elaborate:checkpoint: |+2
+      .md
+      **「存檔點」**區塊會在推動進度時自動保存工作目錄狀態，以方便使用者在~~掉進異次元~~操作失敗的時候回復到初始狀態  
+
+      目前的設計中，存檔點還能夠倒回教學的進度，例如以下的例子...
+
+    description:instruct:unmerge: |+2
+      .md
+      如眾所周知，git 分支就只是個標籤。要回復一次合併，就只要把分支擺回原來的地方就行了~  
+
+      請在指令介面輸入
+
+          git reset --hard HEAD^1
+
+      就可以把 master 移動回到原本的位置。
+      
+      完成後請按下「執行」按鈕查驗
+
+    description:illustrate:load-checkpoint: |+2
+      .md
+      恭喜您又儲存一個存檔點  
+
+      現在，如果讀取第一個存下的存檔點，就會把前一個回復合併的操作通關的紀錄消除，並且把這一個區塊變回被阻擋狀態，請嘗試看看
+
+    description:elaborate:end: |+2
+      .md
+      展示結束，感謝體驗。
+
+  ondisk:
+    image:blocking: "blocking.png"
+
+    
+    

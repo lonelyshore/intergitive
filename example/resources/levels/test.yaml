@@ -6,25 +6,63 @@
         referenceStoreName: "test-local-ref"
         checkpointStoreName: "test-local-checkpoints"
   steps:
+    - !elaborate
+      descriptionId: "demo/description:elaborate:intro"
+    
+    - !instruct # instruct the user to take action
+      descriptionId: "demo/description:instruct:simple-example"
+    
+    - !verifyInput
+      answer: "2"
+    
+    - !illustrate
+      descriptionId: "demo/description:illustrate:explain-blocking"
+    
+    - !verifyInput
+      descriptionId: "demo/description:verify-input:puzzle"
+      answer: "${{ demo/answer:puzzle }}"
+    
     - !loadReference
       repoSetupName: local
       referenceName: clean
+
+    - !elaborate
+      descriptionId: "demo/description:elaborate:explain-load-reference"
+    
     - !openWorkingPath
       repoSetupName: local
+
+    - !instruct
+      descriptionId: "demo/description:instruct:count-local-branch"
+    - !verifyInput
+      answer: "6"
+    
+    - !instruct
+      descriptionId: "demo/description:instruct:merge"
     - !verifyRepo
       repoSetupName: local
-      referenceName: clean
+      referenceName: merge
+
     - !checkpoint
       repoSetupName: local
       checkpointName: kerker
-    - !elaborate # elaborate this is an example
-      descriptionId: "assets/description:elaborate:example"
-    - !illustrate # illustrate that IllustrateStep puts out illustrations
-      descriptionId: "assets/description:illustrate:example"
-    - !instruct # instruct the user to take action
-      descriptionId: "assets/description:instruct:example"
-    - !verifyInput
-      answer: "2"
-    - !verifyInput
-      descriptionId: "assets/description:verifyInput"
-      answer: "${{ assets/localized_answer }}"
+
+    - !elaborate
+      descriptionId: "demo/description:elaborate:checkpoint"
+    
+    - !instruct
+      descriptionId: "demo/description:instruct:unmerge"
+    - !verifyRepo
+      repoSetupName: local
+      referenceName: clean
+
+    - !checkpoint
+      repoSetupName: local
+      checkpointName: noking
+
+    - !instruct # illustrate that IllustrateStep puts out illustrations
+      descriptionId: "demo/description:illustrate:load-checkpoint"
+
+    - !elaborate
+      descriptionId: "demo/description:elaborate:end"
+
