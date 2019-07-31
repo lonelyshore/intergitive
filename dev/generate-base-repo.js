@@ -2,13 +2,15 @@
 
 const fs = require("fs-extra");
 const path = require("path");
-const yaml = require("js-yaml");
 
-const ACTION_SCHEMAS = require("./config-schema").LEVEL_CONFIG_SCHEMA;
 const ActionExecutor = require("./action-executor").DevActionExecutor;
 const Action = require("../lib/config-action").Action;
 const AssetLoader = require("../lib/asset-loader").AssetLoader;
 const RepoSetup = require("../lib/config-level").RepoVcsSetup;
+
+const configExecutor = 
+    new (require('./repo-generation-config-executor')
+    .RepoGenerationConfigExecutor)();
 
 /**
  * 
@@ -74,20 +76,15 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
         .then(() => options.initializeRepo(sourceRepoPath));
     })
     .then(() => {
-        return fs.readFile(yamlPath)
-        .then(content => {
-            return yaml.load(content, { schema: ACTION_SCHEMAS });
-        });
+        return configExecutor.loadConfig(yamlPath);
     })
     .then(config => {
-        let stageActionsMap = {};
-        config.stages.forEach(stage => {
-            stageActionsMap[stage.name] = stage.actions;
-        });
     
         let executions = Promise.resolve();
     
-        config.stages.forEach(stage => {
+        config.stageNames.forEach(stageName => {
+
+            let stage = config.stageMap[stageName];
     
             if (options.preStage) {
                 executions = executions.then(() => options.preStage(sourceRepoPath, stage.name))
@@ -101,24 +98,8 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
             if (stage.reset) {
                 executions = executions.then(() => options.initializeRepo(sourceRepoPath));
             }
-
-            if (stage.replay) {
-                stage.replay.forEach(replayName => {
-                    let replayActions = stageActionsMap[replayName];
-
-                    executions = executions.then(() => executeContents(replayActions, actionExecutor))
-                    .catch(err => {
-                        console.error(`error when replaying ${replayName} for stage ${stage.name}`);
-                        throw err;
-                    });                    
-                });
-            }
     
-            executions = executions.then(() => executeContents(stage.actions, actionExecutor))
-            .catch(err => {
-                console.error(`error when executing contents of ${stage.name}`)
-                throw err;
-            });;
+            executions = configExecutor.executeStage(stageName, config.stageMap, actionExecutor);
     
             if (options.postStage) {
                 executions = executions.then(() => {
@@ -134,27 +115,4 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
         return executions;
     });
     
-}
-
-/**
- * 
- * @param {Array<Any>} actions 
- * @param {ActionExecutor} actionExecutor 
- */
-function executeContents(actions, actionExecutor) {
-    let executions = Promise.resolve();
-    actions.forEach(item => {
-        if (item instanceof Action) {
-            executions = executions.then(() => {
-                return item.executeBy(actionExecutor)
-                .catch(err => {
-                    console.error(`[execute ${item.klass}] ${err.message}`);
-                    console.error(err.stack);
-                    throw err;
-                });
-            });
-        }
-    })
-
-    return executions;
 }

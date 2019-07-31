@@ -24,7 +24,7 @@ describe('Prepare VCS Compare #core', function() {
 
     let testingStorageTypes = [
         vcs.STORAGE_TYPE.ARCHIVE,
-        // vcs.STORAGE_TYPE.GIT
+        //vcs.STORAGE_TYPE.GIT
     ];
 
     it('GENERATE_TESTS', function() {
@@ -179,7 +179,9 @@ function createTests(storageType) {
                 })
                 .then(result => {
                     stageMap = result.stageMap;
-                    stageMap["clean"] = [];
+                    // stageMap["clean"] = {
+                    //     actions: []
+                    // };
                 })
                 .then(() => {
                     const assetLoader = new AssetLoader(assetStorePath);
@@ -283,7 +285,7 @@ function createTests(storageType) {
                 });
         
                 it("merging conflict editted", function() {
-                    const referenceName = "conclictEdit";
+                    const referenceName = "conflictEdit";
                     return testForReferencename(referenceName);
                 });
     

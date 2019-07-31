@@ -10,7 +10,6 @@ let rng = random('seed');
 const normalizePathSep = require('../../lib/noarmalize-path-sep');
 
 const resourcesPath = path.resolve(__dirname, "../resources");
-const pathSepRegEx = new RegExp(path.sep, 'g');
 
 function generateRepoHistorySummary(workingPath) {
     let repo = new simpleGitCtor(workingPath);
@@ -331,90 +330,4 @@ module.exports.notImplemented = function() { throw new Error("Not Implemented");
 module.exports.areDirectorySame = areDirectorySame;
 module.exports.inplaceShuffle = inplaceShuffle;
 module.exports.eolToRandom = randomConvert;
-module.exports.RepoArchiveConfigExecutor = class RepoArchiveConfigExecutor {
-
-    constructor() {
-        this.SCHEMA = require("../../dev/config-schema").LEVEL_CONFIG_SCHEMA;
-        this.Action = require("../../lib/config-action").Action;
-    }
-
-    /**
-     * 
-     * @param {Array<Any>} contents 
-     * @param {ActionExecutor} actionExecutor 
-     */
-    executeContents(contents, actionExecutor) {
-        let executions = Promise.resolve();
-        contents.forEach(item => {
-            if (item instanceof this.Action) {
-                executions = executions.then(() => {
-                    return item.executeBy(actionExecutor)
-                        .catch(err => {
-                            console.error(`[execute ${item.klass}] ${err.message}`);
-                            throw err;
-                        });
-                });
-            }
-        })
-
-        return executions;
-    }
-
-    tryApplyReplay(executions, contents, stageMap, actionExecutor) {
-
-        if (contents.length !== 0 && ("replay" in contents[0])) {
-            let replayContents = [];
-            contents[0]["replay"].forEach(replayName => {
-                replayContents = replayContents.concat(stageMap[replayName]);
-            });
-
-            executions = executions.then(() => this.executeContents(replayContents, actionExecutor));
-        }
-
-        return executions;
-    }
-
-    executeStage(stageName, stageMap, actionExecutor) {
-
-        if (!(stageName in stageMap)) {
-            return Promise.reject(new Error(`Cannot find find stageName ${stageName}`));
-        }
-
-        let contents = stageMap[stageName];
-
-        let executions = Promise.resolve();
-        executions = this.tryApplyReplay(executions, contents, stageMap, actionExecutor);
-        executions = executions.then(() => this.executeContents(contents, actionExecutor));
-        return executions;
-    }
-
-    loadConfigSync(configPath) {
-        let content = fs.readFileSync(configPath);
-        return this.loadConfigFromContent(content);
-    }
-
-    loadConfig(configPath) {
-        return fs.readFile(configPath)
-        .then(content => {
-            return this.loadConfigFromContent(content);
-        })
-    }
-
-    loadConfigFromContent(content) {
-
-        let config = yaml.safeLoad(content, { schema: this.SCHEMA });
-
-        let stageMap = {};
-        let stageNames = [];
-        config.stages.forEach(stage => {
-            stageNames.push(stage.name);
-            stageMap[stage.name] = stage.contents;
-        })
-
-        return {
-            stageMap: stageMap,
-            stageNames: stageNames
-        };
-    }
-
-}
+module.exports.RepoArchiveConfigExecutor = require('../../dev/repo-generation-config-executor').RepoGenerationConfigExecutor;
