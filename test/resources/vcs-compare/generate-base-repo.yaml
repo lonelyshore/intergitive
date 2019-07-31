@@ -1,6 +1,6 @@
 stages:
   - name: init
-    contents:
+    actions:
     - !git
       repoSetupName: repo
       arguments:
@@ -27,7 +27,7 @@ stages:
         - core.autocrlf
         - input
   - name: base1
-    contents:
+    actions:
     - !writeFile
       sourceAssetIds:
         - file/base/first_file:v1
@@ -60,7 +60,7 @@ stages:
         - branch
         - second-branch
   - name: base2
-    contents:
+    actions:
       - !writeFile
         sourceAssetIds:
           - file/base/third_file:v1
@@ -88,7 +88,7 @@ stages:
           - -m
           - commit
   - name: base3
-    contents:
+    actions:
       - !git
         repoSetupName: repo
         arguments:
@@ -110,7 +110,7 @@ stages:
           - branch
           - "conflict-mixed"
   - name: base4
-    contents:
+    actions:
       - !writeFile
         sourceAssetIds:
           - file/base/first_file:v2
@@ -149,7 +149,7 @@ stages:
           - -m
           - add fifth
   - name: growSecond
-    contents:
+    actions:
       - !cleanCheckout
         repoSetupName: repo
         commitish: "second-branch"
@@ -180,7 +180,7 @@ stages:
           - -m
           - add seventh
   - name: growSecond2
-    contents:
+    actions:
       - !removeFile
         targetPaths:
           - repo/second_folder/sixth_file
@@ -193,7 +193,7 @@ stages:
           - -m
           - remove sixth
   - name: growSecond3
-    contents:
+    actions:
       - !moveFile
         sourcePath: repo/second_folder/seventh_file
         targetPath: repo/second_folder/periodic_table
@@ -206,7 +206,7 @@ stages:
           - -m
           - remove
   - name: conflict-AA
-    contents:
+    actions:
       - !cleanCheckout
         repoSetupName: repo
         commitish: "conflict-AA"
@@ -224,7 +224,7 @@ stages:
           - -m
           - add fifth
   - name: conflict-MM
-    contents:
+    actions:
       - !cleanCheckout
         repoSetupName: repo
         commitish: "conflict-MM"
@@ -242,7 +242,7 @@ stages:
           - -m
           - modify first
   - name: conflict-MR
-    contents:
+    actions:
       - !cleanCheckout
         repoSetupName: repo
         commitish: "conflict-MR"
@@ -260,7 +260,7 @@ stages:
           - -m
           - "remove second"
   - name: conflict-mixed
-    contents:
+    actions:
       - !cleanCheckout
         repoSetupName: repo
         commitish: "conflict-mixed"  
@@ -274,12 +274,12 @@ stages:
         repoSetupName: repo
         withBranch: "conflict-MR"
   - name: reset
-    contents:
+    actions:
       - !cleanCheckout
         repoSetupName: repo
         commitish: master
   - name: tagging
-    contents:
+    actions:
       - !git
         repoSetupName: repo
         arguments:

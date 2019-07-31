@@ -80,9 +80,9 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
         });
     })
     .then(config => {
-        let stageMap = {};
+        let stageActionsMap = {};
         config.stages.forEach(stage => {
-            stageMap[stage.name] = stage.contents;
+            stageActionsMap[stage.name] = stage.actions;
         });
     
         let executions = Promise.resolve();
@@ -97,22 +97,24 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
                     throw err;                    
                 });
             }
-    
-            let contents = stage.contents;
-            if (contents.length !== 0 && ("replay" in contents[0])) {
-                let replayContents = [];
-                contents[0]["replay"].forEach(replayName => {
-                    replayContents = replayContents.concat(stageMap[replayName]);
-                });
-    
-                executions = executions.then(() => executeContents(replayContents, actionExecutor))
-                .catch(err => {
-                    console.error(`error when replaying ${stage.name}`);
-                    throw err;
+
+            if (stage.reset) {
+                executions = executions.then(() => options.initializeRepo(sourceRepoPath));
+            }
+
+            if (stage.replay) {
+                stage.replay.forEach(replayName => {
+                    let replayActions = stageActionsMap[replayName];
+
+                    executions = executions.then(() => executeContents(replayActions, actionExecutor))
+                    .catch(err => {
+                        console.error(`error when replaying ${replayName} for stage ${stage.name}`);
+                        throw err;
+                    });                    
                 });
             }
     
-            executions = executions.then(() => executeContents(contents, actionExecutor))
+            executions = executions.then(() => executeContents(stage.actions, actionExecutor))
             .catch(err => {
                 console.error(`error when executing contents of ${stage.name}`)
                 throw err;
@@ -136,12 +138,12 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
 
 /**
  * 
- * @param {Array<Any>} contents 
+ * @param {Array<Any>} actions 
  * @param {ActionExecutor} actionExecutor 
  */
-function executeContents(contents, actionExecutor) {
+function executeContents(actions, actionExecutor) {
     let executions = Promise.resolve();
-    contents.forEach(item => {
+    actions.forEach(item => {
         if (item instanceof Action) {
             executions = executions.then(() => {
                 return item.executeBy(actionExecutor)

@@ -1,87 +1,100 @@
-perStageReset: true
 stages:
   - name: clean
-    contents: []
+    actions: []
   - name: dirtyAdd
-    contents:
+    reset: true
+    actions:
     - !writeFile
       sourceAssetIds:
         - file/dirtyAdd
       destinationPaths:
         - repo/folder/some_new
   - name: dirtyRemove
-    contents:
+    reset: true
+    actions:
     - !removeFile
       targetPaths:
         - repo/first_file
   - name: dirtyModify
-    contents:
+    reset: true
+    actions:
     - !writeFile
       sourceAssetIds:
         - file/dirtyModify
       destinationPaths:
         - repo/folder/forth
   - name: dirtyMixed
-    contents:
-    - replay:
-      - dirtyAdd
-      - dirtyRemove
-      - dirtyModify
+    reset: true
+    replay:
+    - dirtyAdd
+    - dirtyRemove
+    - dirtyModify
+    actions: []
   - name: dirtyAddStage
-    contents:
-    - replay:
-      - dirtyAdd
+    reset: true
+    replay:
+    - dirtyAdd    
+    actions:
     - !stageAll
       repoSetupName: repo
   - name: dirtyRemoveStage
-    contents:
-    - replay:
-      - dirtyRemove
+    reset: true
+    replay:
+    - dirtyRemove    
+    actions:
     - !stageAll
       repoSetupName: repo      
   - name: dirtyModifyStage
-    contents:
-    - replay:
-      - dirtyModify
+    reset: true
+    replay:
+    - dirtyModify    
+    actions:
     - !stageAll
       repoSetupName: repo
   - name: dirtyMixedStage
-    contents:
-    - replay:
-      - dirtyAdd
-      - dirtyRemove
-      - dirtyModify
+    reset: true
+    replay:
+    - dirtyAdd
+    - dirtyRemove
+    - dirtyModify    
+    actions:
     - !stageAll
       repoSetupName: repo      
   - name: merge
-    contents:
+    reset: true
+    actions:
     - !merge
       repoSetupName: repo
       withBranch: "second-branch"
   - name: conflictAA
-    contents:
+    reset: true
+    actions:
     - !merge
       repoSetupName: repo
       withBranch: "conflict-AA"
   - name: conflictMM
-    contents:
+    reset: true
+    actions:
     - !merge
       repoSetupName: repo
       withBranch: "conflict-MM"
   - name: conflictMR
-    contents:
+    reset: true
+    actions:
     - !merge
       repoSetupName: repo
       withBranch: "conflict-MR"
   - name: conflictMixed
-    contents:
+    reset: true  
+    actions:
     - !merge
       repoSetupName: repo
       withBranch: "conflict-mixed"
-  - name: conclictEdit
-    contents:
-    - replay:
-      - conflictMixed
+  - name: conflictEdit
+    reset: true
+    replay:
+    - conflictMixed    
+    actions:
     - !writeFile
       sourceAssetIds:
         - file/resolveConflictAA
@@ -92,22 +105,25 @@ stages:
         - repo/first_file
         - repo/second_file
   - name: conflictResolveStage
-    contents:
-    - replay:
-      - conflictMixed
-      - conflictEdit
+    reset: true
+    replay:
+    - conflictMixed
+    - conflictEdit    
+    actions:
     - !stageAll
       repoSetupName: repo
   - name: conflictResolve
-    contents:
-    - replay:
-      - conflictMixed
-      - conflictEdit
-      - conflictResolveStage
+    reset: true
+    replay:
+    - conflictMixed
+    - conflictEdit
+    - conflictResolveStage    
+    actions:
     - !continueMerge
       repoSetupName: repo
   - name: detached
-    contents:
+    reset: true
+    actions:
     - !cleanCheckout
       repoSetupName: repo
       commitish: "end-of-base"
