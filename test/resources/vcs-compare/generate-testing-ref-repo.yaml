@@ -1,7 +1,16 @@
+repoVcsSetups:
+  - local:
+    !repoVcs:
+      workingPath: "repo"
+      referenceStoreName: "compare-vcs-local-ref"
 stages:
   - name: clean
+    save:
+      - local  
     actions: []
   - name: dirtyAdd
+    save:
+      - local  
     reset: true
     actions:
     - !writeFile
@@ -10,12 +19,16 @@ stages:
       destinationPaths:
         - repo/folder/some_new
   - name: dirtyRemove
+    save:
+      - local  
     reset: true
     actions:
     - !removeFile
       targetPaths:
         - repo/first_file
   - name: dirtyModify
+    save:
+      - local  
     reset: true
     actions:
     - !writeFile
@@ -24,6 +37,8 @@ stages:
       destinationPaths:
         - repo/folder/forth
   - name: dirtyMixed
+    save:
+      - local  
     reset: true
     replay:
     - dirtyAdd
@@ -31,6 +46,8 @@ stages:
     - dirtyModify
     actions: []
   - name: dirtyAddStage
+    save:
+      - local  
     reset: true
     replay:
     - dirtyAdd    
@@ -38,6 +55,8 @@ stages:
     - !stageAll
       repoSetupName: repo
   - name: dirtyRemoveStage
+    save:
+      - local  
     reset: true
     replay:
     - dirtyRemove    
@@ -45,6 +64,8 @@ stages:
     - !stageAll
       repoSetupName: repo      
   - name: dirtyModifyStage
+    save:
+      - local  
     reset: true
     replay:
     - dirtyModify    
@@ -52,6 +73,8 @@ stages:
     - !stageAll
       repoSetupName: repo
   - name: dirtyMixedStage
+    save:
+      - local  
     reset: true
     replay:
     - dirtyAdd
@@ -61,36 +84,48 @@ stages:
     - !stageAll
       repoSetupName: repo      
   - name: merge
+    save:
+      - local  
     reset: true
     actions:
     - !merge
       repoSetupName: repo
       withBranch: "second-branch"
   - name: conflictAA
+    save:
+      - local  
     reset: true
     actions:
     - !merge
       repoSetupName: repo
       withBranch: "conflict-AA"
   - name: conflictMM
+    save:
+      - local  
     reset: true
     actions:
     - !merge
       repoSetupName: repo
       withBranch: "conflict-MM"
   - name: conflictMR
+    save:
+      - local  
     reset: true
     actions:
     - !merge
       repoSetupName: repo
       withBranch: "conflict-MR"
   - name: conflictMixed
+    save:
+      - local  
     reset: true  
     actions:
     - !merge
       repoSetupName: repo
       withBranch: "conflict-mixed"
   - name: conflictEdit
+    save:
+      - local  
     reset: true
     replay:
     - conflictMixed    
@@ -105,6 +140,8 @@ stages:
         - repo/first_file
         - repo/second_file
   - name: conflictResolveStage
+    save:
+      - local  
     reset: true
     replay:
     - conflictMixed
@@ -113,6 +150,8 @@ stages:
     - !stageAll
       repoSetupName: repo
   - name: conflictResolve
+    save:
+      - local  
     reset: true
     replay:
     - conflictMixed
@@ -122,6 +161,8 @@ stages:
     - !continueMerge
       repoSetupName: repo
   - name: detached
+    save:
+      - local  
     reset: true
     actions:
     - !cleanCheckout

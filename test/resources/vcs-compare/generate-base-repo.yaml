@@ -1,5 +1,12 @@
+repoVcsSetups:
+  local:
+    !repoVcs
+      workingPath: "repo"
+      referenceStoreName: "compare-vcs-grow-local-ref"
 stages:
   - name: init
+    save:
+      - local
     actions:
     - !git
       repoSetupName: repo
@@ -27,6 +34,8 @@ stages:
         - core.autocrlf
         - input
   - name: base1
+    save:
+      - local
     actions:
     - !writeFile
       sourceAssetIds:
@@ -60,6 +69,8 @@ stages:
         - branch
         - second-branch
   - name: base2
+    save:
+      - local
     actions:
       - !writeFile
         sourceAssetIds:
@@ -88,6 +99,8 @@ stages:
           - -m
           - commit
   - name: base3
+    save:
+      -local
     actions:
       - !git
         repoSetupName: repo
@@ -110,6 +123,8 @@ stages:
           - branch
           - "conflict-mixed"
   - name: base4
+    save:
+      - local
     actions:
       - !writeFile
         sourceAssetIds:
@@ -149,6 +164,8 @@ stages:
           - -m
           - add fifth
   - name: growSecond
+    save:
+      - local
     actions:
       - !cleanCheckout
         repoSetupName: repo
@@ -180,6 +197,8 @@ stages:
           - -m
           - add seventh
   - name: growSecond2
+    save:
+      - local  
     actions:
       - !removeFile
         targetPaths:
@@ -193,6 +212,8 @@ stages:
           - -m
           - remove sixth
   - name: growSecond3
+    save:
+      - local  
     actions:
       - !moveFile
         sourcePath: repo/second_folder/seventh_file
@@ -206,6 +227,8 @@ stages:
           - -m
           - remove
   - name: conflict-AA
+    save:
+      - local  
     actions:
       - !cleanCheckout
         repoSetupName: repo
@@ -224,6 +247,8 @@ stages:
           - -m
           - add fifth
   - name: conflict-MM
+    save:
+      - local  
     actions:
       - !cleanCheckout
         repoSetupName: repo
@@ -242,6 +267,8 @@ stages:
           - -m
           - modify first
   - name: conflict-MR
+    save:
+      - local  
     actions:
       - !cleanCheckout
         repoSetupName: repo
@@ -260,6 +287,8 @@ stages:
           - -m
           - "remove second"
   - name: conflict-mixed
+    save:
+      - local  
     actions:
       - !cleanCheckout
         repoSetupName: repo
@@ -274,11 +303,15 @@ stages:
         repoSetupName: repo
         withBranch: "conflict-MR"
   - name: reset
+    save:
+      - local  
     actions:
       - !cleanCheckout
         repoSetupName: repo
         commitish: master
   - name: tagging
+    save:
+      - local  
     actions:
       - !git
         repoSetupName: repo
