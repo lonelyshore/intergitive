@@ -110,8 +110,8 @@ describe('Prepare Repo Save & Restore Tests', function() {
 
     });
 
-    it(`GENERATE TESTS`, function() {
-        return createTests(repoCreationConfig.stageNames, testingStorageTypes);
+    it(`GENERATE LOCAL TESTS`, function() {
+        return createTests(repoCreationConfig.stageNames, false, testingStorageTypes);
     });
 
 });
@@ -120,7 +120,7 @@ describe('Prepare Repo Save & Restore Tests', function() {
  * 
  * @param {Array<String>} testdataEntryNames 
  */
-function createTests(testdataEntryNames, testingStorageTypes) {
+function createTests(testdataEntryNames, isRemoteRepo, testingStorageTypes) {
 
     describe('Save & Restore Repo', function() {
 
@@ -396,6 +396,7 @@ function createTests(testdataEntryNames, testingStorageTypes) {
                             sourcePath,
                             storePath,
                             refStoreName,
+                            isRemoteRepo,
                             testingStorageType
                         )
                         .then(maker => {
@@ -408,6 +409,7 @@ function createTests(testdataEntryNames, testingStorageTypes) {
                             restoredPath,
                             storePath,
                             refStoreName,
+                            isRemoteRepo,
                             testingStorageType
                         )
                         .then(manager => {
@@ -444,6 +446,7 @@ function createTests(testdataEntryNames, testingStorageTypes) {
                             sourcePath,
                             storePath,
                             checkpointStoreName,
+                            isRemoteRepo,
                             testingStorageType
                         )
                         .then(manager => {
@@ -456,6 +459,7 @@ function createTests(testdataEntryNames, testingStorageTypes) {
                             restoredPath,
                             storePath,
                             checkpointStoreName,
+                            isRemoteRepo,
                             testingStorageType
                         )
                         .then(checkPointManager => {

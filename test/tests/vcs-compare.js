@@ -74,7 +74,7 @@ function createTests(storageType) {
                     .then(() => repo.addConfig("user.email", "test@test.server"))
                 })
                 .then(() => {
-                    return vcs.RepoReferenceManager.create(checkedRepoPath, referenceStorePath, referenceStoreName, storageType)
+                    return vcs.RepoReferenceManager.create(checkedRepoPath, referenceStorePath, referenceStoreName, false, storageType)
                     .then((manager) => {
                         vcsManager = manager;
                     });
@@ -169,7 +169,7 @@ function createTests(storageType) {
                     .then(() => zip.extractArchiveTo(checkedArchivePath, checkedRepoPath));
                 })
                 .then(() => {
-                    return vcs.RepoReferenceManager.create(checkedRepoPath, referenceStorePath, referenceStoreName, storageType)
+                    return vcs.RepoReferenceManager.create(checkedRepoPath, referenceStorePath, referenceStoreName, false, storageType)
                     .then((manager) => {
                         vcsManager = manager;
                     });
