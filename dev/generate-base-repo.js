@@ -49,6 +49,8 @@ const configExecutor =
  */
 module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPath, archiveStorePath, options) {
 
+    options = options || {};
+
     const repoStoresPath = path.join(workingPath, 'repo-stores');
 
     const assetLoader = new AssetLoader(assetStorePath);
@@ -127,13 +129,27 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
                     });
                 }
         
-                executions = configExecutor.executeStage(stageName, config.stageMap, actionExecutor);
+                executions = 
+                    executions.then(() => {
+                        return configExecutor
+                        .executeStage(stageName, config.stageMap, actionExecutor)
+                        .catch(err => {
+                            console.error(`[Execute Stage ${stageName}] error occured`);
+                            console.error(err);
+                            throw err;
+                        });
+                    });
 
                 if (stage.save) {
                     stage.save.forEach(savedRepoName => {
                         let saveAction = new actionConfigs.SaveRepoReferenceAction(savedRepoName);
                         executions = executions.then(() => {
                             return saveAction.executeBy(actionExecutor);
+                        })
+                        .catch(err => {
+                            console.error(`[Save Stage ${stageName}] error occured`);
+                            console.error(err);
+                            throw err;
                         });
                     });
                 }
@@ -167,50 +183,50 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
      * @param {InitializeRepoCb} onRepoInitialized 
      */
     function initializeRepos(workingPath, archiveStorePath, repoSetups, onRepoInitialized) {
-        return () => {
-            let initializations = Promise.resolve();
-            Object.keys(repoSetups).forEach(repoSetupName => {
+        let initializations = Promise.resolve();
+        Object.keys(repoSetups).forEach(repoSetupName => {
 
-                let repoSetup = repoSetups[repoSetupName];
-                let repoWorkingPath = path.join(
-                    workingPath,
-                    repoSetup.workingPath
-                );
+            let repoSetup = repoSetups[repoSetupName];
+            let repoWorkingPath = path.join(
+                workingPath,
+                repoSetup.workingPath
+            );
 
-                if (repoSetup.repoArchiveName) {
+            if (repoSetup.repoArchiveName) {
 
-                    initializations = initializations.then(() => {
-                        return zip.extractArchiveTo(
-                            path.join(archiveStorePath, repoSetup.repoArchiveName),
-                            repoWorkingPath
-                        )
-                    });
+                initializations = initializations.then(() => {
+                    return zip.extractArchiveTo(
+                        path.join(archiveStorePath, repoSetup.repoArchiveName),
+                        repoWorkingPath
+                    )
+                });
 
-                }
-                else {
+            }
+            else {
 
-                    initializations = initializations.then(() => {
-                        return fs.emptyDir(repoWorkingPath);
-                    });
+                initializations = initializations.then(() => {
+                    return fs.emptyDir(repoWorkingPath);
+                });
 
-                }
+            }
 
-                if (onRepoInitialized) {
-                    initializations = initializations.then(() => {
-                        return onRepoInitialized(
-                            repoSetupName,
-                            repoWorkingPath
-                        );
-                    })
-                    .catch(err => {
-                        console.error(`[InitializationCallback] error occured for ${repoSetupName}`);
-                        console.error(err);
-                        throw err;
-                    });
-                }
+            if (onRepoInitialized) {
+                initializations = initializations.then(() => {
+                    return onRepoInitialized(
+                        repoSetupName,
+                        repoWorkingPath
+                    );
+                })
+                .catch(err => {
+                    console.error(`[InitializationCallback] error occured for ${repoSetupName}`);
+                    console.error(err);
+                    throw err;
+                });
+            }
 
-            });
-        }
+        });
+
+        return initializations;
     }
 
     /**
@@ -221,25 +237,23 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
      * @param {Object} repoSetups 
      */
     function invokeStageCalbacks(callback, workingPath, stageName, repoSetups) {
-        return () => {
-            let invocations = Promise.resolve();
-            Object.keys(repoSetups).forEach(repoSetupName => {
-                let repoSetup = repoSetups[repoSetupName];
+        let invocations = Promise.resolve();
+        Object.keys(repoSetups).forEach(repoSetupName => {
+            let repoSetup = repoSetups[repoSetupName];
 
-                invocations = invocations.then(() => {
-                    return callback(
-                        repoSetupName,
-                        path.join(workingPath, repoSetup.workingPath),
-                        stageName
-                    );
-                })
-                .catch(err => {
-                    console.error(`[InvokeStageCallback] error for repoName: ${repoSetupName}`);
-                    throw err;
-                });
+            invocations = invocations.then(() => {
+                return callback(
+                    repoSetupName,
+                    path.join(workingPath, repoSetup.workingPath),
+                    stageName
+                );
+            })
+            .catch(err => {
+                console.error(`[InvokeStageCallback] error for repoName: ${repoSetupName}`);
+                throw err;
             });
+        });
 
-            return invocations;
-        }
+        return invocations;
     }
 }

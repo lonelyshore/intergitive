@@ -89,7 +89,8 @@ module.exports.RepoGenerationConfigExecutor = class RepoGenerationConfigExecutor
 
         return {
             stageMap: stageMap,
-            stageNames: stageNames
+            stageNames: stageNames,
+            repoSetups: config.repoSetups
         };
     }
 

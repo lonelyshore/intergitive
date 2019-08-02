@@ -83,6 +83,18 @@ class GitCommandAction extends upstream.Action {
     }
 }
 
+class SaveRepoReferenceAction extends upstream.Action {
+    constructor(repoSetupName) {
+        super();
+        this.klass = 'SaveRepoReferenceAction';
+        this.repoSetupName = repoSetupName;
+    }
+
+    executeBy(actionExecutor) {
+        return Promise.reject('not implemented');
+    }
+}
+
 module.exports = Object.assign({}, upstream);
 module.exports.UnstageAction = UnstageAction;
 module.exports.UnstageAllAction = UnstageAllAction;
@@ -90,3 +102,4 @@ module.exports.MergeAction = MergeAction;
 module.exports.ContinueMergeAction = ContinueMergeAction;
 module.exports.CleanCheckoutAction = CleanCheckoutAction;
 module.exports.GitCommandAction = GitCommandAction;
+module.exports.SaveRepoReferenceAction = SaveRepoReferenceAction;

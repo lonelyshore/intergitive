@@ -79,7 +79,7 @@ class DevActionExecutor extends ActionExecutor {
             return repo.raw(commandArguments);
         })
         .catch(err => {
-            console.error(`[executeGitCommand] error occured when executing ${command} with arguments [${commandArguments.join([","])}]\nerror: ` + err.message);
+            console.error(`[executeGitCommand] error occured when executing git command [${commandArguments.join([","])}]\nerror: ` + err.message);
             throw err;
         });
     }
