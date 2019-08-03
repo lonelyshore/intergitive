@@ -66,22 +66,6 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
 
         repoSetups = config.repoSetups;
 
-        Object.keys(repoSetups).forEach(repoSetupName => {
-            let repoSetup = repoSetups[repoSetupName];
-            repoSetup.fullWorkingPath = 
-                path.join(
-                    workingPath,
-                    repoSetup.workingPath
-                );
-
-            repoSetup.fullReferenceStorePath = 
-                path.join(
-                    workingPath,
-                    repoStoreName,
-                    repoSetup.referenceStoreName
-                );
-        });
-
 
         return Promise.resolve()
         .then(() => {
@@ -97,6 +81,15 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
                 repoSetupsForActionExecutor,
                 options.repoStorageType
             );
+
+            Object.keys(repoSetups).forEach(repoSetupName => {
+                let repoSetup = repoSetups[repoSetupName];
+
+                repoSetup = Object.assign(
+                    repoSetup,
+                    actionExecutor.getRepoFullPaths(repoSetupName)
+                );
+            });
         })
         .then(() => {
             return fs.emptyDir(workingPath)

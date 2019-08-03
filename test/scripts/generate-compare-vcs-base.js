@@ -101,19 +101,25 @@ executionContexts.forEach(executionContext => {
                             .then(() => {
                                 return zip.archivePathTo(
                                     setup.fullReferenceStorePath,
-                                    destination
+                                    destination,
+                                    false
                                 );
                             });
                         });
                     }
                 });
             })
-            .then(() => {
+            .catch(err => {
+                console.error(`Error happend when executing ${executionContext.yamlSubPath} & ${STORAGE_TYPE.toString(storageType)}`);
+                console.error(err);
+            })
+            .finally(() => {
                 return fs.remove(workingPath);
-            });
+            })
+
         })
     })
-})
+});
 
 
 

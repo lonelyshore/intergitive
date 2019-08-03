@@ -103,7 +103,7 @@ class DevActionExecutor extends ActionExecutor {
         let setup = this.repoSetups[repoSetupName];
         let result = {};
         if (setup) {
-            if ('workingPath' in setup) {
+            if (setup.workingPath) {
                 result.fullWorkingPath =
                     path.join(
                         this.fileSystemBaseFolder,
@@ -111,7 +111,7 @@ class DevActionExecutor extends ActionExecutor {
                     );
             }
             if (this.repoStoreSubPath) {
-                if ('referenceStoreName' in setup) {
+                if (setup.referenceStoreName) {
                     result.fullReferenceStorePath =
                         path.join(
                             this.fileSystemBaseFolder,
@@ -119,7 +119,7 @@ class DevActionExecutor extends ActionExecutor {
                             setup.referenceStoreName
                         );
                 }
-                if ('checkpointStoreName' in setup) {
+                if (setup.checkpointStoreName) {
                     result.fullCheckpointStorePath =
                         path.join(
                             this.fileSystemBaseFolder,

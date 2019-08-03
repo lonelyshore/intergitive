@@ -61,7 +61,7 @@ let repoCreationActionExecutor = createRepoCreationActionExecutor(
     repoCreationConfigExecutor
 );
 
-describe.only('Prepare Repo Save & Restore Tests', function() {
+describe('Prepare Repo Save & Restore Tests', function() {
 
     const repoCreationPath = 
     repoCreationActionExecutor.getRepoFullPaths('local').fullWorkingPath;

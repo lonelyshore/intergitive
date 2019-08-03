@@ -1,3 +1,4 @@
+resourcesSubPath: "vcs-compare/assets"
 repoSetups:
   local:
     workingPath: "repo"

@@ -20,7 +20,7 @@ const RepoSetup = require("../../lib/config-level").RepoVcsSetup;
 chai.use(chaiAsPromised);
 chai.should();
 
-describe('Prepare VCS Compare #core', function() {
+describe.only('Prepare VCS Compare #core', function() {
 
     let testingStorageTypes = [
         vcs.STORAGE_TYPE.ARCHIVE,
@@ -46,21 +46,46 @@ function createTests(storageType) {
                 
             const workingPath = path.join(utils.PLAYGROUND_PATH, "compare-vcs");
     
-            const checkedRepoPath = path.join(workingPath, "repo");
             const referenceStorePath = path.join(workingPath, "repo-store");
             const referenceStoreName = "compare-vcs-grow-local-ref";
     
             const referenceArchivePath = path.join(utils.ARCHIVE_RESOURCES_PATH, `compare-vcs-grow-local-ref-${vcs.STORAGE_TYPE.toString(storageType)}.zip`);
+
+            const yamlPath = 
+                path.join(utils.RESOURCES_PATH, "vcs-compare", "generate-base-repo.yaml");
+            let config = 
+                archiveCreationConfigExecutor.loadConfigSync(
+                    yamlPath
+                );
     
             let repo;
             let vcsManager;
             let actionExecutor;
+            let checkedRepoPath;
     
             before(function() {
     
                 const assetStorePath = path.join(utils.RESOURCES_PATH, "vcs-compare", "assets");
                 
                 return Promise.resolve()
+                .then(() => {
+                    const assetLoader = new AssetLoader(assetStorePath);
+                    assetLoader.setBundlePath();
+    
+                    const repoSetups = 
+                        archiveCreationConfigExecutor
+                        .createRepoVcsSetupsFromConfig(config);
+    
+                    actionExecutor = new ActionExecutor(
+                        workingPath,
+                        undefined,
+                        assetLoader,
+                        repoSetups
+                    );
+
+                    checkedRepoPath = actionExecutor.getRepoFullPaths('local').fullWorkingPath;
+    
+                })
                 .then(() => {
                     return fs.emptyDir(workingPath)
                     .then(() => fs.emptyDir(checkedRepoPath))
@@ -78,26 +103,6 @@ function createTests(storageType) {
                     .then((manager) => {
                         vcsManager = manager;
                     });
-                })
-                .then(() => {
-                    const assetLoader = new AssetLoader(assetStorePath);
-                    assetLoader.setBundlePath();
-    
-                    const repoSetups = {
-                        repo: new RepoSetup(
-                            path.relative(workingPath, checkedRepoPath),
-                            undefined,
-                            undefined
-                        )
-                    };
-    
-                    actionExecutor = new ActionExecutor(
-                        workingPath,
-                        undefined,
-                        assetLoader,
-                        repoSetups
-                    );
-    
                 });
             });
     
@@ -105,11 +110,7 @@ function createTests(storageType) {
                 return fs.remove(workingPath)
             });
     
-            const yamlPath = path.join(utils.RESOURCES_PATH, "vcs-compare", "generate-base-repo.yaml");
-            let config = 
-                archiveCreationConfigExecutor.loadConfigSync(
-                    yamlPath
-                );
+
             
             config.stageNames.forEach(stageName => {
     
@@ -137,7 +138,7 @@ function createTests(storageType) {
     
             const workingPath = path.join(utils.PLAYGROUND_PATH, "compare-vcs");
     
-            const checkedRepoPath = path.join(workingPath, "repo");
+            
             const referenceStorePath = path.join(workingPath, "repo-store");
             const referenceStoreName = "compare-vcs-local-ref";
     
@@ -149,6 +150,7 @@ function createTests(storageType) {
             let vcsManager;
             let stageMap = {};
             let actionExecutor;
+            let checkedRepoPath;
     
             let resetCheckRepo = function() {
                 return fs.remove(checkedRepoPath)
@@ -163,6 +165,32 @@ function createTests(storageType) {
                 
                 return Promise.resolve()
                 .then(() => {
+                    return archiveCreationConfigExecutor.loadConfig(yamlPath);
+                })
+                .then(config => {
+                    stageMap = config.stageMap;
+
+                    const assetLoader = new AssetLoader(assetStorePath);
+                    assetLoader.setBundlePath();
+    
+                    const repoSetups = 
+                        archiveCreationConfigExecutor.createRepoVcsSetupsFromConfig(
+                            config
+                        );
+    
+                    actionExecutor = new ActionExecutor(
+                        workingPath,
+                        undefined,
+                        assetLoader,
+                        repoSetups
+                    );
+    
+                    checkedRepoPath = 
+                        actionExecutor
+                        .getRepoFullPaths('local')
+                        .fullWorkingPath;
+                })
+                .then(() => {
                     return fs.emptyDir(workingPath)
                     .then(() => fs.emptyDir(referenceStorePath))
                     .then(() => zip.extractArchiveTo(referenceArchivePath, path.join(referenceStorePath, referenceStoreName)))
@@ -173,35 +201,6 @@ function createTests(storageType) {
                     .then((manager) => {
                         vcsManager = manager;
                     });
-                })
-                .then(() => {
-                    return archiveCreationConfigExecutor.loadConfig(yamlPath);
-                })
-                .then(result => {
-                    stageMap = result.stageMap;
-                    // stageMap["clean"] = {
-                    //     actions: []
-                    // };
-                })
-                .then(() => {
-                    const assetLoader = new AssetLoader(assetStorePath);
-                    assetLoader.setBundlePath();
-    
-                    const repoSetups = {
-                        repo: new RepoSetup(
-                            path.relative(workingPath, checkedRepoPath),
-                            undefined,
-                            undefined
-                        )
-                    };
-    
-                    actionExecutor = new ActionExecutor(
-                        workingPath,
-                        undefined,
-                        assetLoader,
-                        repoSetups
-                    );
-    
                 });
             });
     

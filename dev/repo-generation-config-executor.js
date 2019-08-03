@@ -84,43 +84,6 @@ module.exports.RepoGenerationConfigExecutor = class RepoGenerationConfigExecutor
         return repoSetupsForActionExecutor;
     }
 
-    createRepoVcsInfoFromConig(config, workingPath, repoStoreName) {
-        let repoSetups = config.repoSetups;
-        let repoInfos = {};
-
-        Object.keys(repoSetups).forEach(repoSetupName => {
-            let repoSetup = repoSetups[repoSetupName];
-
-            let repoInfo = {};
-            
-            repoInfo.fullWorkingPath = 
-                path.join(
-                    workingPath,
-                    repoSetup.workingPath
-                );
-
-            repoInfo.fullReferenceStorePath = 
-                path.join(
-                    workingPath,
-                    repoStoreName,
-                    repoSetup.referenceStoreName
-                );
-
-            if (repoSetup.checkpointStoreName) {
-                repoInfo.fullCheckpointStorePath =
-                    path.join(
-                        workingPath,
-                        repoStoreName,
-                        repoSetup.checkpointStoreName
-                    );
-            }
-
-            repoInfos[repoSetupName] = repoInfo;
-        });
-
-        return repoInfos;
-    }
-
     loadConfigSync(configPath) {
         let content = fs.readFileSync(configPath);
         return this.loadConfigFromContent(content);
