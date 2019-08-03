@@ -53,32 +53,7 @@ require("../../dev/generate-base-repo").generateBaseRepo(
     }
 )
 .then(() => {
-    let initRepoPath = path.join(archivePath, 'init');
-    return fs.mkdirp(initRepoPath)
-    .then(() => {
-        return simpleGit(initRepoPath)
-    })
-    .then(repo => {
-        return repo.raw(['init'])
-        .then(() => {
-            return repo.raw(['config', '--local', 'user.name', 'test-repo']);
-        })
-        .then(() => {
-            return repo.raw(['config', '--local', 'user.email', 'test-repo@some.mail.server']);
-        })
-        .then(() => {
-            return repo.raw(['config', '--local', 'core.autocrlf', 'input']);
-        });
-    })
-    .then(() => {
-        return zip.archivePathTo(
-            initRepoPath,
-            initRepoPath + '.zip'
-        );
-    })
-    .then(() => {
-        return fs.remove(initRepoPath);
-    });
+
 })
 .then(() => {
     return zip.archivePathTo(

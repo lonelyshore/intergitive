@@ -14,11 +14,30 @@ const zip = require('../../lib/simple-archive');
 chai.use(chaiAsPromised);
 chai.should();
 
-const testdataName = 'compare-vcs-version-archives';
-const testdataBasePath =
-    path.join(utils.PLAYGROUND_PATH, 'testdata');
+const testdatasetNames = [
+    'local-repo-edgecases',
+    'compare-vcs-local-ref-snapshot'
+];
+
 const testdataPath =
-    path.join(testdataBasePath, testdataName);
+    path.join(utils.PLAYGROUND_PATH, 'testdata');
+
+function loadTestdata() {
+    return fs.emptyDir(testdataPath)
+    .then(() => {
+        let loadThread = Promise.resolve();
+        testdatasetNames.forEach(testdatasetName => {
+            loadThread = loadThread.then(() => {
+                return zip.extractArchiveTo(
+                    path.join(utils.ARCHIVE_RESOURCES_PATH, testdatasetName) + '.zip',
+                    testdataPath
+                );
+            });
+        });
+
+        return loadThread;
+    });
+}
 
 describe.skip('Prepare test-utils tests', function() {
 
@@ -32,13 +51,10 @@ describe.skip('Prepare test-utils tests', function() {
 
         return fs.emptyDir(utils.PLAYGROUND_PATH)
         .then(() => {
-            return fs.emptyDir(testdataBasePath)
+            return fs.emptyDir(testdataPath)
         })
         .then(() => {
-            return zip.extractArchiveTo(
-                path.join(utils.ARCHIVE_RESOURCES_PATH, testdataName) + '.zip',
-                testdataBasePath
-            );
+            return loadTestdata();
         })
         .then(() => {
             return fs.readdir(testdataPath)
@@ -73,13 +89,7 @@ function createTests(testdataEntryNames) {
             })
     
             before('Load testdata', function() {
-                return fs.emptyDir(testdataBasePath)
-                .then(() => {
-                    return zip.extractArchiveTo(
-                        path.join(utils.ARCHIVE_RESOURCES_PATH, testdataName) + '.zip',
-                        testdataBasePath
-                    );
-                });
+                return loadTestdata();
             });
     
             beforeEach('Clean up working path', function() {
@@ -93,14 +103,8 @@ function createTests(testdataEntryNames) {
             function LoadsRepositoryFromDataset(repoName, loadedName) {
                 return zip.extractArchiveTo(
                     path.join(testdataPath, repoName) + '.zip',
-                    workingPath
-                )
-                .then(() => {
-                    return fs.move(
-                        path.join(workingPath, repoName),
-                        path.join(workingPath, loadedName)
-                    )
-                });
+                    path.join(workingPath, loadedName)
+                );
             }
     
             function LoadsFirstAndSecond(firstSourceName, secondSourceName) {
