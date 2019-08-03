@@ -4,13 +4,17 @@ const fs = require("fs-extra");
 const path = require("path");
 const zip = require('../lib/simple-archive');
 
-const RefMaker = require('../lib/repo-vcs').RepoReferenceMaker;
 const ActionExecutor = require("./action-executor").DevActionExecutor;
 const actionConfigs = require("../dev/config-action");
 const AssetLoader = require("../lib/asset-loader").AssetLoader;
-const RepoSetup = require("../lib/config-level").RepoVcsSetup;
 const REPO_STORAGE_TYPE = require('../lib/repo-vcs').STORAGE_TYPE;
-const REPO_TYPE = require('../lib/config-level').REPO_TYPE;
+
+let SAVE_TYPE = {
+    ARCHIVE: REPO_STORAGE_TYPE.ARCHIVE,
+    GIT: REPO_STORAGE_TYPE.GIT,
+    SNAPSHOT: Symbol('snapshot')
+};
+
 
 const configExecutor = 
     new (require('./repo-generation-config-executor')
@@ -39,8 +43,10 @@ const configExecutor =
   * @property {InitializeRepoCb} onRepoInitialized
   * @property {StageCb} preStage
   * @property {StageCb} postStage
-  * @property {REPO_STORAGE_TYPE} repoStorageType
+  * @property {SAVE_TYPE} saveType
   */
+
+module.exports.SAVE_TYPE = SAVE_TYPE;
 
 /**
  * @param {string} workingPath the working directory
@@ -79,7 +85,7 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
                 repoStoreName,
                 assetLoader,
                 repoSetupsForActionExecutor,
-                options.repoStorageType
+                options.saveType !== SAVE_TYPE.SNAPSHOT ? options.saveType : undefined
             );
 
             Object.keys(repoSetups).forEach(repoSetupName => {
@@ -148,19 +154,35 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
 
                 if (stage.save) {
                     stage.save.forEach(savedRepoName => {
-                        let saveAction = 
-                            new actionConfigs.SaveRepoReferenceAction(
+                        if (options.saveType === SAVE_TYPE.SNAPSHOT) {
+                            
+                            executions = executions.then(() => {
+                                return zip.archivePathTo(
+                                    repoSetups[savedRepoName].fullWorkingPath,
+                                    path.join(
+                                        repoSetups[savedRepoName].fullReferenceStorePath,
+                                        `${stageName}.zip`,
+                                    ),
+                                    false
+                                );
+                            });
+                        }
+                        else {
+                            let saveAction = new actionConfigs.SaveRepoReferenceAction(
                                 savedRepoName,
                                 stageName
                             );
-                        executions = executions.then(() => {
-                            return saveAction.executeBy(actionExecutor);
-                        })
-                        .catch(err => {
+
+                            executions = executions.then(() => {
+                                return saveAction.executeBy(actionExecutor);
+                            });
+                        }
+
+                        executions = executions.catch(err => {
                             console.error(`[Save Stage ${stageName}] error occured`);
                             console.error(err);
                             throw err;
-                        });
+                        })
                     });
                 }
         

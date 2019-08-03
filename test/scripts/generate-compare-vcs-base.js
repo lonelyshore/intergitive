@@ -6,6 +6,7 @@ const zip = require('../../lib/simple-archive');
 const utils = require('../tests/test-utils');
 const generateBaseRepo = require('../../dev/generate-base-repo').generateBaseRepo;
 
+const SAVE_TYPE = require('../../dev/generate-base-repo').SAVE_TYPE;
 const STORAGE_TYPE = require('../../lib/repo-vcs').STORAGE_TYPE;
 
 
@@ -20,6 +21,7 @@ const assetStorePath = path.join(resoruceBasePath, 'vcs-compare', 'assets');
  * @property {string} yamlSubPath
  * @property {Object} repoNameToWorkingPathArchiveName
  * @property {Object} repoNameToRefArchiveName
+ * @property {Array<SAVE_TYPE>} saveTypes
  */
 
 const executionContexts = [
@@ -30,36 +32,56 @@ const executionContexts = [
         },
         repoNameToRefArchiveName: {
             local: 'compare-vcs-grow-local-ref'
-        }
+        },
+        saveTypes: [
+            SAVE_TYPE.ARCHIVE,
+            SAVE_TYPE.GIT,
+            SAVE_TYPE.SNAPSHOT
+        ]
     },
     {
         yamlSubPath: path.join('vcs-compare', 'generate-testing-ref-repo.yaml'),
         repoNameToWorkingPathArchiveName: {},
         repoNameToRefArchiveName: {
             local: 'compare-vcs-local-ref'
-        }
+        },
+        repoNameToPerStageSnapshotName: {
+            local: 'compare-vcs-local-ref-per-stage'
+        },
+        saveTypes: [
+            SAVE_TYPE.ARCHIVE,
+            SAVE_TYPE.GIT,
+            SAVE_TYPE.SNAPSHOT
+        ]
     }
 ];
 
-const storageTypes = [
-    STORAGE_TYPE.ARCHIVE,
-    STORAGE_TYPE.GIT
-];
+function getSaveTypeString(saveType) {
+    switch(saveType) {
+        case SAVE_TYPE.SNAPSHOT:
+            return 'snapshot';
+        default:
+            return STORAGE_TYPE.toString(saveType);
+    }
+}
 
 let execution = Promise.resolve();
 
 executionContexts.forEach(executionContext => {
-    storageTypes.forEach(storageType => {
+    executionContext.saveTypes.forEach(saveType => {
+
+        let options = {};
+
+        options.saveType = saveType;
 
         execution = execution.then(() => {
+
             return generateBaseRepo(
                 workingPath,
                 assetStorePath,
                 path.join(resoruceBasePath, executionContext.yamlSubPath),
                 utils.ARCHIVE_RESOURCES_PATH,
-                {
-                    repoStorageType: storageType
-                }
+                options
             )
             .then(repoSetups => {
                 let postProcess = Promise.resolve();
@@ -93,7 +115,7 @@ executionContexts.forEach(executionContext => {
                     if (refArchiveName) {
                         let destination = path.join(
                             utils.ARCHIVE_RESOURCES_PATH,
-                            `${refArchiveName}-${STORAGE_TYPE.toString(storageType)}.zip`
+                            `${refArchiveName}-${getSaveTypeString(saveType)}.zip`
                         );
 
                         postProcess = postProcess.then(() =>{
@@ -110,7 +132,7 @@ executionContexts.forEach(executionContext => {
                 });
             })
             .catch(err => {
-                console.error(`Error happend when executing ${executionContext.yamlSubPath} & ${STORAGE_TYPE.toString(storageType)}`);
+                console.error(`Error happend when executing ${executionContext.yamlSubPath} & ${getSaveTypeString(saveType)}`);
                 console.error(err);
             })
             .finally(() => {
