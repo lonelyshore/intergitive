@@ -698,13 +698,16 @@ describe('Action Executor #core', function() {
     
                     return action.executeBy(actionExecutor)
                     .then(() => {
-                        return repo.raw(['remote', 'show'])
+                        return simpleGitCtor(workingPath);
+                    })
+                    .then(repo => {
+                        return repo.raw(['status'])
                         .then(result => {
                             return result.trim();
                         })
                         .should.eventually.equal(remoteNickName, `Expect to have remote ${remoteNickName}`)
                         .then(() => {
-                            repo.raw(['remote', 'get-url', remoteNickName])
+                            return repo.raw(['remote', 'get-url', remoteNickName])
                         })
                         .then(result => {
                             return normalizePathSep.posix(result.trim());
