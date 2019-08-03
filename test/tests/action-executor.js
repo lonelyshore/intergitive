@@ -7,12 +7,14 @@ const simpleGitCtor = require('simple-git/promise');
 const eol = require('../../lib/text-eol');
 const zip = require('../../lib/simple-archive');
 const devParams = require('../../dev/parameters');
+const normalizePathSep = require('../../lib/noarmalize-path-sep');
 
 const utils = require('./test-utils');
 const AssetLoader = require('../../lib/asset-loader').AssetLoader;
 const ActionExecutor = require('../../lib/action-executor').ActionExecutor;
 const RepoVcsSetup = require('../../lib/config-level').RepoVcsSetup;
 const RepoReferenceManager = require('../../lib/repo-vcs').RepoReferenceManager;
+const REPO_TYPE = require('../../lib/config-level').REPO_TYPE;
 const actionTypes = require('../../lib/config-action');
 
 const chai = require('chai');
@@ -26,9 +28,13 @@ describe('Action Executor #core', function() {
 
     let actionExecutor;
     const testRepoSetupName = 'test-repo';
+    const testRemoteRepoSetupName = 'test-remote-repo';
+    const alternativeRemoteRepoSetupName = 'test-remote-repo2';
     const repoParentPath = path.join(utils.PLAYGROUND_PATH, 'repo');
     const repoArchiveName = 'action-executor';
-    const workingPath = path.join(repoParentPath, repoArchiveName);    
+    const workingPath = path.join(repoParentPath, repoArchiveName);
+    const remoteWorkingPath = path.join(repoParentPath, testRemoteRepoSetupName);
+    const alternativeRemoteWorkingPath = path.join(repoParentPath, alternativeRemoteRepoSetupName);
     const repoStoreCollectionName = 'repo-store';
     const repoStoreCollectionPath = path.join(utils.PLAYGROUND_PATH, repoStoreCollectionName);
 
@@ -40,7 +46,20 @@ describe('Action Executor #core', function() {
             [testRepoSetupName]: new RepoVcsSetup(
                 path.relative(utils.PLAYGROUND_PATH, workingPath),
                 '',
-                ''
+                '',
+                REPO_TYPE.LOCAL
+            ),
+            [testRemoteRepoSetupName]: new RepoVcsSetup(
+                path.relative(utils.PLAYGROUND_PATH, remoteWorkingPath),
+                '',
+                '',
+                REPO_TYPE.REMOTE
+            ),
+            [alternativeRemoteRepoSetupName]: new RepoVcsSetup(
+                path.relative(utils.PLAYGROUND_PATH, alternativeRemoteWorkingPath),
+                '',
+                '',
+                REPO_TYPE.REMOTE
             )
         };
 
@@ -649,6 +668,111 @@ describe('Action Executor #core', function() {
             });
 
         });
+
+        describe.only('Remote Related', function() {
+
+            let remoteRepo;
+
+            beforeEach('Initialize Remote', function() {
+                return fs.emptyDir(remoteWorkingPath)
+                .then(() => {
+                    return simpleGitCtor(remoteWorkingPath);
+                })
+                .then(result => {
+                    remoteRepo = result;
+                    return result.raw(['init', '--bare']);
+                });
+            });
+
+            describe('Set Remote', function() {
+
+                it('set new remote', function() {
+    
+                    let remoteNickName = 'kerker';
+    
+                    let action = new actionTypes.SetRemoteAction(
+                        testRepoSetupName,
+                        testRemoteRepoSetupName,
+                        remoteNickName
+                    );
+    
+                    return action.executeBy(actionExecutor)
+                    .then(() => {
+                        return repo.raw(['remote', 'show'])
+                        .then(result => {
+                            return result.trim();
+                        })
+                        .should.eventually.equal(remoteNickName, `Expect to have remote ${remoteNickName}`)
+                        .then(() => {
+                            repo.raw(['remote', 'get-url', remoteNickName])
+                        })
+                        .then(result => {
+                            return normalizePathSep.posix(result.trim());
+                        })
+                        .should.eventually.equal(
+                            normalizePathSep.posix(remoteWorkingPath.trim()),
+                            `Expect remote ${remoteNickName} to have url ${remoteWorkingPath}`
+                        );
+                    });
+                });
+    
+                it('overwrites old remote, no warning', function() {
+
+                    let remoteNickName = 'kerker';
+    
+                    let action1 = new actionTypes.SetRemoteAction(
+                        testRepoSetupName,
+                        testRemoteRepoSetupName,                        
+                        remoteNickName
+                    );
+
+                    let action2 = new actionTypes.SetRemoteAction(
+                        testRepoSetupName,
+                        alternativeRemoteRepoSetupName,
+                        remoteNickName
+                    );
+
+                    return action1.executeBy(actionExecutor)
+                    .then(() => {
+                        return repo.raw(['remote', 'show'])
+                        .then(result => {
+                            return result.trim();
+                        })
+                        .should.eventually.equal(remoteNickName, `Expect to have remote ${remoteNickName}`);
+                    })
+                    .then(() => {
+                        return action2.executeBy(actionExecutor);
+                    })
+                    .then(() => {
+                        return repo.raw(['remote', 'raw'])
+                        .then(result => {
+                            return result.trim();
+                        })
+                        .should.eventually.equal(remoteNickName, `Expect to have remote ${remoteNickName}`)
+                        .then(() => {
+                            return repo.raw(['remote', 'get-url', remoteNickName]);
+                        })
+                        .then(result => {
+                            return normalizePathSep.posix(result.trim());
+                        })
+                        .should.eventually.equal(
+                            normalizePathSep.posix(alternativeRemoteWorkingPath),
+                            `Expect remote ${remoteNickName} to have url ${alternativeRemoteWorkingPath}`
+                        )
+                    })
+                });
+    
+            })
+    
+            describe('Push', function() {
+    
+                it('normal push, remote exists', function() {
+    
+                })
+            })
+        })
+
+
     });
 
     describe('Repository Operations', function() {
