@@ -29,7 +29,7 @@ const executionContexts = [
             local: 'compare-vcs'
         },
         repoNameToRefArchiveName: {
-            local: 'compare-vcs-grow-local'
+            local: 'compare-vcs-grow-local-ref'
         }
     },
     {
@@ -55,7 +55,7 @@ executionContexts.forEach(executionContext => {
             return generateBaseRepo(
                 workingPath,
                 assetStorePath,
-                path.join(resoruceBasePath, yamlSubPath),
+                path.join(resoruceBasePath, executionContext.yamlSubPath),
                 utils.ARCHIVE_RESOURCES_PATH,
                 {
                     repoStorageType: storageType
@@ -65,7 +65,7 @@ executionContexts.forEach(executionContext => {
                 let postProcess = Promise.resolve();
 
                 Object.keys(repoSetups).forEach(repoSetupName => {
-                    let setup = repoSetups;
+                    let setup = repoSetups[repoSetupName];
                     let workingPathArchiveName =
                         executionContext.repoNameToWorkingPathArchiveName[repoSetupName];
 
@@ -107,6 +107,9 @@ executionContexts.forEach(executionContext => {
                         });
                     }
                 });
+            })
+            .then(() => {
+                return fs.remove(workingPath);
             });
         })
     })

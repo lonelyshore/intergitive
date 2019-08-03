@@ -1,8 +1,9 @@
-repoVcsSetups:
-  - local:
-    !repoVcs:
-      workingPath: "repo"
-      referenceStoreName: "compare-vcs-local-ref"
+repoSetups:
+  local:
+    workingPath: "repo"
+    referenceStoreName: "compare-vcs-local-ref"
+    repoType: "local"
+    repoArchiveName: "compare-vcs.zip"
 stages:
   - name: clean
     save:
@@ -53,7 +54,7 @@ stages:
     - dirtyAdd    
     actions:
     - !stageAll
-      repoSetupName: repo
+      repoSetupName: local
   - name: dirtyRemoveStage
     save:
       - local  
@@ -62,7 +63,7 @@ stages:
     - dirtyRemove    
     actions:
     - !stageAll
-      repoSetupName: repo      
+      repoSetupName: local      
   - name: dirtyModifyStage
     save:
       - local  
@@ -71,7 +72,7 @@ stages:
     - dirtyModify    
     actions:
     - !stageAll
-      repoSetupName: repo
+      repoSetupName: local
   - name: dirtyMixedStage
     save:
       - local  
@@ -82,14 +83,14 @@ stages:
     - dirtyModify    
     actions:
     - !stageAll
-      repoSetupName: repo      
+      repoSetupName: local      
   - name: merge
     save:
       - local  
     reset: true
     actions:
     - !merge
-      repoSetupName: repo
+      repoSetupName: local
       withBranch: "second-branch"
   - name: conflictAA
     save:
@@ -97,7 +98,7 @@ stages:
     reset: true
     actions:
     - !merge
-      repoSetupName: repo
+      repoSetupName: local
       withBranch: "conflict-AA"
   - name: conflictMM
     save:
@@ -105,7 +106,7 @@ stages:
     reset: true
     actions:
     - !merge
-      repoSetupName: repo
+      repoSetupName: local
       withBranch: "conflict-MM"
   - name: conflictMR
     save:
@@ -113,7 +114,7 @@ stages:
     reset: true
     actions:
     - !merge
-      repoSetupName: repo
+      repoSetupName: local
       withBranch: "conflict-MR"
   - name: conflictMixed
     save:
@@ -121,7 +122,7 @@ stages:
     reset: true  
     actions:
     - !merge
-      repoSetupName: repo
+      repoSetupName: local
       withBranch: "conflict-mixed"
   - name: conflictEdit
     save:
@@ -148,7 +149,7 @@ stages:
     - conflictEdit    
     actions:
     - !stageAll
-      repoSetupName: repo
+      repoSetupName: local
   - name: conflictResolve
     save:
       - local  
@@ -159,14 +160,14 @@ stages:
     - conflictResolveStage    
     actions:
     - !continueMerge
-      repoSetupName: repo
+      repoSetupName: local
   - name: detached
     save:
       - local  
     reset: true
     actions:
     - !cleanCheckout
-      repoSetupName: repo
+      repoSetupName: local
       commitish: "end-of-base"
       
 
