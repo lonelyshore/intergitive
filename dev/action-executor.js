@@ -2,7 +2,9 @@
 
 const simpleGit = require("simple-git/promise");
 const path = require('path');
+const vcs = require('../lib/repo-vcs');
 const ActionExecutor = require("../lib/action-executor").ActionExecutor;
+const REPO_TYPE = require('../lib/config-level').REPO_TYPE;
 
 const getRepo = Symbol("getRepo");
 
@@ -10,8 +12,8 @@ const getRepo = Symbol("getRepo");
  * @inheritdoc
  */
 class DevActionExecutor extends ActionExecutor {
-    constructor(fileSystemBaseFolder, repoStoreSubPath, assetLoader, repoSetups) {
-        super(fileSystemBaseFolder, repoStoreSubPath, assetLoader, repoSetups);
+    constructor(fileSystemBaseFolder, repoStoreSubPath, assetLoader, repoSetups, repoStorageType) {
+        super(fileSystemBaseFolder, repoStoreSubPath, assetLoader, repoSetups, repoStorageType);
     }
 
     executeStaging(repoSetupName, pathSpecs) {
@@ -84,6 +86,15 @@ class DevActionExecutor extends ActionExecutor {
         });
     }
 
+    executeSaveReference(repoSetupName, referenceName) {
+        return this.operateReferenceMaker(
+            repoSetupName,
+            (refMaker) => {
+                return refMaker.save(referenceName);
+            }
+        );
+    }
+
     [getRepo](repoSetupName) {
         let setup = this.repoSetups[repoSetupName];
         if (!setup) {
@@ -97,6 +108,38 @@ class DevActionExecutor extends ActionExecutor {
 
             return Promise.resolve(setup.devRepo);
         }
+    }
+
+    operateReferenceMaker(repoSetupName, operation) {
+        let getReferenceMaker = () => {
+            let setup = this.repoSetups[repoSetupName];
+            if (!setup) {
+                return Promise.reject(new Error(`Cannot find repo setup ${repoSetupName}`));
+            }
+            else {
+                if (!('referenceMaker' in setup)) {
+                    return vcs.RepoReferenceMaker.create(
+                        path.join(this.fileSystemBaseFolder, setup.workingPath),
+                        path.join(this.fileSystemBaseFolder, this.repoStoreSubPath),
+                        setup.referenceStoreName,
+                        setup.remoteType === REPO_TYPE.REMOTE,
+                        this.repoStorageType
+                    )
+                    .then(result => {
+                        setup.referenceMaker = result;
+                        return result;
+                    });
+                }
+                else {
+                    return Promise.resolve(setup.referenceMaker)
+                }
+            }
+        }
+
+        return getReferenceMaker()
+        .then(referenceMaker => {
+            return operation(referenceMaker);
+        });
     }
 }
 

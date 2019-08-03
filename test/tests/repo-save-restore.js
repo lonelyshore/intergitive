@@ -162,7 +162,7 @@ function createTests(testdataEntryNames, isRemoteRepo, testingStorageTypes) {
 
         testingStorageTypes.forEach(testingStorageType => {
 
-            describe(`Save & Restore Repo, type: ${testingStorageType}`, function () {
+            describe(`Save & Restore Repo, type: ${vcs.STORAGE_TYPE.toString(testingStorageType)}`, function () {
 
                 this.timeout(4000);
 

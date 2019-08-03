@@ -9,6 +9,7 @@ const ActionExecutor = require("./action-executor").DevActionExecutor;
 const actionConfigs = require("../dev/config-action");
 const AssetLoader = require("../lib/asset-loader").AssetLoader;
 const RepoSetup = require("../lib/config-level").RepoVcsSetup;
+const REPO_STORAGE_TYPE = require('../lib/repo-vcs').STORAGE_TYPE;
 const REPO_TYPE = require('../lib/config-level').REPO_TYPE;
 
 const configExecutor = 
@@ -38,6 +39,7 @@ const configExecutor =
   * @property {InitializeRepoCb} onRepoInitialized
   * @property {StageCb} preStage
   * @property {StageCb} postStage
+  * @property {REPO_STORAGE_TYPE} repoStorageType
   */
 
 /**
@@ -51,17 +53,34 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
 
     options = options || {};
 
-    const repoStoresPath = path.join(workingPath, 'repo-stores');
+    const repoStoreName = 'repo-stores';
 
     const assetLoader = new AssetLoader(assetStorePath);
     assetLoader.setBundlePath();
     
     let actionExecutor;
+    let repoSetups;
     
     return configExecutor.loadConfig(yamlPath)
     .then(config => {
 
-        let repoSetups = config.repoSetups;
+        repoSetups = config.repoSetups;
+
+        Object.keys(repoSetups).forEach(repoSetupName => {
+            let repoSetup = repoSetups[repoSetupName];
+            repoSetup.fullWorkingPath = 
+                path.join(
+                    workingPath,
+                    repoSetup.workingPath
+                );
+
+            repoSetup.fullReferenceStorePath = 
+                path.join(
+                    workingPath,
+                    repoStoreName,
+                    repoSetup.referenceStoreName
+                );
+        });
 
 
         return Promise.resolve()
@@ -80,9 +99,10 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
 
             actionExecutor = new ActionExecutor(
                 workingPath,
-                repoStoresPath,
+                repoStoreName,
                 assetLoader,
-                repoSetupsForActionExecutor
+                repoSetupsForActionExecutor,
+                options.repoStorageType
             );
         })
         .then(() => {
@@ -142,7 +162,11 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
 
                 if (stage.save) {
                     stage.save.forEach(savedRepoName => {
-                        let saveAction = new actionConfigs.SaveRepoReferenceAction(savedRepoName);
+                        let saveAction = 
+                            new actionConfigs.SaveRepoReferenceAction(
+                                savedRepoName,
+                                stageName
+                            );
                         executions = executions.then(() => {
                             return saveAction.executeBy(actionExecutor);
                         })
@@ -174,6 +198,9 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
             return executions;
         })
     })
+    .then(() => {
+        return repoSetups;
+    })
 
     /**
      * 
@@ -187,17 +214,13 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
         Object.keys(repoSetups).forEach(repoSetupName => {
 
             let repoSetup = repoSetups[repoSetupName];
-            let repoWorkingPath = path.join(
-                workingPath,
-                repoSetup.workingPath
-            );
 
             if (repoSetup.repoArchiveName) {
 
                 initializations = initializations.then(() => {
                     return zip.extractArchiveTo(
                         path.join(archiveStorePath, repoSetup.repoArchiveName),
-                        repoWorkingPath
+                        repoSetup.fullWorkingPath
                     )
                 });
 
@@ -205,7 +228,7 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
             else {
 
                 initializations = initializations.then(() => {
-                    return fs.emptyDir(repoWorkingPath);
+                    return fs.emptyDir(repoSetup.fullWorkingPath);
                 });
 
             }
@@ -214,7 +237,7 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
                 initializations = initializations.then(() => {
                     return onRepoInitialized(
                         repoSetupName,
-                        repoWorkingPath
+                        repoSetup.fullWorkingPath
                     );
                 })
                 .catch(err => {
@@ -244,7 +267,7 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
             invocations = invocations.then(() => {
                 return callback(
                     repoSetupName,
-                    path.join(workingPath, repoSetup.workingPath),
+                    repoSetup.fullWorkingPath,
                     stageName
                 );
             })

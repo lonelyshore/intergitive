@@ -36,7 +36,7 @@ describe('Prepare VCS Compare #core', function() {
 
 function createTests(storageType) {
 
-    describe(`VCS Compare #core - ${storageType} storage`, function() {
+    describe(`VCS Compare #core - ${vcs.STORAGE_TYPE.toString(storageType)} storage`, function() {
 
         this.timeout(4000);
 
@@ -50,7 +50,7 @@ function createTests(storageType) {
             const referenceStorePath = path.join(workingPath, "repo-store");
             const referenceStoreName = "compare-vcs-grow-local-ref";
     
-            const referenceArchivePath = path.join(utils.ARCHIVE_RESOURCES_PATH, `compare-vcs-grow-local-ref-${storageType.toLowerCase()}.zip`);
+            const referenceArchivePath = path.join(utils.ARCHIVE_RESOURCES_PATH, `compare-vcs-grow-local-ref-${vcs.STORAGE_TYPE.toString(storageType)}.zip`);
     
             let repo;
             let vcsManager;
@@ -142,7 +142,7 @@ function createTests(storageType) {
             const referenceStoreName = "compare-vcs-local-ref";
     
             const archivePath = path.join(utils.RESOURCES_PATH, "repo-archive");
-            const referenceArchivePath = path.join(archivePath, `compare-vcs-local-ref-${storageType.toLowerCase()}.zip`);
+            const referenceArchivePath = path.join(archivePath, `compare-vcs-local-ref-${vcs.STORAGE_TYPE.toString(storageType)}.zip`);
             const checkedArchivePath = path.join(archivePath, "compare-vcs.zip");
     
             let repo;

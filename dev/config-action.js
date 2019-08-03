@@ -84,14 +84,15 @@ class GitCommandAction extends upstream.Action {
 }
 
 class SaveRepoReferenceAction extends upstream.Action {
-    constructor(repoSetupName) {
+    constructor(repoSetupName, referenceName) {
         super();
         this.klass = 'SaveRepoReferenceAction';
         this.repoSetupName = repoSetupName;
+        this.referenceName = referenceName;
     }
 
     executeBy(actionExecutor) {
-        return Promise.reject('not implemented');
+        return actionExecutor.executeSaveReference(this.repoSetupName, this.referenceName);
     }
 }
 
