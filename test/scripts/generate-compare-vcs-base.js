@@ -1,64 +1,116 @@
-"use strict";
+'use strict';
 
-const fs = require("fs-extra");
-const path = require("path");
+const fs = require('fs-extra');
+const path = require('path');
 const zip = require('../../lib/simple-archive');
 const utils = require('../tests/test-utils');
+const generateBaseRepo = require('../../dev/generate-base-repo').generateBaseRepo;
+
 const STORAGE_TYPE = require('../../lib/repo-vcs').STORAGE_TYPE;
-const RefMaker = require('../../lib/repo-vcs').RepoReferenceMaker;
 
-const resoruceBasePath = path.resolve(__dirname, "../resources");
-const assetStorePath = path.join(resoruceBasePath, "vcs-compare", "assets");
-const yamlSubPath = path.join("vcs-compare", "generate-base-repo.yaml");
 
-const storageType = STORAGE_TYPE.ARCHIVE;
+const workingPath = path.resolve(__dirname, '../playground/generate-repo');
+const resoruceBasePath = path.resolve(__dirname, '../resources');
 
-const workingPath = path.resolve(__dirname, "../playground/generate-vcs-repo");
-const refStorePath = path.join(workingPath, "repo-store");
-const refName = `compare-vcs-grow-local-ref-${storageType.toLowerCase()}`;
+const assetStorePath = path.join(resoruceBasePath, 'vcs-compare', 'assets');
 
-let createdRepoPath;
-let refMaker;
+/**
+ * @typedef executionContext
+ * @type {Object}
+ * @property {string} yamlSubPath
+ * @property {Object} repoNameToWorkingPathArchiveName
+ * @property {Object} repoNameToRefArchiveName
+ */
 
-let createRefMaker = (sourceRepoPath) => {
-    createdRepoPath = sourceRepoPath;
+const executionContexts = [
+    {
+        yamlSubPath: path.join('vcs-compare', 'generate-base-repo.yaml'),
+        repoNameToWorkingPathArchiveName: {
+            local: 'compare-vcs'
+        },
+        repoNameToRefArchiveName: {
+            local: 'compare-vcs-grow-local'
+        }
+    },
+    {
+        yamlSubPath: path.join('vcs-compare', 'generate-testing-ref-repo.yaml'),
+        repoNameToWorkingPathArchiveName: {},
+        repoNameToRefArchiveName: {
+            local: 'compare-vcs-local-ref'
+        }
+    }
+];
 
-    return RefMaker.create(sourceRepoPath, refStorePath, refName, false, storageType)
-    .then(result => {
-        refMaker = result;
-    });
-}
+const storageTypes = [
+    STORAGE_TYPE.ARCHIVE,
+    STORAGE_TYPE.GIT
+];
 
-let resetRepo = (sourceRepoPath) => {
-    return fs.emptyDir(sourceRepoPath);
-}
+let execution = Promise.resolve();
 
-let initializeRepo = (sourceRepoPath) => {
-    return resetRepo(sourceRepoPath)
-    .then(() => createRefMaker(sourceRepoPath));
-}
+executionContexts.forEach(executionContext => {
+    storageTypes.forEach(storageType => {
 
-let postStage = (sourceRepoPath, stageName) => {
-    return refMaker.save(stageName);
-}
+        execution = execution.then(() => {
+            return generateBaseRepo(
+                workingPath,
+                assetStorePath,
+                path.join(resoruceBasePath, yamlSubPath),
+                utils.ARCHIVE_RESOURCES_PATH,
+                {
+                    repoStorageType: storageType
+                }
+            )
+            .then(repoSetups => {
+                let postProcess = Promise.resolve();
 
-require("../../dev/generate-base-repo").generateBaseRepo(
-    workingPath,
-    assetStorePath,
-    path.join(resoruceBasePath, yamlSubPath),
-    utils.ARCHIVE_RESOURCES_PATH
-)
-.then(() => {
-    return zip.archivePathTo(
-        path.join(refStorePath, refName),
-        path.join(workingPath, refName) + '.zip',
-        false
-    );
+                Object.keys(repoSetups).forEach(repoSetupName => {
+                    let setup = repoSetups;
+                    let workingPathArchiveName =
+                        executionContext.repoNameToWorkingPathArchiveName[repoSetupName];
+
+                    if (workingPathArchiveName) {
+                        let destination = path.join(
+                            utils.ARCHIVE_RESOURCES_PATH,
+                            workingPathArchiveName + '.zip'
+                        );
+
+                        postProcess = postProcess.then(() => {
+                            return fs.remove(destination)
+                            .then(() => {
+                                return zip.archivePathTo(
+                                    setup.fullWorkingPath,
+                                    destination,
+                                    false
+                                )
+                            });
+                        });
+                    }
+
+                    let refArchiveName =
+                        executionContext.repoNameToRefArchiveName[repoSetupName];
+
+                    if (refArchiveName) {
+                        let destination = path.join(
+                            utils.ARCHIVE_RESOURCES_PATH,
+                            `${refArchiveName}-${STORAGE_TYPE.toString(storageType)}.zip`
+                        );
+
+                        postProcess = postProcess.then(() =>{
+                            return fs.remove(destination)
+                            .then(() => {
+                                return zip.archivePathTo(
+                                    setup.fullReferenceStorePath,
+                                    destination
+                                );
+                            });
+                        });
+                    }
+                });
+            });
+        })
+    })
 })
-.then(() => {
-    return zip.archivePathTo(
-        createdRepoPath,
-        path.join(workingPath, 'compare-vcs') + '.zip',
-        false
-    )
-});
+
+
+
