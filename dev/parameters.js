@@ -8,8 +8,8 @@ const STORAGE_TYPE = require('../lib/repo-vcs').STORAGE_TYPE;
 
 let parameters = {
     defaultRepoStorageType: STORAGE_TYPE.ARCHIVE,
-    defaultRepoStorageTypeName: STORAGE_TYPE.toString(this.defaultRepoStorageType)
-}
+    defaultRepoStorageTypeName: STORAGE_TYPE.toString(STORAGE_TYPE.ARCHIVE)
+};
 
 parameters = readonly.wrap(parameters);
 
