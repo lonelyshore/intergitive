@@ -95,6 +95,44 @@ class DevActionExecutor extends ActionExecutor {
         );
     }
 
+    getRepoSetupNames() {
+        return Object.keys(this.repoSetups);
+    }
+
+    getRepoFullPaths(repoSetupName) {
+        let setup = this.repoSetups[repoSetupName];
+        let result = {};
+        if (setup) {
+            if ('workingPath' in setup) {
+                result.fullWorkingPath =
+                    path.join(
+                        this.fileSystemBaseFolder,
+                        setup.workingPath
+                    );
+            }
+            if (this.repoStoreSubPath) {
+                if ('referenceStoreName' in setup) {
+                    result.fullReferenceStorePath =
+                        path.join(
+                            this.fileSystemBaseFolder,
+                            this.repoStoreSubPath,
+                            setup.referenceStoreName
+                        );
+                }
+                if ('checkpointStoreName' in setup) {
+                    result.fullCheckpointStorePath =
+                        path.join(
+                            this.fileSystemBaseFolder,
+                            this.repoStoreSubPath,
+                            setup.checkpointStoreName
+                        );
+                }
+            }
+        }
+
+        return result;
+    }
+
     [getRepo](repoSetupName) {
         let setup = this.repoSetups[repoSetupName];
         if (!setup) {

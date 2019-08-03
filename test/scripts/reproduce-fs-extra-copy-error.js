@@ -70,7 +70,7 @@ function generate(workingPath, assetStorePath, yamlPath, initializeRepo) {
         .then(() => initializeRepo(sourceRepoPath));
     })
     .then(() => {
-        return RefMaker.create(sourceRepoPath, refStorePath, refName, devParams.defaultRepoStorageType)
+        return RefMaker.create(sourceRepoPath, refStorePath, refName, false, devParams.defaultRepoStorageType)
         .then(result => {
             refMaker = result;
         });

@@ -654,7 +654,7 @@ describe('Action Executor #core', function() {
     describe('Repository Operations', function() {
 
         describe('Local', function() {
-            const refStoreName = 'compare-vcs-local-ref-' + devParams.defaultRepoStorageType;
+            const refStoreName = 'compare-vcs-local-ref-' + devParams.defaultRepoStorageTypeName;
             const checkpointStoreName = 'checkpoint-store';
 
             before('Create Specialized ActionExecutor', function() {

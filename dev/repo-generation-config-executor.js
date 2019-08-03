@@ -2,6 +2,8 @@
 
 const fs = require('fs-extra');
 const yaml = require('js-yaml');
+const RepoVcsSetup = require('../lib/config-level').RepoVcsSetup;
+const REPO_TYPE = require('../lib/config-level').REPO_TYPE;
 
 module.exports.RepoGenerationConfigExecutor = class RepoGenerationConfigExecutor {
 
@@ -64,6 +66,61 @@ module.exports.RepoGenerationConfigExecutor = class RepoGenerationConfigExecutor
         return executions;
     }
 
+    createRepoVcsSetupsFromConfig(config) {
+        let repoSetups = config.repoSetups;
+
+        let repoSetupsForActionExecutor = {};
+
+        Object.keys(repoSetups).forEach(repoSetupName => {
+            let setup = repoSetups[repoSetupName];
+            repoSetupsForActionExecutor[repoSetupName] = new RepoVcsSetup(
+                setup.workingPath,
+                setup.referenceStoreName,
+                undefined,
+                setup.repoType === 'remote' ? REPO_TYPE.REMOTE : REPO_TYPE.LOCAL
+            );
+        });
+
+        return repoSetupsForActionExecutor;
+    }
+
+    createRepoVcsInfoFromConig(config, workingPath, repoStoreName) {
+        let repoSetups = config.repoSetups;
+        let repoInfos = {};
+
+        Object.keys(repoSetups).forEach(repoSetupName => {
+            let repoSetup = repoSetups[repoSetupName];
+
+            let repoInfo = {};
+            
+            repoInfo.fullWorkingPath = 
+                path.join(
+                    workingPath,
+                    repoSetup.workingPath
+                );
+
+            repoInfo.fullReferenceStorePath = 
+                path.join(
+                    workingPath,
+                    repoStoreName,
+                    repoSetup.referenceStoreName
+                );
+
+            if (repoSetup.checkpointStoreName) {
+                repoInfo.fullCheckpointStorePath =
+                    path.join(
+                        workingPath,
+                        repoStoreName,
+                        repoSetup.checkpointStoreName
+                    );
+            }
+
+            repoInfos[repoSetupName] = repoInfo;
+        });
+
+        return repoInfos;
+    }
+
     loadConfigSync(configPath) {
         let content = fs.readFileSync(configPath);
         return this.loadConfigFromContent(content);
@@ -90,7 +147,8 @@ module.exports.RepoGenerationConfigExecutor = class RepoGenerationConfigExecutor
         return {
             stageMap: stageMap,
             stageNames: stageNames,
-            repoSetups: config.repoSetups
+            repoSetups: config.repoSetups,
+            resourcesSubPath: config.resourcesSubPath
         };
     }
 

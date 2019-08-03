@@ -20,7 +20,7 @@ const testdataBasePath =
 const testdataPath =
     path.join(testdataBasePath, testdataName);
 
-describe.skip('Prepare test-utils tests', function() {
+describe('Prepare test-utils tests', function() {
 
     after('Clean up playground', function() {
         return fs.remove(utils.PLAYGROUND_PATH);

@@ -85,17 +85,10 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
 
         return Promise.resolve()
         .then(() => {
-            let repoSetupsForActionExecutor = {};
-
-            Object.keys(repoSetups).forEach(repoSetupName => {
-                let setup = repoSetups[repoSetupName];
-                repoSetupsForActionExecutor[repoSetupName] = new RepoSetup(
-                    setup.workingPath,
-                    setup.referenceStoreName,
-                    undefined,
-                    setup.repoType === 'remote' ? REPO_TYPE.REMOTE : REPO_TYPE.LOCAL
+            let repoSetupsForActionExecutor = 
+                configExecutor.createRepoVcsSetupsFromConfig(
+                    config
                 );
-            })
 
             actionExecutor = new ActionExecutor(
                 workingPath,
@@ -215,6 +208,10 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
 
             let repoSetup = repoSetups[repoSetupName];
 
+            initializations = initializations.then(() => {
+                return fs.emptyDir(repoSetup.fullWorkingPath);
+            })
+
             if (repoSetup.repoArchiveName) {
 
                 initializations = initializations.then(() => {
@@ -222,13 +219,6 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
                         path.join(archiveStorePath, repoSetup.repoArchiveName),
                         repoSetup.fullWorkingPath
                     )
-                });
-
-            }
-            else {
-
-                initializations = initializations.then(() => {
-                    return fs.emptyDir(repoSetup.fullWorkingPath);
                 });
 
             }

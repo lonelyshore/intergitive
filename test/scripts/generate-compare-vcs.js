@@ -15,7 +15,7 @@ const storageType = STORAGE_TYPE.ARCHIVE;
 
 const workingPath = path.resolve(__dirname, "../playground/generate-vcs-repo");
 const refStorePath = path.join(workingPath, "repo-store");
-const refName = `compare-vcs-local-ref-${storageType.toLowerCase()}`;
+const refName = `compare-vcs-local-ref-${STORAGE_TYPE.toString(storageType)}`;
 
 let refMaker;
 
