@@ -805,7 +805,7 @@ describe('Action Executor #core', function() {
                     };
                 }
 
-                function AssertRemoteUpdated(localRefs, remoteRefs, remoteName, matchedRefs) {
+                function assertRemoteUpdated(localRefs, remoteRefs, remoteName, matchedRefs) {
 
                     chai.expect(localRefs.remotes).to.have.property(remoteName);
 
@@ -818,6 +818,22 @@ describe('Action Executor #core', function() {
                         chai.expect(localRemotes[matchedRef]).to.equal(locals[matchedRef], `expect local remote cache [${matchedRef}] match with local[${matchedRef}]`);
                         chai.expect(remotes).to.have.property(matchedRef);
                         chai.expect(remotes[matchedRef]).to.equal(locals[matchedRef], `expect remote[${matchedRef}] match with local:remote[${matchedRef}]`);
+                    });
+                }
+
+                function moveBranchForward(branchName, fileName) {
+                    return repo.checkout(['-f', branchName])
+                    .then(() => {
+                        return fs.writeFile(
+                            path.join(workingPath, fileName),
+                            'some content'
+                        )
+                    })
+                    .then(() => {
+                        return repo.add([fileName]);
+                    })
+                    .then(() => {
+                        return repo.commit('new');
                     });
                 }
 
@@ -866,7 +882,7 @@ describe('Action Executor #core', function() {
                         remoteRepoRefsAfter = ParseRefs(results[1]);
                     })
                     .then(() => {
-                        AssertRemoteUpdated(
+                        assertRemoteUpdated(
                             localRepoRefsAfter,
                             remoteRepoRefsAfter,
                             remoteNickName,
@@ -923,7 +939,7 @@ describe('Action Executor #core', function() {
                             remoteRefs = ParseRefs(result);
                         })
                         .then(() => {
-                            AssertRemoteUpdated(
+                            assertRemoteUpdated(
                                 localRefFirstPush,
                                 remoteRefs,
                                 remoteNickName,
@@ -935,20 +951,7 @@ describe('Action Executor #core', function() {
                         });
                     })
                     .then(() => {
-                        // Move master forward
-                        return repo.checkout(['-f', targetRef])
-                        .then(() => {
-                            return fs.writeFile(
-                                path.join(workingPath, 'some_new'),
-                                'some content'
-                            )
-                        })
-                        .then(() => {
-                            return repo.add(['some_new']);
-                        })
-                        .then(() => {
-                            return repo.commit('new');
-                        });
+                        return moveBranchForward(targetRef, 'some-not-existing');
                     })
                     .then(() => {
                         return action.executeBy(actionExecutor);
@@ -967,7 +970,7 @@ describe('Action Executor #core', function() {
                             remoteRefs = ParseRefs(result);
                         })
                         .then(() => {
-                            AssertRemoteUpdated(
+                            assertRemoteUpdated(
                                 localRefSecondPush,
                                 remoteRefs,
                                 remoteNickName,
@@ -984,6 +987,88 @@ describe('Action Executor #core', function() {
                 })
 
                 it('push update all', function() {
+                    let action = new actionTypes.PushAllAction(
+                        testRepoSetupName,
+                        remoteNickName,
+                        false
+                    );
+
+                    let localBranches;
+                    let localRefFirstPush;
+                    let localRefSecondPush;
+
+                    return repo.raw(['branch'])
+                    .then(result => {
+                        localBranches = result.trim().split('\n');
+                    })
+                    .then(() => {
+                        return action.executeBy(actionExecutor);
+                    })
+                    .then(() => {
+                        let remoteRefs;
+
+                        return repo.raw(['show-ref', '-d'])
+                        .then(result => {
+                            localRefFirstPush = ParseRefs(result);
+                        })
+                        .then(() => {
+                            return remoteRepo.raw(['show-ref', '-d'])
+                        })
+                        .then(result => {
+                            remoteRefs = ParseRefs(result);
+                        })
+                        .then(() => {
+                            assertRemoteUpdated(
+                                localRefFirstPush,
+                                remoteRefs,
+                                remoteNickName,
+                                localBranches
+                            );
+                        });
+                    })
+                    .then(() => {
+                        return moveBranchForward('master', 'some-not-existing');
+                    })
+                    .then(() => {
+                        return moveBranchForward('mergable', 'some-not-existing-2');
+                    })
+                    .then(() => {
+                        return action.executeBy(actionExecutor);
+                    })
+                    .then(() => {
+                        let remoteRefs;
+
+                        return repo.raw(['show-ref', '-d'])
+                        .then(result => {
+                            localRefSecondPush = ParseRefs(result);
+                        })
+                        .then(() => {
+                            return remoteRepo.raw(['show-ref', '-d'])
+                        })
+                        .then(result => {
+                            remoteRefs = ParseRefs(result);
+                        })
+                        .then(() => {
+                            assertRemoteUpdated(
+                                localRefSecondPush,
+                                remoteRefs,
+                                remoteNickName,
+                                localBranches
+                            );
+
+                            localBranches.forEach(branch => {
+                                if (branch === 'master' || branch === 'mergable') {
+                                    chai.expect(localRefFirstPush.remotes[remoteNickName][branch])
+                                    .to.equal(localRefSecondPush.remotes[remoteNickName][branch]);
+                                }
+                                else {
+                                    chai.expect(localRefFirstPush.remotes[remoteNickName][branch])
+                                    .to.equal(localRefSecondPush.remotes[remoteNickName][branch]);
+                                }
+                            });
+
+                        });
+                    });
 
                 });
 
