@@ -997,9 +997,9 @@ describe('Action Executor #core', function() {
                     let localRefFirstPush;
                     let localRefSecondPush;
 
-                    return repo.raw(['branch'])
+                    return repo.branchLocal()
                     .then(result => {
-                        localBranches = result.trim().split('\n');
+                        localBranches = Object.keys(result.branches);
                     })
                     .then(() => {
                         return action.executeBy(actionExecutor);
@@ -1059,7 +1059,7 @@ describe('Action Executor #core', function() {
                             localBranches.forEach(branch => {
                                 if (branch === 'master' || branch === 'mergable') {
                                     chai.expect(localRefFirstPush.remotes[remoteNickName][branch])
-                                    .to.equal(localRefSecondPush.remotes[remoteNickName][branch]);
+                                    .to.not.equal(localRefSecondPush.remotes[remoteNickName][branch]);
                                 }
                                 else {
                                     chai.expect(localRefFirstPush.remotes[remoteNickName][branch])
