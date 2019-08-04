@@ -762,7 +762,9 @@ describe('Action Executor #core', function() {
     
             })
     
-            describe.only('Push', function() {
+            describe('Push', function() {
+
+                this.timeout(5000);
     
                 let remoteNickName = 'kerker';
 
@@ -893,8 +895,6 @@ describe('Action Executor #core', function() {
                 });
 
                 it('normal push single, remote not exists fails', function() {
-
-                    this.timeout(5000);
 
                     let targetRef = 'master'
 
@@ -1120,7 +1120,7 @@ describe('Action Executor #core', function() {
                             localRefSecondPush = ParseRefs(result);
                         })
                         .then(() => {
-                            return repo.raw(['show-ref', '-d'])
+                            return remoteRepo.raw(['show-ref', '-d'])
                             .then(result => {
                                 remoteRefs = ParseRefs(result);
                             })
@@ -1141,6 +1141,112 @@ describe('Action Executor #core', function() {
 
                 it('force push all', function() {
 
+                    let targetRefs = [
+                        'master',
+                        'mergable'
+                    ];
+
+                    let action = new actionTypes.PushAllAction(
+                        testRepoSetupName,
+                        remoteNickName,
+                        true
+                    );
+
+                    let targetOriginalSha = [];
+                    let localBranches;
+                    let localRefFirstPush;
+                    let localRefSecondPush;
+
+                    return repo.branchLocal()
+                    .then(result => {
+                        localBranches = Object.keys(result.branches);
+                    })
+                    .then(() =>{
+                        let getSha = Promise.resolve();
+                        targetRefs.forEach(ref => {
+                            getSha = getSha.then(() => {
+                                return repo.revparse([ref])
+                                .then(result => {
+                                    targetOriginalSha.push(result.trim());
+                                });
+                            });
+                        });
+
+                        return getSha;
+                    })
+                    .then(() => {
+                        let moveTargets = Promise.resolve();
+
+                        targetRefs.forEach(ref => {
+                            moveTargets = moveTargets.then(() => {
+                                return moveBranchForward(ref, `some-not-existing-${ref}`);
+                            });
+                        })
+
+                        return moveTargets;
+                    })
+                    .then(() => {
+                        return action.executeBy(actionExecutor);
+                    })
+                    .then(() => {
+                        return repo.raw(['show-ref', '-d'])
+                        .then(result => {
+                            localRefFirstPush = ParseRefs(result);
+                        })
+                    })
+                    .then(() => {
+                        let moveTargets = Promise.resolve();
+
+                        targetRefs.forEach((ref, index) => {
+                            moveTargets = moveTargets.then(() => {
+                                return repo.checkout(['-f', ref])
+                                .then(() => {
+                                    return repo.reset(['--hard', targetOriginalSha[index]]);
+                                })
+                                .then(() => {
+                                    return moveBranchForward(ref, `some-not-existing-2-${ref}`);
+                                });
+                            })
+                        });
+
+                        return moveTargets;
+                    })
+                    .then(() => {
+                        return action.executeBy(actionExecutor);
+                    })
+                    .then(() => {
+                        let remoteRefs;
+
+                        return repo.raw(['show-ref', '-d'])
+                        .then(result => {
+                            localRefSecondPush = ParseRefs(result);
+                        })
+                        .then(() => {
+                            return remoteRepo.raw(['show-ref', '-d']);
+                        })
+                        .then(result => {
+                            remoteRefs = ParseRefs(result);
+                        })
+                        .then(() => {
+                            assertRemoteUpdated(
+                                localRefSecondPush,
+                                remoteRefs,
+                                remoteNickName,
+                                targetRefs
+                            );
+
+                            localBranches.forEach(branch => {
+                                if (targetRefs.indexOf(branch) !== -1) {
+                                    chai.expect(localRefFirstPush.remotes[remoteNickName][branch])
+                                    .to.not.equal(localRefSecondPush.remotes[remoteNickName][branch]);
+                                }
+                                else {
+                                    chai.expect(localRefFirstPush.remotes[remoteNickName][branch])
+                                    .to.equal(localRefSecondPush.remotes[remoteNickName][branch]);
+                                }
+                            });
+                        });
+                    })
                 });
             })
         })
