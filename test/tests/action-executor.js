@@ -1074,6 +1074,69 @@ describe('Action Executor #core', function() {
 
                 it('force push single', function() {
 
+                    let targetRef = 'master';
+
+                    let action = new actionTypes.PushAction(
+                        testRepoSetupName,
+                        remoteNickName,
+                        `+refs/heads/${targetRef}:refs/heads/${targetRef}`
+                    );
+
+                    let localRefFirstPush;
+                    let localRefSecondPush;
+
+                    let targetBaseSha1;
+
+                    return repo.revparse(['HEAD'])
+                    .then(result => {
+                        targetBaseSha1 = result.trim();
+                    })
+                    .then(() => {
+                        return moveBranchForward(targetRef, 'some-not-existing');
+                    })
+                    .then(() => {
+                        return action.executeBy(actionExecutor);
+                    })
+                    .then(() => {
+                        return repo.raw(['show-ref', '-d'])
+                        .then(result => {
+                            localRefFirstPush = ParseRefs(result);
+                        })
+                    })
+                    .then(() => {
+                        return repo.reset(['--hard', targetBaseSha1])
+                        .then(() => {
+                            return moveBranchForward(targetRef, 'some-not-existing2');
+                        })
+                    })
+                    .then(() => {
+                        return action.executeBy(actionExecutor);
+                    })
+                    .then(() => {
+                        let remoteRefs;
+
+                        return repo.raw(['show-ref', '-d'])
+                        .then(result => {
+                            localRefSecondPush = ParseRefs(result);
+                        })
+                        .then(() => {
+                            return repo.raw(['show-ref', '-d'])
+                            .then(result => {
+                                remoteRefs = ParseRefs(result);
+                            })
+                        })
+                        .then(() => {
+                            assertRemoteUpdated(
+                                localRefSecondPush,
+                                remoteRefs,
+                                remoteNickName,
+                                [ targetRef ]
+                            );
+
+                            chai.expect(localRefFirstPush.remotes[remoteNickName][targetRef])
+                            .to.not.equal(localRefSecondPush.remotes[remoteNickName][targetRef]);
+                        });
+                    });
                 });
 
                 it('force push all', function() {
