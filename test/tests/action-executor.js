@@ -669,7 +669,7 @@ describe('Action Executor #core', function() {
 
         });
 
-        describe.only('Remote Related', function() {
+        describe('Remote Related', function() {
 
             let remoteRepo;
 
@@ -695,28 +695,23 @@ describe('Action Executor #core', function() {
                         testRemoteRepoSetupName,
                         remoteNickName
                     );
-    
+
                     return action.executeBy(actionExecutor)
-                    .then(() => {
-                        return simpleGitCtor(workingPath);
+                    .then(() => repo.raw(['remote', 'show']))
+                    .then(result => {
+                        return result.trim();
                     })
-                    .then(repo => {
-                        return repo.raw(['status'])
-                        .then(result => {
-                            return result.trim();
-                        })
-                        .should.eventually.equal(remoteNickName, `Expect to have remote ${remoteNickName}`)
-                        .then(() => {
-                            return repo.raw(['remote', 'get-url', remoteNickName])
-                        })
-                        .then(result => {
-                            return normalizePathSep.posix(result.trim());
-                        })
-                        .should.eventually.equal(
-                            normalizePathSep.posix(remoteWorkingPath.trim()),
-                            `Expect remote ${remoteNickName} to have url ${remoteWorkingPath}`
-                        );
-                    });
+                    .should.eventually.equal(remoteNickName, `Expect to have remote ${remoteNickName}`)
+                    .then(() => {
+                        return repo.raw(['remote', 'get-url', remoteNickName])
+                    })
+                    .then(result => {
+                        return normalizePathSep.posix(result.trim());
+                    })
+                    .should.eventually.equal(
+                        normalizePathSep.posix(remoteWorkingPath.trim()),
+                        `Expect remote ${remoteNickName} to have url ${remoteWorkingPath}`
+                    );
                 });
     
                 it('overwrites old remote, no warning', function() {
@@ -747,7 +742,7 @@ describe('Action Executor #core', function() {
                         return action2.executeBy(actionExecutor);
                     })
                     .then(() => {
-                        return repo.raw(['remote', 'raw'])
+                        return repo.raw(['remote', 'show'])
                         .then(result => {
                             return result.trim();
                         })
