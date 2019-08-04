@@ -805,18 +805,19 @@ describe('Action Executor #core', function() {
                     };
                 }
 
-                function AssertRemoteMatchLocal(localRefs, remoteRefs, remoteName, matchedRefs) {
-                    let locals = localRefs.remotes[remoteName];
+                function AssertRemoteUpdated(localRefs, remoteRefs, remoteName, matchedRefs) {
+
+                    chai.expect(localRefs.remotes).to.have.property(remoteName);
+
+                    let locals = localRefs.locals;
+                    let localRemotes = localRefs.remotes[remoteName];
                     let remotes = remoteRefs.locals;
 
                     matchedRefs.forEach(matchedRef => {
-                        if (matchedRef in locals) {
-                            chai.expect(remotes).to.have.property(matchedRef);
-                            chai.expect(remotes[matchedRef]).equal(locals[matchedRef], `expect remote[${matchedRef}] to equal to local[${matchedRef}]`);
-                        }
-                        else {
-                            chai.expect(remotes).to.not.have(matchedRef);
-                        }
+                        chai.expect(localRemotes).to.have.property(matchedRef);
+                        chai.expect(localRemotes[matchedRef]).to.equal(locals[matchedRef], `expect local remote cache [${matchedRef}] match with local[${matchedRef}]`);
+                        chai.expect(remotes).to.have.property(matchedRef);
+                        chai.expect(remotes[matchedRef]).to.equal(locals[matchedRef], `expect remote[${matchedRef}] match with local:remote[${matchedRef}]`);
                     });
                 }
 
@@ -865,7 +866,7 @@ describe('Action Executor #core', function() {
                         remoteRepoRefsAfter = ParseRefs(results[1]);
                     })
                     .then(() => {
-                        AssertRemoteMatchLocal(
+                        AssertRemoteUpdated(
                             localRepoRefsAfter,
                             remoteRepoRefsAfter,
                             remoteNickName,
