@@ -762,11 +762,138 @@ describe('Action Executor #core', function() {
     
             })
     
-            describe('Push', function() {
+            describe.only('Push', function() {
     
-                it('normal push, remote exists', function() {
+                let remoteNickName = 'kerker';
+
+                function ParseRefs(refs) {
+                    let lines = refs.split('\n');
+                
+                    let locals = {};
+                    let remotes = {};
+                    let misc = {};
+                
+                    lines.forEach(line => {
+                        let tokens = line.split(' ');
+                
+                        if (tokens.length === 2) {
+                            let refPath = tokens[1].slice(5);
+                            if (refPath.startsWith('heads/')) {
+                                locals[refPath.slice(6)] = tokens[0];
+                            }
+                            else if (refPath.startsWith('remotes/')) {
+                                let remotePath = refPath.slice(8);
+                                let slashIndex = remotePath.indexOf('/');
+                
+                                let remoteName = remotePath.slice(0, slashIndex);
+                                if (!(remoteName in remotes)) {
+                                    remotes[remoteName] = {};
+                                }
+                
+                                remotes[remoteName][remotePath.slice(slashIndex + 1)] = tokens[0];
+                            }
+                            else {
+                                misc[refPath] = tokens[0];
+                            }
+                        }
+                    });
+                
+                    return {
+                        locals: locals,
+                        remotes: remotes,
+                        misc: misc
+                    };
+                }
+
+                function AssertRemoteMatchLocal(localRefs, remoteRefs, remoteName, matchedRefs) {
+                    let locals = localRefs.remotes[remoteName];
+                    let remotes = remoteRefs.locals;
+
+                    matchedRefs.forEach(matchedRef => {
+                        if (matchedRef in locals) {
+                            chai.expect(remotes).to.have.property(matchedRef);
+                            chai.expect(remotes[matchedRef]).equal(locals[matchedRef], `expect remote[${matchedRef}] to equal to local[${matchedRef}]`);
+                        }
+                        else {
+                            chai.expect(remotes).to.not.have(matchedRef);
+                        }
+                    });
+                }
+
+                beforeEach('Set Remote', function() {
+                    let action = new actionTypes.SetRemoteAction(
+                        testRepoSetupName,
+                        testRemoteRepoSetupName,
+                        remoteNickName
+                    );
+
+                    return action.executeBy(actionExecutor);
+                });
+
+                it('normal push single, remote exists', function() {
+
+                    let targetRef = 'master'
+
+                    let action = new actionTypes.PushAction(
+                        testRepoSetupName,
+                        remoteNickName,
+                        `refs/heads/${targetRef}:refs/heads/${targetRef}`
+                    );
+
+                    let localRepoRefsBefore;
+                    let localRepoRefsAfter;
+                    let remoteRepoRefsAfter;
+
+                    return repo.raw(['show-ref', '-d'])
+                    .then(result => {
+                        localRepoRefsBefore = ParseRefs(result);
+                    })
+                    .then(() => {
+                        chai.expect(localRepoRefsBefore.remotes).to.be.empty;
+                    })
+                    .then(() => {
+                        return action.executeBy(actionExecutor);
+                    })
+                    .then(() => {
+                        return Promise.all([
+                            repo.raw(['show-ref', '-d']),
+                            remoteRepo.raw(['show-ref', '-d'])
+                        ]);
+                    })
+                    .then(results => {
+                        localRepoRefsAfter = ParseRefs(results[0]);
+                        remoteRepoRefsAfter = ParseRefs(results[1]);
+                    })
+                    .then(() => {
+                        AssertRemoteMatchLocal(
+                            localRepoRefsAfter,
+                            remoteRepoRefsAfter,
+                            remoteNickName,
+                            [ targetRef ]
+                        );
+                    });
     
+                });
+
+                it('normal push single, remote not exists fails', function() {
+
+                });
+
+                it('push update single', function() {
+
                 })
+
+                it('push update all', function() {
+
+                });
+
+                it('force push single', function() {
+
+                });
+
+                it('force push all', function() {
+
+                });
             })
         })
 
