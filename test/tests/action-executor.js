@@ -878,10 +878,109 @@ describe('Action Executor #core', function() {
 
                 it('normal push single, remote not exists fails', function() {
 
+                    this.timeout(5000);
+
+                    let targetRef = 'master'
+
+                    let action = new actionTypes.PushAction(
+                        testRepoSetupName,
+                        remoteNickName,
+                        `refs/heads/${targetRef}:refs/heads/${targetRef}`
+                    );
+
+                    return fs.remove(remoteWorkingPath)
+                    .then(() => {
+                        return action.executeBy(actionExecutor)
+                        .should.be.rejected;
+                    });
                 });
 
                 it('push update single', function() {
 
+                    let targetRef = 'master'
+
+                    let action = new actionTypes.PushAction(
+                        testRepoSetupName,
+                        remoteNickName,
+                        `refs/heads/${targetRef}:refs/heads/${targetRef}`
+                    );
+
+                    let localRefFirstPush;
+                    let localRefSecondPush;
+
+                    return action.executeBy(actionExecutor)
+                    .then(() => {
+                        let remoteRefs;
+
+                        return repo.raw(['show-ref', '-d'])
+                        .then(result => {
+                            localRefFirstPush = ParseRefs(result);
+                        })
+                        .then(() => {
+                            return remoteRepo.raw(['show-ref', '-d'])
+                        })
+                        .then(result => {
+                            remoteRefs = ParseRefs(result);
+                        })
+                        .then(() => {
+                            AssertRemoteUpdated(
+                                localRefFirstPush,
+                                remoteRefs,
+                                remoteNickName,
+                                [ targetRef ]
+                            );
+
+                            chai.expect(Object.keys(localRefFirstPush.remotes[remoteNickName]))
+                            .to.have.lengthOf(1);
+                        });
+                    })
+                    .then(() => {
+                        // Move master forward
+                        return repo.checkout(['-f', targetRef])
+                        .then(() => {
+                            return fs.writeFile(
+                                path.join(workingPath, 'some_new'),
+                                'some content'
+                            )
+                        })
+                        .then(() => {
+                            return repo.add(['some_new']);
+                        })
+                        .then(() => {
+                            return repo.commit('new');
+                        });
+                    })
+                    .then(() => {
+                        return action.executeBy(actionExecutor);
+                    })
+                    .then(() => {
+                        let remoteRefs;
+
+                        return repo.raw(['show-ref', '-d'])
+                        .then(result => {
+                            localRefSecondPush = ParseRefs(result);
+                        })
+                        .then(() => {
+                            return remoteRepo.raw(['show-ref', '-d'])
+                        })
+                        .then(result => {
+                            remoteRefs = ParseRefs(result);
+                        })
+                        .then(() => {
+                            AssertRemoteUpdated(
+                                localRefSecondPush,
+                                remoteRefs,
+                                remoteNickName,
+                                [ targetRef ]
+                            );
+
+                            chai.expect(Object.keys(localRefSecondPush.remotes[remoteNickName]))
+                            .to.have.lengthOf(1);
+
+                            chai.expect(localRefFirstPush.remotes[remoteNickName][targetRef])
+                            .to.not.equal(localRefSecondPush.remotes[remoteNickName][targetRef]);
+                        });
+                    });
                 })
 
                 it('push update all', function() {
