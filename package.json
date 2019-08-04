@@ -27,6 +27,7 @@
     "==== Node ====": "",
     "test": "npm run \"load-native-node\" && mocha --recursive \"./test/tests/*.js\"",
     "test-core": "npm run \"load-native-node\" && mocha --recursive \"./test/tests/*.js\" --grep \"#core\"",
+    "test-remote": "mocha \"./playground/remote.js\"",
     "==== Electron ====": "",
     "start": "npm run \"load-native-electron\" && electron .",
     "rebuild": "npm run \"load-native-electron\" && electron-rebuild -f --version 4.2.2 -w nodegit",
@@ -37,7 +38,8 @@
     "build-win64": "npm run \"load-native-electron\" && electron-packager . intergitive --platform=win32 --arch=x64 --ignore=\"^/\\.module_cache/\" --ignore=\"^/test\" --ignore=\"^/playground\" --out=\"out\"",
     "build-win64-dev": "npm run \"load-native-electron\" && electron-packager . intergitive --platform=win32 --arch=x64 --prune=false",
     "load-native-node": "node \"./dev/module-switch.js\" load nodegit node-10-11",
-    "load-native-electron": "node \"./dev/module-switch.js\" load nodegit electron-4"
+    "load-native-electron": "node \"./dev/module-switch.js\" load nodegit electron-4",
+    "raw": "mocha --recursive \"./test/tests/*.js\""
   },
   "author": "zedaizd",
   "license": "ISC"
