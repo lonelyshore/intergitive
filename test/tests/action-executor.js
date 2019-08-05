@@ -174,6 +174,43 @@ describe('Action Executor #core', function() {
                 });
             }
 
+            it('writes content', function() {
+
+                let rawTargets = [ 'inFile1', 'inFile2' ];
+                let ondiskTargets = ['manyFiles1'];
+                let targets = rawTargets.concat(ondiskTargets);
+
+                let keys = appendFolderName(targets, 'write-file');
+
+                keys.forEach((key, index) => {
+                    // The dollar sign also applies to ondisk asset
+                    keys[index] = '$' + key;
+                });
+
+                let contents = [];
+                rawTargets.forEach(target => {
+                    contents.push(`${target} raw content`);
+                });
+                ondiskTargets.forEach(target => {
+                    contents.push(target);
+                })
+                
+                let action = new actionTypes.WriteFileAction(
+                    keys,
+                    targets
+                );
+
+                return action.executeBy(actionExecutor)
+                .then(() => {
+                    return allFilesHasContents(
+                        utils.PLAYGROUND_PATH,
+                        targets,
+                        contents
+                    );
+                })
+                .should.eventually.equal(true);               
+            })
+
             it('files not overwritting', function() {
                 
                 let targets = ['manyFiles1', 'manyFiles2']

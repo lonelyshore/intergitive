@@ -1,4 +1,7 @@
 asset_index:
+  infile:
+    inFile1: 'inFile1 raw content'
+    inFile2: 'inFile2 raw content'
   ondisk:
     manyFiles1: "many-files-1.txt"
     manyFiles2: "many-files-2.txt"
