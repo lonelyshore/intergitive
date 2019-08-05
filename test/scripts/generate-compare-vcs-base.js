@@ -23,6 +23,7 @@ const assetStorePath = path.join(resoruceBasePath, 'vcs-compare', 'assets');
  * @property {Object} repoNameToWorkingPathArchiveName
  * @property {Object} repoNameToRefArchiveName
  * @property {Array<SAVE_TYPE>} saveTypes
+ * @property {Any} isSkipped
  */
 
 const executionContexts = [
@@ -30,6 +31,7 @@ const executionContexts = [
     // Generate working path final state archive
     // and per-stage archive-type repo refs
     {
+        isSkipped: true,
         yamlSubPath: path.join('vcs-compare', 'generate-base-repo.yaml'),
         repoNameToWorkingPathArchiveName: {
             local: 'compare-vcs'
@@ -44,6 +46,7 @@ const executionContexts = [
     // Growing base repo.
     // Generate per-stage git-type repo refs
     {
+        isSkipped: true,
         yamlSubPath: path.join('vcs-compare', 'generate-base-repo.yaml'),
         repoNameToWorkingPathArchiveName: {},
         repoNameToRefArchiveName: {
@@ -56,18 +59,29 @@ const executionContexts = [
     // Diverge from base repo.
     // Generate per-stage archive- and repo-type repo refs
     {
+        isSkipped: true,
         yamlSubPath: path.join('vcs-compare', 'generate-testing-ref-repo.yaml'),
         repoNameToWorkingPathArchiveName: {},
         repoNameToRefArchiveName: {
             local: 'compare-vcs-local-ref'
         },
-        repoNameToPerStageSnapshotName: {
-            local: 'compare-vcs-local-ref-per-stage'
-        },
         saveTypes: [
             SAVE_TYPE.ARCHIVE,
             SAVE_TYPE.GIT,
             SAVE_TYPE.SNAPSHOT
+        ]
+    },
+    // Generate remote repo.
+    {
+        yamlSubPath: path.join('vcs-compare', 'generate-remote-repo.yaml'),
+        repoNameToWorkingPathArchiveName: {},
+        repoNameToRefArchiveName: {
+            remote: 'compare-vcs-remote-ref'
+        },
+        saveTypes: [
+            SAVE_TYPE.ARCHIVE,
+            SAVE_TYPE.SNAPSHOT,
+            SAVE_TYPE.GIT
         ]
     }
 ];
@@ -84,6 +98,11 @@ function getSaveTypeString(saveType) {
 let execution = Promise.resolve();
 
 executionContexts.forEach(executionContext => {
+
+    if (executionContext.isSkipped) {
+        return;
+    }
+
     executionContext.saveTypes.forEach(saveType => {
 
         let options = {};
@@ -158,7 +177,7 @@ executionContexts.forEach(executionContext => {
             })
 
         })
-    })
+    });
 });
 
 // Create local repo edge cases
@@ -201,6 +220,6 @@ execution = execution.then(() =>{
     .then(() => {
         return fs.remove(workingPath);
     });
-})
+});
 
 
