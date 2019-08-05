@@ -1,4 +1,7 @@
 asset_index:
+  infile:
+    update-master-1: "update-master-1 content"
+    force-update-master: "force-update-master content"
   ondisk:
     dirtyAdd: "dirtyAdd.txt"
     dirtyModify: "dirtyModify.txt"

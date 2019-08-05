@@ -1,0 +1,168 @@
+resourcesSubPath: "vcs-compare/assets"
+repoSetups:
+  local:
+    workingPath: "local-repo"
+    repoType: "local"
+    repoArchiveName: "compare-vcs.zip"
+  remote:
+    workingPath: "remote-repo"
+    repoType: "remote"
+stages:
+  - name: init-remote
+    save:
+      - remote
+    actions:
+    - !git
+      repoSetupName: remote
+      arguments:
+        - init
+        - "--bare"
+    - !setRemote
+      localSetupName: local
+      remoteSetupName: remote
+      remoteNickName: origin
+  - name: push-master
+    save:
+      - remote
+    actions:
+      - !push &pushMaster
+        localSetupName: local
+        remoteNickName: origin
+        refspecs: '+refs/heads/master:refs/heads/master'
+  - name: push-all
+    save:
+      - remote
+    actions:
+      - !pushAll &pushAll
+        localSetupName: local
+        remoteNickName: origin
+        isForce: true
+  - name: push-tags
+    save:
+      - remote
+    actions:
+      - !git
+        repoSetupName: local
+        arguments:
+          - push
+          - origin
+          - "--tags"
+  - name: update-master-only
+    save:
+      - remote
+    actions:
+    - !writeFile:
+      sourceAssetIds:
+        - file/update-master-1
+      destinationPaths:
+        - local-repo/update-master-1
+    - !stageAll
+      repoSetupName: local
+    - !git &commit
+      repoSetupName: local
+      arguments:
+        - commit
+        - -m
+        - commit
+    - *pushMaster
+  - name: force-update-master
+    save:
+      - remote
+    actions:
+      - !git
+        repoSetupName: local
+        arguments:
+          - reset
+          - "--hard"
+          - "HEAD^"
+      - !writeFile:
+        sourceAssetIds:
+          - file/force-update-master
+        destinationPaths:
+          - local-repo/force-update-master
+      - *commit
+      - *pushMaster
+  - name: add-third-branch
+    save:
+      - remote
+    actions:
+      - !git
+        repoSetupName: local
+        arguments:
+          - branch
+          - "third-branch"
+          - "second-branch"
+      - *pushAll
+  - name: delete-second-branch
+    save:
+      - remote
+    actions:
+      - !git
+        repoSetupName: local
+        arguments:
+          - branch
+          - "-D"
+          - second-branch
+      - !push
+        localSetupName: local
+        remoteNickName: origin
+        refspecs: ":refs/heads/second-branch"
+  - name: add-second-branch-to-conflict-mixed
+    save:
+      - remote
+    actions:
+      - !git
+        repoSetupName: local
+        arguments:
+          - branch
+          - "second-branch"
+          - "conflict-mixed"
+      - *pushAll
+  - name: change-tag-place
+    save:
+      - remote
+    actions:
+      - !git
+        repoSetupName: local
+        arguments:
+          - tag
+          - "-f"
+          - "end-of-base"
+          - "conflict-MM"
+      - !git
+        repoSetupName: local
+        arguments:
+          - push
+          - origin
+          - "end-of-base"
+  - name: change-tag-name
+    save:
+      - remote
+    actions:
+      - !git
+        repoSetupName: local
+        arguments:
+          - tag
+          - "another-tag"
+          - "end-of-base"
+      - !git
+        repoSetupName: local
+        arguments:
+          - tag
+          - "-d"
+          - "end-of-base"
+      - !git
+        repoSetupName: local
+        arguments:
+          - push
+          - origin
+          - "--tags"
+          - "--prune"
+
+
+    
+
+
+  
+
+
