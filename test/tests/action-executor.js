@@ -1109,6 +1109,83 @@ describe('Action Executor #core', function() {
 
                 });
 
+                it('delete remote', function() {
+
+                    // please note that master cannot be deleted easily
+                    let targetRef = 'mergable'; 
+
+                    let pushAllAction = new actionTypes.PushAllAction(
+                        testRepoSetupName,
+                        remoteNickName,
+                        false
+                    );
+
+                    let deleteAction = new actionTypes.PushAction(
+                        testRepoSetupName,
+                        remoteNickName,
+                        [ `:refs/heads/${targetRef}` ]
+                    );
+
+                    let localBranches;
+
+                    return repo.branchLocal()
+                    .then(result => {
+                        localBranches = Object.keys(result.branches);
+                    })
+                    .then(() => {
+                        return pushAllAction.executeBy(actionExecutor);
+                    })
+                    .then(() => {
+                        return Promise.all([
+                            repo.raw(['show-ref', '-d']),
+                            remoteRepo.raw(['show-ref', '-d'])
+                        ])
+                        .then(results => {
+                            let localRefs = ParseRefs(results[0]);
+                            let remoteRefs = ParseRefs(results[1]);
+    
+                            assertRemoteUpdated(
+                                localRefs,
+                                remoteRefs,
+                                remoteNickName,
+                                localBranches
+                            );
+                        });
+                    })
+                    .then(() => {
+                        return deleteAction.executeBy(actionExecutor);
+                    })
+                    .then(() => {
+                        return Promise.all([
+                            repo.raw(['show-ref', '-d']),
+                            remoteRepo.raw(['show-ref', '-d'])
+                        ])
+                        .then(results => {
+                            let localRefs = ParseRefs(results[0]);
+                            let remoteRefs = ParseRefs(results[1]);
+
+                            chai.expect(remoteRefs.locals)
+                            .to.not.have.property(targetRef);
+
+                            chai.expect(localRefs.remotes[remoteNickName])
+                            .to.not.have.property(targetRef);
+
+                            let untouchedBranches =
+                                localBranches.filter(val => {
+                                    return val !== targetRef;
+                                });
+
+                            assertRemoteUpdated(
+                                localRefs,
+                                remoteRefs,
+                                remoteNickName,
+                                untouchedBranches
+                            );
+                        })
+                    });
+
+                });
+
                 it('force push single', function() {
 
                     let targetRef = 'master';
