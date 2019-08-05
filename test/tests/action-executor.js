@@ -856,7 +856,7 @@ describe('Action Executor #core', function() {
                     let action = new actionTypes.PushAction(
                         testRepoSetupName,
                         remoteNickName,
-                        `refs/heads/${targetRef}:refs/heads/${targetRef}`
+                        [ `refs/heads/${targetRef}:refs/heads/${targetRef}` ]
                     );
 
                     let localRepoRefsBefore;
@@ -901,7 +901,7 @@ describe('Action Executor #core', function() {
                     let action = new actionTypes.PushAction(
                         testRepoSetupName,
                         remoteNickName,
-                        `refs/heads/${targetRef}:refs/heads/${targetRef}`
+                        [ `refs/heads/${targetRef}:refs/heads/${targetRef}` ]
                     );
 
                     return fs.remove(remoteWorkingPath)
@@ -918,7 +918,7 @@ describe('Action Executor #core', function() {
                     let action = new actionTypes.PushAction(
                         testRepoSetupName,
                         remoteNickName,
-                        `refs/heads/${targetRef}:refs/heads/${targetRef}`
+                        [ `refs/heads/${targetRef}:refs/heads/${targetRef}` ]
                     );
 
                     let localRefFirstPush;
@@ -1079,7 +1079,7 @@ describe('Action Executor #core', function() {
                     let action = new actionTypes.PushAction(
                         testRepoSetupName,
                         remoteNickName,
-                        `+refs/heads/${targetRef}:refs/heads/${targetRef}`
+                        [ `+refs/heads/${targetRef}:refs/heads/${targetRef}` ]
                     );
 
                     let localRefFirstPush;
