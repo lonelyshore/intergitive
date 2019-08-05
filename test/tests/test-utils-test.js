@@ -14,22 +14,20 @@ const zip = require('../../lib/simple-archive');
 chai.use(chaiAsPromised);
 chai.should();
 
-const testdatasetNames = [
-    'local-repo-edgecases',
-    'compare-vcs-local-ref-snapshot'
-];
-
 const testdataPath =
     path.join(utils.PLAYGROUND_PATH, 'testdata');
 
-function loadTestdata() {
+function loadTestdata(testdataArchivesNames, testdataPath) {
     return fs.emptyDir(testdataPath)
     .then(() => {
         let loadThread = Promise.resolve();
-        testdatasetNames.forEach(testdatasetName => {
+        testdataArchivesNames.forEach(testdataArchiveName => {
             loadThread = loadThread.then(() => {
                 return zip.extractArchiveTo(
-                    path.join(utils.ARCHIVE_RESOURCES_PATH, testdatasetName) + '.zip',
+                    path.join(
+                        utils.ARCHIVE_RESOURCES_PATH,
+                        testdataArchiveName
+                    ) + '.zip',
                     testdataPath
                 );
             });
@@ -39,14 +37,38 @@ function loadTestdata() {
     });
 }
 
-describe.skip('Prepare test-utils tests', function() {
+describe.only('Prepare test-utils tests', function() {
 
     after('Clean up playground', function() {
         return fs.remove(utils.PLAYGROUND_PATH);
     });
 
-    it('GENERATE TESTS', function() {
+    it('GENERATE LOCAL TESTS', function() {
 
+        const localTestdataArchiveNames = [
+            'local-repo-edgecases',
+            'compare-vcs-local-ref-snapshot'
+        ];
+
+        return GenerateCompareTestsForArchives(
+            localTestdataArchiveNames,
+            'local'
+        );
+    });
+
+    it('GENERATE REMOTE TESTS', function() {
+
+        const remoteTestdataArchiveNames = [
+            'compare-vcs-remote-ref-snapshot'
+        ];
+
+        return GenerateCompareTestsForArchives(
+            remoteTestdataArchiveNames,
+            'remote'
+        );
+    });   
+
+    function GenerateCompareTestsForArchives(archiveNames, experimentName) {
         let testdataEntryNames = [];
 
         return fs.emptyDir(utils.PLAYGROUND_PATH)
@@ -54,7 +76,7 @@ describe.skip('Prepare test-utils tests', function() {
             return fs.emptyDir(testdataPath)
         })
         .then(() => {
-            return loadTestdata();
+            return loadTestdata(archiveNames, testdataPath);
         })
         .then(() => {
             return fs.readdir(testdataPath)
@@ -67,15 +89,15 @@ describe.skip('Prepare test-utils tests', function() {
             });
         })
         .then(() => {
-            createTests(testdataEntryNames);
+            createTests(archiveNames, testdataEntryNames, experimentName);
         });
-    });
+    }
 });
 
 
-function createTests(testdataEntryNames) {
+function createTests(testdataArchiveNames, testdataEntryNames, experimentName) {
 
-    describe("Test Utils", function() {
+    describe(`Test Utils - ${experimentName}`, function() {
         describe("Folder Equality", function() {
     
             const workingPath =
@@ -89,7 +111,7 @@ function createTests(testdataEntryNames) {
             })
     
             before('Load testdata', function() {
-                return loadTestdata();
+                return loadTestdata(testdataArchiveNames, testdataPath);
             });
     
             beforeEach('Clean up working path', function() {
