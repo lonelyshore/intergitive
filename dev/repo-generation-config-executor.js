@@ -1,7 +1,9 @@
 'use strict';
 
 const fs = require('fs-extra');
+const path = require('path');
 const yaml = require('js-yaml');
+const zip = require('../lib/simple-archive');
 const RepoVcsSetup = require('../lib/config-level').RepoVcsSetup;
 const REPO_TYPE = require('../lib/config-level').REPO_TYPE;
 
@@ -33,6 +35,53 @@ module.exports.RepoGenerationConfigExecutor = class RepoGenerationConfigExecutor
         })
 
         return executions;
+    }
+
+    initializeRepos(workingPath, archiveStorePath, config, onRepoInitialized) {
+        let initializations = Promise.resolve();
+
+        let repoSetups = config.repoSetups;
+        Object.keys(repoSetups).forEach(repoSetupName => {
+
+            let repoSetup = repoSetups[repoSetupName];
+
+            let fullWorkingPath = path.join(
+                workingPath,
+                repoSetup.workingPath
+            );
+
+            initializations = initializations.then(() => {
+                return fs.emptyDir(fullWorkingPath);
+            });
+
+            if (repoSetup.repoArchiveName) {
+
+                initializations = initializations.then(() => {
+                    return zip.extractArchiveTo(
+                        path.join(archiveStorePath, repoSetup.repoArchiveName),
+                        fullWorkingPath
+                    )
+                });
+
+            }
+
+            if (onRepoInitialized) {
+                initializations = initializations.then(() => {
+                    return onRepoInitialized(
+                        repoSetupName,
+                        fullWorkingPath
+                    );
+                })
+                .catch(err => {
+                    console.error(`[InitializationCallback] error occured for ${repoSetupName}`);
+                    console.error(err);
+                    throw err;
+                });
+            }
+
+        });
+
+        return initializations;        
     }
 
     tryApplyReplay(executions, stage, stageMap, actionExecutor) {

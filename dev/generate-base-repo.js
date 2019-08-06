@@ -100,10 +100,10 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
         .then(() => {
             return fs.emptyDir(workingPath)
             .then(() => {
-                return initializeRepos(
+                return configExecutor.initializeRepos(
                     workingPath,
                     archiveStorePath,
-                    repoSetups,
+                    config,
                     options.onRepoInitialized
                 );
             });
@@ -117,10 +117,10 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
     
                 if (stage.reset) {
                     executions = executions.then(() => {
-                        return initializeRepos(
+                        return configExecutor.initializeRepos(
                             workingPath,
                             archiveStorePath,
-                            repoSetups
+                            config
                         );
                     });
                 }
@@ -209,53 +209,6 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
     .then(() => {
         return repoSetups;
     })
-
-    /**
-     * 
-     * @param {string} workingPath 
-     * @param {string} archiveStorePath 
-     * @param {Object} repoSetups 
-     * @param {InitializeRepoCb} onRepoInitialized 
-     */
-    function initializeRepos(workingPath, archiveStorePath, repoSetups, onRepoInitialized) {
-        let initializations = Promise.resolve();
-        Object.keys(repoSetups).forEach(repoSetupName => {
-
-            let repoSetup = repoSetups[repoSetupName];
-
-            initializations = initializations.then(() => {
-                return fs.emptyDir(repoSetup.fullWorkingPath);
-            })
-
-            if (repoSetup.repoArchiveName) {
-
-                initializations = initializations.then(() => {
-                    return zip.extractArchiveTo(
-                        path.join(archiveStorePath, repoSetup.repoArchiveName),
-                        repoSetup.fullWorkingPath
-                    )
-                });
-
-            }
-
-            if (onRepoInitialized) {
-                initializations = initializations.then(() => {
-                    return onRepoInitialized(
-                        repoSetupName,
-                        repoSetup.fullWorkingPath
-                    );
-                })
-                .catch(err => {
-                    console.error(`[InitializationCallback] error occured for ${repoSetupName}`);
-                    console.error(err);
-                    throw err;
-                });
-            }
-
-        });
-
-        return initializations;
-    }
 
     /**
      * 
