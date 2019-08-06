@@ -21,153 +21,175 @@ chai.should();
 
 const repoSnapshotsPath =
     path.join(utils.PLAYGROUND_PATH, 'repo-snapshots');
+
 const testingStorageTypes = [
     vcs.STORAGE_TYPE.ARCHIVE,
     // vcs.STORAGE_TYPE.GIT
 ];
 
 const repoCreationWorkingPath = path.join(utils.PLAYGROUND_PATH, 'created-repo');
-const repoCreationConfigPath = path.join(utils.RESOURCES_PATH, "vcs-compare", "generate-base-repo.yaml");
 
-function createRepoCreationActionExecutor(workingPath, creationConfig, configExecutor) {
 
-    let assetLoader = new AssetLoader(
-        path.join(utils.RESOURCES_PATH, creationConfig.resourcesSubPath)
+describe.only('Prepare Repo Save & Restore Tests', function() {
+
+    testSnapshotsMatchReplayAndCreateTests(
+        path.join(
+            utils.RESOURCES_PATH, 
+            "vcs-compare", "generate-base-repo.yaml"
+        ),
+        'local',
+        false
     );
 
-    assetLoader.setBundlePath();
-
-    let repoSetups = configExecutor.createRepoVcsSetupsFromConfig(creationConfig);
-
-    let actionExecutor = new ActionExecutor(
-        workingPath,
-        undefined,
-        assetLoader,
-        repoSetups
+    testSnapshotsMatchReplayAndCreateTests(
+        path.join(
+            utils.RESOURCES_PATH,
+            'vcs-compare', 'generate-remote-repo.yaml'
+        ),
+        'remote',
+        true
     );
 
-    return actionExecutor;
-}
+    function testSnapshotsMatchReplayAndCreateTests(repoCreationConfigPath, targetRepoName, isRemote) {
 
-const repoCreationConfigExecutor = new utils.RepoArchiveConfigExecutor();
+        function createRepoCreationActionExecutor(workingPath, creationConfig, configExecutor) {
 
-const repoCreationConfig = repoCreationConfigExecutor.loadConfigSync(
-    repoCreationConfigPath
-);
+            let assetLoader = new AssetLoader(
+                path.join(utils.RESOURCES_PATH, creationConfig.resourcesSubPath)
+            );
 
-let repoCreationActionExecutor = createRepoCreationActionExecutor(
-    repoCreationWorkingPath,
-    repoCreationConfig,
-    repoCreationConfigExecutor
-);
+            assetLoader.setBundlePath();
 
-describe('Prepare Repo Save & Restore Tests', function() {
+            let repoSetups = configExecutor.createRepoVcsSetupsFromConfig(creationConfig);
 
-    const repoCreationPath = 
-    repoCreationActionExecutor.getRepoFullPaths('local').fullWorkingPath;
+            let actionExecutor = new ActionExecutor(
+                workingPath,
+                undefined,
+                assetLoader,
+                repoSetups
+            );
 
-    const allRepoCreationPaths = [];
-    repoCreationActionExecutor.getRepoSetupNames().forEach(setupName => {
-        allRepoCreationPaths.push(
-            repoCreationActionExecutor.getRepoFullPaths(setupName)
-            .fullWorkingPath
+            return actionExecutor;
+        }
+
+        const repoCreationConfigExecutor = new utils.RepoArchiveConfigExecutor();
+
+        const repoCreationConfig = repoCreationConfigExecutor.loadConfigSync(
+            repoCreationConfigPath
         );
-    });
 
-    function clearAllCreationPaths() {
-        let clear = Promise.resolve();
-        allRepoCreationPaths.forEach(repoCreationPath => {
-            clear = clear.then(() => {
-                return fs.emptyDir(repoCreationPath);
-            });
+        let repoCreationActionExecutor = createRepoCreationActionExecutor(
+            repoCreationWorkingPath,
+            repoCreationConfig,
+            repoCreationConfigExecutor
+        );
+
+        const targetRepoCreationPath = 
+            repoCreationActionExecutor
+            .getRepoFullPaths(targetRepoName)
+            .fullWorkingPath;
+
+        const allRepoCreationPaths = [];
+        repoCreationActionExecutor.getRepoSetupNames().forEach(setupName => {
+            allRepoCreationPaths.push(
+                repoCreationActionExecutor.getRepoFullPaths(setupName)
+                .fullWorkingPath
+            );
         });
 
-        return clear;
-    }
+        function clearAllCreationPaths() {
+            let clear = Promise.resolve();
+            allRepoCreationPaths.forEach(repoCreationPath => {
+                clear = clear.then(() => {
 
-    describe('Replay and capture snapshot', function() {
-
-
-
-        before('Initialize', function() {
-
-            return clearAllCreationPaths()
-            .then(() => {
-                return fs.emptyDir(repoSnapshotsPath);
+                    return fs.emptyDir(repoCreationPath);
+                });
             });
-        });
 
-        after('Clean up', function() {
-            return clearAllCreationPaths();
-        })
+            return clear;
+        }
 
-        repoCreationConfig.stageNames.forEach(stageName => {
+        describe(`Replay and capture snapshot - ${targetRepoName}`, function() {
 
-            it(`Replay ${stageName}`, function() {
+            before('Initialize', function() {
 
-                this.timeout(4000);
-
-                let stageSnapshotPath = path.join(repoSnapshotsPath, stageName);
-                return repoCreationConfigExecutor.executeStage(stageName, repoCreationConfig.stageMap, repoCreationActionExecutor)
+                return clearAllCreationPaths()
                 .then(() => {
-                    return fs.copy(
-                        repoCreationPath,
-                        stageSnapshotPath
-                    );
-                })
-                .then(() => {
-                    return utils.areDirectorySame(
-                        repoCreationPath,
-                        stageSnapshotPath
-                    )
-                })
-                .should.eventually.equal(true, `Expect snapshot of replayed stage ${stageName} should equal`);
+                    return fs.emptyDir(repoSnapshotsPath);
+                });
             });
 
-        });
-
-    });
-
-    function createSnapshots() {
-        return clearAllCreationPaths()
-        .then(() => {
-            return fs.emptyDir(repoSnapshotsPath);
-        })
-        .then(() => {
-
-            let thread = Promise.resolve();
+            after('Clean up', function() {
+                return clearAllCreationPaths();
+            })
 
             repoCreationConfig.stageNames.forEach(stageName => {
-    
-                let stageSnapshotPath = path.join(repoSnapshotsPath, stageName);
 
-                thread = thread.then(() => {
+                it(`Replay ${stageName}`, function() {
+
+                    this.timeout(4000);
+
+                    let stageSnapshotPath = path.join(repoSnapshotsPath, stageName);
                     return repoCreationConfigExecutor.executeStage(stageName, repoCreationConfig.stageMap, repoCreationActionExecutor)
                     .then(() => {
                         return fs.copy(
-                            repoCreationPath,
+                            targetRepoCreationPath,
                             stageSnapshotPath
                         );
-                    });
+                    })
+                    .then(() => {
+                        return utils.areDirectorySame(
+                            targetRepoCreationPath,
+                            stageSnapshotPath
+                        )
+                    })
+                    .should.eventually.equal(true, `Expect snapshot of replayed stage ${stageName} should equal`);
                 });
-    
+
             });
 
-            return thread;
-        })
-        .then(() => {
-            return repoSnapshotsPath;
+        });
+
+        function createSnapshots() {
+            return clearAllCreationPaths()
+            .then(() => {
+                return fs.emptyDir(repoSnapshotsPath);
+            })
+            .then(() => {
+
+                let thread = Promise.resolve();
+
+                repoCreationConfig.stageNames.forEach(stageName => {
+        
+                    let stageSnapshotPath = path.join(repoSnapshotsPath, stageName);
+
+                    thread = thread.then(() => {
+                        return repoCreationConfigExecutor.executeStage(stageName, repoCreationConfig.stageMap, repoCreationActionExecutor)
+                        .then(() => {
+                            return fs.copy(
+                                targetRepoCreationPath,
+                                stageSnapshotPath
+                            );
+                        });
+                    });
+        
+                });
+
+                return thread;
+            })
+            .then(() => {
+                return repoSnapshotsPath;
+            });
+        }
+
+        it(`GENERATE TESTS ${targetRepoName}`, function() {
+            return createTests(
+                repoCreationConfig.stageNames, 
+                isRemote, 
+                testingStorageTypes,
+                createSnapshots);
         });
     }
-
-    it(`GENERATE LOCAL TESTS`, function() {
-        return createTests(
-            repoCreationConfig.stageNames, 
-            false, 
-            testingStorageTypes,
-            createSnapshots);
-    });
-
 });
 
 /**
