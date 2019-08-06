@@ -108,7 +108,7 @@ function generateWorktreeSummary(workingPath) {
     return getAllFilesRecursive(
         workingPath, 
         (currentPath, name) => {
-            return currentPath === workingPath && name !== '.git';
+            return name !== '.git';
         }
     )
     .then(files => {
@@ -246,6 +246,48 @@ function areWorkingTreeSame(first, second, isVerbose) {
     })
 }
 
+function areBareRepoSame(first, second, isVerbose) {
+    return Promise.reject(new Error('not implemented'));
+}
+
+function isBareRepo(testedPath) {
+    let mandatoryFileSet = {
+        HEAD: ''
+    };
+    let mandatoryFolderSet = {
+        objects: '',
+        refs: ''
+    }
+
+    return fs.readdir(testedPath, { withFileTypes: true })
+    .then(dirents => {
+        let isBare = false;
+
+        dirents.forEach(dirent => {
+            if (isBare)
+                return;
+
+            if (dirent.isDirectory()) {
+                if (dirent.name in mandatoryFolderSet) {
+                    delete mandatoryFolderSet[dirent.name];
+                }
+            }
+            else if (dirent.isFile()) {
+                if (dirent.name in mandatoryFileSet) {
+                    delete mandatoryFileSet[dirent.name];
+                }
+            }
+
+            if (Object.getOwnPropertyNames(mandatoryFileSet).length === 0
+            && Object.getOwnPropertyNames(mandatoryFolderSet).length === 0) {
+                isBare = true;
+            }
+        });
+
+        return isBare;
+    });
+}
+
 function areDirectorySame(firstDir, secondDir, isVerbose) {
     isVerbose = isVerbose || false;
 
@@ -266,7 +308,18 @@ function areDirectorySame(firstDir, secondDir, isVerbose) {
             });
         }
         else if (areGitRepos.every(value => value === false)) {
-            return areWorkingTreeSame(firstDir, secondDir, isVerbose);
+            return Promise.all([
+                isBareRepo(firstDir),
+                isBareRepo(secondDir)
+            ])
+            .then(areBareRepos => {
+                if (areBareRepos.every(value => value === true)) {
+                    return areBareRepoSame(firstDir, secondDir, isVerbose);
+                }
+                else {
+                    return areWorkingTreeSame(firstDir, secondDir, isVerbose);
+                }
+            })
         }
         else {
             if (isVerbose) {
