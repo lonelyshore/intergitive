@@ -247,7 +247,13 @@ function areWorkingTreeSame(first, second, isVerbose) {
 }
 
 function areBareRepoSame(first, second, isVerbose) {
-    return Promise.reject(new Error('not implemented'));
+    return Promise.all([
+        generateRepoHistorySummary(first),
+        generateRepoHistorySummary(second)
+    ])
+    .then(summaries => {
+        return compareSummaries(summaries, 'RepoHistory', isVerbose);
+    });
 }
 
 function isBareRepo(testedPath) {

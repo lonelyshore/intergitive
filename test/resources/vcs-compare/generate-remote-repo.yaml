@@ -71,6 +71,8 @@ stages:
           - $file/force-update-master
         destinationPaths:
           - local-repo/force-update-master
+      - !stageAll
+        repoSetupName: local
       - *commit
       - *pushMaster
   - name: add-third-branch

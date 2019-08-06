@@ -37,7 +37,7 @@ function loadTestdata(testdataArchivesNames, testdataPath) {
     });
 }
 
-describe.only('Prepare test-utils tests', function() {
+describe.skip('Prepare test-utils tests', function() {
 
     after('Clean up playground', function() {
         return fs.remove(utils.PLAYGROUND_PATH);
