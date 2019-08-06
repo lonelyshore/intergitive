@@ -160,7 +160,7 @@ class DevActionExecutor extends ActionExecutor {
                         path.join(this.fileSystemBaseFolder, setup.workingPath),
                         path.join(this.fileSystemBaseFolder, this.repoStoreSubPath),
                         setup.referenceStoreName,
-                        setup.remoteType === REPO_TYPE.REMOTE,
+                        setup.repoType === REPO_TYPE.REMOTE,
                         this.repoStorageType
                     )
                     .then(result => {

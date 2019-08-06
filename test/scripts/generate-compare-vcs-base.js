@@ -81,7 +81,7 @@ const executionContexts = [
         saveTypes: [
             SAVE_TYPE.ARCHIVE,
             SAVE_TYPE.SNAPSHOT,
-            SAVE_TYPE.GIT
+            //SAVE_TYPE.GIT
         ]
     }
 ];
