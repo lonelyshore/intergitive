@@ -100,7 +100,7 @@ let execution = Promise.resolve();
 executionContexts.forEach(executionContext => {
 
     if (executionContext.isSkipped) {
-        //return;
+        return;
     }
 
     executionContext.saveTypes.forEach(saveType => {

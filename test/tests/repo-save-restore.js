@@ -101,7 +101,6 @@ describe.only('Prepare Repo Save & Restore Tests', function() {
             let clear = Promise.resolve();
             allRepoCreationPaths.forEach(repoCreationPath => {
                 clear = clear.then(() => {
-
                     return fs.emptyDir(repoCreationPath);
                 });
             });
@@ -109,11 +108,19 @@ describe.only('Prepare Repo Save & Restore Tests', function() {
             return clear;
         }
 
+        function initializeAllCreationPaths() {
+            return repoCreationConfigExecutor.initializeRepos(
+                repoCreationWorkingPath,
+                utils.ARCHIVE_RESOURCES_PATH,
+                repoCreationConfig,
+            );
+        }
+
         describe(`Replay and capture snapshot - ${targetRepoName}`, function() {
 
             before('Initialize', function() {
 
-                return clearAllCreationPaths()
+                return initializeAllCreationPaths()
                 .then(() => {
                     return fs.emptyDir(repoSnapshotsPath);
                 });
@@ -151,7 +158,7 @@ describe.only('Prepare Repo Save & Restore Tests', function() {
         });
 
         function createSnapshots() {
-            return clearAllCreationPaths()
+            return initializeAllCreationPaths()
             .then(() => {
                 return fs.emptyDir(repoSnapshotsPath);
             })
