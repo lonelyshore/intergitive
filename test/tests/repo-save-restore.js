@@ -30,7 +30,7 @@ const testingStorageTypes = [
 const repoCreationWorkingPath = path.join(utils.PLAYGROUND_PATH, 'created-repo');
 
 
-describe.only('Prepare Repo Save & Restore Tests', function() {
+describe('Prepare Repo Save & Restore Tests', function() {
 
     testSnapshotsMatchReplayAndCreateTests(
         path.join(

@@ -20,7 +20,7 @@ const RepoSetup = require("../../lib/config-level").RepoVcsSetup;
 chai.use(chaiAsPromised);
 chai.should();
 
-describe('Prepare VCS Compare #core', function() {
+describe.only('Prepare VCS Compare #core', function() {
 
     let testingStorageTypes = [
         vcs.STORAGE_TYPE.ARCHIVE,
@@ -42,7 +42,7 @@ function createTests(storageType) {
 
         const archiveCreationConfigExecutor = new utils.RepoArchiveConfigExecutor();
     
-        describe.only("Build Tree Equal", function() {
+        describe.skip("Build Tree Equal", function() {
                 
             const workingPath = path.join(utils.PLAYGROUND_PATH, "compare-vcs");
     
@@ -134,7 +134,7 @@ function createTests(storageType) {
     
         });
     
-        describe("Local", function() {
+        describe.skip("Local", function() {
     
             const workingPath = path.join(utils.PLAYGROUND_PATH, "compare-vcs");
     
@@ -467,7 +467,10 @@ function createTests(storageType) {
             let snapshotsPath = path.join(workingPath, 'snapshots');
             let inspectedPath = path.join(workingPath, 'inspected');
     
-            let config;
+            let config = archiveCreationConfigExecutor.loadConfigSync(
+                path.join(utils.RESOURCES_PATH, 'vcs-compare', 'generate-remote-repo.yaml')
+            );
+
             let refManager;
 
             before('Initialize paths', function() {
@@ -477,21 +480,12 @@ function createTests(storageType) {
                 });
             })
 
-            before('Load config', function() {
-                return archiveCreationConfigExecutor.loadConfig(
-                    path.join(utils.RESOURCES_PATH, 'vcs-compare', 'generate-remote-repo.yaml')
-                )
-                .then(result => {
-                    config = result;
-                });
-            });
-
             before('Create ReferenceManager', function() {
                 return fs.emptyDir(repoStorePath)
                 .then(() => {
                     return zip.extractArchiveTo(
                         path.join(
-                            archivePath,
+                            utils.ARCHIVE_RESOURCES_PATH,
                             `compare-vcs-remote-ref-${vcs.STORAGE_TYPE.toString(storageType)}.zip`
                         ),
                         path.join(repoStorePath, referenceStoreName)
@@ -513,15 +507,17 @@ function createTests(storageType) {
 
             before('Create snapshots', function() {
                 const assetLoader = new AssetLoader(
-                    path.join(utils.RESOURCES_PATH, 'vcs-compare')
+                    path.join(utils.RESOURCES_PATH, config.resourcesSubPath)
                 );
+
+                assetLoader.setBundlePath();
 
                 const repoSetups =
                     archiveCreationConfigExecutor.createRepoVcsSetupsFromConfig(
                         config
                     );
 
-                actionExecutor = new ActionExecutor(
+                let actionExecutor = new ActionExecutor(
                     workingPath,
                     path.relative(workingPath, repoStorePath),
                     assetLoader,
@@ -531,19 +527,36 @@ function createTests(storageType) {
 
                 return fs.emptyDir(snapshotsPath)
                 .then(() => {
-                    return config.stageNames.forEach(stageName => {
-                        return archiveCreationConfigExecutor.executeStage(
-                            stageName,
-                            config.stageMap,
-                            actionExecutor
-                        );
-                    })
-                    .then(() => {
-                        return fs.copy(
-                            actionExecutor.getRepoFullPaths('remote').workingPath,
-                            path.join(snapshotsPath, stageName)
-                        );
+                    return archiveCreationConfigExecutor.initializeRepos(
+                        workingPath,
+                        utils.ARCHIVE_RESOURCES_PATH,
+                        config
+                    );
+                })
+                .then(() => {
+
+                    let captureSnapshots = Promise.resolve();
+                    config.stageNames.forEach(stageName => {
+                        captureSnapshots = captureSnapshots.then(() => {
+                            return archiveCreationConfigExecutor.executeStage(
+                                stageName,
+                                config.stageMap,
+                                actionExecutor
+                            ).then(() => {
+                                return fs.copy(
+                                    actionExecutor.getRepoFullPaths('remote').fullWorkingPath,
+                                    path.join(snapshotsPath, stageName)
+                                );
+                            })
+                            .catch(err => {
+                                console.error(`Error on ${stageName}`);
+                                console.error(err);
+                                return Promise.reject(err);
+                            });
+                        });
                     });
+
+                    return captureSnapshots;
                 });
             });
 
@@ -598,7 +611,7 @@ function createTests(storageType) {
                         });
                     });
                 });
-                
+
             });
         });
     });
