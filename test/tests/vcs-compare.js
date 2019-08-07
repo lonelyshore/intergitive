@@ -588,7 +588,7 @@ function createTests(storageType) {
                 });
             });
 
-            describe('Different', function() {
+            describe.skip('Different', function() {
 
                 config.stageNames.forEach(stageName => {
 
