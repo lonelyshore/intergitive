@@ -132,7 +132,7 @@ function createTests(storageType) {
             });
     
     
-        })
+        });
     
         describe("Local", function() {
     
@@ -182,7 +182,8 @@ function createTests(storageType) {
                         workingPath,
                         undefined,
                         assetLoader,
-                        repoSetups
+                        repoSetups,
+                        storageType
                     );
     
                     checkedRepoPath = 
@@ -455,6 +456,149 @@ function createTests(storageType) {
                     })
                     .should.eventually.equal(false, 'clean should not equal to a repo that is not existed');
                 });
+            });
+        });
+
+        describe("Remote", function() {
+            const workingPath = path.join(utils.PLAYGROUND_PATH, "compare-vcs");
+            
+            const repoStorePath = path.join(workingPath, "repo-store");
+            const referenceStoreName = "compare-vcs-remote-ref";
+            let snapshotsPath = path.join(workingPath, 'snapshots');
+            let inspectedPath = path.join(workingPath, 'inspected');
+    
+            let config;
+            let refManager;
+
+            before('Initialize paths', function() {
+                return fs.emptyDir(workingPath)
+                .then(() => {
+                    return fs.emptyDir(inspectedPath);
+                });
+            })
+
+            before('Load config', function() {
+                return archiveCreationConfigExecutor.loadConfig(
+                    path.join(utils.RESOURCES_PATH, 'vcs-compare', 'generate-remote-repo.yaml')
+                )
+                .then(result => {
+                    config = result;
+                });
+            });
+
+            before('Create ReferenceManager', function() {
+                return fs.emptyDir(repoStorePath)
+                .then(() => {
+                    return zip.extractArchiveTo(
+                        path.join(
+                            archivePath,
+                            `compare-vcs-remote-ref-${vcs.STORAGE_TYPE.toString(storageType)}.zip`
+                        ),
+                        path.join(repoStorePath, referenceStoreName)
+                    );
+                })
+                .then(() => {
+                    return vcs.RepoReferenceManager.create(
+                        inspectedPath,
+                        repoStorePath,
+                        referenceStoreName,
+                        true,
+                        storageType
+                    );
+                })
+                .then(result => {
+                    refManager = result;
+                });
+            })
+
+            before('Create snapshots', function() {
+                const assetLoader = new AssetLoader(
+                    path.join(utils.RESOURCES_PATH, 'vcs-compare')
+                );
+
+                const repoSetups =
+                    archiveCreationConfigExecutor.createRepoVcsSetupsFromConfig(
+                        config
+                    );
+
+                actionExecutor = new ActionExecutor(
+                    workingPath,
+                    path.relative(workingPath, repoStorePath),
+                    assetLoader,
+                    repoSetups,
+                    storageType
+                );
+
+                return fs.emptyDir(snapshotsPath)
+                .then(() => {
+                    return config.stageNames.forEach(stageName => {
+                        return archiveCreationConfigExecutor.executeStage(
+                            stageName,
+                            config.stageMap,
+                            actionExecutor
+                        );
+                    })
+                    .then(() => {
+                        return fs.copy(
+                            actionExecutor.getRepoFullPaths('remote').workingPath,
+                            path.join(snapshotsPath, stageName)
+                        );
+                    });
+                });
+            });
+
+            after('Clear up', function() {
+                return fs.remove(utils.PLAYGROUND_PATH);
+            });
+
+            function loadSnapshot(snapshotName) {
+                return fs.copy(
+                    path.join(snapshotsPath, snapshotName),
+                    inspectedPath
+                );
+            }
+
+            describe('Equal', function() {
+
+                beforeEach('Clean inspected path', function() {
+                    return fs.emptyDir(inspectedPath);
+                });
+
+                config.stageNames.forEach(stageName => {
+                    it(`${stageName}`, function() {
+                        return loadSnapshot(stageName)
+                        .then(() => {
+                            return refManager.equivalent(stageName);
+                        })
+                        .should.eventually.be.true;
+                    });
+                });
+            });
+
+            describe('Different', function() {
+
+                config.stageNames.forEach(stageName => {
+
+                    describe(`== ${stageName} ==`, function() {
+
+                        before('Load snapshot', function() {
+                            return fs.emptyDir(inspectedPath)
+                            .then(() => {
+                                return loadSnapshot(stageName);
+                            });
+                        });
+
+                        config.stageNames.forEach(otherStageName => {
+                            if (stageName !== otherStageName) {
+                                it(`${stageName} v.s. ${otherStageName}`, function() {
+                                    return refManager.equivalent(otherStageName)
+                                    .should.eventually.be.false;
+                                });
+                            }
+                        });
+                    });
+                });
+                
             });
         });
     });
