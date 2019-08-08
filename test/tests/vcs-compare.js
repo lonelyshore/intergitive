@@ -20,7 +20,7 @@ const RepoSetup = require("../../lib/config-level").RepoVcsSetup;
 chai.use(chaiAsPromised);
 chai.should();
 
-describe.only('Prepare VCS Compare #core', function() {
+describe('Prepare VCS Compare #core', function() {
 
     let testingStorageTypes = [
         vcs.STORAGE_TYPE.ARCHIVE,
@@ -42,7 +42,7 @@ function createTests(storageType) {
 
         const archiveCreationConfigExecutor = new utils.RepoArchiveConfigExecutor();
     
-        describe.skip("Build Tree Equal", function() {
+        describe("Build Tree Equal", function() {
                 
             const workingPath = path.join(utils.PLAYGROUND_PATH, "compare-vcs");
     
@@ -134,7 +134,7 @@ function createTests(storageType) {
     
         });
     
-        describe.skip("Local", function() {
+        describe("Local", function() {
     
             const workingPath = path.join(utils.PLAYGROUND_PATH, "compare-vcs");
     
@@ -313,7 +313,7 @@ function createTests(storageType) {
                 })
             });
         
-            describe.only("Different", function() {
+            describe("Different", function() {
         
                 describe("Dirty Combination", function() {
                     let names = [ 
@@ -588,7 +588,7 @@ function createTests(storageType) {
                 });
             });
 
-            describe.skip('Different', function() {
+            describe('Different', function() {
 
                 config.stageNames.forEach(stageName => {
 
