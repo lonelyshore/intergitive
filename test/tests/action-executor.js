@@ -1370,9 +1370,11 @@ describe('Action Executor #core', function() {
 
     describe('Repository Operations', function() {
 
-        describe('Local', function() {
-            const refStoreName = 'compare-vcs-local-ref-' + devParams.defaultRepoStorageTypeName;
-            const checkpointStoreName = 'checkpoint-store';
+        describe.only('Reference and Checkpoint', function() {
+            const localRefStoreName = 'compare-vcs-local-ref-' + devParams.defaultRepoStorageTypeName;
+            const remoteRefStoreName = `compare-vcs-remote-ref-${devParams.defaultRepoStorageTypeName}`;
+            const localCheckpointStoreName = 'checkpoint-store-local';
+            const remoteCheckpointStoreName = 'checkpoint-store-remote';
 
             before('Create Specialized ActionExecutor', function() {
 
@@ -1382,8 +1384,15 @@ describe('Action Executor #core', function() {
                 let repoSetups = {
                     [testRepoSetupName]: new RepoVcsSetup(
                         path.relative(utils.PLAYGROUND_PATH, workingPath),
-                        refStoreName,
-                        checkpointStoreName
+                        localRefStoreName,
+                        localCheckpointStoreName,
+                        REPO_TYPE.LOCAL
+                    ),
+                    [testRemoteRepoSetupName]: new RepoVcsSetup(
+                        path.relative(utils.PLAYGROUND_PATH, remoteWorkingPath),
+                        remoteRefStoreName,
+                        remoteCheckpointStoreName,
+                        REPO_TYPE.REMOTE
                     )
                 };
 
@@ -1399,163 +1408,241 @@ describe('Action Executor #core', function() {
                 return fs.emptyDir(repoStoreCollectionPath)
                 .then(() => {
                     return zip.extractArchiveTo(
-                        path.join(utils.ARCHIVE_RESOURCES_PATH, refStoreName) + '.zip', 
-                        path.join(repoStoreCollectionPath, refStoreName)
+                        path.join(utils.ARCHIVE_RESOURCES_PATH, localRefStoreName) + '.zip', 
+                        path.join(repoStoreCollectionPath, localRefStoreName)
+                    );
+                })
+                .then(() => {
+                    return zip.extractArchiveTo(
+                        path.join(utils.ARCHIVE_RESOURCES_PATH, remoteRefStoreName) + '.zip', 
+                        path.join(repoStoreCollectionPath, remoteRefStoreName)
                     );
                 });
             });
 
             beforeEach('Clean Working Directory', function() {
-                fs.emptyDirSync(workingPath);
+                return fs.emptyDir(workingPath)
+                .then(() => {
+                    return fs.emptyDir(remoteWorkingPath);
+                });
             });
 
             after('Clean Up', function() {
                 return fs.remove(workingPath)
+                .then(() => fs.remove(remoteWorkingPath))
                 .then(() => fs.remove(repoStoreCollectionPath));
-            })
+            });
 
-            // We don't need to verify restored cotent, it is covered by
-            // repo-save-restore
-            it('load reference to correct location', function() {
-                
-                let action = new actionTypes.LoadReferenceAction(
-                    testRepoSetupName,
-                    'clean'
-                );
-
-                return action.executeBy(actionExecutor)
-                .then(() => {
-                    return fs.exists(workingPath);
+            function assertRemoteLoaded(destination, errorLocation) {
+                return Promise.all([
+                    fs.exists(destination),
+                    fs.exists(path.join(destination, 'HEAD')),
+                    fs.exists(path.join(destination, 'objects')),
+                    fs.exists(path.join(destination, 'refs'))
+                ])
+                .then(results => {
+                    return results.every(result =>  result === true);
                 })
-                .should.eventually.equal(true)
+                .should.eventually.equal(
+                    true,
+                    `[${errorLocation}] Should load remote repo to ${destination}, but it is not loaded`
+                );
+            }
+
+            function assertLocalLoaded(destination, errorLocation) {
+                return fs.exists(workingPath)
+                .should.eventually.equal(
+                    true,
+                    `[${errorLocation}] Should load local repo to ${destination}, but the destination is not shown`
+                )
                 .then(() => {
                     return fs.exists(path.join(workingPath, '.git'));
                 })
-                .should.eventually.equal(true);
-            });
-
-            it('load multiple times do not break', function() {
-                let action1 = new actionTypes.LoadReferenceAction(
-                    testRepoSetupName,
-                    'clean'
+                .should.eventually.equal(
+                    true,
+                    `[${errorLocation}] Should load local repo to ${destination}, but it seems not loaded`
                 );
+            };
 
-                let action2 = new actionTypes.LoadReferenceAction(
-                    testRepoSetupName,
-                    'conflictResolveStage'
-                );
+            describe('Local', function() {
 
-                let action3 = new actionTypes.LoadReferenceAction(
-                    testRepoSetupName,
-                    'detached'
-                );
-
-                let isRestored = () => {
-                    return fs.exists(workingPath)
+                // We don't need to verify restored cotent, it is covered by
+                // repo-save-restore
+                it('load reference to correct location', function() {
+                    
+                    let action = new actionTypes.LoadReferenceAction(
+                        testRepoSetupName,
+                        'clean'
+                    );
+    
+                    return action.executeBy(actionExecutor)
+                    .then(() => {
+                        return fs.exists(workingPath);
+                    })
                     .should.eventually.equal(true)
                     .then(() => {
                         return fs.exists(path.join(workingPath, '.git'));
                     })
                     .should.eventually.equal(true);
-                };
-
-                return action1.executeBy(actionExecutor)
-                .then(() => {
-                    return isRestored();
-                })
-                .then(() => {
-                    return fs.remove(workingPath);
-                })
-                .then(() => {
-                    return action2.executeBy(actionExecutor);
-                })
-                .then(() => {
-                    return isRestored();
-                })
-                .then(() => {
-                    return action3.executeBy(actionExecutor);
-                })
-                .then(() => {
-                    return isRestored();
-                })
-            });
-
-            it('save and load checkpoint', function() {
-
-                let checkpointName = 'check';
-
-                let backupAction = new actionTypes.SaveCheckpointAction(
-                    testRepoSetupName,
-                    checkpointName
-                );
-
-                let restoreAction = new actionTypes.LoadCheckpointAction(
-                    testRepoSetupName,
-                    checkpointName
-                );
-
-                return fs.emptyDir(workingPath)
-                .then(() => {
-                    return fs.writeFile(
-                        path.join(workingPath, '123'),
-                        'ABC',
-                        {
-                            encoding: 'utf8'
-                        }
-                    );
-                })
-                .then(() => {
-                    return backupAction.executeBy(actionExecutor);
-                })
-                .then(() => {
-                    return fs.remove(workingPath);
-                })
-                .then(() => {
-                    return restoreAction.executeBy(actionExecutor);
-                })
-                .then(() => {
-                    return fs.readdir(workingPath)
-                    .should.eventually.have.length(1)
-                    .and.include.members(['123']);
-                })
-                .then(() => {
-                    return fs.readFile(
-                        path.join(workingPath, '123'),
-                        {
-                            encoding: 'utf8'
-                        }
-                    )
-                    .should.eventually.equal('ABC');
                 });
+    
+                it('load multiple times do not break', function() {
+
+                    let actions = [
+                        new actionTypes.LoadReferenceAction(
+                            testRepoSetupName,
+                            'clean'
+                        ),
+                        new actionTypes.LoadReferenceAction(
+                            testRepoSetupName,
+                            'conflictResolveStage'
+                        ),
+                        new actionTypes.LoadReferenceAction(
+                            testRepoSetupName,
+                            'detached'
+                        )                        
+                    ];
+                    
+                    let execution = Promise.resolve();
+
+                    actions.forEach((action, index) => {
+                        execution = execution.then(() => {
+                            return action.executeBy(actionExecutor);
+                        })
+                        .then(() => {
+                            return assertLocalLoaded(workingPath, `load-multiple-${index}`)
+                        });
+                    });
+
+                    return execution;
+                });
+    
+                it('save and load checkpoint', function() {
+    
+                    let checkpointName = 'check';
+    
+                    let backupAction = new actionTypes.SaveCheckpointAction(
+                        testRepoSetupName,
+                        checkpointName
+                    );
+    
+                    let restoreAction = new actionTypes.LoadCheckpointAction(
+                        testRepoSetupName,
+                        checkpointName
+                    );
+    
+                    return fs.emptyDir(workingPath)
+                    .then(() => {
+                        return fs.writeFile(
+                            path.join(workingPath, '123'),
+                            'ABC',
+                            {
+                                encoding: 'utf8'
+                            }
+                        );
+                    })
+                    .then(() => {
+                        return backupAction.executeBy(actionExecutor);
+                    })
+                    .then(() => {
+                        return fs.remove(workingPath);
+                    })
+                    .then(() => {
+                        return restoreAction.executeBy(actionExecutor);
+                    })
+                    .then(() => {
+                        return fs.readdir(workingPath)
+                        .should.eventually.have.length(1)
+                        .and.include.members(['123']);
+                    })
+                    .then(() => {
+                        return fs.readFile(
+                            path.join(workingPath, '123'),
+                            {
+                                encoding: 'utf8'
+                            }
+                        )
+                        .should.eventually.equal('ABC');
+                    });
+                });
+    
+                it('load reference then compare should be equal', function() {
+                    let loadAction = new actionTypes.LoadReferenceAction(
+                        testRepoSetupName,
+                        'clean'
+                    );
+    
+                    let compareActionEqual = new actionTypes.CompareReferenceAction(
+                        testRepoSetupName,
+                        'clean'
+                    );
+    
+                    let compareActionUnequal = new actionTypes.CompareReferenceAction(
+                        testRepoSetupName,
+                        'dirtyAdd'
+                    );
+    
+                    return loadAction.executeBy(actionExecutor)
+                    .then(() => {
+                        return compareActionEqual.executeBy(actionExecutor);
+                    })
+                    .should.eventually.equal(true)
+                    .then(() => {
+                        return compareActionUnequal.executeBy(actionExecutor);
+                    })
+                    .should.eventually.equal(false);
+                })
             });
 
-            it('load reference then compare should be equal', function() {
-                let loadAction = new actionTypes.LoadReferenceAction(
-                    testRepoSetupName,
-                    'clean'
-                );
 
-                let compareActionEqual = new actionTypes.CompareReferenceAction(
-                    testRepoSetupName,
-                    'clean'
-                );
 
-                let compareActionUnequal = new actionTypes.CompareReferenceAction(
-                    testRepoSetupName,
-                    'dirtyAdd'
-                );
+            describe('Remote', function() {
+            
+                it('load reference to correct location', function() {
+                    let action = new actionTypes.LoadReferenceAction(
+                        testRemoteRepoSetupName,
+                        'init-remote'
+                    );
+                    
+                    return action.executeBy(actionExecutor) 
+                    .then(() => {
+                        return assertRemoteLoaded(remoteWorkingPath, 'load reference once');
+                    });
+                });
+    
+                it('load multiple times do not break', function() {
+                    let actions = [
+                        new actionTypes.LoadReferenceAction(
+                            testRemoteRepoSetupName,
+                            'update-master-only'
+                        ),
+    
+                        new actionTypes.LoadReferenceAction(
+                            testRemoteRepoSetupName,
+                            'force-update-master'
+                        ),
+    
+                        new actionTypes.LoadReferenceAction(
+                            testRemoteRepoSetupName,
+                            'push-master'
+                        )
+                    ];
+    
+                    let execution = Promise.resolve();
+    
+                    actions.forEach((action, index) => {
+                        execution = execution.then(() => {
+                            return action.executeBy(actionExecutor)
+                            .then(() => {
+                                return assertRemoteLoaded(remoteWorkingPath, `remote-multiple-${index}`)
+                            })
+                        });
+                    });
+    
+                    return execution;
+                });
+            });            
+        })
 
-                return loadAction.executeBy(actionExecutor)
-                .then(() => {
-                    return compareActionEqual.executeBy(actionExecutor);
-                })
-                .should.eventually.equal(true)
-                .then(() => {
-                    return compareActionUnequal.executeBy(actionExecutor);
-                })
-                .should.eventually.equal(false);
-            })
-        });
-        
     })
 });
