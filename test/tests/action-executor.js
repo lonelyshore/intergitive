@@ -1464,6 +1464,49 @@ describe('Action Executor #core', function() {
                 );
             };
 
+            function pushToRemoteAndGetPsuhedRef(localWorkingPath, remoteWorkingPath) {
+                let localRepo = simpleGitCtor(localWorkingPath);
+                let remoteRepo = simpleGitCtor(remoteWorkingPath);
+
+                return localRepo.init(false)
+                .then(() => {
+                    return localRepo.addConfig('user.name', 'test')
+                    .then(() => {
+                        return localRepo.addConfig('user.email', 'test@test.ts');
+                    });
+                })
+                .then(() => {
+                    return remoteRepo.init(true);
+                })
+                .then(() => {
+                    return localRepo.addRemote(
+                        'origin',
+                        remoteWorkingPath
+                    )
+                })
+                .then(() => {
+                    return fs.writeFile(
+                        path.join(localWorkingPath, 'some_file'),
+                        'some file content'
+                    )
+                    .then(() => {
+                        return localRepo.add('some_file');
+                    })
+                    .then(() => {
+                        return localRepo.commit('some');
+                    })
+                    .then(() => {
+                        return localRepo.push('origin', 'master');
+                    });
+                })
+                .then(() => {
+                    return remoteRepo.raw(['show-ref', '-d'])
+                    .then(result => {
+                        return result.trim().split(' ')[0];
+                    });
+                });
+            }
+
             describe('Local', function() {
 
                 // We don't need to verify restored cotent, it is covered by
@@ -1477,13 +1520,8 @@ describe('Action Executor #core', function() {
     
                     return action.executeBy(actionExecutor)
                     .then(() => {
-                        return fs.exists(workingPath);
+                        return assertLocalLoaded(workingPath, 'load-local-once');
                     })
-                    .should.eventually.equal(true)
-                    .then(() => {
-                        return fs.exists(path.join(workingPath, '.git'));
-                    })
-                    .should.eventually.equal(true);
                 });
     
                 it('load multiple times do not break', function() {
@@ -1641,6 +1679,110 @@ describe('Action Executor #core', function() {
     
                     return execution;
                 });
+
+                it('save and load checkpoint', function() {
+
+                    this.timeout(3000);
+
+                    let checkpointName = 'check';
+
+                    let backupActions = [
+                        new actionTypes.SaveCheckpointAction(
+                            testRepoSetupName,
+                            checkpointName
+                        ),
+                        new actionTypes.SaveCheckpointAction(
+                            testRemoteRepoSetupName,
+                            checkpointName
+                        )
+                    ];
+
+                    let restoreActions = [
+                        new actionTypes.LoadCheckpointAction(
+                            testRepoSetupName,
+                            checkpointName
+                        ),
+                        new actionTypes.LoadCheckpointAction(
+                            testRemoteRepoSetupName,
+                            checkpointName
+                        )
+                    ];
+
+                    let executeActions = (actions) => {
+                        let execution = Promise.resolve() ;
+                        actions.forEach(action => {
+                            execution = execution.then(() => {
+                                return action.executeBy(actionExecutor);
+                            });
+                        });
+
+                        return execution;
+                    }
+
+                    let pushedRef;
+                    return pushToRemoteAndGetPsuhedRef(
+                        workingPath,
+                        remoteWorkingPath
+                    )
+                    .then(result => {
+                        pushedRef = result;
+                    })
+                    .then(() => {
+                        return executeActions(backupActions);
+                    })
+                    .then(() => {
+                        return fs.remove(workingPath)
+                        .then(() => {
+                            return fs.remove(remoteWorkingPath);
+                        });
+                    })
+                    .then(() => {
+                        return executeActions(restoreActions);
+                    })
+                    .then(() => {
+                        return fs.readFile(
+                            path.join(
+                                remoteWorkingPath,
+                                'refs',
+                                'heads',
+                                'master'
+                            ),
+                            {
+                                encoding: 'utf8'
+                            }
+                        )
+                        .then(result => {
+                            chai.expect(result.trim()).equal(pushedRef);
+                        });
+                    });
+                });
+
+                it('load reference then compare should be equal', function() {
+                    let loadAction = new actionTypes.LoadReferenceAction(
+                        testRemoteRepoSetupName,
+                        'add-second-branch-to-conflict-mixed'
+                    );
+
+                    let compareActionEqual = new actionTypes.CompareReferenceAction(
+                        testRemoteRepoSetupName,
+                        'add-second-branch-to-conflict-mixed'
+                    );
+
+                    let compareActionUnequal = new actionTypes.CompareReferenceAction(
+                        testRemoteRepoSetupName,
+                        'change-tag-name'
+                    );
+
+                    return loadAction.executeBy(actionExecutor)
+                    .then(() => {
+                        return compareActionEqual.executeBy(actionExecutor);
+                    })
+                    .should.eventually.equal(true)
+                    .then(() => {
+                        return compareActionUnequal.executeBy(actionExecutor);
+                    })
+                    .should.eventually.equal(false);
+                })
             });            
         })
 
