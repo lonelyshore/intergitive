@@ -1370,7 +1370,7 @@ describe('Action Executor #core', function() {
 
     describe('Repository Operations', function() {
 
-        describe.only('Reference and Checkpoint', function() {
+        describe('Reference and Checkpoint', function() {
             const localRefStoreName = 'compare-vcs-local-ref-' + devParams.defaultRepoStorageTypeName;
             const remoteRefStoreName = `compare-vcs-remote-ref-${devParams.defaultRepoStorageTypeName}`;
             const localCheckpointStoreName = 'checkpoint-store-local';

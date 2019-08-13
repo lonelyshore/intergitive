@@ -15,7 +15,8 @@
       repoSetupName: local
       referenceName: clean
     - !checkpoint
-      repoSetupName: local
+      repoSetupNames:
+        - local
       checkpointName: kerker
     - !elaborate # elaborate this is an example
       descriptionId: "assets/description:elaborate:example"
