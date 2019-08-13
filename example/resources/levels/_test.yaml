@@ -14,7 +14,7 @@
     - !verifyRepo
       repoSetupName: local
       referenceName: clean
-    - !checkpoint
+    - !partialCheckpoint
       repoSetupNames:
         - local
       checkpointName: kerker

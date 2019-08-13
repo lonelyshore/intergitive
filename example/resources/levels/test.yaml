@@ -44,7 +44,6 @@
       referenceName: merge
 
     - !checkpoint
-      repoSetupName: local
       checkpointName: kerker
 
     - !elaborate
@@ -57,7 +56,6 @@
       referenceName: clean
 
     - !checkpoint
-      repoSetupName: local
       checkpointName: noking
 
     - !instruct # illustrate that IllustrateStep puts out illustrations
