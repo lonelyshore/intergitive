@@ -8,21 +8,7 @@
   </head>
   <body>
     
-    <div id="level" class="level" v-bind:non-interactable="!levelState.interactable">
-        <div
-          v-for="(stepKey) in renderSteps"
-          is="blockable"
-          v-bind:step-key="stepKey"
-          v-bind:key="`blockable-${stepKey}`">
-          <div          
-            v-bind:is="stepStates[stepKey].step.componentType"
-            v-bind:step-key="stepKey"
-            v-bind:key="`level-step-${stepKey}`"
-          ></div>
-        </div>
-
-    </div>
-
+    <div id="main"></div>
 
     <!-- <script type="text/javascript" src="./lib/render-level.js"></script> -->
     <script type="application/javascript">require('./lib/render-level.js');</script>
