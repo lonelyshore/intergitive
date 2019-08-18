@@ -1,16 +1,16 @@
-!course:
+!course
   id: "example-main"
   nameKey: "levels/main:course-name"
   children:
-    - !sequential-section:
+    - !sequential-section
       id: "example-main-secion-1"
       nameKey: "levels/main:section-1:name"
       children:
-        - !level:
+        - !level
           id: "example-main-level-1-1"
           nameKey: "levels/main:level-1-1:name"
-          configAssetId: "levels/test"
-        - !level:
+          configAssetId: "levels/local"
+        - !level
           id: "example-main-level-1-2"
           nameKey: "levels/main:level-1-2:name"
-          configAssetId: "remote.yaml"
+          configAssetId: "levels/remote"
