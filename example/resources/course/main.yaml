@@ -1,10 +1,11 @@
 !course:
   id: "example-main"
-  items:
-    - !section:
+  nameKey: "levels/main:course-name"
+  children:
+    - !sequential-section:
       id: "example-main-secion-1"
       nameKey: "levels/main:section-1:name"
-      sequentialChildren:
+      children:
         - !level:
           id: "example-main-level-1-1"
           nameKey: "levels/main:level-1-1:name"
