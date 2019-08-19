@@ -1,10 +1,13 @@
 asset_index:
   infile:
-    main:course-name: "教學範例"
-    main:section-1:name: "第一章: 範例章節"
-    main:section-1:level-1-1: "第一關： git 本地操作教學範例"
-    main:section-1:level-1-2: "第二關： git 遠端操作教學範例"
+    main.course-name: "教學範例"
+    main.section-1.name: "第一章: 範例章節"
+    main.section-2.name: "第二章: 測試章節"
+    main.level-1-1.name: "第一關： git 本地操作教學範例"
+    main.level-1-2.name: "第二關： git 遠端操作教學範例"
+    main.level-2-1.name: "第一關： ?????"
     
   ondisk:
     local: "local.yaml"
     remote: "remote.yaml"
+    test: "_test.yaml"
