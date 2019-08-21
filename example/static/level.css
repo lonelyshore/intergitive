@@ -5,23 +5,35 @@
     src: local("Microsoft JhengHezi"), local("Heiti TC"), local("WenQuanYi Zen Hei");
 } */
 
+.course {
+    padding: 0rem 1rem;
+}
+
+.course title {
+    padding: 0rem 0.2rem;
+}
+
 .menu-list .menu-list-entry {
     display: block;
     position: relative;
     padding: 0.5rem 0.5rem;
+    color: #0087ff;
+    
 }
 
 .menu-list .menu-list-entry:hover {
-    background: rgb(247, 247, 252);
+    color: #48aaff;
+    cursor: pointer;
 }
 
 .menu-list .menu-list-entry:active {
-    background: rgb(242, 242, 247);
+    color: #0076dd;
+    cursor: pointer;
 }
 
-.menu-list .menu-list-entry + .menu-list-entry {
+/* .menu-list .menu-list-entry + .menu-list-entry {
     border-top: dashed 2px rgb(149, 206, 255);
-}
+} */
 
 /* :after instead of :before cause
    it messes with text-transform */
@@ -30,8 +42,8 @@
     float: left;
     display: inline-block;
     position: relative;
-    left: -0.2rem;
-    margin: 0.3rem 0.3rem;
+    left: -0.3rem;
+    margin: 0.3rem 0.2rem;
     height: 0.5rem;
     width: 0.5rem;
     box-sizing: border-box;
