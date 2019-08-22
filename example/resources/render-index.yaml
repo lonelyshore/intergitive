@@ -20,3 +20,6 @@ asset_index:
     checkpointLoadButton: "讀取"
     checkpointReadyToSave: "存檔點"
     openWorkingPathDescription: "開啟位於 {} 的工作目錄"
+    preCompleteLevelDescription: "哎呀，被發現關卡的尾巴在這裡了 ฅ^•ﻌ•^ฅ"
+    completeLevelDescription: "恭喜您已經完成此關卡，請按下確認回到選單畫面  (*￣▽￣)/‧☆*\"'*-.,_,.-*'\"*-.,_☆"
+    buttonConfirmText: "確認"
