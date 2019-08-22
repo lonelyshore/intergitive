@@ -9,8 +9,35 @@
     padding: 0rem 1rem;
 }
 
-.course title {
+.section {
+    padding: 0rem 1rem;
+}
+
+.course .title {
     padding: 0rem 0.2rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.section .title {
+    padding: 0rem;
+    font-size: 1.5rem;
+    box-sizing: border-box;
+    font-weight: bold;
+}
+
+.section .back {
+    position: relative;
+    vertical-align: text-bottom;
+    padding: 0.2rem 0px 0.2rem 0.2rem;
+    height: 1.4rem;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+.section .back:hover {
+    cursor: pointer;
+    opacity: 0.7;
 }
 
 .menu-list .menu-list-entry {
