@@ -50,6 +50,7 @@
     text-align: center;
     top: 0px;
     background: #0076dd;
+    z-index: 10;
 }
 
 .nav-bar .title {
