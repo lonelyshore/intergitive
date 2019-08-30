@@ -18,7 +18,7 @@ const Level = require("../lib/config-level").Level;
  * 
  * @param {string} configPath 
  */
-const loadCourse = function(configPath, schema) {
+const loadConfig = function(configPath, schema) {
     return fs.readFile(configPath)
     .then(content => {
         return yaml.safeLoad(content, {
@@ -53,83 +53,92 @@ const loadReferenceMakerMapping = function(repoVcsSetups, storePath) {
 
 /**
  * 
- * @param {Level} level
+ * @param {courseConfig.LevelItem} levelItem
  * @param {String} levelId
  * @param {Object} courseItemDict
  * @param {Array<String>} flatCourseIds
  * @param {Object} actionExecutorContext
  */
-const bakeLevel = function(level, levelId, flatCourseIds, courseItemDict, actionExecutorContext) {
+const bakeLevel = function(levelItem, levelId, flatCourseIds, courseItemDict, actionExecutorContext) {
 
-    let actionExecutor = new ActionExecutor(
-        actionExecutorContext.fileSystemBaseFolder,
-        actionExecutorContext.repoStoreSubPath,
-        actionExecutorContext.assetLoader,
-        level.repoVcsSetups
-    );
-
-    let repoVcsSetupNames = Object.keys(level.repoVcsSetups);
-
-    let promises = Promise.resolve();
-
-    level.steps.forEach((step) => {
-        if ('actions' in step) {
-            step.actions.forEach(action => {
-                promises = promises.then(() => {
-                    return action.evaluate(actionExecutor);
-                });
-            });
-        }
-        else if (step instanceof stepConf.VerifyRepoStep) {
-            promises = promises.then(() => {
-                let saveRefAction = new actionConf.SaveRepoReferenceAction(
-                    step.repoSetupName,
-                    step.referenceName
-                );
-
-                return saveRefAction.executeBy(actionExecutor);
-            });
-        }
-        else if (step instanceof stepConf.LoadLastStageFinalSnapshotStep) {
-            
-            let previousLevelId = null;
-            for (let i = flatCourseIds.indexOf(levelId) - 1; i >= 0; i--) {
-                let candidateLevelId = flatCourseIds[levelId];
-                if (courseItemDict[candidateLevelId] instanceof courseConfig.LevelItem) {
-                    previousLevelId = candidateLevelId;
-                    break;
-                }
-            }
-
-            let loadRefActions = repoVcsSetupNames.map(repoVcsSetupName => {
-                return new actionConf.LoadReferenceAction(
-                    repoVcsSetupName,
-                    `${previousLevelId}-final-snapshot`
-                )
-            });
-
-            loadRefActions.forEach(action => {
-                promises = promises.then(() => {
-                    return action.executeBy(actionExecutor);
-                })
-            });
-        }
-    });
-
-    let saveFinalSnapshotActions = repoVcsSetupNames.map(repoVcsSetupName => {
-        return new actionConf.SaveRepoReferenceAction(
-            repoVcsSetupName,
-            `${levelId}-final-snapshot`
-        );
-    });
-
-    saveFinalSnapshotActions.forEach(action => {
-        promises = promises.then(() => {
-            return action.executeBy(actionExecutor);
-        })
+    return actionExecutorContext.assetLoader.loadTextContent(levelItem.configAssetId)
+    .then(text => {
+        return yaml.safeLoad(text, { schema: LEVEL_SCHEMA });
     })
+    .then(level => {
 
-    return promises;
+        let bakeActions = Promise.then();
+
+        let actionExecutor = new ActionExecutor(
+            actionExecutorContext.fileSystemBaseFolder,
+            actionExecutorContext.repoStoreSubPath,
+            actionExecutorContext.assetLoader,
+            level.repoVcsSetups
+        );
+    
+        let repoVcsSetupNames = Object.keys(level.repoVcsSetups);
+
+        level.steps.forEach((step) => {
+            if ('actions' in step) {
+                step.actions.forEach(action => {
+                    bakeActions = bakeActions.then(() => {
+                        return action.evaluate(actionExecutor);
+                    });
+                });
+            }
+            else if (step instanceof stepConf.VerifyRepoStep) {
+                bakeActions = bakeActions.then(() => {
+                    let saveRefAction = new actionConf.SaveRepoReferenceAction(
+                        step.repoSetupName,
+                        step.referenceName
+                    );
+    
+                    return saveRefAction.executeBy(actionExecutor);
+                });
+            }
+            else if (step instanceof stepConf.LoadLastStageFinalSnapshotStep) {
+                
+                let previousLevelId = null;
+                for (let i = flatCourseIds.indexOf(levelId) - 1; i >= 0; i--) {
+                    let candidateLevelId = flatCourseIds[levelId];
+                    if (courseItemDict[candidateLevelId] instanceof courseConfig.LevelItem) {
+                        previousLevelId = candidateLevelId;
+                        break;
+                    }
+                }
+    
+                let loadRefActions = repoVcsSetupNames.map(repoVcsSetupName => {
+                    return new actionConf.LoadReferenceAction(
+                        repoVcsSetupName,
+                        `${previousLevelId}-final-snapshot`
+                    )
+                });
+    
+                loadRefActions.forEach(action => {
+                    bakeActions = bakeActions.then(() => {
+                        return action.executeBy(actionExecutor);
+                    })
+                });
+            }
+        });
+    
+        let saveFinalSnapshotActions = repoVcsSetupNames.map(repoVcsSetupName => {
+            return new actionConf.SaveRepoReferenceAction(
+                repoVcsSetupName,
+                `${levelId}-final-snapshot`
+            );
+        });
+    
+        saveFinalSnapshotActions.forEach(action => {
+            bakeActions = bakeActions.then(() => {
+                return action.executeBy(actionExecutor);
+            })
+        })
+    
+        return bakeActions;
+    });
+
+
 }
 
 /**
@@ -224,7 +233,7 @@ const run = function(configPath, fileSystemBaseFolder, repoStoreSubPath, assetLo
 
     let course;
     
-    return loadCourse(configPath, COURSE_SCHEMA)
+    return loadConfig(configPath, COURSE_SCHEMA)
     .then(result => {
         course = result;
     })
