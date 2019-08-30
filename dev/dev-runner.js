@@ -2,18 +2,17 @@
 
 const yaml = require("js-yaml");
 const fs = require("fs-extra");
-const path = require("path");
 
-const actionConf = require("../dev/config-action");
-const stepConf = require("./config-step");
-const courseConfig = require("./config-course");
-const vcs = require("./repo-vcs");
-const devParams = require('../dev/parameters');
-const LEVEL_SCHEMA = require("./level-config-schema").LEVEL_CONFIG_SCHEMA;
-const COURSE_SCHEMA = require("./course-config-schema").COURSE_CONFIG_SCHEMA;
-const REPO_TYPE = require('./config-level').REPO_TYPE;
-const ActionExecutor = require("./action-executor").ActionExecutor;
-const Level = require("./config-level").Level;
+const actionConf = require("./config-action");
+const stepConf = require("../lib/config-step");
+const courseConfig = require("../lib/config-course");
+const vcs = require("../lib/repo-vcs");
+const devParams = require('./parameters');
+const LEVEL_SCHEMA = require("../lib/level-config-schema").LEVEL_CONFIG_SCHEMA;
+const COURSE_SCHEMA = require("../lib/course-config-schema").COURSE_CONFIG_SCHEMA;
+const REPO_TYPE = require('../lib/config-level').REPO_TYPE;
+const ActionExecutor = require("../lib/action-executor").ActionExecutor;
+const Level = require("../lib/config-level").Level;
 
 /**
  * 
