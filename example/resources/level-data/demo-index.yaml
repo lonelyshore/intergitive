@@ -17,7 +17,7 @@ asset_index:
     description:illustrate:explain-blocking: |+2
       .md
       **「圖解」**區塊可以搭配圖片說明 ~~其實跟解說好像有點重複~~  
-      ![blocking]({{demo/image:blocking}})  
+      ![blocking]({{level-data/demo/image:blocking}})  
       如上圖所示，還沒完成的「操作指引」區塊會阻擋教學的進度，被阻擋的區塊以半透明呈現(如圖左)。  
       一旦完成檢核，就可以解鎖進度(如圖右)  
 

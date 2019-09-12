@@ -7,19 +7,19 @@
         checkpointStoreName: "test-local-checkpoints"
   steps:
     - !elaborate
-      descriptionId: "demo/description:elaborate:intro"
+      descriptionId: "level-data/demo/description:elaborate:intro"
     
     - !instruct # instruct the user to take action
-      descriptionId: "demo/description:instruct:simple-example"
+      descriptionId: "level-data/demo/description:instruct:simple-example"
     
     - !verifyInput
       answer: "2"
     
     - !illustrate
-      descriptionId: "demo/description:illustrate:explain-blocking"
+      descriptionId: "level-data/demo/description:illustrate:explain-blocking"
     
     - !verifyInput
-      descriptionId: "demo/description:verify-input:puzzle"
+      descriptionId: "level-data/demo/description:verify-input:puzzle"
       answer: "${{ demo/answer:puzzle }}"
     
     - !loadReference
@@ -27,18 +27,18 @@
       referenceName: clean
 
     - !elaborate
-      descriptionId: "demo/description:elaborate:explain-load-reference"
+      descriptionId: "level-data/demo/description:elaborate:explain-load-reference"
     
     - !openWorkingPath
       repoSetupName: local
 
     - !instruct
-      descriptionId: "demo/description:instruct:count-local-branch"
+      descriptionId: "level-data/demo/description:instruct:count-local-branch"
     - !verifyInput
       answer: "6"
     
     - !instruct
-      descriptionId: "demo/description:instruct:merge"
+      descriptionId: "level-data/demo/description:instruct:merge"
     - !verifyRepo
       repoSetupName: local
       referenceName: merge
@@ -47,10 +47,10 @@
       checkpointName: kerker
 
     - !elaborate
-      descriptionId: "demo/description:elaborate:checkpoint"
+      descriptionId: "level-data/demo/description:elaborate:checkpoint"
     
     - !instruct
-      descriptionId: "demo/description:instruct:unmerge"
+      descriptionId: "level-data/demo/description:instruct:unmerge"
     - !verifyRepo
       repoSetupName: local
       referenceName: clean
@@ -59,8 +59,8 @@
       checkpointName: noking
 
     - !instruct # illustrate that IllustrateStep puts out illustrations
-      descriptionId: "demo/description:illustrate:load-checkpoint"
+      descriptionId: "level-data/demo/description:illustrate:load-checkpoint"
 
     - !elaborate
-      descriptionId: "demo/description:elaborate:end"
+      descriptionId: "level-data/demo/description:elaborate:end"
 
