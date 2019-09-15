@@ -28,6 +28,17 @@ function wrapper(args) {
             else {
                 return dropModule(args[1]);
             }
+        
+        case 'init':
+            return fs.ensureDir(cachePath)
+            .then(() => {
+                return fs.exists(configPath);
+            })
+            .then(configExists => {
+                if (!configExists) {
+                    return fs.writeFile(configPath, '{}');
+                }
+            });
     
         case 'ls':
             return listModules();
