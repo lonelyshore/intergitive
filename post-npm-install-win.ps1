@@ -18,13 +18,21 @@ target_arch = $architecture
 disturl = "https://atom.io/download/atom-shell"
 "@
 
-Write-Output $content | Out-File -FilePath .\.npmrc
+$outStream = New-Object -TypeName System.IO.StreamWriter $PSScriptRoot\.npmrc
+$outStream.NewLine = "`n"
+foreach($line in $content.Split("`r`n"))
+{
+    $outStream.WriteLine($line)
+}
+$outStream.Flush()
+$outStream.Close()
+$outStream.Dispose()
 
 npm install nodegit
 
 node .\dev\module-switch.js save nodegit electron-4
 
-# load for current node
+# # load for current node
 Remove-Item -Force -Path .\.npmrc
 
 npm install nodegit
