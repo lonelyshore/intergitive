@@ -1,6 +1,6 @@
 param (
     [Parameter(Mandatory=$true)]    
-    [ValidateSet("x86", "x64")]
+    [ValidateSet("ia32", "x64")]
     $architecture
 )
 
