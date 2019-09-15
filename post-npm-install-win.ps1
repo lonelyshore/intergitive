@@ -20,9 +20,13 @@ disturl = "https://atom.io/download/atom-shell"
 
 Write-Output $content | Out-File -FilePath .\.npmrc
 
+npm install nodegit
+
 node .\dev\module-switch.js save nodegit electron-4
 
 # load for current node
 Remove-Item -Force -Path .\.npmrc
+
+npm install nodegit
 
 node .\dev\module-switch.js save nodegit node-10-11
