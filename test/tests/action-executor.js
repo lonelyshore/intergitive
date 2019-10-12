@@ -436,6 +436,36 @@ describe('Action Executor #core', function() {
                 })
             });
 
+            it('remove folder', function() {
+
+                let files = [
+                    'removed-folder/file-1',
+                    'removed-folder/file-2',
+                    'untouched',
+                    'untouched-folder/file-1',
+                    'untouched-folder/file-2'
+                ];
+
+                let action = new actionTypes.RemoveFileAction(['removed-folder']);
+
+                return initializeFolder(files, utils.PLAYGROUND_PATH)
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return Promise.all([
+                        fs.exists(path.join(utils.PLAYGROUND_PATH, 'removed-folder'))
+                        .should.eventually.equal(false, 'expect <removed-folder> got removed, but it still exists'),
+                        fs.exists(path.join(utils.PLAYGROUND_PATH, 'untouched'))
+                        .should.eventually.equal(true, '<untouched> is removed unexpectedly'),
+                        fs.exists(path.join(utils.PLAYGROUND_PATH, 'untouched-folder/file-1'))
+                        .should.eventually.equal(true, '<untouched-folder/file-1> is removed unexpectedly'),
+                        fs.exists(path.join(utils.PLAYGROUND_PATH, 'untouched-folder/file-2'))
+                        .should.eventually.equal(true, '<untouched-folder/file-2> is removed unexpectedly'),
+                    ]);
+                });
+            });
+
             it('any target not exist should fail', function() {
                 
                 let existsFiles = [
