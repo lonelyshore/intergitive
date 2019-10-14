@@ -1,0 +1,69 @@
+!level
+  repoVcsSetups:
+    local: 
+      !repoVcs
+        workingPath: "local"
+        referenceStoreName: "test-local-ref"
+        checkpointStoreName: "test-local-checkpoints"
+  steps:
+    - !elaborate
+      descriptionId: "level-data/lost/description:elaborate:intro"
+    
+    - !instruct # instruct the user to take action
+      descriptionId: "level-data/lost/description:instruct:simple-example"
+    
+    - !verifyInput
+      answer: "2"
+    
+    - !illustrate
+      descriptionId: "level-data/lost/description:illustrate:explain-blocking"
+    
+    - !verifyInput
+      descriptionId: "level-data/lost/description:verify-input:puzzle"
+      answer: "2"
+    
+    - !loadReference
+      repoSetupName: local
+      referenceName: clean
+
+    - !elaborate
+      descriptionId: "level-data/lost/description:elaborate:explain-load-reference"
+    
+    - !openWorkingPath
+      repoSetupName: local
+
+    - !needAction
+      actions:
+        - !removeFile
+          targetPaths:
+            - local/folder
+
+    - !instruct
+      descriptionId: "level-data/lost/description:instruct:delete-folder"
+    - !verifyRepo
+      repoSetupName: local
+      referenceName: folder-deleted
+
+    - !checkpoint
+      checkpointName: checkpoint-folder-deleted
+
+    - !elaborate
+      descriptionId: "level-data/demo/description:elaborate:checkpoint"
+
+    - !instruct
+      descriptionId: "level-data/lost/description:elaborate:reset"
+    - !verifyRepo
+      repoSetupName: local
+      referenceName: clean
+
+    - !checkpoint
+      checkpointName: checkpoint-restore-from-deleted-folder
+
+    - !instruct # illustrate that IllustrateStep puts out illustrations
+      descriptionId: "level-data/demo/description:illustrate:load-checkpoint"
+
+    - !elaborate
+      descriptionId: "level-data/demo/description:elaborate:end"
+    
+
+

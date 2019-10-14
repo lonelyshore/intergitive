@@ -8,6 +8,6 @@ asset_index:
     main.level-2-1.name: "第一關： ?????"
     
   ondisk:
-    local: "local.yaml"
+    local: "lost.yaml"
     remote: "remote.yaml"
     test: "_test.yaml"

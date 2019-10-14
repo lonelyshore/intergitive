@@ -1,0 +1,70 @@
+asset_index:
+  infile:
+    description:elaborate:intro: |+2
+      .md
+      這是一個關於互動式 git 教學的示範展示。
+      在這個展示中，將會融合說明與操作指引，逐步展示這個互動式教學的核心機制
+
+      這個教學系統的一個關卡主要是由**「區塊」**為基本構成單位，
+      例如本區塊就是一個**「解說」**區塊，顧名思義用來進行解說  
+
+      雖然在這個展示裡將會指引使用 git 命令進行操作，但是正式版中將會是針對 GUI 介面的教學
+    description:instruct:simple-example: |+2
+      .md
+      **「操作指引」**區塊會給出指示，使用者按照指示操作並驗證結果後可以繼續進行教學
+
+      請回答，1+1=?
+    description:illustrate:explain-blocking: |+2
+      .md
+      **「圖解」**區塊可以搭配圖片說明 ~~其實跟解說好像有點重複~~  
+      ![blocking]({{level-data/demo/image:blocking}})  
+      如上圖所示，還沒完成的「操作指引」區塊會阻擋教學的進度，被阻擋的區塊以半透明呈現(如圖左)。  
+      一旦完成檢核，就可以解鎖進度(如圖右)  
+
+      請再拿下面的操作指引練手驗證這件事情
+    description:verify-input:puzzle: |+2
+      .md
+      請問 SoE 的全名是？
+
+      1. Spinoza organized Ethics
+      2. Soul of Eden
+      3. Seven okay eleven
+      4. Shinseiki or Evangelion
+
+    description:elaborate:explain-load-reference: |+2
+      .md
+      身為 git 教學，一定少不了 git 倉庫(repository)  
+      前一步的**「載入 git 倉庫」**區塊就是負責載入預先設計好的 git 倉庫。
+      通常這個步驟會在一個教學關卡的第一步進行
+
+      為了方便使用者快速開啟工作目錄所在位置，設計了開啟工作目錄的區塊，也就是下一個區塊。
+      請在下一個區塊中按下「執行」開啟目錄所在位置
+
+    description:instruct:delete-folder: |+2
+      .md
+      現在我們有了現成的倉庫，在教學中將著重在與此倉庫的互動。  
+      除了指引回答問題外，這個教學也會指引使用者進行特定的檔案操作，並且檢查其結果是否正確。  
+
+      以下就是一個範例的檢查。  
+      
+      請試著將**「folder」**資料夾刪除  
+      在操作前，請先試著在按照指示操作前先直接按下「確認」按鈕體驗檢驗失敗的情況
+      然後，在把資料夾刪除完成後，請再次按下確認按鈕檢驗
+
+    description:elaborate:checkpoint: |+2
+      .md
+      **「存檔點」**區塊會在推動進度時自動保存工作目錄狀態，以方便使用者在~~掉進異次元~~操作失敗的時候回復到初始狀態  
+
+      目前的設計中，存檔點還能夠倒回教學的進度，例如以下的例子...
+
+    description:elaborate:reset: |+2
+      .md
+      想要快速的將被 git 管理的檔案給恢復原狀非常簡單  
+      請在倉庫的工作目錄開啟慣用的指令介面(git bash, cmd, PowerShell, whatever)，並輸入 
+
+      `git checkout -f`
+
+      輸入完成後，請確認剛才被刪除的資料夾已經恢復原狀
+
+    
+    
