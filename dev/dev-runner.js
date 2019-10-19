@@ -67,7 +67,7 @@ const bakeLevel = function(levelItem, levelId, flatCourseIds, courseItemDict, ac
     })
     .then(level => {
 
-        let bakeActions = Promise.then();
+        let bakeActions = Promise.resolve();
 
         let actionExecutor = new ActionExecutor(
             actionExecutorContext.fileSystemBaseFolder,
@@ -82,7 +82,7 @@ const bakeLevel = function(levelItem, levelId, flatCourseIds, courseItemDict, ac
             if ('actions' in step) {
                 step.actions.forEach(action => {
                     bakeActions = bakeActions.then(() => {
-                        return action.evaluate(actionExecutor);
+                        return action.executeBy(actionExecutor);
                     });
                 });
             }
