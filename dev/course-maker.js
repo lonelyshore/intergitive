@@ -9,10 +9,15 @@ const fileSystemBasePath = path.resolve(__dirname, '../bake');
 
 let args = process.argv.slice(2);
 
+operate(args)
+.catch(err => {
+    console.error(err);
+});
+
 function operate(args) {
-    switch(arges[0]) {
+    switch(args[0]) {
         case 'bake-level':
-            if (arges[1] === 'help') {
+            if (args[1] === 'help' || args.length === 1) {
                 console.log(`
     bake-level: bake for a level
       arguments:
