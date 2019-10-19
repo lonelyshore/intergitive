@@ -266,3 +266,5 @@ const run = function(configPath, fileSystemBaseFolder, repoStoreSubPath, assetLo
         return bakeLevelTasks;
     })
 }
+
+module.exports.run = run;
