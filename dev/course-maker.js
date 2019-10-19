@@ -9,6 +9,8 @@ const fileSystemBasePath = path.resolve(__dirname, '../bake');
 
 let args = process.argv.slice(2);
 
+let projectPath = path.resolve(__dirname, '../');
+
 operate(args)
 .catch(err => {
     console.error(err);
@@ -16,24 +18,27 @@ operate(args)
 
 function operate(args) {
     switch(args[0]) {
-        case 'bake-level':
+        case 'bake-course':
             if (args[1] === 'help' || args.length === 1) {
                 console.log(`
-    bake-level: bake for a level
+    bake-course: bake for a course
       arguments:
-        resourcePathEncoded: path to resource loaded by AssetLoader. Formed in format BASE_PATH|BUNDLE/PATH/ELEMENTS
-        levelAssetId: asset id of the baked level
-        sourceRepoStorePath: path to repo store that is used to bake the level`);
+        resourcePathEncoded: path to resource loaded by AssetLoader. Formed in format BASE_PATH+BUNDLE/PATH/ELEMENTS
+        courseAssetId: asset id of the baked course
+        sourceRepoStorePath: path to repo store that is used to bake the course`);
                 return Promise.resolve();
             }
 
             let resourcePathEncoded = args[1];
             let levelAssetId = args[2];
-            let sourceRepoStorePath = args[3];
+            let sourceRepoStorePath = normalizePath(args[3]);
 
-            let resourcePathTokens = resourcePathEncoded.split('|')[0];
-            let resourcePath = resourcePathTokens[0];
-            let bundlePaths = resourcePathTokens[1].split('/');
+            let resourcePathTokens = resourcePathEncoded.replace('\\', '/').split('+');
+            let resourcePath = normalizePath(resourcePathTokens[0]);
+            let bundlePaths = 
+                resourcePathTokens[1] === '' ?
+                [] :
+                resourcePathTokens[1].split('/');
 
             let repoStorePathSubPath = 'repo-store';
 
@@ -47,9 +52,9 @@ function operate(args) {
             })
             .then(() => {
                 let assetLoader = new AssetLoader(resourcePath);
-                assetLoader.setBundlePath(bundlePaths);
+                assetLoader.setBundlePath(...bundlePaths);
 
-                return assetLoader.loadTextContent(levelAssetId)
+                return assetLoader.getFullAssetPath(levelAssetId)
                 .then(configPath => {
                     return devRunner.run(
                         configPath,
@@ -69,5 +74,14 @@ function operate(args) {
 function printUsage() {
     console.log(`
     Usage:
-      bake-level <resourcePathEncoded> <levelAssetId> <sourceRepoStorePath>: bake for a level`);
+      bake-course <resourcePathEncoded> <levelAssetId> <sourceRepoStorePath>: bake for a course`);
+}
+
+function normalizePath(pathValue) {
+    if (path.isAbsolute(pathValue)) {
+        return pathValue;
+    }
+    else {
+        return path.join(projectPath, pathValue);
+    }
 }
