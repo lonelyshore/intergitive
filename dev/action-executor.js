@@ -1,7 +1,9 @@
 "use strict";
 
 const simpleGit = require("simple-git/promise");
+const zip = require('../lib/simple-archive');
 const path = require('path');
+const fs = require('fs-extra');
 const vcs = require('../lib/repo-vcs');
 const ActionExecutor = require("../lib/action-executor").ActionExecutor;
 const REPO_TYPE = require('../lib/config-level').REPO_TYPE;
@@ -96,7 +98,22 @@ class DevActionExecutor extends ActionExecutor {
     }
 
     executeLoadRepoReferenceArchive(repoSetupName, assetId) {
-        return Promise.reject('not implemented');
+        return this.getRepoFullPaths(repoSetupName)
+        .then(repoSetupPaths => {
+            let referenceStorePath = repoSetupPaths.fullReferenceStorePath;
+            return fs.exists(referenceStorePath)
+            .then(isExisting => {
+                if (isExisting) {
+                    return new Error(`Should not load repo archive ${assetId} into a non-empty repo store path ${referenceStorePath} of repo setup ${repoSetupPaths}`);
+                }
+                else {
+                    return zip.extractArchiveTo(
+                        this.assetLoader.getFullAssetPath(assetId),
+                        referenceStorePath
+                    );
+                }
+            });
+        });
     }
 
     getRepoSetupNames() {
