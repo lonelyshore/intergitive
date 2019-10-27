@@ -11,11 +11,11 @@ const normalizePathSep = require('../../lib/noarmalize-path-sep');
 
 const utils = require('./test-utils');
 const AssetLoader = require('../../lib/asset-loader').AssetLoader;
-const ActionExecutor = require('../../lib/action-executor').ActionExecutor;
+const ActionExecutor = require('../../dev/action-executor').DevActionExecutor;
 const RepoVcsSetup = require('../../lib/config-level').RepoVcsSetup;
 const RepoReferenceManager = require('../../lib/repo-vcs').RepoReferenceManager;
 const REPO_TYPE = require('../../lib/config-level').REPO_TYPE;
-const actionTypes = require('../../lib/config-action');
+const actionTypes = require('../../dev/config-action');
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -543,7 +543,7 @@ describe('Action Executor #core', function() {
                     ]);
                 });
             });
-        })
+        });
     });
 
     describe('Git Operations', function() {

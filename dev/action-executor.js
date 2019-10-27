@@ -95,6 +95,10 @@ class DevActionExecutor extends ActionExecutor {
         );
     }
 
+    executeLoadRepoReferenceArchive(repoSetupName, assetId) {
+        return Promise.reject('not implemented');
+    }
+
     getRepoSetupNames() {
         return Object.keys(this.repoSetups);
     }

@@ -96,6 +96,22 @@ class SaveRepoReferenceAction extends upstream.Action {
     }
 }
 
+/**
+ * Extracts archive to a repo store as its starting point
+ */
+class LoadRepoReferenceArchiveAction extends upstream.Action {
+    constructor(repoSetupName, assetId) {
+        super();
+        this.klass = 'LoadRepoReferenceArchiveAction';
+        this.repoSetupName = repoSetupName;
+        this.assetId = assetId;
+    }
+
+    executeBy(actionExecutor) {
+        return actionExecutor.executeLoadRepoReferenceArchive(this.repoSetupName, this.assetId);
+    }
+}
+
 module.exports = Object.assign({}, upstream);
 module.exports.UnstageAction = UnstageAction;
 module.exports.UnstageAllAction = UnstageAllAction;
@@ -104,3 +120,4 @@ module.exports.ContinueMergeAction = ContinueMergeAction;
 module.exports.CleanCheckoutAction = CleanCheckoutAction;
 module.exports.GitCommandAction = GitCommandAction;
 module.exports.SaveRepoReferenceAction = SaveRepoReferenceAction;
+module.exports.LoadRepoReferenceArchiveAction = LoadRepoReferenceArchiveAction;
