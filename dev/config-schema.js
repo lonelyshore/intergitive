@@ -153,13 +153,38 @@ let gitCommandActionType = new yaml.Type(
     }
 );
 
+let loadRepoReferenceArchiveActionType = new yaml.Type(
+    dummyActionConfigDict.loadRepoReferenceArchive.tag,
+    {
+        kind: 'mapping',
+
+        resolve: function(data) {
+            return data !== null
+                && 'repoSetupName' in data
+                && isString(data.repoSetupName)
+                && 'assetId' in data
+                && isString(data.assetId);
+        },
+
+        construct: function(data) {
+            return new actionConfig.LoadRepoReferenceArchiveAction(
+                data.repoSetupName,
+                data.assetId
+            );
+        },
+
+        instanceOf: actionConfig.LoadRepoReferenceArchiveAction,
+    }
+)
+
 let schema = yaml.Schema.create(upstream.LEVEL_CONFIG_SCHEMA, [
     unstageActionType,
     unstageAllActionType,
     mergeActionType,
     continueMergeActionType,
     cleanCheckoutActionType,
-    gitCommandActionType
+    gitCommandActionType,
+    loadRepoReferenceArchiveActionType,
 ]);
 
 module.exports.LEVEL_CONFIG_SCHEMA = schema;
