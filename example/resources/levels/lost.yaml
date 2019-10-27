@@ -6,6 +6,10 @@
         referenceStoreName: "test-local-ref"
         checkpointStoreName: "test-local-checkpoints"
   steps:
+    - !loadRepoReferenceArchive
+      repoSetupName: "local"
+      assetId: "archives/init-repo-store:test-local-ref"
+
     - !elaborate
       descriptionId: "level-data/lost/description:elaborate:intro"
     

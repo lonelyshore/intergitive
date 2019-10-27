@@ -40,14 +40,13 @@ function operate(args) {
                 [] :
                 resourcePathTokens[1].split('/');
 
-            let repoStorePathSubPath = 'repo-store';
+            let initRepoStoreArchivePath = path.join(resourcePath, 'archives', 'init-repo-store');
 
             return fs.emptyDir(fileSystemBasePath)
             .then(() => {
-                let repoStorePath = path.join(fileSystemBasePath, repoStorePathSubPath);
                 return fs.copy(
                     sourceRepoStorePath,
-                    repoStorePath
+                    initRepoStoreArchivePath
                 );
             })
             .then(() => {
@@ -59,7 +58,7 @@ function operate(args) {
                     return devRunner.run(
                         configPath,
                         fileSystemBasePath,
-                        repoStorePathSubPath,
+                        'repo-store',
                         assetLoader
                     );
                 });
