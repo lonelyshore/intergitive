@@ -4,6 +4,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const AssetLoader = require('../lib/asset-loader').AssetLoader;
 const devRunner = require('./dev-runner');
+const zip = require('../lib/simple-archive');
 
 const fileSystemBasePath = path.resolve(__dirname, '../bake');
 
@@ -61,6 +62,27 @@ function operate(args) {
                         'repo-store',
                         assetLoader
                     );
+                });
+            })
+            .then(() => {
+                let repoStorePath = path.join(fileSystemBasePath, 'repo-store');
+                var archivesPath = path.join(fileSystemBasePath, 'repo-archives');
+                return fs.readdir(repoStorePath, { withFileTypes: true })
+                .then(dirents => {
+                    let archives = Promise.resolve();
+                    dirents.forEach(dirent => {
+                        if (dirent.isDirectory()) {
+                            archives = archives.then(() => {
+                                return zip.archivePathTo(
+                                    path.join(repoStorePath, dirent.name),
+                                    path.join(archivesPath, dirent.name + '.zip'),
+                                    false
+                                );
+                            });
+                        }
+                    });
+
+                    return archives;
                 });
             });
 
