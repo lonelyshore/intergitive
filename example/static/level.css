@@ -191,6 +191,10 @@
     margin-bottom: 0.25rem;
 }
 
+[red-highlight] {
+    color: crimson;
+}
+
 [drift-right] {
     float: right;
 }
