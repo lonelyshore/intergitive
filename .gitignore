@@ -4,3 +4,4 @@
 /.module_cache/
 /example/repoStore/
 /out
+**/archives/init-repo-store
