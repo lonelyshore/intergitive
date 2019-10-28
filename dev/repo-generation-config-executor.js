@@ -10,7 +10,7 @@ const REPO_TYPE = require('../lib/config-level').REPO_TYPE;
 module.exports.RepoGenerationConfigExecutor = class RepoGenerationConfigExecutor {
 
     constructor() {
-        this.SCHEMA = require('./config-schema').LEVEL_CONFIG_SCHEMA;
+        this.SCHEMA = require('./level-config-schema').LEVEL_CONFIG_SCHEMA;
         this.Action = require('../lib/config-action').Action;
     }
 
