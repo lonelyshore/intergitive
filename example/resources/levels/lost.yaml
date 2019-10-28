@@ -38,14 +38,13 @@
     - !openWorkingPath
       repoSetupName: local
 
+    - !instruct
+      descriptionId: "level-data/lost/description:instruct:delete-folder"
     - !needAction
       actions:
         - !removeFile
           targetPaths:
-            - local/folder
-
-    - !instruct
-      descriptionId: "level-data/lost/description:instruct:delete-folder"
+            - local/folder      
     - !verifyRepo
       repoSetupName: local
       referenceName: folder-deleted
@@ -58,9 +57,16 @@
 
     - !instruct
       descriptionId: "level-data/lost/description:elaborate:reset"
+    - !needAction
+      actions:
+        - !git
+          repoSetupName: local
+          arguments:
+          - checkout
+          - "-f"
     - !verifyRepo
       repoSetupName: local
-      referenceName: clean
+      referenceName: folder-restored
 
     - !checkpoint
       checkpointName: checkpoint-restore-from-deleted-folder
