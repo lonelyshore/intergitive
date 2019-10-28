@@ -98,21 +98,22 @@ class DevActionExecutor extends ActionExecutor {
     }
 
     executeLoadRepoReferenceArchive(repoSetupName, assetId) {
-        return this.getRepoFullPaths(repoSetupName)
-        .then(repoSetupPaths => {
-            let referenceStorePath = repoSetupPaths.fullReferenceStorePath;
-            return fs.exists(referenceStorePath)
-            .then(isExisting => {
-                if (isExisting) {
-                    return new Error(`Should not load repo archive ${assetId} into a non-empty repo store path ${referenceStorePath} of repo setup ${repoSetupPaths}`);
-                }
-                else {
+        let referenceStorePath = this.getRepoFullPaths(repoSetupName).fullReferenceStorePath;
+
+        return fs.exists(referenceStorePath)
+        .then(isExisting => {
+            if (isExisting) {
+                return new Error(`Should not load repo archive ${assetId} into a non-empty repo store path ${referenceStorePath} of repo setup ${repoSetupPaths}`);
+            }
+            else {
+                return this.assetLoader.getFullAssetPath(assetId)
+                .then(archivePath => {
                     return zip.extractArchiveTo(
-                        this.assetLoader.getFullAssetPath(assetId),
+                        archivePath,
                         referenceStorePath
                     );
-                }
-            });
+                });
+            }
         });
     }
 

@@ -6,9 +6,11 @@
         referenceStoreName: "test-local-ref"
         checkpointStoreName: "test-local-checkpoints"
   steps:
-    - !loadRepoReferenceArchive
-      repoSetupName: "local"
-      assetId: "archives/init-repo-store:test-local-ref"
+    - !devAction
+      actions:
+      - !loadRepoReferenceArchive
+        repoSetupName: "local"
+        assetId: "archives/init-repo-store:test-local-ref"
 
     - !elaborate
       descriptionId: "level-data/lost/description:elaborate:intro"
@@ -28,7 +30,7 @@
     
     - !loadReference
       repoSetupName: local
-      referenceName: clean
+      referenceName: merge
 
     - !elaborate
       descriptionId: "level-data/lost/description:elaborate:explain-load-reference"

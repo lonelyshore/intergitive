@@ -1,4 +1,4 @@
 asset_index:
   ondisk:
-    test-local-ref: "local/compare-vcs-local-ref-archive.zip"
+    test-local-ref: "local/test-local-ref.zip"
     init-repo-store:test-local-ref: "init-repo-store/compare-vcs-local-ref-archive.zip"
