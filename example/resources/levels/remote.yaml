@@ -1,0 +1,75 @@
+!level
+  repoVcsSetups:
+    local: 
+      !repoVcs
+        workingPath: "local"
+        referenceStoreName: "test-local-ref"
+        checkpointStoreName: "test-local-checkpoints"
+    another:
+      !repoVcs
+        workingPath: "another"
+        referenceStoreName: "another"
+        checkpointStoreName: "test-another-checkpoints"
+    remote:
+      !repoVcs
+        workingPath: "remote"
+        referenceStoreName: "test-remote-ref"
+        checkpointStoreName: "test-remote-checkpoints"
+  steps:
+    - !devAction
+      actions:
+      - !loadRepoReferenceArchive
+        repoSetupName: local
+        assetId: "archives/init-repo-store:test-local-ref"
+      - !loadRepoReferenceArchive
+        repoSetupName: remote
+        assetId: "archives/init-repo-store:test-remote-ref"
+      - !loadRepoReferenceArchive
+        repoSetupName: another
+        assetId: "archives/init-repo-store:test-local-ref"
+      - !loadReference
+        repoSetupName: local
+        referenceName: merge
+      - !loadReference
+        repoSetupName: another
+        referenceName: merge
+      - !loadReference
+        repoSetupName: remote
+        referenceName: push-all
+      - !git
+        repoSetupName: local
+        arguments:
+        - remote
+        - add
+        - origin
+        - "../repo-stores/test-remote-ref"
+      - !git
+        repoSetupName: another
+        arguments:
+        - remote
+        - add
+        - origin
+        - "../repo-stores/test-remote-ref"  
+      - !saveReference
+        repoSetupName: local
+        referenceName: remote-init
+      - !saveReference
+        repoSetupName: another
+        referenceName: remote-init
+
+    - !loadReference
+      repoSetupName: local
+      referenceName: remote-init
+    - !loadReference
+      repoSetupName: another
+      referenceName: remote-init
+    - !loadReference
+      repoSetupName: remote
+      referenceName: push-all
+
+    - !elaborate
+      descriptionId: "level-data/remote/description:elaborate:intro"
+
+    
+
+

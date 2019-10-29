@@ -1,0 +1,77 @@
+asset_index:
+  infile:
+    description:elaborate:intro: |+2
+      .md
+      在這個教學中，將會展示針對遠端倉庫的教學能力
+
+    description:instruct:simple-example: |+2
+      .md
+      **「操作指引」**區塊會給出指示，使用者按照指示操作並驗證結果後可以繼續進行教學
+
+      請回答，1+1=?
+
+    description:illustrate:explain-blocking: |+2
+      .md
+      **「圖解」**區塊可以搭配圖片說明 ~~其實跟解說好像有點重複~~  
+      順帶一提，本教學有進度的概念。被阻擋而尚未解鎖的區塊無法提前操作，並且視覺上可以感覺得出來。如下圖的範例：  
+
+      ![blocking]({{level-data/demo/image:blocking}})  
+
+      圖片的左方是被阻擋的外觀，而右方是已解鎖的外觀  
+      具體來說，還沒完成的「操作指引」區塊會阻擋教學的進度，被阻擋的區塊以半透明呈現(如圖左)。  
+      一旦完成檢核，就可以解鎖進度(如圖右)  
+
+      如果剛才沒有注意到這個現象，下面還有一個「操作指引」區塊，可以再次觀察
+
+    description:verify-input:puzzle: |+2
+      .md
+      請問 SoE 的全名是？
+
+      1. Spinoza organized Ethics
+      2. Soul of Eden
+      3. Seven okay eleven
+      4. Shinseiki otaku Evangelion  
+
+      請輸入選項編號
+
+    description:elaborate:explain-load-reference-and-checkpoint: |+2
+      .md
+      身為 git 教學，一定少不了 git 倉庫(repository)  
+      前兩步的**「載入 git 倉庫」**區塊就是負責載入預先設計好的 git 倉庫。
+      通常這個步驟會在一個教學關卡的第一步進行
+
+      **「存檔點」**區塊會在推動進度時自動保存工作目錄狀態，以方便使用者在~~掉進異次元~~操作失敗的時候回復到初始狀態  
+      如果想要體驗存檔點的效果，可以打開工作目錄，隨意修改，然後「讀取」存檔點  
+
+      說到這裡，為了方便使用者快速開啟工作目錄所在位置，設計了開啟工作目錄的區塊，也就是下一個區塊。
+      請在下一個區塊中按下「執行」開啟目錄所在位置
+
+    description:instruct:delete-folder: |+2
+      .md
+      現在我們有了現成的倉庫，在教學中將著重在與此倉庫的互動。  
+      除了指引回答問題外，這個教學也會指引使用者進行特定的檔案操作，並且檢查其結果是否正確。  
+
+      以下就是一個範例的檢查。  
+      
+      請試著將**「folder」**資料夾刪除  
+      在操作前，可以試著在按照指示操作前先直接按下「確認」按鈕體驗檢驗失敗的情況  
+      然後，再把資料夾刪除完成後，請再次按下確認按鈕檢驗
+
+    description:elaborate:checkpoint: |+2
+      .md
+      目前的設計中，存檔點除了恢復工作目錄的狀態，還會倒回教學的進度  
+      如有興趣，可以回到上一個存檔點按下「讀取」  
+      
+      或者，也可以直接繼續往下進行
+
+    description:elaborate:reset: |+2
+      .md
+      想要快速的將被 git 管理的檔案給恢復原狀非常簡單  
+      請在倉庫的工作目錄開啟慣用的指令介面(git bash, cmd, PowerShell, whatever)，並輸入 
+
+      `git checkout -f`
+
+      輸入完成後，請確認剛才被刪除的資料夾已經恢復原狀
+
+    
+    
