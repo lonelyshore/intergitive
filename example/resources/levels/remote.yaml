@@ -27,13 +27,13 @@
       - !act.loadRepoReferenceArchive
         repoSetupName: another
         assetId: "archives/init-repo-store:test-local-ref"
-      - !loadReference
+      - !act.loadReference
         repoSetupName: local
         referenceName: merge
-      - !loadReference
+      - !act.loadReference
         repoSetupName: another
         referenceName: merge
-      - !loadReference
+      - !act.loadReference
         repoSetupName: remote
         referenceName: push-all
       - !act.git
