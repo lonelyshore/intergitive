@@ -9,25 +9,25 @@ stages:
     save:
       - local
     actions:
-    - !git
+    - !act.git
       repoSetupName: local
       arguments:
         - init
-    - !git
+    - !act.git
       repoSetupName: local
       arguments:
         - config 
         - "--local"
         - user.name
         - test-repo
-    - !git
+    - !act.git
       repoSetupName: local
       arguments:
         - config 
         - "--local"        
         - user.email
         - test-repo@some.mail.server
-    - !git
+    - !act.git
       repoSetupName: local
       arguments:
         - config
@@ -38,33 +38,33 @@ stages:
     save:
       - local
     actions:
-    - !writeFile
+    - !act.writeFile
       sourceAssetIds:
         - file/base/first_file:v1
       destinationPaths:
         - repo/first_file
-    - !stageAll
+    - !act.stageAll
       repoSetupName: local
-    - !git
+    - !act.git
       repoSetupName: local
       arguments:
         - commit
         - -m
         - commit
-    - !writeFile
+    - !act.writeFile
       sourceAssetIds:
         - file/base/second_file:v1
       destinationPaths:
         - repo/second_file
-    - !stageAll
+    - !act.stageAll
       repoSetupName: local
-    - !git
+    - !act.git
       repoSetupName: local
       arguments:
         - commit
         - -m
         - commit
-    - !git
+    - !act.git
       repoSetupName: local
       arguments:
         - branch
@@ -73,27 +73,27 @@ stages:
     save:
       - local
     actions:
-      - !writeFile
+      - !act.writeFile
         sourceAssetIds:
           - file/base/third_file:v1
         destinationPaths:
           - repo/folder/third
-      - !stageAll
+      - !act.stageAll
         repoSetupName: local
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - commit
           - -m
           - commit
-      - !writeFile
+      - !act.writeFile
         sourceAssetIds:
           - file/base/forth_file:v1
         destinationPaths:
           - repo/folder/forth
-      - !stageAll
+      - !act.stageAll
         repoSetupName: local
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - commit
@@ -103,22 +103,22 @@ stages:
     save:
       - local
     actions:
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - branch
           - "conflict-AA"
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - branch
           - "conflict-MR"
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - branch
           - "conflict-MM"
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - branch
@@ -127,38 +127,38 @@ stages:
     save:
       - local
     actions:
-      - !writeFile
+      - !act.writeFile
         sourceAssetIds:
           - file/base/first_file:v2
         destinationPaths:
           - repo/first_file
-      - !stageAll
+      - !act.stageAll
         repoSetupName: local
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - commit
           - -m
           - commit
-      - !removeFile
+      - !act.removeFile
         targetPaths:
           - repo/second_file
-      - !stageAll
+      - !act.stageAll
         repoSetupName: local
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - commit
           - -m
           - remove second file
-      - !writeFile
+      - !act.writeFile
         sourceAssetIds:
           - file/base/fifth_file:v1
         destinationPaths:
           - repo/folder/fifth
-      - !stageAll
+      - !act.stageAll
         repoSetupName: local
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - commit
@@ -168,30 +168,30 @@ stages:
     save:
       - local
     actions:
-      - !cleanCheckout
+      - !act.cleanCheckout
         repoSetupName: local
         commitish: "second-branch"
-      - !writeFile
+      - !act.writeFile
         sourceAssetIds:
           - file/base/sixth_file:v1
         destinationPaths:
           - repo/second_folder/sixth_file
-      - !stageAll
+      - !act.stageAll
         repoSetupName: local
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - commit
           - -m
           - add sixth
-      - !writeFile
+      - !act.writeFile
         sourceAssetIds:
           - file/base/seventh_file:v1
         destinationPaths:
           - repo/second_folder/seventh_file
-      - !stageAll
+      - !act.stageAll
         repoSetupName: local
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - commit
@@ -201,12 +201,12 @@ stages:
     save:
       - local  
     actions:
-      - !removeFile
+      - !act.removeFile
         targetPaths:
           - repo/second_folder/sixth_file
-      - !stageAll
+      - !act.stageAll
         repoSetupName: local
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - commit
@@ -216,12 +216,12 @@ stages:
     save:
       - local  
     actions:
-      - !moveFile
+      - !act.moveFile
         sourcePath: repo/second_folder/seventh_file
         targetPath: repo/second_folder/periodic_table
-      - !stageAll
+      - !act.stageAll
         repoSetupName: local
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - commit
@@ -231,17 +231,17 @@ stages:
     save:
       - local  
     actions:
-      - !cleanCheckout
+      - !act.cleanCheckout
         repoSetupName: local
         commitish: "conflict-AA"
-      - !writeFile
+      - !act.writeFile
         sourceAssetIds:
           - file/base/fifth_file:v2
         destinationPaths:
           - repo/folder/fifth
-      - !stageAll
+      - !act.stageAll
         repoSetupName: local
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - commit
@@ -251,17 +251,17 @@ stages:
     save:
       - local  
     actions:
-      - !cleanCheckout
+      - !act.cleanCheckout
         repoSetupName: local
         commitish: "conflict-MM"
-      - !writeFile
+      - !act.writeFile
         sourceAssetIds:
           - file/base/first_file:v3
         destinationPaths:
           - repo/first_file
-      - !stageAll
+      - !act.stageAll
         repoSetupName: local
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - commit
@@ -271,17 +271,17 @@ stages:
     save:
       - local  
     actions:
-      - !cleanCheckout
+      - !act.cleanCheckout
         repoSetupName: local
         commitish: "conflict-MR"
-      - !writeFile
+      - !act.writeFile
         sourceAssetIds:
           - file/base/second_file:v2
         destinationPaths:
           - repo/second_file
-      - !stageAll
+      - !act.stageAll
         repoSetupName: local
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - commit
@@ -291,30 +291,30 @@ stages:
     save:
       - local  
     actions:
-      - !cleanCheckout
+      - !act.cleanCheckout
         repoSetupName: local
         commitish: "conflict-mixed"  
-      - !merge
+      - !act.merge
         repoSetupName: local
         withBranch: "conflict-AA"
-      - !merge
+      - !act.merge
         repoSetupName: local
         withBranch: "conflict-MM"
-      - !merge
+      - !act.merge
         repoSetupName: local
         withBranch: "conflict-MR"
   - name: reset
     save:
       - local  
     actions:
-      - !cleanCheckout
+      - !act.cleanCheckout
         repoSetupName: local
         commitish: master
   - name: tagging
     save:
       - local  
     actions:
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - tag

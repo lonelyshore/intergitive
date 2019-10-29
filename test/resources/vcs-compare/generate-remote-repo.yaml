@@ -13,12 +13,12 @@ stages:
     save:
       - remote
     actions:
-    - !git
+    - !act.git
       repoSetupName: remote
       arguments:
         - init
         - "--bare"
-    - !setRemote
+    - !act.setRemote
       localSetupName: local
       remoteSetupName: remote
       remoteNickName: origin
@@ -26,7 +26,7 @@ stages:
     save:
       - remote
     actions:
-      - !push &pushMaster
+      - !act.push &pushMaster
         localSetupName: local
         remoteNickName: origin
         refspecs: '+refs/heads/master:refs/heads/master'
@@ -34,7 +34,7 @@ stages:
     save:
       - remote
     actions:
-      - !pushAll &pushAll
+      - !act.pushAll &pushAll
         localSetupName: local
         remoteNickName: origin
         isForce: true
@@ -42,14 +42,14 @@ stages:
     save:
       - remote
     actions:
-    - !writeFile
+    - !act.writeFile
       sourceAssetIds:
         - $file/update-master-1
       destinationPaths:
         - local-repo/update-master-1
-    - !stageAll
+    - !act.stageAll
       repoSetupName: local
-    - !git &commit
+    - !act.git &commit
       repoSetupName: local
       arguments:
         - commit
@@ -60,18 +60,18 @@ stages:
     save:
       - remote
     actions:
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - reset
           - "--hard"
           - "HEAD^"
-      - !writeFile
+      - !act.writeFile
         sourceAssetIds:
           - $file/force-update-master
         destinationPaths:
           - local-repo/force-update-master
-      - !stageAll
+      - !act.stageAll
         repoSetupName: local
       - *commit
       - *pushMaster
@@ -79,7 +79,7 @@ stages:
     save:
       - remote
     actions:
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - branch
@@ -90,13 +90,13 @@ stages:
     save:
       - remote
     actions:
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - branch
           - "-D"
           - second-branch
-      - !push
+      - !act.push
         localSetupName: local
         remoteNickName: origin
         refspecs: ":refs/heads/second-branch"
@@ -104,7 +104,7 @@ stages:
     save:
       - remote
     actions:
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - branch
@@ -115,14 +115,14 @@ stages:
     save:
       - remote
     actions:
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - tag
           - "-f"
           - "end-of-base"
           - "conflict-MM"
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - push
@@ -133,19 +133,19 @@ stages:
     save:
       - remote
     actions:
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - tag
           - "another-tag"
           - "end-of-base"
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - tag
           - "-d"
           - "end-of-base"
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
           - push

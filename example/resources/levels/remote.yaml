@@ -18,13 +18,13 @@
   steps:
     - !devAction
       actions:
-      - !loadRepoReferenceArchive
+      - !act.loadRepoReferenceArchive
         repoSetupName: local
         assetId: "archives/init-repo-store:test-local-ref"
-      - !loadRepoReferenceArchive
+      - !act.loadRepoReferenceArchive
         repoSetupName: remote
         assetId: "archives/init-repo-store:test-remote-ref"
-      - !loadRepoReferenceArchive
+      - !act.loadRepoReferenceArchive
         repoSetupName: another
         assetId: "archives/init-repo-store:test-local-ref"
       - !loadReference
@@ -36,24 +36,24 @@
       - !loadReference
         repoSetupName: remote
         referenceName: push-all
-      - !git
+      - !act.git
         repoSetupName: local
         arguments:
         - remote
         - add
         - origin
         - "../repo-stores/test-remote-ref"
-      - !git
+      - !act.git
         repoSetupName: another
         arguments:
         - remote
         - add
         - origin
         - "../repo-stores/test-remote-ref"  
-      - !saveReference
+      - !act.saveReference
         repoSetupName: local
         referenceName: remote-init
-      - !saveReference
+      - !act.saveReference
         repoSetupName: another
         referenceName: remote-init
 

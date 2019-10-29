@@ -8,7 +8,7 @@
   steps:
     - !devAction
       actions:
-      - !loadRepoReferenceArchive
+      - !act.loadRepoReferenceArchive
         repoSetupName: "local"
         assetId: "archives/init-repo-store:test-local-ref"
 
@@ -42,7 +42,7 @@
 
     - !needAction
       actions:
-        - !removeFile
+        - !act.removeFile
           targetPaths:
             - local/folder
     - !instruct
@@ -61,7 +61,7 @@
       descriptionId: "level-data/lost/description:elaborate:reset"
     - !needAction
       actions:
-        - !git
+        - !act.git
           repoSetupName: local
           arguments:
           - checkout
