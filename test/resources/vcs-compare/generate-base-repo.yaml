@@ -9,25 +9,25 @@ stages:
     save:
       - local
     actions:
-    - !act.git
+    - !dev.act.git
       repoSetupName: local
       arguments:
         - init
-    - !act.git
+    - !dev.act.git
       repoSetupName: local
       arguments:
         - config 
         - "--local"
         - user.name
         - test-repo
-    - !act.git
+    - !dev.act.git
       repoSetupName: local
       arguments:
         - config 
         - "--local"        
         - user.email
         - test-repo@some.mail.server
-    - !act.git
+    - !dev.act.git
       repoSetupName: local
       arguments:
         - config
@@ -45,7 +45,7 @@ stages:
         - repo/first_file
     - !act.stageAll
       repoSetupName: local
-    - !act.git
+    - !dev.act.git
       repoSetupName: local
       arguments:
         - commit
@@ -58,13 +58,13 @@ stages:
         - repo/second_file
     - !act.stageAll
       repoSetupName: local
-    - !act.git
+    - !dev.act.git
       repoSetupName: local
       arguments:
         - commit
         - -m
         - commit
-    - !act.git
+    - !dev.act.git
       repoSetupName: local
       arguments:
         - branch
@@ -80,7 +80,7 @@ stages:
           - repo/folder/third
       - !act.stageAll
         repoSetupName: local
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - commit
@@ -93,7 +93,7 @@ stages:
           - repo/folder/forth
       - !act.stageAll
         repoSetupName: local
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - commit
@@ -103,22 +103,22 @@ stages:
     save:
       - local
     actions:
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - branch
           - "conflict-AA"
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - branch
           - "conflict-MR"
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - branch
           - "conflict-MM"
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - branch
@@ -134,7 +134,7 @@ stages:
           - repo/first_file
       - !act.stageAll
         repoSetupName: local
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - commit
@@ -145,7 +145,7 @@ stages:
           - repo/second_file
       - !act.stageAll
         repoSetupName: local
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - commit
@@ -158,7 +158,7 @@ stages:
           - repo/folder/fifth
       - !act.stageAll
         repoSetupName: local
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - commit
@@ -168,7 +168,7 @@ stages:
     save:
       - local
     actions:
-      - !act.cleanCheckout
+      - !dev.act.cleanCheckout
         repoSetupName: local
         commitish: "second-branch"
       - !act.writeFile
@@ -178,7 +178,7 @@ stages:
           - repo/second_folder/sixth_file
       - !act.stageAll
         repoSetupName: local
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - commit
@@ -191,7 +191,7 @@ stages:
           - repo/second_folder/seventh_file
       - !act.stageAll
         repoSetupName: local
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - commit
@@ -206,7 +206,7 @@ stages:
           - repo/second_folder/sixth_file
       - !act.stageAll
         repoSetupName: local
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - commit
@@ -221,7 +221,7 @@ stages:
         targetPath: repo/second_folder/periodic_table
       - !act.stageAll
         repoSetupName: local
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - commit
@@ -231,7 +231,7 @@ stages:
     save:
       - local  
     actions:
-      - !act.cleanCheckout
+      - !dev.act.cleanCheckout
         repoSetupName: local
         commitish: "conflict-AA"
       - !act.writeFile
@@ -241,7 +241,7 @@ stages:
           - repo/folder/fifth
       - !act.stageAll
         repoSetupName: local
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - commit
@@ -251,7 +251,7 @@ stages:
     save:
       - local  
     actions:
-      - !act.cleanCheckout
+      - !dev.act.cleanCheckout
         repoSetupName: local
         commitish: "conflict-MM"
       - !act.writeFile
@@ -261,7 +261,7 @@ stages:
           - repo/first_file
       - !act.stageAll
         repoSetupName: local
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - commit
@@ -271,7 +271,7 @@ stages:
     save:
       - local  
     actions:
-      - !act.cleanCheckout
+      - !dev.act.cleanCheckout
         repoSetupName: local
         commitish: "conflict-MR"
       - !act.writeFile
@@ -281,7 +281,7 @@ stages:
           - repo/second_file
       - !act.stageAll
         repoSetupName: local
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - commit
@@ -291,30 +291,30 @@ stages:
     save:
       - local  
     actions:
-      - !act.cleanCheckout
+      - !dev.act.cleanCheckout
         repoSetupName: local
         commitish: "conflict-mixed"  
-      - !act.merge
+      - !dev.act.merge
         repoSetupName: local
         withBranch: "conflict-AA"
-      - !act.merge
+      - !dev.act.merge
         repoSetupName: local
         withBranch: "conflict-MM"
-      - !act.merge
+      - !dev.act.merge
         repoSetupName: local
         withBranch: "conflict-MR"
   - name: reset
     save:
       - local  
     actions:
-      - !act.cleanCheckout
+      - !dev.act.cleanCheckout
         repoSetupName: local
         commitish: master
   - name: tagging
     save:
       - local  
     actions:
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - tag

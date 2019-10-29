@@ -2,13 +2,14 @@ asset_index:
   infile:
     description:elaborate:intro: |+2
       .md
-      在這個教學中，將會展示針對遠端倉庫的教學能力
+      在這個教學中，將會展示這個系統對遠端倉庫的操作能力，使得遠端倉庫操作的教學是可行的。  
 
-    description:instruct:simple-example: |+2
+      一如既往，教學相關的 git 倉庫已經自動載入。  
+      請使用下一個區塊的按鈕開啟工作目錄所在位置。
+
+    description:instruct:fetch-all: |+2
       .md
-      **「操作指引」**區塊會給出指示，使用者按照指示操作並驗證結果後可以繼續進行教學
-
-      請回答，1+1=?
+      本地倉庫的遠端已經事先設定好。請透過 `git fetch --all` 的指令，抓取所有遠端分支。
 
     description:illustrate:explain-blocking: |+2
       .md

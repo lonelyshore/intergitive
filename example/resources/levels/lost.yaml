@@ -6,9 +6,9 @@
         referenceStoreName: "test-local-ref"
         checkpointStoreName: "test-local-checkpoints"
   steps:
-    - !devAction
+    - !dev.devAction
       actions:
-      - !act.loadRepoReferenceArchive
+      - !dev.act.loadRepoReferenceArchive
         repoSetupName: "local"
         assetId: "archives/init-repo-store:test-local-ref"
 
@@ -40,7 +40,7 @@
     - !openWorkingPath
       repoSetupName: local
 
-    - !needAction
+    - !dev.needAction
       actions:
         - !act.removeFile
           targetPaths:
@@ -59,9 +59,9 @@
 
     - !instruct
       descriptionId: "level-data/lost/description:elaborate:reset"
-    - !needAction
+    - !dev.needAction
       actions:
-        - !act.git
+        - !dev.act.git
           repoSetupName: local
           arguments:
           - checkout

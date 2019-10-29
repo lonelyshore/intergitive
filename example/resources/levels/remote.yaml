@@ -16,15 +16,15 @@
         referenceStoreName: "test-remote-ref"
         checkpointStoreName: "test-remote-checkpoints"
   steps:
-    - !devAction
+    - !dev.devAction
       actions:
-      - !act.loadRepoReferenceArchive
+      - !dev.act.loadRepoReferenceArchive
         repoSetupName: local
         assetId: "archives/init-repo-store:test-local-ref"
-      - !act.loadRepoReferenceArchive
+      - !dev.act.loadRepoReferenceArchive
         repoSetupName: remote
         assetId: "archives/init-repo-store:test-remote-ref"
-      - !act.loadRepoReferenceArchive
+      - !dev.act.loadRepoReferenceArchive
         repoSetupName: another
         assetId: "archives/init-repo-store:test-local-ref"
       - !act.loadReference
@@ -36,24 +36,24 @@
       - !act.loadReference
         repoSetupName: remote
         referenceName: push-all
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
         - remote
         - add
         - origin
         - "../repo-stores/test-remote-ref"
-      - !act.git
+      - !dev.act.git
         repoSetupName: another
         arguments:
         - remote
         - add
         - origin
         - "../repo-stores/test-remote-ref"  
-      - !act.saveReference
+      - !dev.act.saveReference
         repoSetupName: local
         referenceName: remote-init
-      - !act.saveReference
+      - !dev.act.saveReference
         repoSetupName: another
         referenceName: remote-init
 
@@ -67,8 +67,24 @@
       repoSetupName: remote
       referenceName: push-all
 
+    - !checkpoint
+      checkpointName: initial
+
     - !elaborate
       descriptionId: "level-data/remote/description:elaborate:intro"
+
+    - !openWorkingPath
+      repoSetupName: local
+
+    - !dev.needAction
+      actions:
+        - !dev.act.git
+          repoSetupName: local
+          arguments:
+          - fetch
+          - "--all"
+    - !instruct
+      descriptionId: "level-data/remote/description:instruct:fetch-all"
 
     
 

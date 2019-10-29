@@ -13,7 +13,7 @@ stages:
     save:
       - remote
     actions:
-    - !act.git
+    - !dev.act.git
       repoSetupName: remote
       arguments:
         - init
@@ -49,7 +49,7 @@ stages:
         - local-repo/update-master-1
     - !act.stageAll
       repoSetupName: local
-    - !act.git &commit
+    - !dev.act.git &commit
       repoSetupName: local
       arguments:
         - commit
@@ -60,7 +60,7 @@ stages:
     save:
       - remote
     actions:
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - reset
@@ -79,7 +79,7 @@ stages:
     save:
       - remote
     actions:
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - branch
@@ -90,7 +90,7 @@ stages:
     save:
       - remote
     actions:
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - branch
@@ -104,7 +104,7 @@ stages:
     save:
       - remote
     actions:
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - branch
@@ -115,14 +115,14 @@ stages:
     save:
       - remote
     actions:
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - tag
           - "-f"
           - "end-of-base"
           - "conflict-MM"
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - push
@@ -133,19 +133,19 @@ stages:
     save:
       - remote
     actions:
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - tag
           - "another-tag"
           - "end-of-base"
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - tag
           - "-d"
           - "end-of-base"
-      - !act.git
+      - !dev.act.git
         repoSetupName: local
         arguments:
           - push
