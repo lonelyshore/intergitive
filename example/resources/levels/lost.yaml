@@ -24,27 +24,29 @@
     - !illustrate
       descriptionId: "level-data/lost/description:illustrate:explain-blocking"
     
-    - !verifyInput
+    - !instruct
       descriptionId: "level-data/lost/description:verify-input:puzzle"
+    - !verifyInput
       answer: "2"
     
     - !loadReference
       repoSetupName: local
       referenceName: merge
-
+    - !checkpoint
+      checkpointName: checkpoint-initial
     - !elaborate
-      descriptionId: "level-data/lost/description:elaborate:explain-load-reference"
+      descriptionId: "level-data/lost/description:elaborate:explain-load-reference-and-checkpoint"
     
     - !openWorkingPath
       repoSetupName: local
 
-    - !instruct
-      descriptionId: "level-data/lost/description:instruct:delete-folder"
     - !needAction
       actions:
         - !removeFile
           targetPaths:
-            - local/folder      
+            - local/folder
+    - !instruct
+      descriptionId: "level-data/lost/description:instruct:delete-folder" 
     - !verifyRepo
       repoSetupName: local
       referenceName: folder-deleted
