@@ -82,7 +82,14 @@ const bakeLevel = function(levelItem, levelId, flatCourseIds, courseItemDict, ac
             if ('actions' in step) {
                 step.actions.forEach(action => {
                     bakeActions = bakeActions.then(() => {
-                        return action.executeBy(actionExecutor);
+                        try{
+                            return action.executeBy(actionExecutor);
+                        }
+                        catch(e){
+                            console.error(`failed to execute action for ${action.klass}`);
+                            throw e;
+                        }
+                        
                     });
                 });
             }

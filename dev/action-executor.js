@@ -103,7 +103,7 @@ class DevActionExecutor extends ActionExecutor {
         return fs.exists(referenceStorePath)
         .then(isExisting => {
             if (isExisting) {
-                return new Error(`Should not load repo archive ${assetId} into a non-empty repo store path ${referenceStorePath} of repo setup ${repoSetupPaths}`);
+                return new Error(`Should not load repo archive ${assetId} into a non-empty repo store path ${referenceStorePath} of repo setup ${repoSetupName}`);
             }
             else {
                 return this.assetLoader.getFullAssetPath(assetId)
