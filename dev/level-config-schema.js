@@ -153,6 +153,30 @@ let gitCommandActionType = new yaml.Type(
     }
 );
 
+let saveRepoReferenceActionType = new yaml.Type(
+    dummyActionConfigDict.saveRepoReference.tag,
+    {
+        kind: 'mapping',
+
+        resolve: function(data) {
+            return data !== null
+                && 'repoSetupName' in data
+                && isString(data.repoSetupName)
+                && 'referenceName' in data
+                && isString(data.referenceName);
+        },
+
+        construct: function(data) {
+            return new actionConfig.SaveRepoReferenceAction(
+                data.repoSetupName,
+                data.referenceName
+            );
+        },
+
+        instanceOf: actionConfig.SaveRepoReferenceAction,
+    }
+);
+
 let loadRepoReferenceArchiveActionType = new yaml.Type(
     dummyActionConfigDict.loadRepoReferenceArchive.tag,
     {
@@ -184,6 +208,7 @@ let schema = yaml.Schema.create(upstream.LEVEL_CONFIG_SCHEMA, [
     continueMergeActionType,
     cleanCheckoutActionType,
     gitCommandActionType,
+    saveRepoReferenceActionType,
     loadRepoReferenceArchiveActionType,
 ]);
 
