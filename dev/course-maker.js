@@ -59,13 +59,13 @@ function operate(args) {
                     return devRunner.run(
                         configPath,
                         fileSystemBasePath,
-                        'repo-store',
+                        'repo-stores',
                         assetLoader
                     );
                 });
             })
             .then(() => {
-                let repoStorePath = path.join(fileSystemBasePath, 'repo-store');
+                let repoStorePath = path.join(fileSystemBasePath, 'repo-stores');
                 var archivesPath = path.join(fileSystemBasePath, 'repo-archives');
                 return fs.readdir(repoStorePath, { withFileTypes: true })
                 .then(dirents => {

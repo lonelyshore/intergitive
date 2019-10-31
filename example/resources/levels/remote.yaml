@@ -39,17 +39,17 @@
         - !dev.act.git
           repoSetupName: local
           arguments:
-          - remote
-          - add
-          - origin
-          - "../repo-stores/test-remote-ref"
+            - remote
+            - add
+            - origin
+            - "../remote"
         - !dev.act.git
           repoSetupName: another
           arguments:
-          - remote
-          - add
-          - origin
-          - "../repo-stores/test-remote-ref"  
+            - remote
+            - add
+            - origin
+            - "../remote"  
         - !dev.act.saveReference
           repoSetupName: local
           referenceName: remote-init
@@ -81,8 +81,8 @@
         - !dev.act.git
           repoSetupName: local
           arguments:
-          - fetch
-          - "--all"
+            - fetch
+            - "--all"
     - !instruct
       descriptionId: "level-data/remote/description:instruct:fetch-all"
     - !verifyRepo
@@ -93,7 +93,7 @@
 
     - !instruct
       descriptionId: "level-data/remote/description:instruct:list-remote-branches"
-    - !verifyInput:
+    - !verifyInput
       answer: "2"
 
     - !instruct
@@ -107,8 +107,10 @@
             - "-b"
             - "some-new-branch"
         - !act.writeFile
-          sourceAssetIds: "level-data/remote/file:random-file:v1"
-          destinationPaths: "another/randome-file"
+          sourceAssetIds: 
+            - "$level-data/remote/file:random-file:v1"
+          destinationPaths:
+            - "another/randome-file"
         - !act.stageAll
           repoSetupName: another
         - !dev.act.git

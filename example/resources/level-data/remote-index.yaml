@@ -48,7 +48,7 @@ asset_index:
 
       請回答目前 `origin/` 開頭的分支個數
 
-    file:randome-file:v1:
+    file:random-file:v1: |+2
       我是沒想過會有人想把這個檔案打開來看啦...
       只好分享一下生命、宇宙及萬事萬物的終極答案：42
 
