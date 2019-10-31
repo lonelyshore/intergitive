@@ -2,6 +2,7 @@
 
 const yaml = require("js-yaml");
 const fs = require("fs-extra");
+const NestedError = require('nested-error-stacks');
 
 const actionConf = require("./config-action");
 const stepConf = require("../lib/config-step");
@@ -65,6 +66,9 @@ const bakeLevel = function(levelItem, levelId, flatCourseIds, courseItemDict, ac
     .then(text => {
         return yaml.safeLoad(text, { schema: LEVEL_SCHEMA });
     })
+    .catch(error => {
+        throw new NestedError(`Failed to load level ${levelId}`, error);
+    })
     .then(level => {
 
         let bakeActions = Promise.resolve();
@@ -80,16 +84,19 @@ const bakeLevel = function(levelItem, levelId, flatCourseIds, courseItemDict, ac
 
         level.steps.forEach((step) => {
             if ('actions' in step) {
+
+                if (!step.actions.forEach) {
+                    throw new Error(`step ${step.klass} does not contain actions as an array`);
+                }
+
                 step.actions.forEach(action => {
                     bakeActions = bakeActions.then(() => {
                         try{
                             return action.executeBy(actionExecutor);
                         }
                         catch(e){
-                            console.error(`failed to execute action for ${action.klass}`);
-                            throw e;
+                            throw new NestedError(`failed to execute action for ${action.klass}`, e);
                         }
-                        
                     });
                 });
             }
@@ -101,6 +108,18 @@ const bakeLevel = function(levelItem, levelId, flatCourseIds, courseItemDict, ac
                     );
     
                     return saveRefAction.executeBy(actionExecutor);
+                });
+            }
+            else if (step instanceof stepConf.VerifyAllRepoStep) {
+                repoVcsSetupNames.forEach(repoVcsSetupName => {
+                    bakeActions = bakeActions.then(() => {
+                        let saveRefAction = new actionConf.SaveRepoReferenceAction(
+                            repoVcsSetupName,
+                            step.referenceName
+                        );
+
+                        return saveRefAction.executeBy(actionExecutor);
+                    });
                 });
             }
             else if (step instanceof stepConf.LoadLastStageFinalSnapshotStep) {
@@ -128,6 +147,7 @@ const bakeLevel = function(levelItem, levelId, flatCourseIds, courseItemDict, ac
                 });
             }
         });
+
     
         let saveFinalSnapshotActions = repoVcsSetupNames.map(repoVcsSetupName => {
             return new actionConf.SaveRepoReferenceAction(
@@ -143,7 +163,10 @@ const bakeLevel = function(levelItem, levelId, flatCourseIds, courseItemDict, ac
         })
     
         return bakeActions;
-    });
+    })
+    .catch(error => {
+        throw new NestedError(`Failed to execute actions for level ${levelId}`, error);
+    });;
 
 
 }
