@@ -39,7 +39,7 @@
     
     - !instruct
       descriptionId: "level-data/demo/description:instruct:merge"
-    - !verifyRepo
+    - !verifyOneRepo
       repoSetupName: local
       referenceName: merge
 
@@ -51,7 +51,7 @@
     
     - !instruct
       descriptionId: "level-data/demo/description:instruct:unmerge"
-    - !verifyRepo
+    - !verifyOneRepo
       repoSetupName: local
       referenceName: clean
 

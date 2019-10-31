@@ -18,44 +18,44 @@
   steps:
     - !dev.devAction
       actions:
-      - !dev.act.loadRepoReferenceArchive
-        repoSetupName: local
-        assetId: "archives/init-repo-store:test-local-ref"
-      - !dev.act.loadRepoReferenceArchive
-        repoSetupName: remote
-        assetId: "archives/init-repo-store:test-remote-ref"
-      - !dev.act.loadRepoReferenceArchive
-        repoSetupName: another
-        assetId: "archives/init-repo-store:test-local-ref"
-      - !act.loadReference
-        repoSetupName: local
-        referenceName: merge
-      - !act.loadReference
-        repoSetupName: another
-        referenceName: merge
-      - !act.loadReference
-        repoSetupName: remote
-        referenceName: push-all
-      - !dev.act.git
-        repoSetupName: local
-        arguments:
-        - remote
-        - add
-        - origin
-        - "../repo-stores/test-remote-ref"
-      - !dev.act.git
-        repoSetupName: another
-        arguments:
-        - remote
-        - add
-        - origin
-        - "../repo-stores/test-remote-ref"  
-      - !dev.act.saveReference
-        repoSetupName: local
-        referenceName: remote-init
-      - !dev.act.saveReference
-        repoSetupName: another
-        referenceName: remote-init
+        - !dev.act.loadRepoReferenceArchive
+          repoSetupName: local
+          assetId: "archives/init-repo-store:test-local-ref"
+        - !dev.act.loadRepoReferenceArchive
+          repoSetupName: remote
+          assetId: "archives/init-repo-store:test-remote-ref"
+        - !dev.act.loadRepoReferenceArchive
+          repoSetupName: another
+          assetId: "archives/init-repo-store:test-local-ref"
+        - !act.loadReference
+          repoSetupName: local
+          referenceName: merge
+        - !act.loadReference
+          repoSetupName: another
+          referenceName: merge
+        - !act.loadReference
+          repoSetupName: remote
+          referenceName: push-all
+        - !dev.act.git
+          repoSetupName: local
+          arguments:
+          - remote
+          - add
+          - origin
+          - "../repo-stores/test-remote-ref"
+        - !dev.act.git
+          repoSetupName: another
+          arguments:
+          - remote
+          - add
+          - origin
+          - "../repo-stores/test-remote-ref"  
+        - !dev.act.saveReference
+          repoSetupName: local
+          referenceName: remote-init
+        - !dev.act.saveReference
+          repoSetupName: another
+          referenceName: remote-init
 
     - !loadReference
       repoSetupName: local
@@ -85,6 +85,72 @@
           - "--all"
     - !instruct
       descriptionId: "level-data/remote/description:instruct:fetch-all"
+    - !verifyRepo
+      referenceName: local-fetch-all
+
+    - !checkpoint
+      checkpointName: local-fetch-all
+
+    - !instruct
+      descriptionId: "level-data/remote/description:instruct:list-remote-branches"
+    - !verifyInput:
+      answer: "2"
+
+    - !instruct
+      descriptionId: "level-data/remote/description:elaborate:remote-branches-changes"
+    - !dev.devAction
+      actions:
+        - !dev.act.git
+          repoSetupName: another
+          arguments:
+            - checkout
+            - "-b"
+            - "some-new-branch"
+        - !act.writeFile
+          sourceAssetIds: "level-data/remote/file:random-file:v1"
+          destinationPaths: "another/randome-file"
+        - !act.stageAll
+          repoSetupName: another
+        - !dev.act.git
+          repoSetupName: another
+          arguments:
+            - commit
+            - "-m"
+            - "some commit"
+        - !act.pushAll
+          localSetupName: another
+          remoteNickName: origin
+        - !dev.act.saveReference
+          repoSetupName: another
+          referenceName: add-some-new-branch
+        - !dev.act.saveReference
+          repoSetupName: remote
+          referenceName: add-some-new-branch
+    - !execute
+      actions:
+        - !act.loadReference
+          repoSetupName: another
+          referenceName: add-some-new-branch
+        - !act.loadReference
+          repoSetupName: remote
+          referenceName: add-some-new-branch
+
+    - !instruct
+      descriptionId: "level-data/remote/description:instruct:fetch-new-branches"
+    - !verifyRepo
+      referenceName: add-some-new-branch
+
+    - !checkpoint
+      checkpointName: add-some-new-branch
+
+    - !instruct
+      descriptionId: "level-data/remote/description:instruct:check-new-branch"
+    - !verifyInput
+      answer: "3"
+
+    
+
+
 
     
 

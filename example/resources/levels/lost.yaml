@@ -48,7 +48,6 @@
     - !instruct
       descriptionId: "level-data/lost/description:instruct:delete-folder" 
     - !verifyRepo
-      repoSetupName: local
       referenceName: folder-deleted
 
     - !checkpoint
@@ -67,7 +66,6 @@
           - checkout
           - "-f"
     - !verifyRepo
-      repoSetupName: local
       referenceName: folder-restored
 
     - !checkpoint

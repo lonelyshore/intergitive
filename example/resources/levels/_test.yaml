@@ -12,7 +12,6 @@
     - !openWorkingPath
       repoSetupName: local
     - !verifyRepo
-      repoSetupName: local
       referenceName: clean
     - !partialCheckpoint
       repoSetupNames:

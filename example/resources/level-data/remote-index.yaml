@@ -9,70 +9,48 @@ asset_index:
 
     description:instruct:fetch-all: |+2
       .md
-      本地倉庫的遠端已經事先設定好。請透過 `git fetch --all` 的指令，抓取所有遠端分支。
+      git 的一大重要功能是可以將版本歷史與他人共享  
+      共享的最簡單方法是，將位在自己電腦上的 git 倉庫(本地倉庫)與位在別處的倉庫(遠端倉庫)連結  
+      建立連結後，就可以抓取遠端的版本歷史，或推送本地的版本歷史  
 
-    description:illustrate:explain-blocking: |+2
+      目前教學的本地倉庫的遠端位置已經事先設定好了  
+      欲抓取遠端倉庫的所有內容，請使用 `git fetch --all` 的指令  
+      抓取完成後，請按「確認」按鈕繼續進行  
+
+    description:instruct:list-remote-branches: |+2
       .md
-      **「圖解」**區塊可以搭配圖片說明 ~~其實跟解說好像有點重複~~  
-      順帶一提，本教學有進度的概念。被阻擋而尚未解鎖的區塊無法提前操作，並且視覺上可以感覺得出來。如下圖的範例：  
+      (為了節省時間，直接進入核心部分)  
 
-      ![blocking]({{level-data/demo/image:blocking}})  
-
-      圖片的左方是被阻擋的外觀，而右方是已解鎖的外觀  
-      具體來說，還沒完成的「操作指引」區塊會阻擋教學的進度，被阻擋的區塊以半透明呈現(如圖左)。  
-      一旦完成檢核，就可以解鎖進度(如圖右)  
-
-      如果剛才沒有注意到這個現象，下面還有一個「操作指引」區塊，可以再次觀察
-
-    description:verify-input:puzzle: |+2
-      .md
-      請問 SoE 的全名是？
-
-      1. Spinoza organized Ethics
-      2. Soul of Eden
-      3. Seven okay eleven
-      4. Shinseiki otaku Evangelion  
-
-      請輸入選項編號
-
-    description:elaborate:explain-load-reference-and-checkpoint: |+2
-      .md
-      身為 git 教學，一定少不了 git 倉庫(repository)  
-      前兩步的**「載入 git 倉庫」**區塊就是負責載入預先設計好的 git 倉庫。
-      通常這個步驟會在一個教學關卡的第一步進行
-
-      **「存檔點」**區塊會在推動進度時自動保存工作目錄狀態，以方便使用者在~~掉進異次元~~操作失敗的時候回復到初始狀態  
-      如果想要體驗存檔點的效果，可以打開工作目錄，隨意修改，然後「讀取」存檔點  
-
-      說到這裡，為了方便使用者快速開啟工作目錄所在位置，設計了開啟工作目錄的區塊，也就是下一個區塊。
-      請在下一個區塊中按下「執行」開啟目錄所在位置
-
-    description:instruct:delete-folder: |+2
-      .md
-      現在我們有了現成的倉庫，在教學中將著重在與此倉庫的互動。  
-      除了指引回答問題外，這個教學也會指引使用者進行特定的檔案操作，並且檢查其結果是否正確。  
-
-      以下就是一個範例的檢查。  
+      從遠端倉庫拉取歷史後，為了在本地表現出遠端倉庫的狀態，會建立 **遠端追蹤分支** (remote-tracking branches)  
+      這些分支的位置就代表拉取當下的遠端分支狀態  
       
-      請試著將**「folder」**資料夾刪除  
-      在操作前，可以試著在按照指示操作前先直接按下「確認」按鈕體驗檢驗失敗的情況  
-      然後，再把資料夾刪除完成後，請再次按下確認按鈕檢驗
+      為了與本地分支區分，遠端追蹤分支的名字前面會有前綴(在這裡是 "origin")  
 
-    description:elaborate:checkpoint: |+2
+      請使用 `git branch -a` 列出本地所有分支，並回答 `origin/` 開頭的分支數量
+
+    description:instruct:remote-branches-changes: |+2
       .md
-      目前的設計中，存檔點除了恢復工作目錄的狀態，還會倒回教學的進度  
-      如有興趣，可以回到上一個存檔點按下「讀取」  
-      
-      或者，也可以直接繼續往下進行
+      git 終究不是同步軟體，當遠端倉庫發生變動的時候不會自動同步到本地，而是要手動更新  
 
-    description:elaborate:reset: |+2
+      請按下「確認」按鈕模擬遠端倉庫被第三方推送了一個新的分支
+
+    description:instruct:fetch-new-branches: |+2
       .md
-      想要快速的將被 git 管理的檔案給恢復原狀非常簡單  
-      請在倉庫的工作目錄開啟慣用的指令介面(git bash, cmd, PowerShell, whatever)，並輸入 
+      現在遠端已經發生變化  
 
-      `git checkout -f`
+      欲取得最新變化，請使用 `git fetch --all`  
+      如果不相信遠端的變化**不會**自動同步，可以先使用 `git branch -a` 確認目前本地認知中的遠端分支數量狀態與剛才一致  
+      抓取完成後，請按「確認」按鈕繼續進行  
 
-      輸入完成後，請確認剛才被刪除的資料夾已經恢復原狀
+    description:instruct:check-new-branch: |+2
+      .md
+      經過抓取更新後，現在可以再執行 `git branch -a` 然後觀察 `origin/` 開頭的分支個數如何變化  
+
+      請回答目前 `origin/` 開頭的分支個數
+
+    file:randome-file:v1:
+      我是沒想過會有人想把這個檔案打開來看啦...
+      只好分享一下生命、宇宙及萬事萬物的終極答案：42
 
     
     
