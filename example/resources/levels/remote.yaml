@@ -57,15 +57,26 @@
           repoSetupName: another
           referenceName: remote-init
 
-    - !loadReference
-      repoSetupName: local
-      referenceName: remote-init
-    - !loadReference
-      repoSetupName: another
-      referenceName: remote-init
-    - !loadReference
-      repoSetupName: remote
-      referenceName: push-all
+    - !playActions
+      descriptionId: "render/loadReference"
+      actions:
+        - !act.loadReference
+          repoSetupName: local
+          referenceName: remote-init
+        - !act.loadReference
+          repoSetupName: another
+          referenceName: remote-init
+        - !act.loadReference
+          repoSetupName: remote
+          referenceName: push-all
+        - !act.setRemote
+          localSetupName: local
+          remoteSetupName: remote
+          remoteNickName: origin
+        - !act.setRemote
+          localSetupName: another
+          remoteSetupName: remote
+          remoteNickName: origin
 
     - !checkpoint
       checkpointName: initial
