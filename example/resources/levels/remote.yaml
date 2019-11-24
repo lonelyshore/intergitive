@@ -15,6 +15,7 @@
         workingPath: "remote"
         referenceStoreName: "test-remote-ref"
         checkpointStoreName: "test-remote-checkpoints"
+        repoType: "remote"
   steps:
     - !dev.devAction
       actions:
@@ -105,10 +106,10 @@
     - !instruct
       descriptionId: "level-data/remote/description:instruct:list-remote-branches"
     - !verifyInput
-      answer: "2"
+      answer: "6"
 
     - !instruct
-      descriptionId: "level-data/remote/description:elaborate:remote-branches-changes"
+      descriptionId: "level-data/remote/description:instruct:remote-branches-changes"
     - !dev.devAction
       actions:
         - !dev.act.git
@@ -116,7 +117,7 @@
           arguments:
             - checkout
             - "-b"
-            - "some-new-branch"
+            - "some-new-branch-pushed-from-another"
         - !act.writeFile
           sourceAssetIds: 
             - "$level-data/remote/file:random-file:v1"
@@ -130,9 +131,12 @@
             - commit
             - "-m"
             - "some commit"
-        - !act.pushAll
-          localSetupName: another
-          remoteNickName: origin
+        - !dev.act.git
+          repoSetupName: another
+          arguments:
+            - push
+            - origin
+            - "some-new-branch-pushed-from-another"
         - !dev.act.saveReference
           repoSetupName: another
           referenceName: add-some-new-branch
@@ -150,6 +154,13 @@
 
     - !instruct
       descriptionId: "level-data/remote/description:instruct:fetch-new-branches"
+    - !dev.needAction
+      actions:
+        - !dev.act.git
+          repoSetupName: local
+          arguments:
+            - fetch
+            - "--all"
     - !verifyRepo
       referenceName: add-some-new-branch
 
@@ -159,7 +170,7 @@
     - !instruct
       descriptionId: "level-data/remote/description:instruct:check-new-branch"
     - !verifyInput
-      answer: "3"
+      answer: "7"
 
     
 
