@@ -40,7 +40,6 @@ function operate(args) {
                 resourcePathTokens[1] === '' ?
                 [] :
                 resourcePathTokens[1].split('/');
-
             let initRepoStoreArchivePath = path.join(resourcePath, 'archives', 'init-repo-store');
 
             return fs.emptyDir(fileSystemBasePath)

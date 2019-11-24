@@ -82,21 +82,19 @@ const bakeLevel = function(levelItem, levelId, flatCourseIds, courseItemDict, ac
     
         let repoVcsSetupNames = Object.keys(level.repoVcsSetups);
 
-        level.steps.forEach((step) => {
+        level.steps.forEach((step, stepIndex) => {
             if ('actions' in step) {
 
                 if (!step.actions.forEach) {
-                    throw new Error(`step ${step.klass} does not contain actions as an array`);
+                    throw new Error(`step-#${stepIndex} ${step.klass} does not contain actions as an array`);
                 }
 
                 step.actions.forEach(action => {
                     bakeActions = bakeActions.then(() => {
-                        try{
-                            return action.executeBy(actionExecutor);
-                        }
-                        catch(e){
-                            throw new NestedError(`failed to execute action for ${action.klass}`, e);
-                        }
+                        return action.executeBy(actionExecutor)
+                        .catch(e => {
+                            throw new NestedError(`failed to execute action for ${action.klass} in step-#${stepIndex} ${step.klass}`, e)
+                        });
                     });
                 });
             }
