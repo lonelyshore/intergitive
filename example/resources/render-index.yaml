@@ -12,6 +12,7 @@ asset_index:
     checkpointLoading: "還原檢查點中..."
     checkpointReadyToLoad: "檢查點準備就緒 (ง •̀_•́)ง"
     startOperationButton: "執行"
+    generalExecutionDescription: "執行操作"
     operationStatus: "狀態"
     operationReady: "準備進行"
     operationRunning: "操作進行中"
