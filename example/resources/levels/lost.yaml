@@ -54,7 +54,7 @@
       checkpointName: checkpoint-folder-deleted
 
     - !elaborate
-      descriptionId: "level-data/demo/description:elaborate:checkpoint"
+      descriptionId: "level-data/lost/description:elaborate:checkpoint"
 
     - !instruct
       descriptionId: "level-data/lost/description:elaborate:reset"
@@ -71,8 +71,8 @@
     - !checkpoint
       checkpointName: checkpoint-restore-from-deleted-folder
 
-    - !instruct # illustrate that IllustrateStep puts out illustrations
-      descriptionId: "level-data/demo/description:illustrate:load-checkpoint"
+    - !elaborate # illustrate that IllustrateStep puts out illustrations
+      descriptionId: "level-data/lost/description:elaborate:load-checkpoint"
 
     - !elaborate
       descriptionId: "level-data/demo/description:elaborate:end"

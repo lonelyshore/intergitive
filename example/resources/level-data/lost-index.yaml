@@ -36,14 +36,14 @@ asset_index:
       1. Spinoza organized Ethics
       2. Soul of Eden
       3. Seven okay eleven
-      4. Shinseiki otaku Evangelion  
+      4. Shin Osaka eki
 
       請輸入選項編號
 
     description:elaborate:explain-load-reference-and-checkpoint: |+2
       .md
       身為 git 教學，一定少不了 git 倉庫(repository)  
-      前兩步的**「載入 git 倉庫」**區塊就是負責載入預先設計好的 git 倉庫。
+      兩步前的**「載入 git 倉庫」**區塊就是負責載入預先設計好的 git 倉庫。
       通常這個步驟會在一個教學關卡的第一步進行
 
       **「存檔點」**區塊會在推動進度時自動保存工作目錄狀態，以方便使用者在~~掉進異次元~~操作失敗的時候回復到初始狀態  
@@ -69,6 +69,12 @@ asset_index:
       如有興趣，可以回到上一個存檔點按下「讀取」  
       
       或者，也可以直接繼續往下進行
+
+    description:elaborate:load-checkpoint: |+2
+      .md
+      恭喜您又儲存一個存檔點  
+
+      現在，如果讀取前一個存檔點，就會把先前的操作清除，並且把這一個區塊變回被阻擋狀態，請嘗試看看
 
     description:elaborate:reset: |+2
       .md
