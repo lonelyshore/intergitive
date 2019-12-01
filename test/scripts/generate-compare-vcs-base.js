@@ -73,6 +73,7 @@ const executionContexts = [
     },
     // Generate remote repo.
     {
+        isSkipped: true,
         yamlSubPath: path.join('vcs-compare', 'generate-remote-repo.yaml'),
         repoNameToWorkingPathArchiveName: {},
         repoNameToRefArchiveName: {
@@ -183,43 +184,122 @@ executionContexts.forEach(executionContext => {
 // Create local repo edge cases
 execution = execution.then(() =>{
     let workingPath = path.join(utils.PLAYGROUND_PATH, 'create-test-data');
-    let repoPath = path.join(workingPath, 'init');
-    return fs.emptyDir(repoPath)
-    .then(() => {
-        return simpleGit(repoPath)
-    })
-    .then(repo => {
-        return repo.raw(['init'])
+
+    function OperateAndSave(repoPath, operations) {
+        return operations(repoPath)
         .then(() => {
-            return repo.raw(['config', '--local', 'user.name', 'test-repo']);
+            return zip.archivePathTo(
+                repoPath,
+                repoPath + '.zip',
+                false
+            );
         })
-        .then(() => {
-            return repo.raw(['config', '--local', 'user.email', 'test-repo@some.mail.server']);
-        })
-        .then(() => {
-            return repo.raw(['config', '--local', 'core.autocrlf', 'input']);
-        });
-    })
-    .then(() => {
-        return zip.archivePathTo(
-            repoPath,
-            repoPath + '.zip',
-            false
-        )
         .then(() => {
             return fs.remove(repoPath);
         })
-        .then(() => {
-            return zip.archivePathTo(
-                workingPath,
-                path.join(utils.ARCHIVE_RESOURCES_PATH, 'local-repo-edgecases.zip'),
-                false
-            );
+        .catch(e => {
+            console.error(e);
+            throw e;
         });
+    }
+
+    return OperateAndSave(path.join(workingPath, 'empty'), (repoPath) => {
+        return fs.emptyDir(repoPath);
     })
     .then(() => {
-        return fs.remove(workingPath);
-    });
+        return OperateAndSave(
+            path.join(workingPath, 'init'), 
+            (repoPath) => {
+                return fs.emptyDir(repoPath)
+                .then(() => {
+                    return simpleGit(repoPath)
+                })
+                .then(repo => {
+                    return repo.raw(['init']);
+                });
+            }
+        );
+    })
+    .then(() => {
+        return OperateAndSave(
+            path.join(workingPath, 'init-with-config'), 
+            (repoPath) => {
+                return fs.emptyDir(repoPath)
+                .then(() => {
+                    return simpleGit(repoPath)
+                })
+                .then(repo => {
+                    return repo.raw(['init'])
+                    .then(() => {
+                        return repo.raw(['config', '--local', 'user.name', 'test-repo']);
+                    })
+                    .then(() => {
+                        return repo.raw(['config', '--local', 'user.email', 'test-repo@some.mail.server']);
+                    })
+                    .then(() => {
+                        return repo.raw(['config', '--local', 'core.autocrlf', 'input']);
+                    });
+                });
+            }
+        );
+    })
+    .then(() => {
+        return OperateAndSave(
+            path.join(workingPath, 'one-commit'), 
+            (repoPath) => {
+                return zip.extractArchiveTo(
+                    path.join(workingPath, 'init-with-config.zip'),
+                    repoPath
+                )
+                .then(() => {
+                    return fs.writeFile(path.join(repoPath, 'some_file'), 'content of some file');
+                })
+                .then(() => {
+                    return simpleGit(repoPath);
+                })
+                .then(repo => {
+                    return repo.raw(['add', '-A'])
+                    .then(() => {
+                        return repo.raw(['commit', '-m', 'commit'])
+                    });
+                });
+            }
+        );
+    })
+    .then(() => {
+        return OperateAndSave(
+            path.join(workingPath, 'one-commit-unset-config'),
+            (repoPath) => {
+                return zip.extractArchiveTo(
+                    path.join(workingPath, 'one-commit.zip'),
+                    repoPath
+                )
+                .then(() => {
+                    return simpleGit(repoPath);
+                })
+                .then(repo => {
+                    return repo.raw(['config', '--local', '--unset', 'user.name',])
+                    .then(() => {
+                        return repo.raw(['config', '--local', '--unset', 'user.email']);
+                    })
+                    .then(() => {
+                        return repo.raw(['config', '--local', '--unset', 'core.autocrlf']);
+                    });
+                });
+            }
+        );
+    })
+    .then(() => {
+        return zip.archivePathTo(
+            workingPath,
+            path.join(utils.ARCHIVE_RESOURCES_PATH, 'local-repo-edgecases.zip'),
+            false
+        )
+        .then(() => {
+            return fs.remove(workingPath);
+        });
+    })
+
 });
 
 
