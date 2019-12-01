@@ -28,45 +28,45 @@
         - !dev.act.loadRepoReferenceArchive
           repoSetupName: another
           assetId: "archives/init-repo-store:test-local-ref"
-        - !act.loadReference
-          repoSetupName: local
-          referenceName: merge
-        - !act.loadReference
-          repoSetupName: another
-          referenceName: merge
-        - !act.loadReference
-          repoSetupName: remote
-          referenceName: push-all
-        - !dev.act.git
-          repoSetupName: local
-          arguments:
-            - remote
-            - add
-            - origin
-            - "../remote"
-        - !dev.act.git
-          repoSetupName: another
-          arguments:
-            - remote
-            - add
-            - origin
-            - "../remote"  
-        - !dev.act.saveReference
-          repoSetupName: local
-          referenceName: remote-init
-        - !dev.act.saveReference
-          repoSetupName: another
-          referenceName: remote-init
+        # - !act.loadReference
+        #   repoSetupName: local
+        #   referenceName: merge
+        # - !act.loadReference
+        #   repoSetupName: another
+        #   referenceName: merge
+        # - !act.loadReference
+        #   repoSetupName: remote
+        #   referenceName: push-all
+        # - !dev.act.git
+        #   repoSetupName: local
+        #   arguments:
+        #     - remote
+        #     - add
+        #     - origin
+        #     - "../remote"
+        # - !dev.act.git
+        #   repoSetupName: another
+        #   arguments:
+        #     - remote
+        #     - add
+        #     - origin
+        #     - "../remote"  
+        # - !dev.act.saveReference
+        #   repoSetupName: local
+        #   referenceName: remote-init
+        # - !dev.act.saveReference
+        #   repoSetupName: another
+        #   referenceName: remote-init
 
     - !playActions
       descriptionId: "render/loadReference"
       actions:
         - !act.loadReference
           repoSetupName: local
-          referenceName: remote-init
+          referenceName: merge
         - !act.loadReference
           repoSetupName: another
-          referenceName: remote-init
+          referenceName: merge
         - !act.loadReference
           repoSetupName: remote
           referenceName: push-all

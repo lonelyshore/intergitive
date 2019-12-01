@@ -19,8 +19,6 @@ asset_index:
 
     description:instruct:list-remote-branches: |+2
       .md
-      (為了節省時間，直接進入核心部分)  
-
       從遠端倉庫拉取歷史後，為了在本地表現出遠端倉庫的狀態，會建立 **遠端追蹤分支** (remote-tracking branches)  
       這些分支的位置就代表拉取當下的遠端分支狀態  
       
