@@ -139,7 +139,6 @@ function createTests(testdataArchiveNames, testdataEntryNames, experimentName) {
             describe("Equal", function() {
                 testdataEntryNames.forEach(testdataEntryName => {
                     it(`${testdataEntryName}`, function() {
-
                         return LoadsFirstAndSecond(testdataEntryName, testdataEntryName)
                         .then(() => {
                             return utils.areDirectorySame(

@@ -11,6 +11,25 @@ const normalizePathSep = require('../../lib/noarmalize-path-sep');
 
 const resourcesPath = path.resolve(__dirname, "../resources");
 
+function generateConfigSummary(workingPath) {
+    let repo = new simpleGitCtor(workingPath);
+
+    return repo.raw(['config', '--local', '--list'])
+    .then(result => {
+        if (!result) {
+            return [];
+        }
+        else {
+            return result.split('\n').filter(v => {
+                return !v.toLowerCase().startsWith('user.name')
+                    && !v.toLowerCase().startsWith('user.email')
+                    && v.trim();
+            })
+            .sort((a, b) => a < b);
+        }
+    });
+}
+
 function generateRepoHistorySummary(workingPath) {
     let repo = new simpleGitCtor(workingPath);
 
@@ -157,7 +176,25 @@ function areGitRepoSame(first, second, isVerbose) {
         });
     }
 
-    return checkHistorySame()
+    let checkConfigsSame = () => {
+        return Promise.all([
+            generateConfigSummary(first),
+            generateConfigSummary(second)
+        ])
+        .then(summaries => {
+            return compareSummaries(summaries, 'RepoConfig', isVerbose);
+        });
+    }
+
+    return checkConfigsSame()
+    .then(configSame => {
+        if (!configSame) {
+            throw 'breaking';
+        }
+    })
+    .then(() => {
+        return checkHistorySame();
+    })
     .then(isHistorySame => {
         if (isHistorySame) {
             if (isRepositoryEmpty) {
@@ -188,19 +225,19 @@ function areGitRepoSame(first, second, isVerbose) {
                         console.log('[RepoStatus] repos have different "git status" result')
                     }
                     return areStatusesSame;
-                })
-                .catch(err => {
-                    if (err === 'breaking') {
-                        return false;
-                    }
-                    else {
-                        console.error(err, err.stack);
-                        return false;
-                    }
-                })
+                });
             }
         }
         else {
+            return false;
+        }
+    })
+    .catch(err => {
+        if (err === 'breaking') {
+            return false;
+        }
+        else {
+            console.error(err, err.stack);
             return false;
         }
     });
