@@ -29,14 +29,18 @@
     - !verifyInput
       answer: "2"
     
+    - !elaborate
+      descriptionId: "level-data/lost/description:elaborate:explain-load-reference-and-checkpoint"
+      needConfirm: true
+
     - !loadReference
       repoSetupName: local
       referenceName: merge
     - !checkpoint
       checkpointName: checkpoint-initial
-    - !elaborate
-      descriptionId: "level-data/lost/description:elaborate:explain-load-reference-and-checkpoint"
     
+    - !elaborate
+      descriptionId: "level-data/lost/description:elaborate:explain-open-working-path"
     - !openWorkingPath
       repoSetupName: local
 
@@ -67,12 +71,6 @@
           - "-f"
     - !verifyRepo
       referenceName: folder-restored
-
-    - !checkpoint
-      checkpointName: checkpoint-restore-from-deleted-folder
-
-    - !elaborate # illustrate that IllustrateStep puts out illustrations
-      descriptionId: "level-data/lost/description:elaborate:load-checkpoint"
 
     - !elaborate
       descriptionId: "level-data/demo/description:elaborate:end"
