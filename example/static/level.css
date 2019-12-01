@@ -189,14 +189,18 @@
 .processing-box {
     margin-top: 0.25rem;
     margin-bottom: 0.25rem;
+    display: flex;
+    justify-content: space-between;
+    max-width: 100%;
+}
+
+.processing-box button:only-child {
+    margin-left: auto;
+    align-self: flex-end;
 }
 
 [red-highlight] {
     color: crimson;
-}
-
-[drift-right] {
-    float: right;
 }
 
 .inline-img {
