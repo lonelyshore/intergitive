@@ -199,6 +199,11 @@
     align-self: flex-end;
 }
 
+.processing-box img:only-child {
+    margin-left: auto;
+    align-self: flex-end;
+}
+
 [red-highlight] {
     color: crimson;
 }
