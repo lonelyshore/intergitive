@@ -20,7 +20,7 @@ const RepoSetup = require("../../lib/config-level").RepoVcsSetup;
 chai.use(chaiAsPromised);
 chai.should();
 
-describe('Prepare VCS Compare #core', function() {
+describe.only('Prepare VCS Compare #core', function() {
 
     let testingStorageTypes = [
         vcs.STORAGE_TYPE.ARCHIVE,
@@ -229,6 +229,21 @@ function createTests(storageType) {
                     const referenceName = "clean";
                     return vcsManager.equivalent(referenceName)
                     .should.eventually.equal(true);
+                });
+
+                it('clean and change user name and email', function() {
+                    return repo.raw(['config', '--local', 'user.name', 'some other'])
+                    .then(() => {
+                        return vcsManager.equivalent('clean')
+                        .should.eventually.equal(true);
+                    })
+                    .then(() => {
+                        return repo.raw(['config', '--local', 'user.email', 'some-other@test.com']);
+                    })
+                    .then(() => {
+                        return vcsManager.equivalent('clean')
+                        .should.eventually.equal(true);
+                    });
                 });
     
                 it("dirty working directory", function() {
@@ -456,6 +471,14 @@ function createTests(storageType) {
                     })
                     .should.eventually.equal(false, 'clean should not equal to a repo that is not existed');
                 });
+
+                it('should differ config', function() {
+                    return repo.raw(['config', '--local', 'core.autocrlf', 'false'])
+                    .then(() => {
+                        return vcsManager.equivalent('clean')
+                        .should.eventually.equal(false, 'changing git config should be identified by vcsManager');
+                    })
+                })
             });
         });
 
