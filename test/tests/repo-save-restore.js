@@ -33,6 +33,138 @@ const repoCreationWorkingPath = path.join(utils.PLAYGROUND_PATH, 'created-repo')
 
 describe('Prepare Repo Save & Restore Tests', function() {
 
+    testingStorageTypes.forEach(storageType => {
+        describe.only(`Save and restore repo local configs - ${vcs.STORAGE_TYPE.toString(storageType)}`, function() {
+
+            const workingPath = path.join(utils.PLAYGROUND_PATH, 'save-restore-configs');
+            const savedPath = path.join(workingPath, 'source');
+            const storePath = path.join(workingPath, 'repo-stores');
+            const storeName = 'config';
+            let savedRepo;
+            let vcsReferenceMaker;
+
+            function restoreAndGetRestoredRepo(restoredPath, referenceName) {
+                return fs.emptyDir(restoredPath)
+                .then(() => {
+                    return vcs.RepoReferenceManager.create(restoredPath, storePath, storeName, false, storageType);
+                })
+                .then(manager => {
+                    return manager.restore(referenceName);
+                })
+                .then(() => {
+                    return new simpleGit(restoredPath);
+                });
+            }
+
+            function getRemotePath(repo) {
+                return repo.getRemotes(true)
+                .then(remotes => {
+                    return remotes[0].refs.fetch;
+                });
+            }
+
+            beforeEach('Initialize', function() {
+                return fs.emptyDir(workingPath)
+                .then(() => fs.emptyDir(savedPath))
+                .then(() => {
+                    savedRepo = new simpleGit(savedPath);
+                    return savedRepo.raw(['init']);
+                })
+                .then(() => {
+                    return vcs.RepoReferenceMaker.create(savedPath, storePath, storeName, false, storageType)
+                    .then(result => {
+                        vcsReferenceMaker = result;
+                    });
+                });
+            });
+
+            after('Clean up', function() {
+                return fs.remove(workingPath);
+            });
+
+            describe('Restored remote path are always absolute', function() {
+
+                const remotePath = path.join(__dirname, 'some-remote');
+                const referenceName = 'testing';
+                const restoredPath = path.join(workingPath, 'restored');
+
+                it('Remote path is absolute', function() {
+                    return savedRepo.raw(['remote', 'add', 'origin', remotePath])
+                    .then(() => {
+                        return vcsReferenceMaker.save(referenceName);
+                    })
+                    .then(() => {
+                        return restoreAndGetRestoredRepo(restoredPath, referenceName);
+                    })
+                    .then(restoredRepo => {
+                        return getRemotePath(restoredRepo)
+                        .should.eventually.equal(remotePath);
+                    });
+                });
+
+                it('Remote path is relative', function() {
+                    let relativeRemotePath = path.relative(remotePath, savedPath);
+                    return savedRepo.raw(['remote', 'add', 'origin', relativeRemotePath])
+                    .then(() => {
+                        return vcsReferenceMaker.save(referenceName);
+                    })
+                    .then(() => {
+                        return restoreAndGetRestoredRepo(restoredPath, referenceName);
+                    })
+                    .then(restoredRepo => {
+                        return getRemotePath(restoredRepo)
+                        .should.eventually.equal(remotePath);
+                    });
+                });
+            });
+
+            describe('Restored remote path rebases from source to target', function() {
+                // What we want to test is that remote path will be rebased onto target path on user's computer, 
+                // a different file system. 
+                // However, it is hard to simulate a file system in a test.
+                // Alternatively, we restore the repo to a path that does not 
+                // share the same parent of the source path
+                const restoredPath = path.join(utils.PLAYGROUND_PATH, 'restored-path'); 
+                const remoteRelativePath = '../remote';
+                const savedRemotePath = path.join(savedPath, remoteRelativePath);
+                const expectedSavedRemotePath = path.join(restoredPath, remoteRelativePath);
+                const referenceName = 'testing';
+
+                after('Remote restored path', function() {
+                    return fs.remove(restoredPath);
+                });
+
+                it('save absolute remote path and restore', function() {
+                    return savedRepo.raw(['remote', 'add', 'origin', savedRemotePath])
+                    .then(() => {
+                        return vcsReferenceMaker.save(referenceName);
+                    })
+                    .then(() => {
+                        return restoreAndGetRestoredRepo(restoredPath, referenceName);
+                    })
+                    .then(restoredRepo => {
+                        return getRemotePath(restoredRepo)
+                        .should.eventually.equal(expectedSavedRemotePath);
+                    });
+                });
+
+                it('save relative remote path and restore', function() {
+                    return savedRepo.raw(['remote', 'add', 'origin', remoteRelativePath])
+                    .then(() => {
+                        return vcsReferenceMaker.save(referenceName);
+                    })
+                    .then(() => {
+                        return restoreAndGetRestoredRepo(restoredPath, referenceName);
+                    })
+                    .then(restoredRepo => {
+                        return getRemotePath(restoredRepo)
+                        .should.eventually.equal(expectedSavedRemotePath);
+                    });
+                });
+            });
+        });
+    });
+
     testSnapshotsMatchReplayAndCreateTests(
         path.join(
             utils.RESOURCES_PATH, 
@@ -116,138 +248,6 @@ describe('Prepare Repo Save & Restore Tests', function() {
                 repoCreationConfig,
             );
         }
-
-        testingStorageTypes.forEach(storageType => {
-            describe.only('Save and restore repo local configs', function() {
-
-                const workingPath = path.join(utils.PLAYGROUND_PATH, 'save-restore-configs');
-                const savedPath = path.join(workingPath, 'source');
-                const storePath = path.join(workingPath, 'repo-stores');
-                const storeName = 'config';
-                let savedRepo;
-                let vcsReferenceMaker;
-    
-                function restoreAndGetRestoredRepo(restoredPath, referenceName) {
-                    return fs.emptyDir(restoredPath)
-                    .then(() => {
-                        return vcs.RepoReferenceManager.create(restoredPath, storePath, storeName, false, storageType);
-                    })
-                    .then(manager => {
-                        return manager.restore(referenceName);
-                    })
-                    .then(() => {
-                        return new simpleGit(restoredPath);
-                    });
-                }
-    
-                function getRemotePath(repo) {
-                    return repo.getRemotes(true)
-                    .then(remotes => {
-                        return remotes[0].refs.fetch;
-                    });
-                }
-    
-                beforeEach('Initialize', function() {
-                    return fs.emptyDir(workingPath)
-                    .then(() => fs.emptyDir(savedPath))
-                    .then(() => {
-                        savedRepo = new simpleGit(savedPath);
-                        return savedRepo.raw(['init']);
-                    })
-                    .then(() => {
-                        return vcs.RepoReferenceMaker.create(savedPath, storePath, storeName, false, storageType)
-                        .then(result => {
-                            vcsReferenceMaker = result;
-                        });
-                    });
-                });
-    
-                after('Clean up', function() {
-                    return fs.remove(workingPath);
-                });
-    
-                describe('Restored remote path are always absolute', function() {
-    
-                    const remotePath = path.join(__dirname, 'some-remote');
-                    const referenceName = 'testing';
-                    const restoredPath = path.join(workingPath, 'restored');
-    
-                    it('Remote path is absolute', function() {
-                        return savedRepo.raw(['remote', 'add', 'origin', remotePath])
-                        .then(() => {
-                            return vcsReferenceMaker.save(referenceName);
-                        })
-                        .then(() => {
-                            return restoreAndGetRestoredRepo(restoredPath, referenceName);
-                        })
-                        .then(restoredRepo => {
-                            return getRemotePath(restoredRepo)
-                            .should.eventually.equal(remotePath);
-                        });
-                    });
-    
-                    it('Remote path is relative', function() {
-                        let relativeRemotePath = path.relative(remotePath, savedPath);
-                        return savedRepo.raw(['remote', 'add', 'origin', relativeRemotePath])
-                        .then(() => {
-                            return vcsReferenceMaker.save(referenceName);
-                        })
-                        .then(() => {
-                            return restoreAndGetRestoredRepo(restoredPath, referenceName);
-                        })
-                        .then(restoredRepo => {
-                            return getRemotePath(restoredRepo)
-                            .should.eventually.equal(remotePath);
-                        });
-                    });
-                });
-    
-                describe('Restored remote path rebases from source to target', function() {
-                    // What we want to test is that remote path will be rebased onto target path on user's computer, 
-                    // a different file system. 
-                    // However, it is hard to simulate a file system in a test.
-                    // Alternatively, we restore the repo to a path that does not 
-                    // share the same parent of the source path
-                    const restoredPath = path.join(utils.PLAYGROUND_PATH, 'restored-path'); 
-                    const remoteRelativePath = '../remote';
-                    const savedRemotePath = path.join(savedPath, remoteRelativePath);
-                    const expectedSavedRemotePath = path.join(restoredPath, remoteRelativePath);
-                    const referenceName = 'testing';
-    
-                    after('Remote restored path', function() {
-                        return fs.remove(restoredPath);
-                    });
-    
-                    it('save absolute remote path and restore', function() {
-                        return savedRepo.raw(['remote', 'add', 'origin', savedRemotePath])
-                        .then(() => {
-                            return vcsReferenceMaker.save(referenceName);
-                        })
-                        .then(() => {
-                            return restoreAndGetRestoredRepo(restoredPath, referenceName);
-                        })
-                        .then(restoredRepo => {
-                            return getRemotePath(restoredRepo)
-                            .should.eventually.equal(expectedSavedRemotePath);
-                        });
-                    });
-    
-                    it('save relative remote path and restore', function() {
-                        return savedRepo.raw(['remote', 'add', 'origin', remoteRelativePath])
-                        .then(() => {
-                            return vcsReferenceMaker.save(referenceName);
-                        })
-                        .then(() => {
-                            return restoreAndGetRestoredRepo(restoredPath, referenceName);
-                        })
-                        .then(restoredRepo => {
-                            return getRemotePath(restoredRepo)
-                            .should.eventually.equal(expectedSavedRemotePath);
-                        });
-                    });
-                });
-            });
-        });
 
         describe(`Replay and capture snapshot - ${targetRepoName}`, function() {
 
