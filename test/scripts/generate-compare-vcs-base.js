@@ -138,8 +138,7 @@ executionContexts.forEach(executionContext => {
                             .then(() => {
                                 return zip.archivePathTo(
                                     setup.fullWorkingPath,
-                                    destination,
-                                    false
+                                    destination
                                 )
                             });
                         });
@@ -159,8 +158,7 @@ executionContexts.forEach(executionContext => {
                             .then(() => {
                                 return zip.archivePathTo(
                                     setup.fullReferenceStorePath,
-                                    destination,
-                                    false
+                                    destination
                                 );
                             });
                         });
@@ -190,8 +188,7 @@ execution = execution.then(() =>{
         .then(() => {
             return zip.archivePathTo(
                 repoPath,
-                repoPath + '.zip',
-                false
+                repoPath + '.zip'
             );
         })
         .then(() => {
@@ -292,8 +289,7 @@ execution = execution.then(() =>{
     .then(() => {
         return zip.archivePathTo(
             workingPath,
-            path.join(utils.ARCHIVE_RESOURCES_PATH, 'local-repo-edgecases.zip'),
-            false
+            path.join(utils.ARCHIVE_RESOURCES_PATH, 'local-repo-edgecases.zip')
         )
         .then(() => {
             return fs.remove(workingPath);

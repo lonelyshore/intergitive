@@ -74,8 +74,7 @@ function operate(args) {
                             archives = archives.then(() => {
                                 return zip.archivePathTo(
                                     path.join(repoStorePath, dirent.name),
-                                    path.join(archivesPath, dirent.name + '.zip'),
-                                    false
+                                    path.join(archivesPath, dirent.name + '.zip')
                                 );
                             });
                         }

@@ -162,8 +162,7 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
                                     path.join(
                                         repoSetups[savedRepoName].fullReferenceStorePath,
                                         `${stageName}.zip`,
-                                    ),
-                                    false
+                                    )
                                 );
                             });
                         }

@@ -24,17 +24,17 @@ const repoSnapshotsPath =
     path.join(utils.PLAYGROUND_PATH, 'repo-snapshots');
 
 const testingStorageTypes = [
-    vcs.STORAGE_TYPE.ARCHIVE,
-    //vcs.STORAGE_TYPE.GIT
+    //vcs.STORAGE_TYPE.ARCHIVE,
+    vcs.STORAGE_TYPE.GIT
 ];
 
 const repoCreationWorkingPath = path.join(utils.PLAYGROUND_PATH, 'created-repo');
 
 
-describe('Prepare Repo Save & Restore Tests', function() {
-
+describe.only('Prepare Repo Save & Restore Tests', function() {
+//
     testingStorageTypes.forEach(storageType => {
-        describe.only(`Save and restore repo local configs - ${vcs.STORAGE_TYPE.toString(storageType)}`, function() {
+        describe(`Save and restore repo local configs - ${vcs.STORAGE_TYPE.toString(storageType)}`, function() {
 
             const workingPath = path.join(utils.PLAYGROUND_PATH, 'save-restore-configs');
             const savedPath = path.join(workingPath, 'source');
