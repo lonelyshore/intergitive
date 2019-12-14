@@ -25,7 +25,7 @@ const repoSnapshotsPath =
 
 const testingStorageTypes = [
     vcs.STORAGE_TYPE.ARCHIVE,
-    // vcs.STORAGE_TYPE.GIT
+    //vcs.STORAGE_TYPE.GIT
 ];
 
 const repoCreationWorkingPath = path.join(utils.PLAYGROUND_PATH, 'created-repo');
@@ -103,7 +103,7 @@ describe('Prepare Repo Save & Restore Tests', function() {
                 });
 
                 it('Remote path is relative', function() {
-                    let relativeRemotePath = path.relative(remotePath, savedPath);
+                    let relativeRemotePath = path.relative(savedPath, remotePath);
                     return savedRepo.raw(['remote', 'add', 'origin', relativeRemotePath])
                     .then(() => {
                         return vcsReferenceMaker.save(referenceName);
