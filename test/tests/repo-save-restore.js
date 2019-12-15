@@ -6,6 +6,7 @@ const assert = require('assert');
 const utils = require("./test-utils");
 
 
+
 const simpleGit = require('simple-git/promise');
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
@@ -24,14 +25,13 @@ const repoSnapshotsPath =
     path.join(utils.PLAYGROUND_PATH, 'repo-snapshots');
 
 const testingStorageTypes = [
-    //vcs.STORAGE_TYPE.ARCHIVE,
-    vcs.STORAGE_TYPE.GIT
+    vcs.STORAGE_TYPE.ARCHIVE,
+    //vcs.STORAGE_TYPE.GIT
 ];
 
 const repoCreationWorkingPath = path.join(utils.PLAYGROUND_PATH, 'created-repo');
 
-
-describe.only('Prepare Repo Save & Restore Tests', function() {
+describe('Prepare Repo Save & Restore Tests', function() {
 //
     testingStorageTypes.forEach(storageType => {
         describe(`Save and restore repo local configs - ${vcs.STORAGE_TYPE.toString(storageType)}`, function() {

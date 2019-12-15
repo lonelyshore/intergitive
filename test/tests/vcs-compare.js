@@ -20,7 +20,7 @@ const RepoSetup = require("../../lib/config-level").RepoVcsSetup;
 chai.use(chaiAsPromised);
 chai.should();
 
-describe('Prepare VCS Compare #core', function() {
+describe.only('Prepare VCS Compare #core', function() {
 
     let testingStorageTypes = [
         vcs.STORAGE_TYPE.ARCHIVE,
@@ -471,14 +471,6 @@ function createTests(storageType) {
                     })
                     .should.eventually.equal(false, 'clean should not equal to a repo that is not existed');
                 });
-
-                it('should differ config', function() {
-                    return repo.raw(['config', '--local', 'core.autocrlf', 'false'])
-                    .then(() => {
-                        return vcsManager.equivalent('clean')
-                        .should.eventually.equal(false, 'changing git config should be identified by vcsManager');
-                    })
-                })
             });
         });
 
@@ -636,6 +628,144 @@ function createTests(storageType) {
                 });
 
             });
+        });
+
+        describe('Config', function() {
+
+            describe('Remote URL', function() {
+
+                let testingRepo;
+                let vcsManager;
+
+                const workingPath = path.join(utils.PLAYGROUND_PATH, 'vcs-compare-config');
+                const testingRepoPath = path.join(workingPath, 'testing-repo');
+                const repoStorePath = path.join(workingPath, 'repo-store');
+                const referenceStoreName = 'test-ref';
+                const remoteName = 'origin';
+                const remoteRefAbsolutePath = path.join(workingPath, 'remote');
+
+                const referenceName = 'ref-for-test';
+
+                before('Create reference', function() {
+
+                    this.timeout(6000);
+
+                    const referenceRepoPath = path.join(workingPath, 'ref-repo');
+
+                    return fs.emptyDir(workingPath)
+                    .then(() => fs.emptyDir(testingRepoPath))
+                    .then(() => fs.emptyDir(repoStorePath))
+                    .then(() => fs.emptyDir(referenceRepoPath))
+                    .then(() => {
+                        let repo = simpleGit(referenceRepoPath);
+                        return repo.init(false)
+                        .then(() => repo.raw(['remote', 'add', remoteName, remoteRefAbsolutePath]));
+                    })
+                    .then(() => {
+                        return vcs.RepoReferenceMaker.create(
+                            referenceRepoPath,
+                            repoStorePath,
+                            referenceStoreName,
+                            false,
+                            storageType
+                        )
+                        .then(vcsReferenceMaker => {
+                            return vcsReferenceMaker.save(referenceName);
+                        });
+                    })
+                    .then(() => {
+
+                    })
+                    .then(() => {
+                        return fs.remove(referenceRepoPath); // clean up
+                    });
+                });
+
+                beforeEach('Initialize testing folder', function() {
+                    return fs.emptyDir(testingRepoPath)
+                    .then(() => {
+                        return vcs.RepoReferenceManager.create(
+                            testingRepoPath,
+                            repoStorePath,
+                            referenceStoreName,
+                            false,
+                            storageType
+                        );
+                    })
+                    .then(result => {
+                        vcsManager = result;
+                    })
+                    .then(() => {
+                        testingRepo = simpleGit(testingRepoPath);
+                        return testingRepo.init(false);
+                    });
+                })
+
+                after('Clean up', function() {
+                    return fs.remove(workingPath);
+                })
+
+                describe('Equal', function() {
+
+                    it('setting absolute', function() {
+                        return testingRepo.raw(['remote', 'add', remoteName, remoteRefAbsolutePath])
+                        .then(() => {
+                            return vcsManager.equivalent(referenceName)
+                            .should.eventually.equal(true);
+                        });
+                    });
+
+                    it('setting relative', function() {
+                        return testingRepo.raw(['remote', 'add', remoteName, path.relative(testingRepoPath, remoteRefAbsolutePath)])
+                        .then(() => {
+                            return vcsManager.equivalent(referenceName)
+                            .should.eventually.equal(true);
+                        })
+                    });
+
+                });
+
+                describe('Different', function() {
+
+                    it('not set', function() {
+                        return vcsManager.equivalent(referenceName)
+                        .should.eventually.equal(false);
+                    });
+
+                    it('empty', function() {
+                        return testingRepo.raw(['remote', 'add', remoteName, ''])
+                        .then(() => {
+                            return vcsManager.equivalent(referenceName)
+                            .should.eventually.equal(false);
+                        });
+                    });
+
+                    it('wrong remote name', function() {
+                        return testingRepo.raw(['remote', 'add', `${remoteName}2`, remoteRefAbsolutePath])
+                        .then(() => {
+                            return vcsManager.equivalent(referenceName)
+                            .should.eventually.equal(false);                           
+                        })
+                    })
+
+                    it('set valid absolute path', function() {
+                        return testingRepo.raw(['remote', 'add', remoteName, repoStorePath])
+                        .then(() => {
+                            return vcsManager.equivalent(referenceName)
+                            .should.eventually.equal(false);
+                        });
+                    });
+
+                    it('set valid relative path', function() {
+                        return testingRepo.raw(['remote', 'add', remoteName, path.relative(testingRepoPath, repoStorePath)])
+                        .then(() => {
+                            return vcsManager.equivalent(referenceName)
+                            .should.eventually.equal(false);
+                        });
+                    });
+
+                });
+            })
         });
     });
 
