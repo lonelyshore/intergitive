@@ -8,6 +8,7 @@ const eol = require('../../lib/text-eol');
 const zip = require('../../lib/simple-archive');
 const devParams = require('../../dev/parameters');
 const normalizePathSep = require('../../lib/noarmalize-path-sep');
+const wait = require('../../lib/utility').wait;
 
 const utils = require('./test-utils');
 const AssetLoader = require('../../lib/asset-loader').AssetLoader;
@@ -554,7 +555,7 @@ describe('Action Executor #core', function() {
 
         beforeEach('Load Testing Repos', function(){
 
-            this.timeout(5000);
+            this.timeout(7000);
 
             return fs.emptyDir(workingPath)
             .then(() => {
@@ -562,6 +563,9 @@ describe('Action Executor #core', function() {
             })
             .then(() => {
                 repo = simpleGitCtor(workingPath);
+            })
+            .then(() => {
+                return wait(100);
             })
             .then(() => {
                 return repo.checkout(['-f', 'master']);
