@@ -7,44 +7,68 @@ asset_index:
       一如既往，教學相關的 git 倉庫已經自動載入。  
       請使用下一個區塊的按鈕開啟工作目錄所在位置。
 
-    description:instruct:fetch-all: |+2
+    description:elaborate:remote: |+2
       .md
       git 的一大重要功能是可以將版本歷史與他人共享  
       共享的最簡單方法是，將位在自己電腦上的 git 倉庫(本地倉庫)與位在別處的倉庫(遠端倉庫)連結  
       建立連結後，就可以抓取遠端的版本歷史，或推送本地的版本歷史  
 
-      目前教學的本地倉庫的遠端位置已經事先設定好了  
+      在此教學中，我們將會介紹如何操作本地倉庫取得遠端變化  
+      因為這是範例教學，為了簡化過程，本地倉庫的遠端位置已經事先設定好了  
+      
+      接下來，請抓取遠端倉庫的所有內容  
+
+    description:instruct:fetch-all: |+2
+      .md
       欲抓取遠端倉庫的所有內容，請使用 `git fetch --all` 的指令  
       抓取完成後，請按「確認」按鈕繼續進行  
 
-    description:instruct:list-remote-branches: |+2
+    description:elaborate:list-remote-branches: |+2
       .md
       從遠端倉庫拉取歷史後，為了在本地表現出遠端倉庫的狀態，會建立 **遠端追蹤分支** (remote-tracking branches)  
       這些分支的位置就代表拉取當下的遠端分支狀態  
       
       為了與本地分支區分，遠端追蹤分支的名字前面會有前綴(在這裡是 "origin")  
+      接下來，就讓我們查看遠端到底有那些分支
 
+    description:instruct:list-remote-branches: |+2
+      .md
       請使用 `git branch -a` 列出本地所有分支，並回答 `origin/` 開頭的分支數量
 
     description:instruct:remote-branches-changes: |+2
       .md
       git 終究不是同步軟體，當遠端倉庫發生變動的時候不會自動同步到本地，而是要手動更新  
+      
+      接下來，我們將模擬本地倉庫沒有任何改變的情況下，遠端倉庫被第三方製造了一些變化  
 
       請按下「確認」按鈕模擬遠端倉庫被第三方推送了一個新的分支
 
+    description:elaborate:fetch-new-branches: |+2
+      .md
+      現在遠端已經被第三方推送了新的分支，但是本地倉庫還**沒有**接收到任何變化  
+      如果您好奇目前本地倉庫的狀態，可以先使用 `git branch -a` 確認目前本地認知中的遠端分支數量狀態與剛才一致  
+
+      緊接著，我們將把遠端倉庫的最新狀態更新到本地
+
     description:instruct:fetch-new-branches: |+2
       .md
-      現在遠端已經發生變化  
-
       欲取得最新變化，請使用 `git fetch --all`  
-      如果不相信遠端的變化**不會**自動同步，可以先使用 `git branch -a` 確認目前本地認知中的遠端分支數量狀態與剛才一致  
+
       抓取完成後，請按「確認」按鈕繼續進行  
+
+    description:elaborate:check-new-branch: |+2
+      .md
+      現在，本地倉庫已經被我們手動更新到與遠端倉庫一致  
+      具體而言，遠端倉庫多了一個新分支，令人好奇它的身分，不是嗎？  
+
+      新的分支資訊其實在上一步抓取時 git 就已經有提到，或者我們也可以自行列出所有分支看看新朋友是誰
 
     description:instruct:check-new-branch: |+2
       .md
-      經過抓取更新後，現在可以再執行 `git branch -a` 然後觀察 `origin/` 開頭的分支個數如何變化  
+      請再執行 `git branch -a` 列出所有分支  
+      然後觀察 `origin/` 開頭的分支個數與上次相比如何變化  
 
-      請回答目前 `origin/` 開頭的分支個數
+      並且，請回答新增加的分支扣去 `origin/` 前綴後的名字
 
     file:random-file:v1: |+2
       我是沒想過會有人想把這個檔案打開來看啦...

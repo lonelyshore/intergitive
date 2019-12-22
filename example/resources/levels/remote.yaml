@@ -28,35 +28,6 @@
         - !dev.act.loadRepoReferenceArchive
           repoSetupName: another
           assetId: "archives/init-repo-store:test-local-ref"
-        # - !act.loadReference
-        #   repoSetupName: local
-        #   referenceName: merge
-        # - !act.loadReference
-        #   repoSetupName: another
-        #   referenceName: merge
-        # - !act.loadReference
-        #   repoSetupName: remote
-        #   referenceName: push-all
-        # - !dev.act.git
-        #   repoSetupName: local
-        #   arguments:
-        #     - remote
-        #     - add
-        #     - origin
-        #     - "../remote"
-        # - !dev.act.git
-        #   repoSetupName: another
-        #   arguments:
-        #     - remote
-        #     - add
-        #     - origin
-        #     - "../remote"  
-        # - !dev.act.saveReference
-        #   repoSetupName: local
-        #   referenceName: remote-init
-        # - !dev.act.saveReference
-        #   repoSetupName: another
-        #   referenceName: remote-init
 
     - !playActions
       descriptionId: "render/loadReference"
@@ -95,6 +66,8 @@
           arguments:
             - fetch
             - "--all"
+    - !elaborate
+      descriptionId: "level-data/remote/description:elaborate:remote"
     - !instruct
       descriptionId: "level-data/remote/description:instruct:fetch-all"
     - !verifyRepo
@@ -103,6 +76,8 @@
     - !checkpoint
       checkpointName: local-fetch-all
 
+    - !elaborate
+      descriptionId: "level-data/remote/description:elaborate:list-remote-branches"
     - !instruct
       descriptionId: "level-data/remote/description:instruct:list-remote-branches"
     - !verifyInput
@@ -152,6 +127,8 @@
           repoSetupName: remote
           referenceName: add-some-new-branch
 
+    - !elaborate
+      descriptionId: "level-data/remote/description:elaborate:fetch-new-branches"
     - !instruct
       descriptionId: "level-data/remote/description:instruct:fetch-new-branches"
     - !dev.needAction
@@ -167,10 +144,12 @@
     - !checkpoint
       checkpointName: add-some-new-branch
 
+    - !elaborate
+      descriptionId: "level-data/remote/description:elaborate:check-new-branch"
     - !instruct
       descriptionId: "level-data/remote/description:instruct:check-new-branch"
     - !verifyInput
-      answer: "7"
+      answer: "some-new-branch-pushed-from-another"
 
     
 
