@@ -7,7 +7,7 @@
             "description": "Describes the content of a raw text entry or the path to a file"
         },
         "infile_block": {
-            "$id": "#/properties/asset_index/properties/infile",
+            "$id": "#/definitions/infile_block",
             "type": "object",
             "title": "The Infile Schema",
             "description": "a dictionary maps asset IDs to their contents. optional",
