@@ -1,0 +1,38 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "relativePath": {
+        "type": "string",
+        "description": "Relative file path"
+    },
+    "assetId": {
+        "type": "string",
+        "description": "Asset ID"
+    },
+    "repoSetupName": {
+        "type": "string",
+        "description": "Alias name of a repo defined in [repoVcs] block of the yaml"
+    },
+    "remoteNickName": {
+        "type": "string",
+        "description": "arbitrary nick name of the remote"
+    },
+    "referenceName": {
+        "type": "string",
+        "description": "name of saved git repo reference"
+    },
+    "pathSpecs": {
+        "type": "array",
+        "description": "git path specs",
+        "items": {
+            "type": "string"
+        }
+    },
+    "commitish": {
+        "type": "string",
+        "description": "git commitish descriptor"
+    },
+    "checkpointName": {
+        "type": "string",
+        "description": "name of a checkpoint"
+    }
+}

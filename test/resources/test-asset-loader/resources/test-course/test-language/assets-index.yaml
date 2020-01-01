@@ -24,3 +24,4 @@ asset_index: # comprised by three parts: infile, ondisk, and fallbacks. All opti
       redirect_not_found: [ fallback-target, test-language ]
       redirect_container_not_found: [ not_exist, not_exist ]
       redirect_cyclic: ["fallback-target", "test-language"]
+

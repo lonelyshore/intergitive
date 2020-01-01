@@ -25,7 +25,7 @@ let unstageActionType = new yaml.Type(
         resolve: function(data) {
             return data !== null
                 && data instanceof Object
-                && memberIsStringArray("pathSpecs")
+                && memberIsStringArray(data, "pathSpecs")
                 && "repoSetupName" in data
                 && isString(data.repoSetupName);
         },
@@ -140,6 +140,7 @@ let gitCommandActionType = new yaml.Type(
             return data !== null
                 && "repoSetupName" in data
                 && isString(data.repoSetupName)
+                && (!('arguments' in data) || memberIsStringArray(data, 'arguments'));
         },
 
         construct: function(data) {

@@ -1,0 +1,258 @@
+{
+    "definitions": {
+        "devActionArray": {
+            "type": "array",
+            "items": {
+                "$ref": "level-actions.json#/dev"
+            }
+        },
+        "actionArray": {
+            "type": "array",
+            "items": {
+                "$ref": "level-actions.json#/production"
+            }           
+        },
+
+        "verifyInput": {
+            "type": "object",
+            "title": "[Step] Verify Input",
+            "description": "verify user input against <answer>. optionally displays a hint message with asset ID <descriptionId>",
+            "properties": {
+                "answer": {
+                    "type": "string",
+                    "description": "raw text or asset ID evaluator (${{ ASSET_ID }})"
+                },
+                "descriptionId": {
+                    "$ref": "config-commons.json#assetId"
+                }
+            },
+            "required": [
+                "answer"
+            ],
+            "additionalProperties": false
+        },
+        "verifyRepo": {
+            "type": "object",
+            "title": "[Step] Verify Repo",
+            "description": "verify repo <repoSetupName> against optional reference name <referenceName>. If <referenceName> is not provided, a unique one is generated and assigned during course baking",
+            "properties": {
+                "repoSetupName": {
+                    "$ref": "config-commons.json#repoSetupName"
+                },
+                "referenceName": {
+                    "$ref": "config-commons.json#referenceName"
+                }
+            },
+            "required": [ "repoSetupName" ],
+            "additionalProperties": false
+        },
+        "verifyAllRepo": {
+            "type": "object",
+            "title": "[Step] Verify All Repo",
+            "description": "verifies all available git repos listed in [repoVcs] block against optional reference name <referenceName>. If <referenceName> is not provided, a unique one is generated and assigned during course baking",
+            "properties": {
+                "referenceName": {
+                    "$ref": "config-commons.json#referenceName"
+                }
+            },
+            "additionalProperties": false
+        },
+        "executeAction": {
+            "type": "object",
+            "title": "[Step] Execute Action",
+            "description": "user can actions <actions> by clicking a button. Optionally dislays a hint message with asset ID <descriptionId>",
+            "properties": {
+                "actions": {
+                    "$ref": "#/definitions/actionArray"
+                },
+                "descriptionId": {
+                    "$ref": "config-commons.json#assetId"
+                }
+            },
+            "required": [ "actions" ],
+            "additionalProperties": false
+        },
+        "elaborate": {
+            "type": "object",
+            "title": "[Step] Elaborate",
+            "description": "display message with asset ID <descriptionId> to a user. Can optionally require user to confirm with a click if <needConfirm> is set and is set to true",
+            "properties": {
+                "descriptionId": {
+                    "$ref": "config-commons.json#assetId"
+                },
+                "needConfirm": {
+                    "type": "boolean",
+                    "default": true
+                }
+            },
+            "required": [ "descriptionId" ],
+            "additionalProperties": false
+        },
+        "illustrate": {
+            "type": "object",
+            "title": "[Step] Illustrate",
+            "description": "display message with asset ID <descriptionId> to a user. Can insert illustrations using asset ID evaluation {{ ILLUSTRATION_ID }} to get illustration path. Can optionally require user to confirm with a click if <needConfirm> is set and is set to true",
+            "properties": {
+                "descriptionId": {
+                    "$ref": "config-commons.json#assetId"
+                },
+                "needConfirm": {
+                    "type": "boolean",
+                    "default": true
+                }
+            },
+            "required": [ "descriptionId" ],
+            "additionalProperties": false
+        },
+        "instruct": {
+            "type": "object",
+            "title": "[Step] Instruct",
+            "description": "display message with asset ID <descriptionId> to a user for instructions.",
+            "properties": {
+                "descriptionId": {
+                    "$ref": "config-commons.json#assetId"
+                }
+            },
+            "required": [ "descriptionId" ],
+            "additionalProperties": false
+        },
+        "partialCheckPoint": {
+            "type": "object",
+            "title": "[Step] Partial Checkpoint",
+            "description": "set a checkpoint with name <checkpointName> for git repo names array <repoSetupNames>",
+            "properties": {
+                "repoSetupNames": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "config-commons.json#repoSetupName"
+                    }
+                },
+                "checkpointName": {
+                    "$ref": "config-commons.json#checkpointName"
+                }
+            },
+            "required": [
+                "repoSetupNames",
+                "checkpointName"
+            ],
+            "additionalProperties": false
+        },
+        "checkpoint": {
+            "type": "object",
+            "title": "[Step] Partial Checkpoint",
+            "description": "set a checkpoint with name <checkpointName> for all available git repos listed in [repoVcs] block",
+            "properties": {
+                "checkpointName": {
+                    "$ref": "config-commons.json#checkpointName"
+                }
+            },
+            "required": [
+                "checkpointName"
+            ],
+            "additionalProperties": false
+        },
+        "loadReference": {
+            "type": "object",
+            "title": "[Step] Load Git Repo Reference",
+            "description": "automatically loads git snapshot with reference name <referenceName> into repo <repoSetupName>",
+            "properties": {
+                "repoSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                },
+                "referenceName": {
+                    "$ref": "config-commons.json#/referenceName"
+                }
+            },
+            "required": [
+                "repoSetupName",
+                "referenceName"
+            ],
+            "additionalProperties": false
+        },
+        "autoPlayActions": {
+            "type": "object",
+            "title": "[Step] Auto Play Actions",
+            "description": "automatically execute actions <actions>, can be retried with a click. Can optionally display hint message with asset ID <descriptionId>",
+            "properties": {
+                "descriptionId": {
+                    "$ref": "config-commons.json#assetId"
+                },
+                "actions": {
+                    "$ref": "#/definitions/actionArray"
+                }
+            },
+            "required": [
+                "descriptionId",
+                "actions"
+            ],
+            "additionalProperties": false
+        },
+        "openWorkingPath":  {
+            "type": "object",
+            "title": "[Step] Open Working Path",
+            "description": "user can open working directory of <repoSetupName> in a file explorer window with a click",
+            "properties": {
+                "repoSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                }
+            },
+            "required": [ "repoSetupName" ],
+            "additionalProperties": false
+        },
+
+        "devNeedAction": {
+            "type": "object",
+            "title": "[Dev][Step] Need Action",
+            "description": "describes actions <actions> that are expected by a user. During course baking, listed <actions> are executed and baked",
+            "properties": {
+                "actions": {
+                    "$ref": "#/definitions/devActionArray"
+                }
+            },
+            "required": [ "actions" ],
+            "additionalProperties": false
+        },
+        "devAction": {
+            "type": "object",
+            "title": "[Dev][Step] Action",
+            "description": "describes actions <actions> that will be executed during course baking",
+            "properties": {
+                "actions": {
+                    "$ref": "#/definitions/devActionArray"
+                },
+                "dev.devAction": {
+                    "type": "number"
+                }
+            },
+            "required": [ "actions" ],
+            "additionalProperties": false
+        }
+    },
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "production": {
+        "$comment": "Describes production step subclasses",
+        "anyOf": [
+            { "$ref": "#/definitions/verifyInput" },
+            { "$ref": "#/definitions/verifyRepo" },
+            { "$ref": "#/definitions/verifyAllRepo" },
+            { "$ref": "#/definitions/executeAction" },
+            { "$ref": "#/definitions/elaborate" },
+            { "$ref": "#/definitions/illustrate" },
+            { "$ref": "#/definitions/instruct" },
+            { "$ref": "#/definitions/partialCheckPoint" },
+            { "$ref": "#/definitions/checkpoint" },
+            { "$ref": "#/definitions/loadReference" },
+            { "$ref": "#/definitions/autoPlayActions" },
+            { "$ref": "#/definitions/openWorkingPath" }
+        ]
+    },
+    "dev": {
+        "$comment": "Describes dev step subclasses",
+        "anyOf": [
+            { "$ref": "#/production" },
+            { "$ref": "#/definitions/devNeedAction" },
+            { "$ref": "#/definitions/devAction" }
+        ]
+    }
+
+}

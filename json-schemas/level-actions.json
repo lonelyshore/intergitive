@@ -1,0 +1,367 @@
+{
+    "definitions": {
+        "writeFile": {
+            "type": "object",
+            "title": "[Action] Write File",
+            "description": "Writes files from <sourceAssetIds> to <destinatinoPaths>",
+            "properties": {
+                "sourceAssetIds": {
+                    "type": "array",
+                    "title": "Source Asset IDs",
+                    "description": "asset IDs of source files",
+                    "items": {
+                        "$ref": "config-commons.json#/assetId"
+                    }
+                },
+                "destinationPaths": {
+                    "type": "array",
+                    "title": "Destination paths",
+                    "description": "relative paths to written files",
+                    "items": {
+                        "$ref": "config-commons.json#/relativePath"
+                    }
+                }
+            },
+            "required": [
+                "sourceAssetIds",
+                "destinationPaths"
+            ],
+            "additionalProperties": false
+        },
+        "removeFile": {
+            "type": "object",
+            "title": "[Action] Remove File",
+            "description": "Remove files in <targetPaths>",
+            "properties": {
+                "targetPaths": {
+                    "type": "array",
+                    "title": "Target Paths",
+                    "description": "relative paths of deleted files",
+                    "items": {
+                        "$ref": "config-commons.json#/relativePath"
+                    }
+                }
+            },
+            "required": [
+                "targetPaths"
+            ],
+            "additionalProperties": false
+        },
+        "moveFile": {
+            "type": "object",
+            "title": "[Action] Move File",
+            "description": "Move files from <sourcePath> to <targetPath>",
+            "properties": {
+                "sourcePath": {
+                    "$ref": "config-commons.json#/relativePath"
+                },
+                "targetPath": {
+                    "$ref": "config-commons.json#/relativePath"
+                }
+            },
+            "required": [
+                "sourcePath",
+                "targetPath"
+            ],
+            "additionalProperties": false
+        },
+        "debugLog": {
+            "type": "string",
+            "title": "[Action] Debug Log",
+            "description": "prints debug message"
+        },
+        "stage": {
+            "type": "object",
+            "title": "[Action] Stage",
+            "description": "stage <pathSpecs> in repo with name <repoSetupName>",
+            "properties": {
+                "pathSpecs": {
+                    "$ref": "config-commons.json#/pathSpecs"
+                },
+                "repoSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                }
+            },
+            "required": [
+                "pathSpecs",
+                "repoSetupName"
+            ],
+            "additionalProperties": false
+        },
+        "stageAll": {
+            "type": "object",
+            "title": "[Action] Stage All",
+            "description": "stage all files in <repoSetupName>",
+            "properties": {
+                "repoSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                }
+            },
+            "required": [ "repoSetupName" ],
+            "additionalProperties": false
+        },
+        "setRemote": {
+            "type": "object",
+            "title": "[Action] Set Remote",
+            "description": "set remote <remoteSetupName> as a remote of <localSetupName> with nick name <remoteNickName>",
+            "properties": {
+                "localSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                },
+                "remoteSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                },
+                "remoteNickName": {
+                    "$ref": "config-commons.json#/remoteNickName"
+                }
+            },
+            "required": [
+                "localSetupName",
+                "remoteSetupName",
+                "remoteNickName"
+            ],
+            "additionalProperties": false
+        },
+        "push": {
+            "type": "object",
+            "title": "[Action] Push",
+            "description": "<localSetupName> pushes <refspecs> to <remoteNickName>",
+            "properties": {
+                "localSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                },
+                "remoteNickName": {
+                    "$ref": "config-commons.json#/remoteNickName"
+                },
+                "refspecs": {
+                    "type": "string",
+                    "description": "git ref specs"
+                }
+            },
+            "required": [
+                "localSetupName",
+                "remoteNickName",
+                "refSpecs"
+            ],
+            "additionalProperties": false
+        },
+        "pushAll": {
+            "type": "object",
+            "title": "[Action] Push All",
+            "description": "<localSetupName> pushes all branches to <remoteNickName>, will force push if <isForce> is set to true",
+            "properties": {
+                "localSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                },
+                "remoteNickName": {
+                    "$ref": "config-commons.json#/remoteNickName"
+                },
+                "isForce": {
+                    "type": "boolean",
+                    "description": "should force push or not"
+                }
+            },
+            "required": [
+                "localSetupName",
+                "remoteNickName"
+            ],
+            "additionalProperties": false           
+        },
+        "loadReference": {
+            "type": "object",
+            "title": "[Action] Load Reference",
+            "description": "load git repo snapshot with name <referenceName> to repo <repoSetupName>",
+            "properties": {
+                "repoSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                },
+                "referenceName": {
+                    "$ref": "config-commons.json#/referenceName"
+                }
+            },
+            "required": [
+                "repoSetupName",
+                "referenceName"
+            ],
+            "additionalProperties": false
+        },
+
+        "devUnstage": {
+            "type": "object",
+            "title": "[Dev][Action] Unstage",
+            "description": "unstage <pathspecs> from <repoSetupName>",
+            "properties": {
+                "pathSpecs": {
+                    "$ref": "config-commons.json#/pathSpecs"
+                },
+                "repoSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                }
+            },
+            "required": [
+                "pathSpecs",
+                "repoSetupName"
+            ],
+            "additionalProperties": false
+        },
+        "devUnstageAll": {
+            "type": "object",
+            "title": "[Dev][Action] Unstage All",
+            "description": "unstage all files from <repoSetupName>",
+            "properties": {
+                "repoSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                }
+            },
+            "required": [
+                "repoSetupName"
+            ],
+            "additionalProperties": false
+        },
+        "devMerge": {
+            "type": "object",
+            "title": "[Dev][Action] Merge",
+            "description": "merge current branch of <repoSetupName> with banch <withBranch>",
+            "properties": {
+                "repoSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                },
+                "withBranch": {
+                    "type": "string",
+                    "description": "branch name"
+                }
+            },
+            "required": [
+                "repoSetupName",
+                "withBranch"
+            ],
+            "additionalProperties": false
+        },
+        "devContinueMerge": {
+            "type": "object",
+            "title": "[Dev][Action] Continue Merging",
+            "description": "continue interrupted merging for <repoSetupName>",
+            "properties": {
+                "repoSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                }
+            },
+            "required": [
+                "repoSetupName"
+            ],
+            "additionalProperties": false
+        },
+        "devCleanCheckout": {
+            "type": "object",
+            "title": "[Dev][Action] Clean Checkout",
+            "description": "clean checkout <repoSetupName> to <commitish>",
+            "properties": {
+                "repoSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                },
+                "commitish": {
+                    "$ref": "config-commons.json#/commitish"
+                }
+            },
+            "required": [
+                "repoSetupName",
+                "commitish"
+            ],
+            "additionalProperties": false
+        },
+        "devGitCommand": {
+            "type": "object",
+            "title": "[Dev][Action] Git Command",
+            "description": "operate git commands in <arguments> array on <repoSetupName>",
+            "properties": {
+                "repoSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                },
+                "arguments": {
+                    "type": "array",
+                    "description": "please break git command arguments into a string array",
+                    "examples": [
+                        "reset",
+                        "--hard",
+                        "HEAD"
+                    ],
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "repoSetupName",
+                "arguments"
+            ],
+            "additionalProperties": false
+        },
+        "devSaveRepoReference": {
+            "type": "object",
+            "title": "[Dev][Action] Save Repo Reference",
+            "default": "saves snapshot of <repoSetupName> as a new repo reference with name <referenceName>",
+            "properties": {
+                "repoSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                },
+                "referenceName": {
+                    "$ref": "config-commons.json#/referenceName"
+                }
+            },
+            "required": [
+                "repoSetupName",
+                "referenceName"
+            ],
+            "additionalProperties": false
+        },
+        "devLoadRepoReferenceArchive": {
+            "type": "object",
+            "title": "[Dev][Action] Load Repo Reference Archive",
+            "default": "extracts a git repo snapshot archive with asset ID <assetId> to <repoSetupName>",
+            "properties": {
+                "repoSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                },
+                "assetId": {
+                    "$ref": "config-commons.json#/assetId"
+                }
+            },
+            "required": [
+                "repoSetupName",
+                "assetId"
+            ],
+            "additionalProperties": false
+        }
+    },
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "production": {
+        "comments": "Describes production action subclasses",
+        "anyOf": [
+            { "$ref": "#/definitions/writeFile" },
+            { "$ref": "#/definitions/removeFile" },
+            { "$ref": "#/definitions/moveFile" },
+            { "$ref": "#/definitions/debugLog" },
+            { "$ref": "#/definitions/stage" },
+            { "$ref": "#/definitions/stageAll" },
+            { "$ref": "#/definitions/setRemote" },
+            { "$ref": "#/definitions/push" },
+            { "$ref": "#/definitions/pushAll" },
+            { "$ref": "#/definitions/loadReference" }
+        ]
+    },
+    "dev": {
+        "comments": "Describes dev action subclasses",
+        "anyOf": [
+            { "$ref": "#/production"},
+
+            { "$ref": "#/definitions/devUnstage" },
+            { "$ref": "#/definitions/devUnstageAll" },
+            { "$ref": "#/definitions/devMerge" },
+            { "$ref": "#/definitions/devContinueMerge" },
+            { "$ref": "#/definitions/devCleanCheckout" },
+            { "$ref": "#/definitions/devGitCommand" },
+            { "$ref": "#/definitions/devSaveRepoReference" },
+            { "$ref": "#/definitions/devLoadRepoReferenceArchive" }
+        ]
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "properties": {
+        "repoVcsSetups": {
+            "type": "object"
+        },
+        "steps": {
+            "type": "array",
+            "items": {
+                "$ref": "level-steps.json#dev"
+            }
+        }
+    },
+    "required": [ "repoVcsSetups", "steps" ]
+}

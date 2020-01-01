@@ -1,5 +1,47 @@
 {
     "yaml.schemas": {
-        "json-schemas/asset-index.json": "*-index.yaml"
-    }
+        "json-schemas/asset-index.json": "*-index.yaml",
+        "json-schemas/level.json": "levels/*.yaml"
+    },
+    "yaml.customTags": [
+        "!level mapping",
+        "!repoVcs mapping",
+
+        "!act.writeFile mapping",
+        "!act.removeFile mapping",
+        "!act.moveFile mapping",
+        "!act.log scalar",
+        "!act.stage mapping",
+        "!act.stageAll mapping",
+        "!act.setRemote mapping",
+        "!act.push mapping",
+        "!act.pushAll mapping",
+        "!act.loadReference mapping",
+
+        "!dev.act.unstage mapping",
+        "!dev.act.unstageAll mapping",
+        "!dev.act.merge mapping",
+        "!dev.act.continueMerge mapping",
+        "!dev.act.cleanCheckout mapping",
+        "!dev.act.git mapping",
+        "!dev.act.saveReference mapping",
+        "!dev.act.loadRepoReferenceArchive mapping",
+
+        "!verifyInput mapping",
+        "!verifyOneRepo mapping",
+        "!verifyRepo mapping",
+        "!execute mapping",
+        "!elaborate mapping",
+        "!illustrate mapping",
+        "!instruct mapping",
+        "!partialCheckpoint mapping",
+        "!checkpoint mapping",
+        "!loadReference mapping",
+        "!playActions mapping",
+        "!openWorkingPath mapping",
+
+        "!dev.needAction mapping",
+        "!dev.devAction mapping",
+        
+    ]
 }
