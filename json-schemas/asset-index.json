@@ -1,0 +1,120 @@
+{
+    "definitions": {
+        "asset_index_entry": {
+            "$id": "#/definitions/asset_index_entry",
+            "type": "string",
+            "title": "An Entry of Asset Index",
+            "description": "Describes the content of a raw text entry or the path to a file"
+        },
+        "infile_block": {
+            "$id": "#/properties/asset_index/properties/infile",
+            "type": "object",
+            "title": "The Infile Schema",
+            "description": "a dictionary maps asset IDs to their contents. optional",
+            "patternProperties": {
+                ".*": {
+                    "$ref": "#/definitions/asset_index_entry"
+                }
+            },
+            "additionalProperties": false
+        },
+        "ondisk_block": {
+            "$id": "#/definitions/ondisk_block",
+            "type": "object",
+            "title": "The Ondisk Schema",
+            "description": "a dictionary of ondisk asset paths. optional",
+            "patternProperties": {
+                ".*": {
+                    "$ref": "#/definitions/asset_index_entry"
+                }
+            },
+            "additionalProperties": false
+        },
+        "fallbacks_block": {
+            "$id": "#/definitions/fallbacks_block",
+            "type": "object",
+            "title": "The Fallbacks Schema",
+            "description": "redirecting queries to other asset indices. optional",
+            "additionalProperties": false,
+            "properties": {
+                "default": {
+                    "$id": "#/definitions/fallbacks_block/properties/default",
+                    "type": "object",
+                    "title": "The Default Fallback Schema",
+                    "description": "enumerates set of assets that are redirected to a default asset. optional",
+                    "required": [
+                        "path_replacement",
+                        "keys"
+                    ],
+                    "properties": {
+                        "path_replacement": {
+                            "$id": "#/definitions/fallbacks_block/properties/default/properties/path_replacement",
+                            "type": "array",
+                            "title": "The Path Replacement Schema of Default Fallbacks",
+                            "description": "the new base path of the remapped keys; mandatory when .fallbacks.default exists.",
+                            "items": {
+                                "$id": "#/definitions/fallbacks_block/properties/default/properties/path_replacement/items",
+                                "type": "string",
+                                "default": ""
+                            }
+                        },
+                        "keys": {
+                            "$id": "#/definitions/fallbacks_block/properties/default/properties/keys",
+                            "type": "array",
+                            "title": "The Keys Schema of Default Fallbacks",
+                            "description": "an array of remapped keys. mandatory when fallback/default exists.",
+                            "items": {
+                                "$id": "#/definitions/fallbacks_block/properties/default/properties/keys/items",
+                                "type": "string",
+                                "title": "The Items Schema",
+                                "default": ""
+                            }
+                        }
+                    }
+                },
+                "redirects": {
+                    "$id": "#/definitions/fallbacks_block/properties/redirects",
+                    "type": "object",
+                    "title": "The Redirects Fallbacks Schema",
+                    "description": "an array of key value paris. each value is the new base path of the remapped key. optional",
+                    "patternProperties": {
+                        ".*": {
+                            "type": "array",
+                            "title": "Redirect Entry",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            }
+        }
+    },
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "title": "The Root Schema of an Asset Index File",
+    "required": [
+        "asset_index"
+    ],
+    "properties": {
+        "asset_index": {
+            "$id": "#/properties/asset_index",
+            "type": "object",
+            "title": "The Asset Index Schema",
+            "description": "Comprised by three parts: infile, ondisk, and fallbacks. All optional.",
+            "properties": {
+                "infile": {
+                    "$ref": "#definitions/infile_block"
+                },
+                "ondisk": {
+                    "$ref": "#definitions/ondisk_block"
+                },
+                "fallbacks": {
+                    "$ref": "#definitions/fallbacks_block"
+                }
+            },
+            "additionalProperties": false
+        }
+    }
+}

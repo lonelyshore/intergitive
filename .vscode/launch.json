@@ -1,0 +1,142 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Bake",
+            "program": "${workspaceFolder}/dev/course-maker",
+            "args": [
+                "bake-course",
+                ".\\example\\resources+",
+                "course/main",
+                ".\\test\\resources\\repo-archive\\"
+            ],
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Save Module",
+            "program": "${workspaceFolder}/dev/module-switch",
+            "args": [
+                "save",
+                "nodegit",
+                "electron-4"
+            ],
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Mocha All",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "args": [
+                "--timeout",
+                "999999",
+                "--colors",
+                "--recursive",
+                "${workspaceFolder}/test/tests/*.js"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Mocha Core",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "args": [
+                "--timeout",
+                "999999",
+                "--colors",
+                "--recursive",
+                "${workspaceFolder}/test/tests/*.js",
+                "--grep",
+                "#core"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Archive",
+            "program": "${workspaceFolder}\\playground\\archive.js"
+        },       
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Util Compare",
+            "program": "${workspaceFolder}\\playground\\util-compare.js"
+        },        
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Generate Asset",
+            "program": "${workspaceFolder}\\playground\\generate-assets.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "YAML",
+            "program": "${workspaceFolder}\\playground\\yaml.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Compare Repo",
+            "program": "${workspaceFolder}\\playground\\compare-repo.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Backup Repo",
+            "program": "${workspaceFolder}\\playground\\backup-repo.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Save Reference",
+            "program": "${workspaceFolder}\\playground\\save-reference.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Restore Repo",
+            "program": "${workspaceFolder}\\playground\\restore-repo.js"
+        },        
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Remote Test",
+            "program": "${workspaceFolder}\\playground\\remote.js"           
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Simple",
+            "program": "${workspaceFolder}\\playground\\simple.js"           
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Json",
+            "program": "${workspaceFolder}\\playground\\json.js"           
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Generate VCS Base Repo",
+            "program": "${workspaceFolder}\\test\\scripts\\generate-compare-vcs-base.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Test FS Copy",
+            "program": "${workspaceFolder}\\test\\scripts\\reproduce-fs-extra-copy-error.js"
+        }
+        
+    ]
+}
