@@ -4,36 +4,7 @@
     "description": "Describes the steps of a level with <steps> and git repos involved using <repoVcsSetups>",
     "properties": {
         "repoVcsSetups": {
-            "type": "object",
-            "title": "Git Repo VCS Setups",
-            "description": "a dictionary mapping repo nick names to a tuple of repo settings",
-            "patternProperties": {
-                ".*": {
-                    "type": "object",
-                    "properties": {
-                        "workingPath": {
-                            "type": "string",
-                            "description": "relative path to working directory"
-                        },
-                        "referenceStoreName": {
-                            "type": "string",
-                            "description": "name of git reference snapshot store. All snapshots will be placed under this subpath"
-                        },
-                        "checkpointStoreName": {
-                            "type": "string",
-                            "description": "name of git checkpoint snapshot store. All checkpoint snapshots will be placed under this subpath"
-                        },
-                        "repoType": {
-                            "type": "string",
-                            "description": "type of the git repo, should be chosen from 'local' or 'remote'. Defaults to 'local' if not shown.",
-                            "enum": [ "local", "remote" ],
-                            "default": "local"
-                        }
-                    },
-                    "required": [ "workingPath" ]
-                }
-            },
-            "additionalProperties": false
+            "$ref": "config-commons.json#/repoVcsSetups"
         },
         "steps": {
             "type": "array",
