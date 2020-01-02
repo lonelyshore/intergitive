@@ -141,7 +141,7 @@
             "required": [
                 "localSetupName",
                 "remoteNickName",
-                "refSpecs"
+                "refspecs"
             ],
             "additionalProperties": false
         },

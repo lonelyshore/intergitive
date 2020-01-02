@@ -1,7 +1,8 @@
 {
     "yaml.schemas": {
         "json-schemas/asset-index.json": "*-index.yaml",
-        "json-schemas/level.json": "levels/*.yaml"
+        "json-schemas/level.json": "levels/*.yaml",
+        "json-schemas/generate-repo.json": "generate-*-repo.yaml"
     },
     "yaml.customTags": [
         "!level mapping",

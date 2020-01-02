@@ -1,0 +1,76 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "title": "Base Repo Generation",
+    "description": "Describes the steps of a level with <steps> and git repos involved using <repoVcsSetups>. Asset ids comes from <resourcesSubPath> for baking",
+    "properties": {
+        "resourcesSubPath": {
+            "type": "string"
+        },
+        "repoSetups": {
+            "type": "object",
+            "title": "Git Repo VCS Setups",
+            "description": "a dictionary mapping repo nick names to a tuple of repo settings",
+            "patternProperties": {
+                ".*": {
+                    "type": "object",
+                    "properties": {
+                        "workingPath": {
+                            "type": "string",
+                            "description": "relative path to working directory"
+                        },
+                        "referenceStoreName": {
+                            "type": "string",
+                            "description": "name of git reference snapshot store. All snapshots will be placed under this subpath"
+                        },
+                        "repoArchiveName": {
+                            "type": "string",
+                            "description": "name of repo archive that will be extracted as the initial base of the repo"
+                        },
+                        "repoType": {
+                            "type": "string",
+                            "description": "type of the git repo, should be chosen from 'local' or 'remote'. Defaults to 'local' if not shown.",
+                            "enum": [ "local", "remote" ],
+                            "default": "local"
+                        }
+                    },
+                    "required": [ "workingPath", "repoType" ]
+                }
+            },
+            "additionalProperties": false
+        },
+        "stages": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "stage name, will be used as repo reference snapshot name"
+                    },
+                    "save": {
+                        "type": "array",
+                        "description": "repo setup names that will be snapshot",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "actions": {
+                        "type": "array",
+                        "description": "array of actions that will be executed when baking",
+                        "items": {
+                            "$ref": "level-actions.json#/dev"
+                        }
+                    }
+                },
+                "required": [
+                    "name",
+                    "save",
+                    "actions"
+                ],
+                "additionalProperties": false
+            }
+        }
+    },
+    "required": [ "resourcesSubPath", "repoSetups", "stages" ],
+    "additionalProperties": false
+}
