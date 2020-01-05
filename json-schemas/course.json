@@ -1,0 +1,42 @@
+{
+    "definitions": {
+        "prerequisiteIds": {
+            "type": "array",
+            "description": "prerequisite item IDs",
+            "items": {
+                "type": "string"
+            }
+        },
+        "namedCourseItem": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "unique ID of the item that can be referenced by other items"
+                },
+                "nameKey": {
+                    "type": "string",
+                    "description": "the asset ID of name of this item"
+                },
+                "configAssetId": {
+                    "$ref": "config-commons.json#assetId"
+                },
+                "prerequisiteIds": {
+                    "$ref": "#/definitions/prerequisiteIds"
+                },
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/namedCourseItem"
+                    }
+                }
+            },
+            "required": [ "id", "nameKey" ],
+            "additionalProperties": false
+        }
+    },
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "title": "Course",
+    "description": "Describes course structure",
+    "$ref": "#/definitions/namedCourseItem"
+}
