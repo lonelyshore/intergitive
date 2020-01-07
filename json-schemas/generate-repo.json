@@ -58,6 +58,13 @@
                         "type": "boolean",
                         "description": "should current step get reset at the beginning"
                     },
+                    "replay": {
+                        "type": "array",
+                        "description": "stages that will be replayed at the beginning of current stage. Non-recursive.",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
                     "actions": {
                         "type": "array",
                         "description": "array of actions that will be executed when baking",
