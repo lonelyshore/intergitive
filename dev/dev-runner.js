@@ -215,20 +215,7 @@ const collectHasPrerequisiteLevels = function(course) {
     return collected;
 }
 
-/**
- * Flatten course tree
- * @param {courseConfig.NamedCourseItem} item 
- * @param {Array<string>} flatCourseSeries
- */
-function flattenCourseTree(item, flatCourseSeries) {
-    if ('children' in item) {
-        item.children.forEach(child => {
-            flattenCourseTree(child, flatCourseSeries);
-        });
-    }
-    
-    flatCourseSeries.push(item.id);
-}
+
 
 function CollectCourseItemIdToItemDict(course) {
     let dict = {};
@@ -267,7 +254,7 @@ const run = function(configPath, fileSystemBaseFolder, repoStoreSubPath, assetLo
     })
     .then(() => {
         let flatCourseIds = [];
-        flattenCourseTree(course, flatCourseIds);
+        courseConfig.flattenCourseTree(course, flatCourseIds);
 
         return flatCourseIds;
     })

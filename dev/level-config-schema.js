@@ -14,7 +14,7 @@ const memberIsStringArray = function(data, memberName) {
     return memberName in data
         && data[memberName] !== null
         && Array.isArray(data[memberName])
-        && data[memberName].all(e => isString(e));
+        && data[memberName].every(e => isString(e));
 }
 
 let unstageActionType = new yaml.Type(
