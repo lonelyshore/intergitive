@@ -45,6 +45,7 @@
         "!checkpoint mapping",
         "!loadReference mapping",
         "!playActions mapping",
+        "!loadLastLevelFinalSnapshot mapping",
         "!openWorkingPath mapping",
 
         "!dev.needAction mapping",

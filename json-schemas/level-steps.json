@@ -187,6 +187,21 @@
             ],
             "additionalProperties": false
         },
+        "loadLastLevelFinalSnapshot": {
+            "type": "object",
+            "title": "[Step] Load Last Level Final Snapshot",
+            "description": "loads final snapshots from previous level for <repoSetupNames>",
+            "properties": {
+                "repoSetupNames": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "config-commons.json#/repoSetupName"
+                    }
+                }
+            },
+            "required": [ "repoSetupNames" ],
+            "additionalProperties": false
+        },
         "openWorkingPath":  {
             "type": "object",
             "title": "[Step] Open Working Path",
