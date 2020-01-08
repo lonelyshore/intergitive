@@ -55,12 +55,10 @@ const loadReferenceMakerMapping = function(repoVcsSetups, storePath) {
 /**
  * 
  * @param {courseConfig.LevelItem} levelItem
- * @param {String} levelId
- * @param {Object} courseItemDict
  * @param {Array<String>} flatCourseIds
  * @param {Object} actionExecutorContext
  */
-const bakeLevel = function(levelItem, levelId, flatCourseIds, courseItemDict, actionExecutorContext) {
+const bakeLevel = function(levelItem, flatCourseItems, actionExecutorContext) {
 
     return actionExecutorContext.assetLoader.loadTextContent(levelItem.configAssetId)
     .then(text => {
@@ -123,10 +121,10 @@ const bakeLevel = function(levelItem, levelId, flatCourseIds, courseItemDict, ac
             else if (step instanceof stepConf.LoadLastStageFinalSnapshotStep) {
                 
                 let previousLevelId = null;
-                for (let i = flatCourseIds.indexOf(levelId) - 1; i >= 0; i--) {
-                    let candidateLevelId = flatCourseIds[levelId];
-                    if (courseItemDict[candidateLevelId] instanceof courseConfig.LevelItem) {
-                        previousLevelId = candidateLevelId;
+                for (let i = flatCourseItems.indexOf(levelItem) - 1; i >= 0; i--) {
+                    let candidateLevel = flatCourseItems[levelId];
+                    if (candidateLevel instanceof courseConfig.LevelItem) {
+                        previousLevelId = candidateLevel.id;
                         break;
                     }
                 }
@@ -150,7 +148,7 @@ const bakeLevel = function(levelItem, levelId, flatCourseIds, courseItemDict, ac
         let saveFinalSnapshotActions = repoVcsSetupNames.map(repoVcsSetupName => {
             return new actionConf.SaveRepoReferenceAction(
                 repoVcsSetupName,
-                `${levelId}-final-snapshot`
+                `${levelItem.id}-final-snapshot`
             );
         });
     
@@ -253,25 +251,20 @@ const run = function(configPath, fileSystemBaseFolder, repoStoreSubPath, assetLo
         course = result;
     })
     .then(() => {
-        let flatCourseIds = [];
-        courseConfig.flattenCourseTree(course, flatCourseIds);
+        let flatCourseItems = [];
+        courseConfig.flattenCourseTree(course, flatCourseItems);
 
-        return flatCourseIds;
+        return flatCourseItems;
     })
-    .then(flatCourseIds => {
-        let idToItemDict = CollectCourseItemIdToItemDict(course);
-
+    .then(flatCourseItems => {
         let bakeLevelTasks = Promise.resolve();
-        flatCourseIds.forEach(courseItemId => {
-            let item = idToItemDict[courseItemId];
+        flatCourseItems.forEach(item => {
 
             if (item instanceof courseConfig.LevelItem) {
                 bakeLevelTasks = bakeLevelTasks.then(() => {
                     return bakeLevel(
                         item,
-                        courseItemId,
-                        flatCourseIds,
-                        idToItemDict,
+                        flatCourseItems,
                         actionExecutorContext,
                     );
                 });
