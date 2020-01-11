@@ -118,7 +118,7 @@ const bakeLevel = function(levelItem, flatCourseItems, actionExecutorContext) {
                     });
                 });
             }
-            else if (step instanceof stepConf.LoadLastStageFinalSnapshotStep) {
+            else if (step instanceof stepConf.LoadLastLevelFinalSnapshotStep) {
                 
                 let previousLevel = courseConfig.findLastLevel(flatCourseItems, levelItem);
                 let previousLevelId = previousLevel ? previousLevel.id : null;
