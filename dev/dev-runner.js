@@ -246,10 +246,7 @@ const run = function(configPath, fileSystemBaseFolder, repoStoreSubPath, assetLo
         course = result;
     })
     .then(() => {
-        let flatCourseItems = [];
-        courseConfig.flattenCourseTree(course, flatCourseItems);
-
-        return flatCourseItems;
+        return courseConfig.flattenCourseTree(course);
     })
     .then(flatCourseItems => {
         let bakeLevelTasks = Promise.resolve();
