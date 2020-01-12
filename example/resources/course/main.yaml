@@ -14,11 +14,11 @@
           id: "example-main-level-1-2"
           nameKey: "levels/main.level-1-2.name"
           configAssetId: "levels/remote"
-    # - !sequential-section
-    #   id: "example-main-seciont-2"
-    #   nameKey: "levels/main.section-2.name"
-    #   children:
-    #     - !level
-    #       id: "example-main-level-2-1"
-    #       nameKey: "levels/main.level-2-1.name"
-    #       configAssetId: "levels/test"
+    - !sequential-section
+      id: "example-main-seciont-2"
+      nameKey: "levels/main.section-2.name"
+      children:
+        - !level
+          id: "example-main-level-2-1"
+          nameKey: "levels/main.level-2-1.name"
+          configAssetId: "levels/test"

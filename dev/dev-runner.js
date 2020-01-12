@@ -65,7 +65,7 @@ const bakeLevel = function(levelItem, flatCourseItems, actionExecutorContext) {
         return yaml.safeLoad(text, { schema: LEVEL_SCHEMA });
     })
     .catch(error => {
-        throw new NestedError(`Failed to load level ${levelId}`, error);
+        throw new NestedError(`Failed to load level ${levelItem.id}`, error);
     })
     .then(level => {
 
@@ -156,7 +156,7 @@ const bakeLevel = function(levelItem, flatCourseItems, actionExecutorContext) {
         return bakeActions;
     })
     .catch(error => {
-        throw new NestedError(`Failed to execute actions for level ${levelId}`, error);
+        throw new NestedError(`Failed to execute actions for level ${levelItem.id}`, error);
     });;
 
 

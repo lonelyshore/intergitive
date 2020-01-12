@@ -258,6 +258,7 @@
             { "$ref": "#/definitions/checkpoint" },
             { "$ref": "#/definitions/loadReference" },
             { "$ref": "#/definitions/autoPlayActions" },
+            { "$ref": "#/definitions/loadLastLevelFinalSnapshot"},
             { "$ref": "#/definitions/openWorkingPath" }
         ]
     },

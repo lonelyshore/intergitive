@@ -1,0 +1,16 @@
+!level
+  repoVcsSetups:
+    local: 
+      !repoVcs
+        workingPath: "local"
+        referenceStoreName: "test-local-ref"
+        checkpointStoreName: "test-local-checkpoints"
+  steps:
+    
+    - !loadLastLevelFinalSnapshot
+      repoSetupNames:
+        - local
+    - !openWorkingPath
+      repoSetupName: local
+
+    

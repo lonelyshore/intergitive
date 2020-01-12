@@ -10,4 +10,4 @@ asset_index:
   ondisk:
     local: "lost.yaml"
     remote: "remote.yaml"
-    test: "_test.yaml"
+    test: "test-new-functionalities.yaml"
