@@ -24,42 +24,44 @@ function operate(args) {
                 console.log(`
     bake-course: bake for a course
       arguments:
-        resourcePathEncoded: path to resource loaded by AssetLoader. Formed in format BASE_PATH+BUNDLE/PATH/ELEMENTS
-        courseAssetId: asset id of the baked course
+        commonResourcePath: path to resource folder where common assets and course definition files located
+        courseResourcePath: path to course resources loaded by AssetLoader
+        courseAssetId: asset id of the baked course, without "course/" prefix
         sourceRepoStorePath: path to repo store that is used to bake the course`);
                 return Promise.resolve();
             }
 
-            let resourcePathEncoded = args[1];
-            let levelAssetId = args[2];
-            let sourceRepoStorePath = normalizePath(args[3]);
+            let commonResourcePath = normalizePath(args[1]);
+            let courseResourcePath = normalizePath(args[2]);
+            let courseAssetId = args[3];
+            let sourceRepoStorePath = normalizePath(args[4]);
 
-            let resourcePathTokens = resourcePathEncoded.replace('\\', '/').split('+');
-            let resourcePath = normalizePath(resourcePathTokens[0]);
-            let bundlePaths = 
-                resourcePathTokens[1] === '' ?
-                [] :
-                resourcePathTokens[1].split('/');
-            let initRepoStoreArchivePath = path.join(resourcePath, 'archives', 'init-repo-store');
+            let initRepoStoreArchivePath = path.join(courseResourcePath, courseAssetId, 'archives', 'init-repo-store');
 
             return fs.emptyDir(fileSystemBasePath)
             .then(() => {
-                return fs.copy(
-                    sourceRepoStorePath,
-                    initRepoStoreArchivePath
-                );
+                return fs.ensureDir(initRepoStoreArchivePath)
+                .then(() => {
+                    return fs.copy(
+                        sourceRepoStorePath,
+                        initRepoStoreArchivePath
+                    );
+                });
             })
             .then(() => {
-                let assetLoader = new AssetLoader(resourcePath);
-                assetLoader.setBundlePath(...bundlePaths);
+                let commonAssetLoader = new AssetLoader(commonResourcePath);
+                commonAssetLoader.setBundlePath();
 
-                return assetLoader.getFullAssetPath(levelAssetId)
+                return commonAssetLoader.getFullAssetPath(`course/${courseAssetId}`)
                 .then(configPath => {
+                    let courseAssetLoader = new AssetLoader(courseResourcePath);
+                    courseAssetLoader.setBundlePath(courseAssetId);
+
                     return devRunner.run(
                         configPath,
                         fileSystemBasePath,
                         'repo-stores',
-                        assetLoader
+                        courseAssetLoader
                     );
                 });
             })
@@ -93,7 +95,7 @@ function operate(args) {
 function printUsage() {
     console.log(`
     Usage:
-      bake-course <resourcePathEncoded> <levelAssetId> <sourceRepoStorePath>: bake for a course`);
+      bake-course <commonResourcePath> <courseResourcePath> <courseAssetId> <sourceRepoStorePath>: bake for a course`);
 }
 
 function normalizePath(pathValue) {
