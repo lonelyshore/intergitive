@@ -1,0 +1,8 @@
+asset_index:
+  infile:
+    main.course-name: "fork 使用教學"
+    main.section-intro.name: "第一章：fork 介紹"
+    main.intro-install.name: "第一關：安裝"
+    
+  ondisk:
+    intro-install: "intro-install.yaml"

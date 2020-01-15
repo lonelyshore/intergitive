@@ -9,7 +9,7 @@ let baseSetting = {
     BUNDLE_PATH: [],
     PLAYGROUND_PATH: path.join(runAndTestBasePath, 'playground'),
     REPO_STORE_COLLECTION_NAME: 'repo-stores',
-    COURSE: 'demo'
+    COURSE: 'fork'
 };
 
 baseSetting = readonly.wrap(baseSetting);

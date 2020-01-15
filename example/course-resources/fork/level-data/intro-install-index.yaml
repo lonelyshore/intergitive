@@ -1,0 +1,39 @@
+asset_index:
+  infile:
+    introduce-fork: |+2
+      .md
+      這個教學將會逐步指引熟悉 git 的操作  
+
+      在這個教學中，會介紹名為 fork 的 git 操作程式  
+
+      git 負責提供版本控管的功能  
+      fork 則是一個方便大家操作 git 的程式  
+
+      fork 的特點是有簡約明瞭的操作介面  
+      在功能上也不複雜容易使用  
+
+    download: |+2
+      .md
+      在繼續進行教學之前，請先安裝 fork  
+      fork 的安裝檔可以從[它的官方網頁](https://git-fork.com/)下載  
+      或者可以嘗試直接使用這個[下載連結](https://git-fork.com/update/win/ForkInstaller.exe)  
+
+      下載完成後，請按「確認」進行下一步驟
+
+    install: |+2
+      .md
+      下載完成後，執行安裝檔案會出現下面的對話框  
+
+      ![illustration]({{images/fork-install-dialog}})
+
+      請在「User Name」的欄位中填入您喜歡的名字，這個名字會保留在 git 的提交上  
+      在「Email」的欄位則請填入公司信箱  
+
+      填寫完畢後，請按右下角的「Finish」按鈕進行安裝  
+
+      當安裝完成時，則會出現如下圖的視窗  
+
+      ![illustration]({{images/fork-installed}})
+
+      當出現此視窗，就表示安裝已經順利完成，請按「確認」按鈕完成這個關卡，繼續下一關
+    

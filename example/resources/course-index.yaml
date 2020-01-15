@@ -1,3 +1,4 @@
 asset_index:
   ondisk:
     demo: "demo.yaml"
+    fork: "fork.yaml"

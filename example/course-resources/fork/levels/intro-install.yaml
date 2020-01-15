@@ -1,0 +1,12 @@
+!level
+  repoVcsSetups: {}
+  steps:
+    - !elaborate
+      descriptionId: "level-data/intro-install/introduce-fork"
+    - !elaborate
+      descriptionId: "level-data/intro-install/download"
+      needConfirm: true
+    - !illustrate
+      descriptionId: "level-data/intro-install/install"
+      needConfirm: true
+    
