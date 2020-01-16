@@ -15,14 +15,13 @@ asset_index:
     download: |+2
       .md
       在繼續進行教學之前，請先安裝 fork  
-      fork 的安裝檔可以從[它的官方網頁](https://git-fork.com/)下載  
-      或者可以嘗試直接使用這個[下載連結](https://git-fork.com/update/win/ForkInstaller.exe)  
+      fork 的安裝檔可以從它的官方網頁(https<span>://</span>git-fork.com/)下載  
 
       下載完成後，請按「確認」進行下一步驟
 
     install: |+2
       .md
-      下載完成後，執行安裝檔案會出現下面的對話框  
+      執行安裝檔案會出現下面的對話框  
 
       ![illustration]({{images/fork-install-dialog}})
 
