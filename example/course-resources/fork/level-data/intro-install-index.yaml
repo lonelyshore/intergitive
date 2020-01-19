@@ -32,7 +32,10 @@ asset_index:
 
       當安裝完成時，則會出現如下圖的視窗  
 
-      ![illustration]({{images/fork-installed}})
+      ![illustration]({{images/fork-installed}})  
 
-      當出現此視窗，就表示安裝已經順利完成，請按「確認」按鈕完成這個關卡，繼續下一關
+      當出現此視窗，就表示安裝已經順利完成  
+      關於如何操作，將會在接下來的章節中逐一引導，現在可以先把 fork 關閉  
+      
+      請按「確認」按鈕完成這個關卡，繼續下一關
     

@@ -2,3 +2,5 @@ asset_index:
   ondisk:
     fork-install-dialog: fork-install-dialog.png
     fork-installed: fork-installed.png
+    fork-open: fork-open.png
+    fork-folded: fork-folded.png

@@ -6,3 +6,4 @@ asset_index:
     
   ondisk:
     intro-install: "intro-install.yaml"
+    intro-basic-usage: "intro-basic-usage.yaml"

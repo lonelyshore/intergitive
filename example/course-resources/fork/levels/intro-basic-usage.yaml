@@ -1,0 +1,15 @@
+!level
+  repoVcsSetups:
+    fork-basic:
+      workingPath: fork-basic
+  steps:
+    - !elaborate
+      descriptionId: "level-data/intro-basic-usage/introduce-goal"
+      needConfirm: true
+    - !illustrate 
+      descriptionId: "level-data/intro-basic-usage/open"
+      needConfirm: true
+    - !elaborate 
+      descriptionId: "level-data/intro-basic-usage/introduce-open-folder"
+
+    
