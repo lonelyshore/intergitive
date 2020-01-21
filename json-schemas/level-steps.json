@@ -111,6 +111,10 @@
             "properties": {
                 "descriptionId": {
                     "$ref": "config-commons.json#assetId"
+                },
+                "needConfirm": {
+                    "type": "boolean",
+                    "default": true
                 }
             },
             "required": [ "descriptionId" ],
