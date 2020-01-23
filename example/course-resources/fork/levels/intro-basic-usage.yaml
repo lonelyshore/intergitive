@@ -6,10 +6,15 @@
     - !elaborate
       descriptionId: "level-data/intro-basic-usage/introduce-goal"
       needConfirm: true
-    - !illustrate 
+    - !instruct 
       descriptionId: "level-data/intro-basic-usage/open"
       needConfirm: true
     - !elaborate 
       descriptionId: "level-data/intro-basic-usage/introduce-open-folder"
+    - !openWorkingPath
+      repoSetupName: fork-basic
+    - !instruct 
+      descriptionId: "level-data/intro-basic-usage/open-directory-in-fork"
+      needConfirm: true
 
     
