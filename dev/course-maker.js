@@ -2,7 +2,7 @@
 
 const fs = require('fs-extra');
 const path = require('path');
-const AssetLoader = require('../lib/asset-loader').AssetLoader;
+const MutableAssetLoader = require('../lib/asset-loader').MutableAssetLoader;
 const devRunner = require('./dev-runner');
 const zip = require('../lib/simple-archive');
 
@@ -25,7 +25,7 @@ function operate(args) {
     bake-course: bake for a course
       arguments:
         commonResourcePath: path to resource folder where common assets and course definition files located
-        courseResourcePath: path to course resources loaded by AssetLoader
+        courseResourcePath: path to course resources loaded by MutableAssetLoader
         courseAssetId: asset id of the baked course, without "course/" prefix
         sourceRepoStorePath: path to repo store that is used to bake the course`);
                 return Promise.resolve();
@@ -49,12 +49,12 @@ function operate(args) {
                 });
             })
             .then(() => {
-                let commonAssetLoader = new AssetLoader(commonResourcePath);
+                let commonAssetLoader = new MutableAssetLoader(commonResourcePath);
                 commonAssetLoader.setBundlePath();
 
                 return commonAssetLoader.getFullAssetPath(`course/${courseAssetId}`)
                 .then(configPath => {
-                    let courseAssetLoader = new AssetLoader(courseResourcePath);
+                    let courseAssetLoader = new MutableAssetLoader(courseResourcePath);
                     courseAssetLoader.setBundlePath(courseAssetId);
 
                     return devRunner.run(

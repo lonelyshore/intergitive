@@ -1,6 +1,7 @@
 'use strict';
 
 const AssetLoader = require('../../lib/asset-loader').AssetLoader;
+const MutableAssetLoader = require('../../lib/asset-loader').MutableAssetLoader;
 const NotFoundError = require('../../lib/asset-loader').NotFoundError;
 const CyclicFallbackError = require('../../lib/asset-loader').CyclicFallbackError;
 const path = require('path');
@@ -12,6 +13,31 @@ chai.use(chaiAsPromised);
 chai.should();
 
 describe('AssetLoader #core', function() {
+
+    describe('Mutability', function() {
+        it('Cannot mutate bundle path state of AssetLoader', function() {
+            let sourceBundlePaths = ['source', 'bundle', 'path'];
+            let anotherBundlePaths = ['another', 'bundle', 'path'];
+            let loader = new AssetLoader(__dirname, ...sourceBundlePaths);
+            let another = loader.getLoaderForBundlePath(...anotherBundlePaths);
+
+            loader.bundlePathElements.should.deep.equal(sourceBundlePaths);
+            another.bundlePathElements.should.deep.equal(anotherBundlePaths);
+        });
+
+        it('Bundle path state of MutableAssetLoader can be mutated', function() {
+            let sourceBundlePaths = ['source', 'bundle', 'path'];
+            let anotherBundlePaths = ['another', 'bundle', 'path'];
+            let loader = new MutableAssetLoader(__dirname, ...sourceBundlePaths);
+            
+            loader.bundlePathElements.should.deep.equal(sourceBundlePaths);
+
+            loader.setBundlePath(...anotherBundlePaths);
+
+            loader.bundlePathElements.should.deep.equal(anotherBundlePaths);           
+        })
+    });
+
     describe('Load Assets', function() {
 
         const resourcePath = path.join(utils.RESOURCES_PATH, '/test-asset-loader/resources');
@@ -32,11 +58,7 @@ describe('AssetLoader #core', function() {
         let assetLoader;
 
         beforeEach(function() {
-            assetLoader = new AssetLoader(resourcePath);
-            assetLoader.setBundlePath(
-                'test-course',
-                'test-language'
-            );
+            assetLoader = new AssetLoader(resourcePath, 'test-course', 'test-language');
         });
 
         describe('Direct Load', function() {
@@ -265,7 +287,6 @@ describe('AssetLoader #core', function() {
 
         beforeEach(function() {
             assetLoader = new AssetLoader(basePath);
-            assetLoader.setBundlePath();
         });
 
         it('raw text content', function() {

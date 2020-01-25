@@ -13,7 +13,7 @@ const zip = require("../../lib/simple-archive");
 const vcs = require("../../lib/repo-vcs");
 
 const ActionExecutor = require("../../dev/action-executor").DevActionExecutor;
-const AssetLoader = require("../../lib/asset-loader").AssetLoader;
+const MutableAssetLoader = require("../../lib/asset-loader").MutableAssetLoader;
 const RepoSetup = require("../../lib/config-level").RepoVcsSetup;
 
 
@@ -69,7 +69,7 @@ function createTests(storageType) {
                 
                 return Promise.resolve()
                 .then(() => {
-                    const assetLoader = new AssetLoader(assetStorePath);
+                    const assetLoader = new MutableAssetLoader(assetStorePath);
                     assetLoader.setBundlePath();
     
                     const repoSetups = 
@@ -170,7 +170,7 @@ function createTests(storageType) {
                 .then(config => {
                     stageMap = config.stageMap;
 
-                    const assetLoader = new AssetLoader(assetStorePath);
+                    const assetLoader = new MutableAssetLoader(assetStorePath);
                     assetLoader.setBundlePath();
     
                     const repoSetups = 
@@ -522,7 +522,7 @@ function createTests(storageType) {
             })
 
             before('Create snapshots', function() {
-                const assetLoader = new AssetLoader(
+                const assetLoader = new MutableAssetLoader(
                     path.join(utils.RESOURCES_PATH, config.resourcesSubPath)
                 );
 

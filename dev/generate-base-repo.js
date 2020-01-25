@@ -6,7 +6,7 @@ const zip = require('../lib/simple-archive');
 
 const ActionExecutor = require("./action-executor").DevActionExecutor;
 const actionConfigs = require("../dev/config-action");
-const AssetLoader = require("../lib/asset-loader").AssetLoader;
+const MutableAssetLoader = require("../lib/asset-loader").MutableAssetLoader;
 const REPO_STORAGE_TYPE = require('../lib/repo-vcs').STORAGE_TYPE;
 
 let SAVE_TYPE = {
@@ -61,7 +61,7 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
 
     const repoStoreName = 'repo-stores';
 
-    const assetLoader = new AssetLoader(assetStorePath);
+    const assetLoader = new MutableAssetLoader(assetStorePath);
     assetLoader.setBundlePath();
     
     let actionExecutor;
