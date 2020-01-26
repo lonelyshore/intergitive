@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "title": "Serialized Course Settings",
+    "description": "Describes necessary info for launching a set of courses",
+    "properties": {
+        "relativeBasePath": {
+            "type": "string",
+            "description": "relative path to courses folder that contains resourses, course-resources, and static"
+        },
+        "bundlePaths": {
+            "type": "array",
+            "description": "array of bundle path elements for running course, default to an empty array",
+            "default": []
+        },
+        "selectedCourse": {
+            "type": "string",
+            "description": "selected course name"
+        }
+    },
+    "required": [ "relativeBasePath", "bundlePaths", "selectedCourse" ]
+}
