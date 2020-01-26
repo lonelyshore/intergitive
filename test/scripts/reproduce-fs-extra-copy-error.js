@@ -9,7 +9,7 @@ const devParams = require('../../dev/parameters');
 const ACTION_SCHEMAS = require("../../dev/config-schema").LEVEL_CONFIG_SCHEMA;
 const ActionExecutor = require("../../dev/action-executor").DevActionExecutor;
 const Action = require("../../lib/config-action").Action;
-const MutableAssetLoader = require("../../lib/asset-loader").MutableAssetLoader;
+const AssetLoader = require("../../lib/asset-loader").AssetLoader;
 const RepoSetup = require("../../lib/config-level").RepoVcsSetup;
 const RefMaker = require("../../lib/repo-vcs").RepoReferenceMaker;
 
@@ -41,8 +41,7 @@ function generate(workingPath, assetStorePath, yamlPath, initializeRepo) {
     const refStorePath = path.join(workingPath, "repo-store");
     const refName = "generated-ref-repo";
 
-    const assetLoader = new MutableAssetLoader(assetStorePath);
-    assetLoader.setBundlePath();
+    const assetLoader = new AssetLoader(assetStorePath);
     
     const repoSetups = {
         repo: new RepoSetup(

@@ -11,7 +11,7 @@ const normalizePathSep = require('../../lib/noarmalize-path-sep');
 const wait = require('../../lib/utility').wait;
 
 const utils = require('./test-utils');
-const MutableAssetLoader = require('../../lib/asset-loader').MutableAssetLoader;
+const AssetLoader = require('../../lib/asset-loader').AssetLoader;
 const ActionExecutor = require('../../dev/action-executor').DevActionExecutor;
 const RepoVcsSetup = require('../../lib/config-level').RepoVcsSetup;
 const RepoReferenceManager = require('../../lib/repo-vcs').RepoReferenceManager;
@@ -40,8 +40,7 @@ describe('Action Executor #core', function() {
     const repoStoreCollectionPath = path.join(utils.PLAYGROUND_PATH, repoStoreCollectionName);
 
     before(function() {
-        let assetLoader = new MutableAssetLoader(path.join(utils.RESOURCES_PATH, 'action-executor', 'resources'));
-        assetLoader.setBundlePath();
+        let assetLoader = new AssetLoader(path.join(utils.RESOURCES_PATH, 'action-executor', 'resources'));
 
         let repoSetups = {
             [testRepoSetupName]: new RepoVcsSetup(
@@ -1412,8 +1411,7 @@ describe('Action Executor #core', function() {
 
             before('Create Specialized ActionExecutor', function() {
 
-                let assetLoader = new MutableAssetLoader(path.join(utils.RESOURCES_PATH, 'action-executor/resources'));
-                assetLoader.setBundlePath();
+                let assetLoader = new AssetLoader(path.join(utils.RESOURCES_PATH, 'action-executor/resources'));
 
                 let repoSetups = {
                     [testRepoSetupName]: new RepoVcsSetup(

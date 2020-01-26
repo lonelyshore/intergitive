@@ -13,7 +13,7 @@ const zip = require("../../lib/simple-archive");
 const vcs = require("../../lib/repo-vcs");
 
 const ActionExecutor = require("../../dev/action-executor").DevActionExecutor;
-const MutableAssetLoader = require("../../lib/asset-loader").MutableAssetLoader;
+const AssetLoader = require("../../lib/asset-loader").AssetLoader;
 const RepoSetup = require("../../lib/config-level").RepoVcsSetup;
 
 
@@ -69,8 +69,7 @@ function createTests(storageType) {
                 
                 return Promise.resolve()
                 .then(() => {
-                    const assetLoader = new MutableAssetLoader(assetStorePath);
-                    assetLoader.setBundlePath();
+                    const assetLoader = new AssetLoader(assetStorePath);
     
                     const repoSetups = 
                         archiveCreationConfigExecutor
@@ -170,8 +169,7 @@ function createTests(storageType) {
                 .then(config => {
                     stageMap = config.stageMap;
 
-                    const assetLoader = new MutableAssetLoader(assetStorePath);
-                    assetLoader.setBundlePath();
+                    const assetLoader = new AssetLoader(assetStorePath);
     
                     const repoSetups = 
                         archiveCreationConfigExecutor.createRepoVcsSetupsFromConfig(
@@ -522,11 +520,9 @@ function createTests(storageType) {
             })
 
             before('Create snapshots', function() {
-                const assetLoader = new MutableAssetLoader(
+                const assetLoader = new AssetLoader(
                     path.join(utils.RESOURCES_PATH, config.resourcesSubPath)
                 );
-
-                assetLoader.setBundlePath();
 
                 const repoSetups =
                     archiveCreationConfigExecutor.createRepoVcsSetupsFromConfig(

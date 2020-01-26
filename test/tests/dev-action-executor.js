@@ -7,7 +7,7 @@ const fs = require("fs-extra");
 const zip = require("../../lib/simple-archive");
 const simpleGitCtor = require("simple-git/promise");
 const utils = require("./test-utils");
-const MutableAssetLoader = require("../../lib/asset-loader").MutableAssetLoader;
+const AssetLoader = require("../../lib/asset-loader").AssetLoader;
 const ActionExecutor = require("../../dev/action-executor").DevActionExecutor;
 const RepoVcsSetup = require("../../lib/config-level").RepoVcsSetup;
 const actionTypes = require("../../dev/config-action");
@@ -31,8 +31,7 @@ describe("Dev Action Executor", function() {
     const repoPath = path.join(repoParentPath, repoArchiveName);    
 
     before(function() {
-        let assetLoader = new MutableAssetLoader(path.join(utils.RESOURCES_PATH, "action-executor/resources"));
-        assetLoader.setBundlePath();
+        let assetLoader = new AssetLoader(path.join(utils.RESOURCES_PATH, "action-executor/resources"));
 
         let repoSetups = {
             [testRepoSetupName]: new RepoVcsSetup(

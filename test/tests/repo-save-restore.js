@@ -15,7 +15,7 @@ const zip = require("../../lib/simple-archive");
 const vcs = require("../../lib/repo-vcs");
 
 const ActionExecutor = require("../../dev/action-executor").DevActionExecutor;
-const MutableAssetLoader = require("../../lib/asset-loader").MutableAssetLoader;
+const AssetLoader = require("../../lib/asset-loader").AssetLoader;
 const RepoSetup = require("../../lib/config-level").RepoVcsSetup;
 
 chai.use(chaiAsPromised);
@@ -187,11 +187,9 @@ describe('Prepare Repo Save & Restore Tests', function() {
 
         function createRepoCreationActionExecutor(workingPath, creationConfig, configExecutor) {
 
-            let assetLoader = new MutableAssetLoader(
+            let assetLoader = new AssetLoader(
                 path.join(utils.RESOURCES_PATH, creationConfig.resourcesSubPath)
             );
-
-            assetLoader.setBundlePath();
 
             let repoSetups = configExecutor.createRepoVcsSetupsFromConfig(creationConfig);
 
