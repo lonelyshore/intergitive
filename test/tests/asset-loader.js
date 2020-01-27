@@ -38,7 +38,7 @@ describe('AssetLoader #core', function() {
         })
     });
 
-    describe('Load Assets', function() {
+    describe('Functionalities', function() {
 
         const resourcePath = path.join(utils.RESOURCES_PATH, '/test-asset-loader/resources');
         
@@ -61,8 +61,28 @@ describe('AssetLoader #core', function() {
             assetLoader = new AssetLoader(resourcePath, 'test-course', 'test-language');
         });
 
+        function testShouldContainAsset(assetId) {
+            it(`contain ${assetId}`, function() {
+                return assetLoader.containsAsset(assetId)
+                .should.eventually.equal(true);
+            });
+        }
+
+        function testShouldNotContainAsset(assetId) {
+            it(`contain ${assetId}`, function() {
+                return assetLoader.containsAsset(assetId)
+                .should.eventually.equal(false);
+            });
+        }
+
         describe('Direct Load', function() {
 
+            testShouldContainAsset(`${assets}/text:raw`);
+
+            testShouldContainAsset(`${assets}/text:from-file`);
+
+            testShouldContainAsset(`${assets}/picture`);
+            
             it('raw text correct load', function() {
                 return assetLoader.loadTextContent(`${assets}/text:raw`)
                     .should.eventually
@@ -87,6 +107,18 @@ describe('AssetLoader #core', function() {
         });
 
         describe('Simple Fallbacks', function() {
+
+            testShouldContainAsset('assets/default_fallback_raw_text');
+
+            testShouldContainAsset('assets/default_fallback_text_from_file');
+
+            testShouldContainAsset(`${assets}/default_fallback_asset_path`);
+
+            testShouldContainAsset('assets/redirect_fallback_raw_text');
+
+            testShouldContainAsset('assets/redirect_fallback_text_from_file');
+
+            testShouldContainAsset(`${assets}/redirect_fallback_asset_path`);
 
             it('default fallback to raw text', function() {
                 return assetLoader.loadTextContent('assets/default_fallback_raw_text')
@@ -138,6 +170,13 @@ describe('AssetLoader #core', function() {
         });
 
         describe('Double Fallbacks', function() {
+
+            testShouldContainAsset('assets/redirect_double_fallback_raw_text');
+
+            testShouldContainAsset('assets/redirect_double_fallback_text_from_file');
+
+            testShouldContainAsset(`${assets}/default_double_fallback_asset_path`);
+
             it('double fallback to raw text', function() {
                 return assetLoader.loadTextContent('assets/redirect_double_fallback_raw_text')
                 .should.eventually
@@ -164,6 +203,12 @@ describe('AssetLoader #core', function() {
         });
 
         describe('Handle Not Found', function() {
+
+            testShouldNotContainAsset(`${assets}/not_exists`);
+
+            testShouldNotContainAsset(`${assets}/redirect_not_found`);
+
+            testShouldNotContainAsset(`${assets}/default_not_found`);
 
             it('text content not found', function() {
                 return assetLoader.loadTextContent(`${assets}/not_exists`)
@@ -228,6 +273,10 @@ describe('AssetLoader #core', function() {
 
         describe('Handle Container Not Found', function() {
 
+            testShouldNotContainAsset('not-exists/not-exists');
+
+            testShouldNotContainAsset('redirect_container_not_found');
+
             it('direct load not found', function() {
                 return assetLoader.loadTextContent('not-exists/not-exists')
                 .should.be.eventually.rejectedWith(NotFoundError)
@@ -254,6 +303,10 @@ describe('AssetLoader #core', function() {
 
         describe('Fallback Cycle Detection', function() {
 
+            testShouldNotContainAsset('redirect_cyclic');
+
+            testShouldNotContainAsset('default_cyclic');
+
             it('cycle in redirect', function() {
                 let assetName = 'redirect_cyclic';
 
@@ -277,7 +330,6 @@ describe('AssetLoader #core', function() {
             });
 
         });
-
     });
 
     describe('Empty Bundle Load', function() {
@@ -285,9 +337,31 @@ describe('AssetLoader #core', function() {
         let basePath = path.join(utils.RESOURCES_PATH, 'test-asset-loader/empty-bundle');
         let assetLoader;
 
+        function testShouldContainAsset(assetId) {
+            it(`contain ${assetId}`, function() {
+                return assetLoader.containsAsset(assetId)
+                .should.eventually.equal(true);
+            });
+        }
+
+        function testShouldNotContainAsset(assetId) {
+            it(`contain ${assetId}`, function() {
+                return assetLoader.containsAsset(assetId)
+                .should.eventually.equal(false);
+            });
+        }
+
         beforeEach(function() {
             assetLoader = new AssetLoader(basePath);
         });
+
+        testShouldContainAsset('assets/text:raw');
+
+        testShouldContainAsset('assets/text:from-file');
+
+        testShouldContainAsset('assets/other');
+
+        testShouldContainAsset('assets/text:from-file');
 
         it('raw text content', function() {
             return assetLoader.loadTextContent('assets/text:raw')
