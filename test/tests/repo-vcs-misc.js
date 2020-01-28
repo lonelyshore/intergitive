@@ -19,11 +19,11 @@ const AssetLoader = require("../../lib/asset-loader").AssetLoader;
 chai.use(chaiAsPromised);
 chai.should();
 
-describe.only('Prepare VCS Miscellaneous #core', function() {
+describe('Prepare VCS Miscellaneous #core', function() {
 
     let testingStorageTypes = [
         vcs.STORAGE_TYPE.ARCHIVE,
-        //vcs.STORAGE_TYPE.GIT
+        // vcs.STORAGE_TYPE.GIT
     ];
 
     it('GENERATE_TESTS', function() {
@@ -124,10 +124,10 @@ function createTests(storageType) {
 
                 it('existing reference should return true', function() {
                     return refManager.contains('clean')
-                    .should.eventually.equal(true)
+                    .should.eventually.equal(true, 'expect ReferenceManager contains "clean"')
                     .then(() => {
-                        return refManager.contains('second-branch')
-                        .should.eventually.equal(true);
+                        return refManager.contains('conflictMixed')
+                        .should.eventually.equal(true, 'expect ReferenceManager contains "conflictMixed"');
                     });
                 });
 
