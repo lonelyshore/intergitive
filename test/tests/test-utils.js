@@ -418,7 +418,7 @@ function randomConvert(target) {
     return ret;
 }
 
-
+module.exports.PROJECT_PATH = path.join(__dirname, "../../");
 module.exports.PLAYGROUND_PATH = path.resolve(__dirname, "../playground");
 module.exports.RESOURCES_PATH = resourcesPath;
 module.exports.ARCHIVE_RESOURCES_PATH = path.join(resourcesPath, "repo-archive");
