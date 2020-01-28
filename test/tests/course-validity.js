@@ -9,8 +9,6 @@ const paths = require('../../paths');
 const courseConfig = require('../../lib/config-course');
 const loadCourseAsset = require('../../lib/load-course-asset');
 const AssetLoader = require('../../lib/asset-loader').AssetLoader;
-const NotFoundError = require('../../lib/asset-loader').NotFoundError;
-const CyclicFallbackError = require('../../lib/asset-loader').CyclicFallbackError;
 const RuntimeCourseSettings = require('../../lib/runtime-course-settings');
 
 const testUtils = require('./test-utils');
@@ -45,34 +43,45 @@ describe.only('Prepare to Validate Course Setting', function() {
 
     it('generate validations', function() {
         let validatedCourse;
-        let loaderPair;
+        let loaderPair = loadCourseAsset.createCourseAssetLoaderPair(courseSettings);
+        let courseName = courseSettings.course;
 
-        loaderPair = loadCourseAsset.createCourseAssetLoaderPair(courseSettings);
-
-        return loaderPair.loadCourse(courseSettings.course)
+        return loaderPair.loadCourse(courseName)
         .then(course => {
             validatedCourse = course;
         })
         .then(() => {
-            validateCourseConfig(courseSettings.course, validatedCourse, loaderPair.getCourseLoader(courseSettings.course));
+            validateCourseConfig(courseName, validatedCourse, loaderPair.getCourseLoader(courseName));
         })
         .then(() => {
-            return gatherValidatableLevelList(validatedCourse, loaderPair.getCourseLoader(courseSettings.course));
+            return gatherValidatableLevelList(validatedCourse, loaderPair.getCourseLoader(courseName));
         })
         .then(validatedLevels => {
-            let generateValidations = validatedLevels.reduce(
-                (validations, level) => {
-                    return validations.then(() => {
-                        return loaderPair.loadLevelFromCourse(level.configAssetId, courseSettings.course)
+
+            let loadLevelConfigAndNames = validatedLevels.reduce(
+                (loadLevelConfigAndNames, level) => {
+                    return loadLevelConfigAndNames.then(levelConfigAndNames => {
+                        return loaderPair.loadLevelFromCourse(level.configAssetId, courseName)
                         .then(levelConfig => {
-                            validateLevel(levelConfig, loaderPair.getCourseLoader(courseSettings.course));
+                            levelConfigAndNames.push({ config: levelConfig, name: level.id });
+                            return levelConfigAndNames;
+                        })
+                        .catch(err => {
+                            console.error(`Error occured when loading config for ${level.id}`);
+                            console.error(err);
                         });
                     });
                 },
-                Promise.resolve()
+                Promise.resolve([])
             );
 
-            return generateValidations;
+            return loadLevelConfigAndNames.then(levelConfigAndNames => {
+                validateLevels(
+                    levelConfigAndNames,
+                    loaderPair.getCourseLoader(courseName),
+                    courseName
+                );
+            });
         });
     });
 
@@ -187,10 +196,38 @@ function validateCourseConfig(courseName, course, assetLoader) {
     })
 }
 
-function gatherValidatableLevelList(courseConfig, assetLoader) {
-    return [];
+/**
+ * 
+ * @param {courseConfig.Course} course 
+ * @param {AssetLoader} assetLoader 
+ */
+function gatherValidatableLevelList(course, assetLoader) {
+    
+    let flatCourseItems = courseConfig.flattenCourseTree(course);
+
+    let validLevelFilter = new courseConfig.CourseItemVisitor(
+        level => {
+            return assetLoader.containsAsset(level.configAssetId);
+        },
+        sequentialSection => false,
+        freeAccessSection => false,
+        course => false
+    );
+
+    return flatCourseItems.filter(item => item.accept(validLevelFilter));
 }
 
-function validateLevel(levelConfig, courseAssetLoader) {
+function validateLevels(levelConfigAndNames, courseAssetLoader, courseName) {
 
+    function validateLevel(levelConfig, levelName, courseAssetLoader) {
+
+        describe(`Level ${levelName}`, function() {
+
+        });
+    }
+
+    describe(`Validate levels for course ${courseName}`, function() {
+
+        
+    })
 }
