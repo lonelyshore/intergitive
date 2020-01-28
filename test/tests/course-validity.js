@@ -37,23 +37,42 @@ if (process.env.COURSE_CONFIG_PATH) {
 
 describe.only('Prepare to Validate Course Setting', function() {
 
-    let testedCourse;
-    let loaderPair;
+
 
     before('loads course and levels', function() {
+        
+    });
+
+    it('generate validations', function() {
+        let validatedCourse;
+        let loaderPair;
+
         loaderPair = loadCourseAsset.createCourseAssetLoaderPair(courseSettings);
 
         return loaderPair.loadCourse(courseSettings.course)
         .then(course => {
-            testedCourse = course;
-        });
-    });
-
-    it('generate validations', function() {
-
-        return Promise.resolve()
+            validatedCourse = course;
+        })
         .then(() => {
-            validateCourseConfig(courseSettings.course, testedCourse, loaderPair.getCourseLoader(courseSettings.course));
+            validateCourseConfig(courseSettings.course, validatedCourse, loaderPair.getCourseLoader(courseSettings.course));
+        })
+        .then(() => {
+            return gatherValidatableLevelList(validatedCourse, loaderPair.getCourseLoader(courseSettings.course));
+        })
+        .then(validatedLevels => {
+            let generateValidations = validatedLevels.reduce(
+                (validations, level) => {
+                    return validations.then(() => {
+                        return loaderPair.loadLevelFromCourse(level.configAssetId, courseSettings.course)
+                        .then(levelConfig => {
+                            validateLevel(levelConfig, loaderPair.getCourseLoader(courseSettings.course));
+                        });
+                    });
+                },
+                Promise.resolve()
+            );
+
+            return generateValidations;
         });
     });
 
@@ -154,8 +173,7 @@ function validateCourseConfig(courseName, course, assetLoader) {
 
             let checkCourseItems = flatCourseConfig.reduce(
                 (checks, item) => {
-                    checks = checks.then(() => item.accept(generateCourseItemValidationVisitor));
-                    return checks;
+                    return checks.then(() => item.accept(generateCourseItemValidationVisitor));
                 },
                 Promise.resolve()
             )
@@ -170,7 +188,7 @@ function validateCourseConfig(courseName, course, assetLoader) {
 }
 
 function gatherValidatableLevelList(courseConfig, assetLoader) {
-
+    return [];
 }
 
 function validateLevel(levelConfig, courseAssetLoader) {
