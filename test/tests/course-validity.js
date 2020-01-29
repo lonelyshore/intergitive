@@ -259,7 +259,10 @@ function validateLevels(course, levelConfigAndNames, loaderPair, courseName) {
                  */
                 function validateRepoStore(repoSetupName, repoSetup, repoRefDemands) {
 
-                    if (repoSetup.referenceStoreName) {
+                    let refStoreName = repoSetup.referenceStoreName;
+
+                    if (refStoreName) {
+
                         it('validate repo store references', function() {
                             let errors = [];
     
@@ -306,7 +309,7 @@ function validateLevels(course, levelConfigAndNames, loaderPair, courseName) {
                                 return validateRepoReferences;
                             })
                             .catch(err => {
-                                errors.push(`Failed to validate ${refStoreName} because:\n${err}`);
+                                errors.push(`Failed to validate ${repoSetupName} because:\n${err}`);
                             })
                             .then(() => {
                                 return Promise.resolve(errors)
@@ -460,9 +463,11 @@ function validateLevels(course, levelConfigAndNames, loaderPair, courseName) {
         let flatCourseItems = configCourse.flattenCourseTree(course);
 
         levelConfigAndNames.forEach(levelConfigAndName => {
+            let lastLevel = configCourse.findLastLevelFromId(flatCourseItems, levelConfigAndName.name);
+
             validateLevel(
                 levelConfigAndName.config,
-                configCourse.findLastLevelFromId(flatCourseItems, levelConfigAndName.name),
+                lastLevel ? lastLevel.id : '',
                 levelConfigAndName.name,
                 loaderPair,
                 courseName
