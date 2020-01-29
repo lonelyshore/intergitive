@@ -6,9 +6,14 @@ const path = require('path');
 
 
 const paths = require('../../paths');
-const courseConfig = require('../../lib/config-course');
+const zip = require('../../lib/simple-archive');
+const repoVcs = require('../../lib/repo-vcs');
+const configCourse = require('../../lib/config-course');
+const configLevel = require('../../lib/config-level');
 const loadCourseAsset = require('../../lib/load-course-asset');
 const AssetLoader = require('../../lib/asset-loader').AssetLoader;
+const configAction = require('../../dev/config-action');
+const configStep = require('../../lib/config-step');
 const RuntimeCourseSettings = require('../../lib/runtime-course-settings');
 
 const testUtils = require('./test-utils');
@@ -34,12 +39,6 @@ if (process.env.COURSE_CONFIG_PATH) {
 }
 
 describe.only('Prepare to Validate Course Setting', function() {
-
-
-
-    before('loads course and levels', function() {
-        
-    });
 
     it('generate validations', function() {
         let validatedCourse;
@@ -77,15 +76,15 @@ describe.only('Prepare to Validate Course Setting', function() {
 
             return loadLevelConfigAndNames.then(levelConfigAndNames => {
                 validateLevels(
+                    validatedCourse,
                     levelConfigAndNames,
-                    loaderPair.getCourseLoader(courseName),
+                    loaderPair,
                     courseName
                 );
             });
         });
     });
-
-})
+});
 
 /**
  * 
@@ -100,7 +99,7 @@ function validateCourseConfig(courseName, course, assetLoader) {
         it('validate', function() {
             let errors = [];
             let ids = {};
-            let flatCourseConfig = courseConfig.flattenCourseTree(course);
+            let flatCourseConfig = configCourse.flattenCourseTree(course);
 
             let checkAssetIdExists = (assetId, assetDescription) => {
                 return assetLoader.containsAsset(assetId)
@@ -132,7 +131,7 @@ function validateCourseConfig(courseName, course, assetLoader) {
                 })
             }
 
-            let generateCourseItemValidationVisitor = new courseConfig.CourseItemVisitor(
+            let generateCourseItemValidationVisitor = new configCourse.CourseItemVisitor(
                 (level) => {
                     return checkAssetIdExists(level.nameKey, `name of level ${level.id}`)
                     .then(() => {
@@ -203,9 +202,9 @@ function validateCourseConfig(courseName, course, assetLoader) {
  */
 function gatherValidatableLevelList(course, assetLoader) {
     
-    let flatCourseItems = courseConfig.flattenCourseTree(course);
+    let flatCourseItems = configCourse.flattenCourseTree(course);
 
-    let validLevelFilter = new courseConfig.CourseItemVisitor(
+    let validLevelFilter = new configCourse.CourseItemVisitor(
         level => {
             return assetLoader.containsAsset(level.configAssetId);
         },
@@ -217,17 +216,257 @@ function gatherValidatableLevelList(course, assetLoader) {
     return flatCourseItems.filter(item => item.accept(validLevelFilter));
 }
 
-function validateLevels(levelConfigAndNames, courseAssetLoader, courseName) {
+/**
+ * 
+ * @param {courseConfig.Course} course
+ * @param {Array<Any>} levelConfigAndNames 
+ * @param {loadCourseAsset.LoaderPair} loaderPair 
+ * @param {string} courseName 
+ */
+function validateLevels(course, levelConfigAndNames, loaderPair, courseName) {
 
-    function validateLevel(levelConfig, levelName, courseAssetLoader) {
+    /**
+     * 
+     * @param {configLevel.Level} levelConfig 
+     * @param {string} previousLevelId
+     * @param {string} levelName 
+     * @param {loadCourseAsset.LoaderPair} loaderPair 
+     * @param {string} courseName 
+     */
+    function validateLevel(levelConfig, previousLevelId, levelName, loaderPair, courseName) {
 
         describe(`Level ${levelName}`, function() {
 
+            describe('Repo VCS Setup', function() {
+
+                const repoStorePath = path.join(
+                    testUtils.PLAYGROUND_PATH,
+                    'repo-store'
+                );
+
+                class RepoRefDemand {
+                    constructor(reference, host) {
+                        this.reference = reference;
+                        this.host = host;
+                    }
+                }
+
+                /**
+                 * 
+                 * @param {string} repoSetupName 
+                 * @param {configLevel.RepoVcsSetup} repoSetup 
+                 * @param {Array<RepoRefDemand>} repoRefDemands 
+                 */
+                function validateRepoStore(repoSetupName, repoSetup, repoRefDemands) {
+
+                    if (repoSetup.referenceStoreName) {
+                        it('validate repo store references', function() {
+                            let errors = [];
+    
+                            return fs.emptyDir(repoStorePath)
+                            .then(() => {
+                                return loaderPair.loadRepoArchivePath(
+                                    repoSetup.referenceStoreName,
+                                    courseName
+                                )
+                            })
+                            .then(archivePath => {
+                                return zip.extractArchiveTo(
+                                    archivePath,
+                                    path.join(repoStorePath, refStoreName)
+                                );
+                            })
+                            .then(() => {
+                                return repoVcs.RepoReferenceManager.create(
+                                    '',
+                                    repoStorePath,
+                                    refStoreName,
+                                    repoSetup.repoType,
+                                    repoVcs.STORAGE_TYPE.ARCHIVE,
+                                    false
+                                )
+                            })
+                            .then(refManager => {
+                                let validateRepoReferences = repoRefDemands.reduce(
+                                    (validations, repoRefDemand) => {
+                                        return validations.then(() => {
+                                            return refManager.contains(repoRefDemand.reference)
+                                            .then(refExists => {
+                                                if (!refExists) {
+                                                    errors.push(
+                                                        `[Missing Repo Reference] Cannot find reference ${repoRefDemand.reference} from ref store ${repoSetupName}. Required by ${repoRefDemand.host}`
+                                                    );
+                                                }
+                                            });
+                                        });
+                                    },
+                                    Promise.resolve()
+                                );
+
+                                return validateRepoReferences;
+                            })
+                            .catch(err => {
+                                errors.push(`Failed to validate ${refStoreName} because:\n${err}`);
+                            })
+                            .then(() => {
+                                return Promise.resolve(errors)
+                                .should.eventually.has.length(0, `Detect errors:\n${errors.join('\n')}`)
+                            })
+                        });
+                    }
+
+                }
+
+                /**
+                 * 
+                 * @param {configLevel.Level} levelConfig 
+                 */
+                function collectRepoSetupToDemandedRepoReferenceAndHosts(levelConfig, previousLevelId) {
+
+                    let repoSetupNames = Object.keys(levelConfig.repoVcsSetups);
+
+                    let repoNameToRepoRefDemands = levelConfig.steps.reduce(
+                        collectRepoSetupToDemandedRepoReferenceAndHostsFromStep,
+                        {}
+                    );
+
+                    return repoNameToRepoRefDemands;
+
+                    function collectRepoSetupToDemandedRepoReferenceAndHostsFromStep(repoNameToRepoRefDemands, step) {
+
+                        let repoNameAndRepoRefDemands =
+                            extractRepoRefNameAndRepoRefDemandsFromStep(step, repoSetupNames, previousLevelId);
+
+                        repoNameAndRepoRefDemands.forEach(repoNameAndRepoRefDemand => {
+                            let repoName = repoNameAndRepoRefDemand.repoName;
+                            if (!(repoName in repoNameToRepoRefDemands)) {
+                                repoNameToRepoRefDemands[repoName] = [];
+                            }
+                            repoNameToRepoRefDemands[repoName].push(new RepoRefDemand(
+                                repoNameAndRepoRefDemand.referenceName,
+                                repoNameAndRepoRefDemand.host
+                            ));
+                        });
+
+                        return repoNameToRepoRefDemands;
+
+                        function extractRepoRefNameAndRepoRefDemandsFromStep(step, repoSetupNames, previousLevelId) {
+
+                            if (step.actions) {
+                                return step.actions.map(extractRepoNameAndRepoRefDemandsFromAction)
+                                .filter(obj => obj !== null);
+                            }
+                            else if (step instanceof configStep.VerifyRepoStep) {
+                                return [{
+                                    repoName: step.repoSetupName,
+                                    referenceName: step.referenceName,
+                                    host: '!verifyOneRepo'
+                                }];
+                            }
+                            else if (step instanceof configStep.VerifyAllRepoStep) {
+                                return repoSetupNames.map(repoSetupName => {
+                                    return {
+                                        repoName: repoSetupName,
+                                        referenceName: step.referenceName,
+                                        host: '!verifyRepo'
+                                    };
+                                })
+                            }
+                            else if (step instanceof configStep.LoadReferenceStep) {
+                                return [{
+                                    repoName: step.repoSetupName,
+                                    referenceName: step.referenceName,
+                                    host: '!loadReference'
+                                }];
+                            }
+                            else if (step instanceof configStep.LoadLastLevelFinalSnapshotStep) {
+                                return step.repoSetupNames.map(repoSetupName => {
+                                    return {
+                                        repoName: repoSetupName,
+                                        referenceName: `${previousLevelId}-final-snapshot`,
+                                        host: '!loadLastLevelFinalSnapshot'
+                                    };
+                                })
+                            }
+                            else {
+                                return [];
+                            }
+
+                            function extractRepoNameAndRepoRefDemandsFromAction(action, hostStep) {
+                                if (action instanceof configAction.LoadReferenceAction) {
+                                    return {
+                                        repoName: action.repoSetupName,
+                                        referenceName: action.referenceVersionName,
+                                        host: `${hostStep}.!act.loadReference`
+                                    }
+                                }
+                                else if (action instanceof configAction.CompareReferenceAction) {
+                                    return {
+                                        repoName: action.repoSetupName,
+                                        referenceName: action.referenceVersionName,
+                                        host: `${hostStep}.!act.compareReference`
+                                    }
+                                }
+                                else {
+                                    return null;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                let repoNameToRepoRefDemands = collectRepoSetupToDemandedRepoReferenceAndHosts(
+                    levelConfig,
+                    previousLevelId
+                );
+
+                after('Clean Up', function() {
+                    return fs.emptyDir(testUtils.PLAYGROUND_PATH);
+                });
+
+                it('ensure demanded repo vcs names exists', function() {
+                    return Promise.resolve()
+                    .then(() => {
+                        let invalidRepoNames = 
+                        Object.keys(repoNameToRepoRefDemands)
+                        .filter(usedRepoName => {
+                            return !(usedRepoName in levelConfig.repoVcsSetups);
+                        });
+
+                        return invalidRepoNames;
+                    })
+                    .then(invalidRepoNames => {
+                        return Promise.resolve(invalidRepoNames)
+                        .should.eventually.has.length(0, `Undefined repo setup names: ${invalidRepoNames.join(', ')}`);
+                    });
+                    
+                });
+
+                Object.keys(repoNameToRepoRefDemands)
+                .filter(repoName => repoName in levelConfig.repoVcsSetups)
+                .forEach(repoName => {
+                    validateRepoStore(
+                        repoName,
+                        levelConfig.repoVcsSetups[repoName],
+                        repoNameToRepoRefDemands[repoName]
+                    );
+                });
+            });
         });
     }
 
-    describe(`Validate levels for course ${courseName}`, function() {
+    describe(`Validate Levels for Course ${courseName}`, function() {
 
-        
+        let flatCourseItems = configCourse.flattenCourseTree(course);
+
+        levelConfigAndNames.forEach(levelConfigAndName => {
+            validateLevel(
+                levelConfigAndName.config,
+                configCourse.findLastLevelFromId(flatCourseItems, levelConfigAndName.name),
+                levelConfigAndName.name,
+                loaderPair,
+                courseName
+            );
+        })
     })
 }
