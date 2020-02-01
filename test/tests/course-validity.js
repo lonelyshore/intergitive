@@ -15,6 +15,7 @@ const AssetLoader = require('../../lib/asset-loader').AssetLoader;
 const configAction = require('../../dev/config-action');
 const configStep = require('../../lib/config-step');
 const RuntimeCourseSettings = require('../../lib/runtime-course-settings');
+const utility = require('../../lib/utility');
 
 const testUtils = require('./test-utils');
 
@@ -454,6 +455,165 @@ function validateLevels(course, levelConfigAndNames, loaderPair, courseName) {
                         repoNameToRepoRefDemands[repoName]
                     );
                 });
+            });
+
+            it('assets should be accessible', function() {
+
+                class AssetDemand {
+                    constructor(assetId, host, isText) {
+                        this.assetId = assetId;
+                        this.host = host;
+                        this.isText = isText;
+                    }
+
+                    toString() {
+                        return `AssetId: ${this.assetId}, Host: ${this.host}`;
+                    }
+                }
+
+                let errors = [];
+
+                let assetDemands = collectAssetDemandsFromLevel(levelConfig);
+
+                let loader = loaderPair.getCourseLoader(courseName);
+
+                let validateAssetDemands = assetDemands.reduce(
+                    (validation, assetDemand) => {
+                        return validation.then(() => {
+                            return loader.containsAsset(assetDemand.assetId)
+                            .then(hasAsset => {
+                                if (!hasAsset) {
+                                    errors.push(`[Missing Asset] cannot find asset ${assetDemand.assetId} for host ${assetDemand.host}`);
+                                }
+                                else {
+                                    if (assetDemand.isText) {
+                                        return loader.loadTextContent(
+                                            assetDemand.assetId
+                                        )
+                                        .then(text => validateTextReplacements(text, assetDemand.host, loader));
+                                    }
+                                }
+                            })
+                            .catch(err => {
+                                errors.push(`Unexpected error occurs for validating ${assetDemand}:\n${err.stack}`);
+                            });
+                        })
+                    },
+                    Promise.resolve()
+                );
+
+                return validateAssetDemands
+                .then(() => {
+                    return Promise.resolve(errors)
+                    .should.eventually.has.length(0, errors.join('\n'));
+                });
+
+                function collectAssetDemandsFromLevel(levelConfig) {
+
+                    return levelConfig.steps.reduce(
+                        (assetDemands, step) => {
+                            return assetDemands.concat(collectAssetDemandsFromStep(step));
+                        },
+                        []
+                    );
+                    
+                    /**
+                     * 
+                     * @param {configStep.Step} step 
+                     * @returns {Array<AssetDemand>}
+                     */
+                    function collectAssetDemandsFromStep(step) {
+
+                        let results = [];
+                        
+                        if (step.actions) {
+                            step.actions.reduce(
+                                (demands, action) => {
+                                    let newDemends = collectAssetDemandsFromAction(action);
+                                    return demands.concat(
+                                        newDemends
+                                    );
+                                },
+                                results
+                            );
+                        }
+                        if (step.descriptionId) {
+                            results.push(
+                                new AssetDemand(
+                                    step.descriptionId,
+                                    step.klass,
+                                    true
+                                )
+                            );
+                        }
+                        
+                        return results;
+
+                        /**
+                         * 
+                         * @param {configAction.Action} action 
+                         * @returns {Array<AssetDemand>}
+                         */
+                        function collectAssetDemandsFromAction(action) {
+                            if (action instanceof configAction.WriteFileAction) {
+                                return action.sourceAssetIds.map(id => {
+                                    return new AssetDemand(
+                                        id,
+                                        '!act.writeFile',
+                                        false
+                                    )
+                                });
+                            }
+                            else if (action instanceof configAction.LoadRepoReferenceArchiveAction) {
+                                return [
+                                    new AssetDemand(
+                                        action.assetId,
+                                        '!dev.act.loadRepoReferenceArchive',
+                                        false
+                                    )
+                                ]
+                            }
+                            else {
+                                return [];
+                            }
+                        }
+                    }
+                }
+                
+                /**
+                 * 
+                 * @param {string} text 
+                 * @param {AssetLoader} loader 
+                 */
+                function validateTextReplacements(text, host, loader) {
+
+                    return utility.searchMustacheReplacementPairs(
+                        text,
+                        loader
+                    )
+                    .then(replacements => {
+                        let pushErrorWhenNotContain = (replacement) => {
+                            return loader.containsAsset(replacement.matchedContent)
+                            .then(contains => {
+                                if (!contains) {
+                                    errors.push(`[Missing Asset] should has ${replacements.matchedContent}, required by ${host}`);
+                                }
+                            });
+                        }
+
+                        return replacements.reduce(
+                            (validateReplacingString, replacement) => {
+                                return validateReplacingString.then(() => {
+                                    return replacement.match(
+                                        pushErrorWhenNotContain,
+                                        pushErrorWhenNotContain
+                                    );
+                                });
+                            },
+                            Promise.resolve()
+                        );
+                    })
+                }
             });
         });
     }
