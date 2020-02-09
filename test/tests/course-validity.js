@@ -490,7 +490,7 @@ function validateLevels(course, levelConfigAndNames, loaderPair, courseName) {
                                         return loader.loadTextContent(
                                             assetDemand.assetId
                                         )
-                                        .then(text => validateTextReplacements(text, assetDemand.host, loader));
+                                        .then(text => validateTextReplacements(text, assetDemand.host, loader, levelConfig.repoVcsSetups));
                                     }
                                 }
                             })
@@ -585,28 +585,38 @@ function validateLevels(course, levelConfigAndNames, loaderPair, courseName) {
                  * @param {string} text 
                  * @param {AssetLoader} loader 
                  */
-                function validateTextReplacements(text, host, loader) {
+                function validateTextReplacements(text, host, loader, repoSetups) {
 
                     return utility.searchMustacheReplacementPairs(
                         text,
                         loader
                     )
                     .then(replacements => {
-                        let pushErrorWhenNotContain = (replacement) => {
+                        let pushErrorWhenNotContainAsset = (replacement) => {
                             return loader.containsAsset(replacement.matchedContent)
                             .then(contains => {
                                 if (!contains) {
                                     errors.push(`[Missing Asset] should has ${replacements.matchedContent}, required by ${host}`);
                                 }
                             });
-                        }
+                        };
+
+                        let pushErrorWhenNotContainRepoSetup = (replacement) => {
+                            return Promise.resolve()
+                            .then(() => {
+                                if (!(replacement.matchedContent in repoSetups)) {
+                                    errors.push(`[Missing Repo Setup] should has ${replacement.matchedContent}, required by ${host}`);
+                                }
+                            });
+                        };
 
                         return replacements.reduce(
                             (validateReplacingString, replacement) => {
                                 return validateReplacingString.then(() => {
                                     return replacement.match(
-                                        pushErrorWhenNotContain,
-                                        pushErrorWhenNotContain
+                                        pushErrorWhenNotContainAsset,
+                                        pushErrorWhenNotContainAsset,
+                                        pushErrorWhenNotContainRepoSetup
                                     );
                                 });
                             },
