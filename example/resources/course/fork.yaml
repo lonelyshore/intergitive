@@ -11,6 +11,6 @@
           nameKey: "levels/main.intro-install.name"
           configAssetId: "levels/intro-install"
         - !level
-          id: "fork-main-intro-basic-usage"
-          nameKey: "levels/main.intro-basic-usage.name"
-          configAssetId: "levels/intro-basic-usage"
+          id: "fork-main-intro-open-repository"
+          nameKey: "levels/main.intro-open-repository.name"
+          configAssetId: "levels/intro-open-repository"

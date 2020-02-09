@@ -3,7 +3,8 @@ asset_index:
     main.course-name: "fork 使用教學"
     main.section-intro.name: "第一章：fork 介紹"
     main.intro-install.name: "第一關：安裝"
+    main.intro-open-repository.name: "第二關：使用 fork 開啟資料夾"
     
   ondisk:
     intro-install: "intro-install.yaml"
-    intro-basic-usage: "intro-basic-usage.yaml"
+    intro-open-repository: "intro-open-repository.yaml"

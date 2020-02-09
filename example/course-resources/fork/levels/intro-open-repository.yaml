@@ -1,0 +1,19 @@
+!level
+  repoVcsSetups:
+    fork-basic:
+      workingPath: fork-basic
+  steps:
+    - !elaborate
+      descriptionId: "level-data/intro-open-repository/introduce-goal"
+      needConfirm: true
+    - !instruct 
+      descriptionId: "level-data/intro-open-repository/open"
+      needConfirm: true
+    - !elaborate 
+      descriptionId: "level-data/intro-open-repository/folded"
+      needConfirm: true
+    - !instruct 
+      descriptionId: "level-data/intro-open-repository/open-directory-in-fork"
+      needConfirm: true
+
+    
