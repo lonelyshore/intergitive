@@ -39,7 +39,7 @@ if (process.env.COURSE_CONFIG_PATH) {
     );
 }
 
-describe.only('Prepare to Validate Course Setting', function() {
+describe('Prepare to Validate Course Setting', function() {
 
     it('generate validations', function() {
         let validatedCourse;
