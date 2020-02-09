@@ -164,7 +164,7 @@
     border: 2px solid #08f;
 }
 
-.illustrate img[alt=illustration] {
+img[alt=illustration] {
     max-width: 100%;
     max-height: 100%;
 }
