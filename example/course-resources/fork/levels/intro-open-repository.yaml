@@ -1,8 +1,98 @@
 !level
   repoVcsSetups:
     fork-basic:
-      workingPath: fork-basic
+      workingPath: basic
+      referenceStoreName: basic-operation
   steps:
+  # build basic operation repo
+    - !dev.devAction 
+      actions:
+      # init git
+        - !dev.act.git
+          repoSetupName: basic
+          arguments:
+            - init
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ config, "--local", user.name, test-repo]
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ config, "--local", user.email, test-repo@some.mail]
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ config, "--local", core.autocrlf, input]
+
+      # initial commit
+        - !act.writeFile 
+          sourceAssetIds:
+            - "level-data/intro-open-repository/file-1:v1"
+            - "level-data/intro-open-repository/file-2:v1"
+            - "level-data/intro-open-repository/file-3:v1"
+          destinationPaths:
+            - "1.txt"
+            - "2.txt"
+            - "3.txt"
+        - !dev.act.git &stageAll
+          repoSetupName: basic
+          arguments: [ "add", "-A" ]
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ "commit", "-m", "第 1 號提交" ]
+
+      # second commit, for browsing
+        - !act.writeFile 
+          sourceAssetIds:
+            - "level-data/intro-open-repository/file-read-me:v1"
+          destinationPaths:
+            - ">>>read me<<<.txt"
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ "commit", "-m", "第 2 號提交" ]
+      
+      # third commit, garbage
+        - !act.writeFile 
+          sourceAssetIds:
+            - "level-data/intro-open-repository/file-1:v2"
+          destinationPaths:
+            - "1.txt"
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ "commit", "-m", "第 3 號提交" ]
+
+      # fourth commit, for browsing second time
+        - !act.writeFile 
+          sourceAssetIds:
+            - "level-data/intro-open-repository/file-read-me:v2"
+          destinationPaths:
+            - ">>>read me<<<.txt"
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ "commit", "-m", "第 4 號提交" ]
+        
+      # fifth commit, for browsing third time
+        - !act.writeFile 
+          sourceAssetIds:
+            - "level-data/intro-open-repository/file-read-me:v3"
+          destinationPaths:
+            - ">>>read me<<<.txt"
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ "commit", "-m", "第 5 號提交" ]
+
+      # sixth comit, garbage
+        - !act.removeFile 
+          targetPaths:
+            - "2.txt"
+        - *stageAll 
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ "commit", "-m", "第 6 號提交" ]
+          
+
     - !elaborate
       descriptionId: "level-data/intro-open-repository/introduce-goal"
       needConfirm: true

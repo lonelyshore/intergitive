@@ -1,5 +1,33 @@
 asset_index:
   infile:
+# build basic operation repo
+    file-1:v1:
+      content of file1
+    file-1:v2:
+      content of file1 v2
+
+    file-2:v1:
+      content of file2
+
+    file-3:v1:
+      content of file3
+
+    file-read-me:v1:
+      媽我在這
+
+    file-read-me:v2:
+      你媽在你背後他非常的火
+
+    file-read-me:v3: |+2
+      臣亮言：先帝創業未半，而中道崩殂。  
+      今天下三分，益州疲弊，此誠危急存亡之秋也。然侍衛之臣，不懈於內；
+      忠志之士，忘身於外者，蓋追先帝之殊遇，欲報之於陛下也。
+      誠宜開張聖聽，以光先帝遺德，恢弘志士之氣；
+      不宜妄自菲薄，引喻失義，以塞忠諫之路也。
+      宮中府中，俱為一體，陟罰臧否，不宜異同。
+      若有作姦犯科，及為忠善者，宜付有司，論其刑賞，以昭陛下平明之治，不宜篇私，使內外異法也。 
+      
+# course content
     introduce-goal: |+2
       .md
       在這一個章節中，將介紹使用 fork 的最基本操作  
@@ -41,7 +69,7 @@ asset_index:
 
       為了方便，練習用資料夾已經預先設置好了，請複製以下路徑：  
 
-      <code>#{{fork-basic}}</code>  
+      <code>#{{basic}}</code>  
 
       然後，貼入上圖兩個紅框圈選位置的其中一個後(任選)，按下「選擇資料夾」，就可以開啟資料夾了
 
