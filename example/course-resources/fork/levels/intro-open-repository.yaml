@@ -25,9 +25,9 @@
       # initial commit
         - !act.writeFile 
           sourceAssetIds:
-            - "level-data/intro-open-repository/file-1:v1"
-            - "level-data/intro-open-repository/file-2:v1"
-            - "level-data/intro-open-repository/file-3:v1"
+            - "$level-data/intro-open-repository/file-1:v1"
+            - "$level-data/intro-open-repository/file-2:v1"
+            - "$level-data/intro-open-repository/file-3:v1"
           destinationPaths:
             - "1.txt"
             - "2.txt"
@@ -42,9 +42,9 @@
       # second commit, for browsing
         - !act.writeFile 
           sourceAssetIds:
-            - "level-data/intro-open-repository/file-read-me:v1"
+            - "$level-data/intro-open-repository/file-read-me:v1"
           destinationPaths:
-            - ">>>read me<<<.txt"
+            - "===read me===.txt"
         - *stageAll
         - !dev.act.git 
           repoSetupName: basic
@@ -53,7 +53,7 @@
       # third commit, garbage
         - !act.writeFile 
           sourceAssetIds:
-            - "level-data/intro-open-repository/file-1:v2"
+            - "$level-data/intro-open-repository/file-1:v2"
           destinationPaths:
             - "1.txt"
         - *stageAll
@@ -64,9 +64,9 @@
       # fourth commit, for browsing second time
         - !act.writeFile 
           sourceAssetIds:
-            - "level-data/intro-open-repository/file-read-me:v2"
+            - "$level-data/intro-open-repository/file-read-me:v2"
           destinationPaths:
-            - ">>>read me<<<.txt"
+            - "===read me===.txt"
         - *stageAll
         - !dev.act.git 
           repoSetupName: basic
@@ -75,9 +75,9 @@
       # fifth commit, for browsing third time
         - !act.writeFile 
           sourceAssetIds:
-            - "level-data/intro-open-repository/file-read-me:v3"
+            - "$level-data/intro-open-repository/file-read-me:v3"
           destinationPaths:
-            - ">>>read me<<<.txt"
+            - "===read me===.txt"
         - *stageAll
         - !dev.act.git 
           repoSetupName: basic
