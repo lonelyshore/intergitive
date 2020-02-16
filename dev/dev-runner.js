@@ -1,20 +1,21 @@
-"use strict";
+'use strict';
 
-const yaml = require("js-yaml");
-const fs = require("fs-extra");
+const yaml = require('js-yaml');
+const fs = require('fs-extra');
+const path = require('path');
 const NestedError = require('nested-error-stacks');
 
-const actionConf = require("./config-action");
-const stepConf = require("../lib/config-step");
-const courseConfig = require("../lib/config-course");
-const vcs = require("../lib/repo-vcs");
+const actionConf = require('./config-action');
+const stepConf = require('../lib/config-step');
+const courseConfig = require('../lib/config-course');
+const vcs = require('../lib/repo-vcs');
 const devParams = require('./parameters');
 const loadCourseAsset = require('../lib/load-course-asset');
-const LEVEL_SCHEMA = require("../dev/level-config-schema").LEVEL_CONFIG_SCHEMA;
-const COURSE_SCHEMA = require("../lib/course-config-schema").COURSE_CONFIG_SCHEMA;
+const LEVEL_SCHEMA = require('../dev/level-config-schema').LEVEL_CONFIG_SCHEMA;
+const COURSE_SCHEMA = require('../lib/course-config-schema').COURSE_CONFIG_SCHEMA;
 const REPO_TYPE = require('../lib/config-level').REPO_TYPE;
-const ActionExecutor = require("../dev/action-executor").DevActionExecutor;
-const Level = require("../lib/config-level").Level;
+const ActionExecutor = require('../dev/action-executor').DevActionExecutor;
+const Level = require('../lib/config-level').Level;
 
 
 const loadReferenceMakerMapping = function(repoVcsSetups, storePath) {
@@ -58,7 +59,11 @@ const bakeLevel = function(levelItem, flatCourseItems, actionExecutorContext) {
     })
     .then(level => {
 
-        let bakeActions = Promise.resolve();
+        let bakeActions = initilaizeRepoVcsSetup(
+            actionExecutorContext.fileSystemBaseFolder,
+            actionExecutorContext.repoStoreSubPath,
+            level.repoVcsSetups
+        );
 
         let actionExecutor = new ActionExecutor(
             actionExecutorContext.fileSystemBaseFolder,
@@ -146,7 +151,22 @@ const bakeLevel = function(levelItem, flatCourseItems, actionExecutorContext) {
     })
     .catch(error => {
         throw new NestedError(`Failed to execute actions for level ${levelItem.id}`, error);
-    });;
+    });
+
+    function initilaizeRepoVcsSetup(fileSystemBaseFolder, repoStoreSubPath, repoVcsSetups) {
+        return Object.keys(repoVcsSetups).reduce(
+            (initializationPromise, repoSetupName) => {
+                return initializationPromise.then(() => {
+                    let setup = repoVcsSetups[repoSetupName];
+                    return fs.emptyDir(path.join(fileSystemBaseFolder, setup.workingPath))
+                    .then(() => {
+                        return fs.emptyDir(path.join(fileSystemBaseFolder, repoStoreSubPath, setup.referenceStoreName))
+                    });
+                });
+            },
+            Promise.resolve()
+        );
+    }
 
 
 }
