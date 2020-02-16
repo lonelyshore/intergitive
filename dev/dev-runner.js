@@ -9,24 +9,13 @@ const stepConf = require("../lib/config-step");
 const courseConfig = require("../lib/config-course");
 const vcs = require("../lib/repo-vcs");
 const devParams = require('./parameters');
+const loadCourseAsset = require('../lib/load-course-asset');
 const LEVEL_SCHEMA = require("../dev/level-config-schema").LEVEL_CONFIG_SCHEMA;
 const COURSE_SCHEMA = require("../lib/course-config-schema").COURSE_CONFIG_SCHEMA;
 const REPO_TYPE = require('../lib/config-level').REPO_TYPE;
 const ActionExecutor = require("../dev/action-executor").DevActionExecutor;
 const Level = require("../lib/config-level").Level;
 
-/**
- * 
- * @param {string} configPath 
- */
-const loadConfig = function(configPath, schema) {
-    return fs.readFile(configPath)
-    .then(content => {
-        return yaml.safeLoad(content, {
-            schema: schema
-        });
-    });
-}
 
 const loadReferenceMakerMapping = function(repoVcsSetups, storePath) {
 
@@ -229,19 +218,22 @@ function CollectCourseItemIdToItemDict(course) {
 
 /**
  * 
- * @param {string} configPath 
+ * @param {string} courseName
+ * @param {string} fileSystemBaseFolder
+ * @param {string} repoStoreSubPath
+ * @param {loadCourseAsset.LoaderPair} loaderPair
  */
-const run = function(configPath, fileSystemBaseFolder, repoStoreSubPath, assetLoader) {
+const run = function(courseName, fileSystemBaseFolder, repoStoreSubPath, loaderPair) {
 
     const actionExecutorContext = {
         fileSystemBaseFolder: fileSystemBaseFolder,
         repoStoreSubPath: repoStoreSubPath,
-        assetLoader: assetLoader
+        assetLoader: loaderPair.getCourseLoader(courseName)
     };
 
     let course;
     
-    return loadConfig(configPath, COURSE_SCHEMA)
+    return loaderPair.loadCourse(courseName)
     .then(result => {
         course = result;
     })

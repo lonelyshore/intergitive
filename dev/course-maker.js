@@ -4,6 +4,8 @@ const fs = require('fs-extra');
 const path = require('path');
 const AssetLoader = require('../lib/asset-loader').AssetLoader;
 const devRunner = require('./dev-runner');
+const loadCourseAsset = require('../lib/load-course-asset');
+const RuntimeCourseSettings = require('../lib/runtime-course-settings');
 const zip = require('../lib/simple-archive');
 
 const fileSystemBasePath = path.resolve(__dirname, '../bake');
@@ -20,23 +22,31 @@ operate(args)
 function operate(args) {
     switch(args[0]) {
         case 'bake-course':
-            if (args[1] === 'help' || args.length === 1) {
+            if (args[1] === 'help' || args.length !== 5) {
                 console.log(`
     bake-course: bake for a course
       arguments:
-        commonResourcePath: path to resource folder where common assets and course definition files located
-        courseResourcePath: path to course resources loaded by AssetLoader
-        courseAssetId: asset id of the baked course, without "course/" prefix
+        relativeBasePath: path to resource folder where common assets and course definition files located
+        bundlePaths: asset loader bundle tokens separated by slashes ('/'). Pass a single slash for empty bundles
+        selectedCourse: asset id of the baked course, without "course/" prefix
         sourceRepoStorePath: path to repo store that is used to bake the course`);
                 return Promise.resolve();
             }
 
-            let commonResourcePath = normalizePath(args[1]);
-            let courseResourcePath = normalizePath(args[2]);
-            let courseAssetId = args[3];
+            let settings = new RuntimeCourseSettings(
+                projectPath,
+                {
+                    relativeBasePath: args[1],
+                    bundlePaths: args[2] === '/' ? [] : args[2].split('/'),
+                    selectedCourse: args[3]
+                }
+            );
+
+            let loaderPair = loadCourseAsset.createCourseAssetLoaderPair(settings);
+            
             let sourceRepoStorePath = normalizePath(args[4]);
 
-            let initRepoStoreArchivePath = path.join(courseResourcePath, courseAssetId, 'archives', 'init-repo-store');
+            let initRepoStoreArchivePath = path.join(settings.courseResourcesPath, settings.course, 'archives', 'init-repo-store');
 
             return fs.emptyDir(fileSystemBasePath)
             .then(() => {
@@ -49,24 +59,16 @@ function operate(args) {
                 });
             })
             .then(() => {
-                let commonAssetLoader = new AssetLoader(commonResourcePath);
-                let baseCourseAssetLoader = new AssetLoader(courseResourcePath);
-
-                return commonAssetLoader.getFullAssetPath(`course/${courseAssetId}`)
-                .then(configPath => {
-                    let courseAssetLoader = baseCourseAssetLoader.getLoaderForBundlePath(courseAssetId);
-
-                    return devRunner.run(
-                        configPath,
-                        fileSystemBasePath,
-                        'repo-stores',
-                        courseAssetLoader
-                    );
-                });
+                return devRunner.run(
+                    settings.course,
+                    fileSystemBasePath,
+                    'repo-stores',
+                    loaderPair
+                );
             })
             .then(() => {
                 let repoStorePath = path.join(fileSystemBasePath, 'repo-stores');
-                var archivesPath = path.join(fileSystemBasePath, 'repo-archives');
+                var archivesPath = path.join(fileSystemBasePath, 'generated-repo-archives');
                 return fs.readdir(repoStorePath, { withFileTypes: true })
                 .then(dirents => {
                     let archives = Promise.resolve();
