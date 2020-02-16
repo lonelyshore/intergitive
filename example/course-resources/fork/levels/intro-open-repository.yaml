@@ -1,6 +1,6 @@
 !level
   repoVcsSetups:
-    fork-basic:
+    basic:
       workingPath: basic
       referenceStoreName: basic-operation
   steps:
