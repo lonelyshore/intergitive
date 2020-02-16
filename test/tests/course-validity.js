@@ -527,14 +527,16 @@ function validateLevels(course, levelConfigAndNames, loaderPair, courseName) {
                         let results = [];
                         
                         if (step.actions) {
-                            step.actions.reduce(
-                                (demands, action) => {
-                                    let newDemends = collectAssetDemandsFromAction(action);
-                                    return demands.concat(
-                                        newDemends
-                                    );
-                                },
-                                results
+                            results = results.concat(
+                                step.actions.reduce(
+                                    (demands, action) => {
+                                     let newDemends = collectAssetDemandsFromAction(action);
+                                        return demands.concat(
+                                            newDemends
+                                        );
+                                    },
+                                    results
+                                )
                             );
                         }
                         if (step.descriptionId) {
