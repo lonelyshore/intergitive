@@ -29,9 +29,9 @@
             - "$level-data/intro-open-repository/file-2:v1"
             - "$level-data/intro-open-repository/file-3:v1"
           destinationPaths:
-            - "1.txt"
-            - "2.txt"
-            - "3.txt"
+            - "basic/1.txt"
+            - "basic/2.txt"
+            - "basic/3.txt"
         - !dev.act.git &stageAll
           repoSetupName: basic
           arguments: [ "add", "-A" ]
@@ -44,7 +44,7 @@
           sourceAssetIds:
             - "$level-data/intro-open-repository/file-read-me:v1"
           destinationPaths:
-            - "===read me===.txt"
+            - "basic/===read me===.txt"
         - *stageAll
         - !dev.act.git 
           repoSetupName: basic
@@ -55,7 +55,7 @@
           sourceAssetIds:
             - "$level-data/intro-open-repository/file-1:v2"
           destinationPaths:
-            - "1.txt"
+            - "basic/1.txt"
         - *stageAll
         - !dev.act.git 
           repoSetupName: basic
@@ -66,7 +66,7 @@
           sourceAssetIds:
             - "$level-data/intro-open-repository/file-read-me:v2"
           destinationPaths:
-            - "===read me===.txt"
+            - "basic/===read me===.txt"
         - *stageAll
         - !dev.act.git 
           repoSetupName: basic
@@ -77,7 +77,7 @@
           sourceAssetIds:
             - "$level-data/intro-open-repository/file-read-me:v3"
           destinationPaths:
-            - "===read me===.txt"
+            - "basic/===read me===.txt"
         - *stageAll
         - !dev.act.git 
           repoSetupName: basic
@@ -86,12 +86,21 @@
       # sixth comit, garbage
         - !act.removeFile 
           targetPaths:
-            - "2.txt"
+            - "basic/2.txt"
         - *stageAll 
         - !dev.act.git 
           repoSetupName: basic
           arguments: [ "commit", "-m", "第 6 號提交" ]
-          
+
+      # save reference
+        - !dev.act.saveReference 
+          repoSetupName: basic
+          referenceName: init
+
+    - !loadReference
+      repoSetupName: basic
+      referenceName: init
+
 
     - !elaborate
       descriptionId: "level-data/intro-open-repository/introduce-goal"
