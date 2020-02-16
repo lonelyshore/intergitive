@@ -30,13 +30,14 @@ asset_index:
 # course content
     introduce-goal: |+2
       .md
-      在這一個章節中，將介紹使用 fork 的最基本操作  
+      在這一個章節中，將介紹如何使用 fork 開啟一個資料夾  
       在往後的教學中，當提到「使用 fork 開啟 OOO 資料夾」時，請按照本章節的步驟進行
     
     open: |+2
       .md
-      請開啟已經安裝好的 fork  
-      在 Windows 10 中，可以從開始目錄的「Fork」資料夾中找到，如下圖所示  
+      首先，請開啟已經安裝好的 fork  
+
+      在 Windows 10 中，可以從開始目錄的「Fork」資料夾中找到，如下圖紅框圈選範圍所示  
 
       ![illustration]({{images/fork-from-start-menu}})  
 
@@ -58,8 +59,8 @@ asset_index:
 
       現在，就讓我們來試著開啟練習用的資料夾吧  
 
-      首先，請進入 fork  
-      如下圖所示，在右上角的工具列選擇 <code>File > Open Repository...</code>  
+      請進入 fork  
+      如下圖所示，在左上角的工具列選擇 <code>File > Open Repository...</code>  
 
       ![illustration]({{images/fork-choose-open-repository}})
 
@@ -71,5 +72,11 @@ asset_index:
 
       <code>#{{basic}}</code>  
 
-      然後，貼入上圖兩個紅框圈選位置的其中一個後(任選)，按下「選擇資料夾」，就可以開啟資料夾了
+      然後，貼入上圖兩個紅框圈選位置的其中一個後(任選)，按下「選擇資料夾」，就可以開啟資料夾了  
+
+      成功開啟之後，fork 中就會出現如下圖紅框圈選的線圖  
+
+      ![illustration]({{images/fork-open-basic}})  
+
+      這個線圖，是整個 git 非常重要的元素，在接下來的教學中我們將好好的熟悉它
 

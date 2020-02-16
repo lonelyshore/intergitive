@@ -2,15 +2,13 @@ asset_index:
   infile:
     introduce-fork: |+2
       .md
-      這個教學將會逐步指引熟悉 git 的操作  
+      歡迎使用 intergitve 教學  
+      在這個教學中，會介紹如何使用名為 fork 的 git 操作程式  
 
-      在這個教學中，會介紹名為 fork 的 git 操作程式  
+      git 是一個負責提供版本控管的功能  
+      fork 則是方便大家操作 git 的程式  
 
-      git 負責提供版本控管的功能  
-      fork 則是一個方便大家操作 git 的程式  
-
-      fork 的特點是有簡約明瞭的操作介面  
-      在功能上也不複雜容易使用  
+      fork 的特點是有簡約明瞭的操作介面，使得學習 git 更加的容易  
 
     download: |+2
       .md
