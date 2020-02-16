@@ -560,9 +560,9 @@ function validateLevels(course, levelConfigAndNames, loaderPair, courseName) {
                             if (action instanceof configAction.WriteFileAction) {
                                 return action.sourceAssetIds.map(id => {
                                     return new AssetDemand(
-                                        id,
+                                        id.replace(/^\$/, ''),
                                         '!act.writeFile',
-                                        false
+                                        id.startsWith('$')
                                     )
                                 });
                             }
