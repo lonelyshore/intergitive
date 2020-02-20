@@ -4,7 +4,9 @@ asset_index:
     main.section-intro.name: "第一章：fork 介紹"
     main.intro-install.name: "第一關：安裝"
     main.intro-open-repository.name: "第二關：使用 fork 開啟資料夾"
+    main.browse-history.name: "第三關：瀏覽版本歷史"
     
   ondisk:
     intro-install: "intro-install.yaml"
     intro-open-repository: "intro-open-repository.yaml"
+    browse-history: "browse-history.yaml"

@@ -14,3 +14,7 @@
           id: "fork-main-intro-open-repository"
           nameKey: "levels/main.intro-open-repository.name"
           configAssetId: "levels/intro-open-repository"
+        - !level 
+          id: "fork-main-browse-history"
+          nameKey: "levels/main.browse-history.name"
+          configAssetId: "levels/browse-history"

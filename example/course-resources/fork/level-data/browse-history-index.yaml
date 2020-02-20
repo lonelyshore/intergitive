@@ -1,0 +1,10 @@
+asset_index:
+  infile:
+    introduction: |+2
+      .md
+
+      在這個章節中，你將在${{t/graph}}上游走  
+
+      git 負責管理電腦上一個資料夾的內容變化歷史  
+      
+      ${{t/graph}}

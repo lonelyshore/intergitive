@@ -1,0 +1,8 @@
+!level
+  repoVcsSetups:
+    basic:
+      workingPath: basic
+      referenceStoreName: basic-operation
+  steps:
+    - !illustrate  
+      descriptionId: "level-data/browse-history-index/introduction"
