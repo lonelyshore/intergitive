@@ -3,10 +3,10 @@
   steps:
     - !elaborate
       descriptionId: "level-data/intro-install/introduce-fork"
-    - !elaborate
+    - !instruct 
       descriptionId: "level-data/intro-install/download"
       needConfirm: true
-    - !illustrate
+    - !instruct 
       descriptionId: "level-data/intro-install/install"
       needConfirm: true
     
