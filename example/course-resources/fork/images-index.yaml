@@ -9,3 +9,6 @@ asset_index:
     fork-select-repository-location: fork-select-repository-location.png
     fork-open-basic: fork-open-basic.png
     folder-history-change: folder-history-change.png
+    graph-fork: graph-fork.png
+    select-first-commit: select-first-commit.png
+    show-file-tree: show-file-tree.png

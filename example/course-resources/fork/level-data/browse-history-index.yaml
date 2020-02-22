@@ -8,7 +8,7 @@ asset_index:
       上個章節的最後，我們提到了${{t/graph}}可以說是 git 最重要的元素也不為過  
       我們想要使用 git 管理電腦上一個資料夾的內容變化歷史，${{t/graph}}則以圖像的方式呈現資料夾的內容變化歷史  
       
-      說到這裡「資料夾的內容變化歷史」是甚麼意思呢？ 請參考下圖(一)  
+      說到這裡，「資料夾的內容變化歷史」是甚麼意思呢？ 請參考下圖(一)  
 
       ![illustration]({{images/folder-history-change}})  
       <div class="img-title">圖(一)</p>  
@@ -24,7 +24,85 @@ asset_index:
       1. 猶如時光機，我們可以任意的把資料夾退回到過去特定的時間點  
       2. 猶如一部史書，我們可以知道這個資料夾的內容過去是如何演變的  
 
-      而${{t/graph}}就是實現 2. 的一個好工具  
+      而${{t/graph}}因為用圖像的方式呈現了這個歷史，是實現 2. 的一個好工具  
+    
+    graph-as-folder-history: |+2
+      .md
+
+      我們重複強調了${{t/graph}}*圖像地*呈現了資料夾變化的歷史，圖像化是甚麼意思呢？ 請看下面圖(二)  
+
+      ![illustration]({{images/graph-fork.png}})
+      <div class="img-title">圖(二)</p>  
+
+      圖(二)是從${{t/gui}}取出的${{t/graph}}截圖  
+      我們可以看到${{t/graph}}是由縱向排列串連的六顆圓點組成的  
+      每一顆圓點，都代表我們記錄下來的一次資料夾內容  
+      可以想像成圖(一)的白色資料夾或黃色資料夾，就各自是這裡的一個圓點  
+      從下到上六個串連的圓點，就代表這裡紀錄了一個資料夾的六次版本內容  
+
+      也就是說${{t/graph}}是以一個圓點代表資料夾的一個版本，把多個圓點以線條串聯來呈現資料夾變化歷史的呈現方式  
+      但是，好像還少了些甚麼？
+
+    file-tree-viewer: |+2
+      .md
+
+      聰明如你，到這裡或許注意到了  
+      圖(一)裡面我們分別列出了同一個資料夾在兩個時間點的內容  
+      但是圖(二)裡面，我們只能看到總共有六次資料夾的內容版本紀錄，卻不知道他們各自內容為何  
+
+      不用擔心！檢視每個版本的內容的功能確實的內建於${{t/gui}}之中  
+      接下來，我們將在電腦上實際產生出一個被 git 紀錄了六次檔案版本歷史的資料夾，請逐步按照指示操作  
+
+    open-folder: |+2
+      .md
+
+      首先，請使用${{t/gui}}開啟 `#{{basic}}`  
+      完成後，應該會出現如下圖(三)的畫面，確認後請進行下一步  
+
+      ![illustration]({{images/fork-open-basic}})  
+      <div class="img-title">圖(三)</p>  
+
+    use-file-tree-viewer: |+2
+      .md
+
+      接著，請在${{t/graph}}上面，使用滑鼠左鍵單點，選取位於最下方的圓點  
+      最下方的圓點被選中後會如下圖(四)所示，以深藍色底反白  
+
+      ![illustration]({{images/select-first-commit}})  
+      <div class="img-title">圖(四)</p>  
+
+      完成選取之後，如下圖(五)所示  
+      請在${{t/graph}}下方的三個頁籤(Commit/Changes/File Tree)中選擇**最右邊的「File Tree」**  
+
+      ![illustration]({{images/select-file-tree-tab}})  
+      <div class="img-title">圖(五)</p>  
+
+    read-file-tree-viewer: |+2
+      .md
+
+      選取了「File Tree」之後，應該會如下圖(六)紅框範圍所示，顯示出這個版本的資料夾內容  
+
+      ![illustration]({{images/show-file-tree}})  
+      <div class="img-title">圖(六)</p>  
+
+      請根據你的${{t/gui}}裡面顯示的資料夾內容，回答總共有哪些個檔案呢？  
+      1. a.txt, b.txt, c.txt  
+      2. 1.txt, 2.txt, 3.txt  
+      3. 甚麼東西都沒有  
+
+      請以數字選項(1/2/3)回答
+
+    explain-file-tree: |+2
+      .md
+
+      在前面的指引中，我們介紹了透過${{t/gui}}的「File Tree」介面可以看見一個資料夾在特定版本的內容  
+
+      為什麼是「File Tree」呢？  
+      其實 *file tree* 是一種專用術語  
+      因為資料夾裡面通常會有數個檔案跟數個子資料夾，子資料夾還有孫資料夾，反覆展開像是一顆樹一樣  
+      就稱呼為${{t/file-tree-f}}了  
+
+      在這個教學中，當我們說**${{t/file-tree}}**時，指稱的就是「被 git 管控的資料夾的一個特定版本的所有檔案內容」  
 
     
       

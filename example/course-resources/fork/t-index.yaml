@@ -1,4 +1,7 @@
 asset_index:
   infile:
+    gui: " fork "
     graph-f: 線圖(graph)
     graph: 線圖
+    file-tree-f: 檔案樹(file tree)
+    file-tree: 檔案樹

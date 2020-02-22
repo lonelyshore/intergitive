@@ -7,4 +7,29 @@
     - !illustrate  
       descriptionId: "level-data/browse-history-index/introduction"
       needConfirm: true
-    - !
+    - !elaborate 
+      descriptionId: "level-data/browse-history-index/graph-as-folder-history"
+      needConfirm: true
+    - !illustrate 
+      descriptionId: "level-data/browse-history-index/file-tree-viewer"
+      needConfirm: true
+
+    - !act.loadReference 
+      repoSetupName: basic
+      referenceName: init
+
+    # intruct how to use file viewer
+    - !instruct 
+      descriptionId: "level-data/browse-history-index/open-folder"
+      needConfirm: true
+    - !instruct 
+      descriptionId: "level-data/browse-history-index/use-file-tree-viewer"
+    - !instruct 
+      descriptionId: "level-data/browse-history-index/read-file-tree-viewer"
+    - !verifyInput 
+      answer: 2
+
+    # introduce file tree
+    - !illustrate 
+      descriptionId: "level-data/browse-history-index/explain-file-tree"
+    
