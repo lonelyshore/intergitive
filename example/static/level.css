@@ -222,3 +222,8 @@ img[alt=illustration] {
     pointer-events: none;
     opacity: 0.4;
 }
+
+dev[class~="img-title"] {
+    text-align: center;
+    font-weight: bold;
+}

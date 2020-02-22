@@ -14,10 +14,10 @@
             - init
         - !dev.act.git 
           repoSetupName: basic
-          arguments: [ config, "--local", user.name, test-repo]
+          arguments: [ config, "--local", user.name, someone]
         - !dev.act.git 
           repoSetupName: basic
-          arguments: [ config, "--local", user.email, test-repo@some.mail]
+          arguments: [ config, "--local", user.email, someone@some.mail]
         - !dev.act.git 
           repoSetupName: basic
           arguments: [ config, "--local", core.autocrlf, input]

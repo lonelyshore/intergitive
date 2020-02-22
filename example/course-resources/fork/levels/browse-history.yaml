@@ -6,3 +6,5 @@
   steps:
     - !illustrate  
       descriptionId: "level-data/browse-history-index/introduction"
+      needConfirm: true
+    - !

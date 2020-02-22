@@ -5,3 +5,4 @@
 /example/repoStore/
 /out
 **/archives/init-repo-store
+.~lock.*
