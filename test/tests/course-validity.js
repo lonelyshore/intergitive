@@ -598,7 +598,7 @@ function validateLevels(course, levelConfigAndNames, loaderPair, courseName) {
                             return loader.containsAsset(replacement.matchedContent)
                             .then(contains => {
                                 if (!contains) {
-                                    errors.push(`[Missing Asset] should has ${replacements.matchedContent}, required by ${host}`);
+                                    errors.push(`[Missing Matching] should has ${replacement.matchedContent}, required by ${host}`);
                                 }
                             });
                         };
