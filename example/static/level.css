@@ -153,6 +153,13 @@
     margin-top: 1rem;
 }
 
+.level-block .content p {
+    line-height: 1.5;
+}
+
+.level-block .content li {
+    line-height: 1.5;
+}
 
 .elaborate {
     border-radius: 2px;
