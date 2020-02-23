@@ -10,3 +10,6 @@ asset_index:
     work-tree-f: 工作樹(working tree)
     work-tree-alt: 工作目錄
     work-tree: 工作樹
+    local-repo-f: 本地倉庫(local repository)
+    repo-f: 倉庫(repository)
+    repo: 倉庫

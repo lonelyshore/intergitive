@@ -8,11 +8,15 @@ asset_index:
     fork-choose-open-repository: fork-choose-open-repository.png
     fork-select-repository-location: fork-select-repository-location.png
     fork-open-basic: fork-open-basic.png
-    folder-history-change: folder-history-change.png
-    graph-fork: graph-fork.png
-    select-last-commit: select-last-commit.png
-    select-file-tree-tab: select-file-tree-tab.png
-    show-file-tree: show-file-tree.png
-    show-file-tree-of-second-commit: show-file-tree-of-second-commit.png
-    read-readme-of-second-commit: read-readme-of-second-commit.png
-    open-working-directory: fork-open-working-directory.png
+
+# browse-history
+    folder-history-change: browse-history@folder-history-change.png
+    graph-fork: browse-history@graph-fork.png
+    select-last-commit: browse-history@select-last-commit.png
+    select-file-tree-tab: browse-history@select-file-tree-tab.png
+    show-file-tree: browse-history@show-file-tree.png
+    show-file-tree-of-second-commit: browse-history@show-file-tree-of-second-commit.png
+    read-readme-of-second-commit: browse-history@read-readme-of-second-commit.png
+    open-working-directory: browse-history@fork-open-working-directory.png
+    illustrate-working-tree-and-file-trees: browse-history@illustrate-working-tree-and-file-trees.png
+    illustrate-working-tree-and-repository: browse-history@illustrate-working-tree-and-repository.png

@@ -1,6 +1,6 @@
 asset_index:
   infile:
-    # tutorial contents
+# tutorial contents
     introduction: |+2
       .md
       
@@ -203,7 +203,40 @@ asset_index:
 
       這個時候，或許你會覺得有點神奇，git 是如何做到讓我們可以隨意翻看過往的${{t/file-tree}}而不嘿影響到${{t/work-tree}}的呢？  
 
-      
+      其實原理非常簡單  
+      git 所做的一個很重要的工作，就是把各個版本的${{t/file-tree}}保存在一個使用者看不到的地方  
+      請見下圖(十)：
 
-    
+      ![illustration]({{images/illustrate-working-tree-and-file-trees}})  
+      <div class="img-title">圖(十)</div>  
+
+      上圖的左邊是${{t/work-tree}}，下面有一個白色資料夾，代表平常我們工作的資料夾  
+      新增/修改/刪除等變化都發生在這裡  
+      因為通常我們只能在一個地方工作(其實有例外)，所以左邊只有一個白色資料夾  
       
+      然後，git 另外找了一個地方，把我們想要留下作紀念(?)的${{t/file-tree}}都偷偷存了起來  
+      就像上圖的右邊存了三個不同版本的${{t/file-tree}}  
+
+      話說回來「一群${{t/file-tree}}」使用起來也很不方便  
+      事實上，這個 git 偷偷保存起來的東西也有一個大家慣用的名字，叫做${{t/local-repo-f}}，或者簡稱${{t/repo-f}}  
+      所以上面的概念圖就會變成像下圖(十一)一樣：
+
+      ![illustration]({{images/illustrate-working-tree-and-repository}})  
+      <div class="img-title">圖(十一)</div>  
+
+      左邊的部分保持不變，而右邊用來表示 git 偷存東西的地方－－**${{t/repo}}**  
+      這時候，我們就發現到，右邊的三個資料夾被替換成這個章節所圍繞著的，${{t/graph}}  
+
+    summary: |+2
+      .md
+
+      在本章節中，我們學會了：  
+      1. **${{t/work-tree}}**代表工作中的資料夾狀態
+      2. **${{t/file-tree}}**代表某一個被 git 偷偷保存起來的過往資料夾狀態
+      3. **${{t/graph}}**用圖像的方式呈現了一連串的${{t/file-tree}}
+      4. 瀏覽過往的${{t/file-tree}}不會影響到${{t/work-tree}}
+      
+      回顧這個章節的第一個解說區塊，我們提到了紀錄一連串的${{t/file-tree}}還有一個好處是：  
+      > 猶如時光機，我們可以任意的把資料夾退回到過去特定的時間點  
+
+      這個功能又應該如何使用呢？請待下回分曉！
