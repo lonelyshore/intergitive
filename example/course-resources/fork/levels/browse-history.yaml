@@ -29,7 +29,7 @@
     - !verifyInput 
       answer: "2"
 
-    # introduce file tree
+    # introduce file tree and practice
     - !illustrate 
       descriptionId: "level-data/browse-history/explain-file-tree"
       needConfirm: true
@@ -39,7 +39,31 @@
     - !instruct 
       descriptionId: "level-data/browse-history/read-readme-of-second-commit"
     - !verifyInput 
-      answer: "${{level-data/browse-history/answer-second-readme}}"
+      answer: "${{level-data/intro-open-repository/file-read-me:v1}}"
+
+    - !instruct 
+      descriptionId: "level-data/browse-history/read-readme-of-last-commit"
+    - !verifyInput 
+      answer: "3"
+
+    - !instruct 
+      descriptionId: "level-data/browse-history/read-readme-of-forth-commit"
+    - !verifyInput 
+      answer: "${{level-data/intro-open-repository/file-read-me:v2}}"
+      
+    # read file tree will not change working directory
+    - !elaborate 
+      descriptionId: "level-data/browse-history/read-file-tree-not-affect-working-directory"
+    - !instruct 
+      descriptionId: "level-data/browse-history/check-working-directory"
+    - !verifyInput 
+      answer: "2"
+    - !elaborate  
+      descriptionId: "level-data/browse-history/introduce-work-tree"
+      needConfirm: true     
+    - !illustrate 
+      descriptionId: "level-data/browse-history/illustrate-file-tree"
+      needConfirm: true
       
 
     

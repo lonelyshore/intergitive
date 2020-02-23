@@ -1,8 +1,5 @@
 asset_index:
   infile:
-    # answers of verify inputs
-    answer-second-readme: "媽我在這"
-
     # tutorial contents
     introduction: |+2
       .md
@@ -132,6 +129,81 @@ asset_index:
 
       如圖所示，${{t/gui}}右下角紅框圈選的範圍會顯示在${{t/file-tree-gui}}中選擇的檔案內容  
       請在下面的輸入欄輸入你所看見的檔案內容，並按下確認檢查答案～
+
+    read-readme-of-last-commit: |+2
+      .md
+
+      且讓我們繼續練習瀏覽不同版本的「===read me===.txt」  
+
+      請從${{t/graph}}選擇最上面一個圓點(寫著「第 6 號提交」)，並且從${{t/file-tree-gui}}檢視「===read me===.txt」的內容  
+
+      這個版本的「===read me===.txt」內容是一篇名作，請問這篇名作的原作者是：
+      1. 塔史亮  
+      2. 豬哥亮  
+      3. 諸葛亮  
+      4. 諸葛暗  
+
+      請以數字選項(1/2/3/4)回答～
+
+    read-readme-of-forth-commit: |+2
+      .md
+
+      最後，請從${{t/graph}}選擇寫著「第 4 號提交」的圓點，再次檢視「===read me===.txt」的內容  
+      請在下方輸入欄填入你看到的內容，並按下確認檢查答案～
+
+    read-file-tree-not-affect-working-directory: |+2
+      .md
+
+      經過前面的練習，我們現在發現${{t/file-tree-gui}}的功能非常有趣
+      它可以讓我們隨意地讀取這個資料夾過去任何版本的任何檔案內容  
+
+      但是，這樣隨意翻看*過去*的檔案，會影響到*現在*這個資料夾的內容嗎？  
+      就讓我們實地檢查看看  
+
+    check-working-directory: |+2
+      .md
+
+      我們打開看看目前被 git 管理的資料夾長甚麼樣子  
+
+      請如下圖(九)紅框圈選範圍，依序操作：  
+
+      ![illustration]({{images/open-working-directory}})  
+      <div class="img-title">圖(九)</div>  
+
+      1. 在${{t/gui}}的右上角工具列找到「Open in」按鈕，展開選單  
+      2. 在選單上選擇「Open In File Explorer」  
+
+      按下之後，應該會出現檔案管理員，顯示`#{{basic}}`目前的檔案狀態  
+      請從檔案管理員開啟「===read me===.txt」  
+      然後在${{t/gui}}裡選擇檢視「第 4 號提交」的「===read me===.txt」的狀態  
+      
+      
+      請問，「===read me===.txt」目前的實際內容是否與${{t/gui}}裡面顯示的一致呢？  
+      1. 是
+      2. 否
+
+      請以數字選項(1/2)回答～
+      
+    introduce-work-tree: |+2
+      .md
+
+      從前面的操作，我們發現了，從${{t/gui}}檢視過往的${{t/file-tree}}並不會修改目前資料夾實際上的內容  
+
+      「目前資料夾實際上的內容」說起來非常繞口  
+      在使用 git 時，我們常常必須區分想要講述的是「*當前*的資料夾狀態」還是「*以前*的資料夾狀態」  
+      在前不久，我們叫紹了被 git 保存的任意*以前*資料夾版本內容叫做${{t/file-tree}}  
+      相對於此，*當前*的資料夾內容則叫做**${{t/work-tree-f}}**  
+      或者比較通俗的說法是${{t/work-tree-alt-f}}  
+
+      雖然${{t/work-tree-alt}}比較容易貼近一般電腦使用者的用語  
+      為了配合 [git 的相關文件用法避免歧異](https://stackoverflow.com/questions/39128500/working-tree-vs-working-directory)，我們將統一使用${{t/work-tree}}來代表「目前資料夾實際上的內容」
+
+    illustrate-file-tree: |+2
+      .md
+
+      這個時候，或許你會覺得有點神奇，git 是如何做到讓我們可以隨意翻看過往的${{t/file-tree}}而不嘿影響到${{t/work-tree}}的呢？  
+
+      
 
     
       
