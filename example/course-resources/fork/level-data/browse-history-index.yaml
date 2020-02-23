@@ -1,5 +1,9 @@
 asset_index:
   infile:
+    # answers of verify inputs
+    answer-second-readme: "媽我在這"
+
+    # tutorial contents
     introduction: |+2
       .md
       
@@ -11,7 +15,7 @@ asset_index:
       說到這裡，「資料夾的內容變化歷史」是甚麼意思呢？ 請參考下圖(一)  
 
       ![illustration]({{images/folder-history-change}})  
-      <div class="img-title">圖(一)</p>  
+      <div class="img-title">圖(一)</div>  
 
       圖(一)中左右並排了兩個資料夾，一白一黃  
       請想像他們分別代表我們電腦上一個特定的資料夾在不同時間點的狀態  
@@ -31,8 +35,8 @@ asset_index:
 
       我們重複強調了${{t/graph}}*圖像地*呈現了資料夾變化的歷史，圖像化是甚麼意思呢？ 請看下面圖(二)  
 
-      ![illustration]({{images/graph-fork.png}})
-      <div class="img-title">圖(二)</p>  
+      ![illustration]({{images/graph-fork}})
+      <div class="img-title">圖(二)</div>  
 
       圖(二)是從${{t/gui}}取出的${{t/graph}}截圖  
       我們可以看到${{t/graph}}是由縱向排列串連的六顆圓點組成的  
@@ -60,49 +64,74 @@ asset_index:
       完成後，應該會出現如下圖(三)的畫面，確認後請進行下一步  
 
       ![illustration]({{images/fork-open-basic}})  
-      <div class="img-title">圖(三)</p>  
+      <div class="img-title">圖(三)</div>  
 
     use-file-tree-viewer: |+2
       .md
 
-      接著，請在${{t/graph}}上面，使用滑鼠左鍵單點，選取位於最下方的圓點  
-      最下方的圓點被選中後會如下圖(四)所示，以深藍色底反白  
+      接著，請在${{t/graph}}上面，使用滑鼠左鍵單點，選取位於最上方的圓點  
+      最上方的圓點被選中後會如下圖(四)所示，以深藍色底反白，表示「這個資料夾版本被選中了」  
 
-      ![illustration]({{images/select-first-commit}})  
-      <div class="img-title">圖(四)</p>  
+      ![illustration]({{images/select-last-commit}})  
+      <div class="img-title">圖(四)</div>  
 
       完成選取之後，如下圖(五)所示  
-      請在${{t/graph}}下方的三個頁籤(Commit/Changes/File Tree)中選擇**最右邊的「File Tree」**  
+      請在${{t/graph}}下方的三個頁籤(Commit/Changes/File Tree)中選擇**最右邊的${{t/file-tree-gui}}**  
 
       ![illustration]({{images/select-file-tree-tab}})  
-      <div class="img-title">圖(五)</p>  
+      <div class="img-title">圖(五)</div>  
 
     read-file-tree-viewer: |+2
       .md
 
-      選取了「File Tree」之後，應該會如下圖(六)紅框範圍所示，顯示出這個版本的資料夾內容  
+      選取了${{t/file-tree-gui}}之後，應該會如下圖(六)紅框範圍所示，顯示出目前選中版本的資料夾內容  
 
       ![illustration]({{images/show-file-tree}})  
-      <div class="img-title">圖(六)</p>  
+      <div class="img-title">圖(六)</div>  
 
       請根據你的${{t/gui}}裡面顯示的資料夾內容，回答總共有哪些個檔案呢？  
       1. a.txt, b.txt, c.txt  
-      2. 1.txt, 2.txt, 3.txt  
+      2. ===read me===.txt, 1.txt, 3.txt  
       3. 甚麼東西都沒有  
 
-      請以數字選項(1/2/3)回答
+      請以數字選項(1/2/3)回答      
 
     explain-file-tree: |+2
       .md
 
-      在前面的指引中，我們介紹了透過${{t/gui}}的「File Tree」介面可以看見一個資料夾在特定版本的內容  
+      在前面的指引中，我們介紹了透過${{t/gui}}的${{t/file-tree-gui}}分頁可以看見一個資料夾在特定版本的內容  
 
-      為什麼是「File Tree」呢？  
+      為什麼是「file tree」呢？  
       其實 *file tree* 是一種專用術語  
       因為資料夾裡面通常會有數個檔案跟數個子資料夾，子資料夾還有孫資料夾，反覆展開像是一顆樹一樣  
       就稱呼為${{t/file-tree-f}}了  
 
       在這個教學中，當我們說**${{t/file-tree}}**時，指稱的就是「被 git 管控的資料夾的一個特定版本的所有檔案內容」  
+
+      接下來，讓我們再更進一步發掘${{t/file-tree-gui}}的有趣功能：檢視${{t/file-tree}}的檔案內容
+
+    read-file-tree-of-second-commit: |+2
+      .md
+
+      請在${{t/graph}}上面，選取寫著「第 2 號提交」的圓點  
+      然後檢視${{t/file-tree-gui}}分頁，應該會出現如下圖(七)紅框所示的四個檔案  
+
+      ![illustration]({{images/show-file-tree-of-second-commit}})  
+      <div class="img-title">圖(七)</div>  
+
+    read-readme-of-second-commit: |+2
+      .md
+
+      使用${{t/file-tree-gui}}檢視指定版本的${{t/file-tree}}的情況下  
+      我們可以進一步檢視個別檔案的內容  
+
+      請如下圖(八)所示，使用滑鼠左鍵單點「===read me===.txt」  
+      
+      ![illustration]({{images/read-readme-of-second-commit}})  
+      <div class="img-title">圖(八)</div>  
+
+      如圖所示，${{t/gui}}右下角紅框圈選的範圍會顯示在${{t/file-tree-gui}}中選擇的檔案內容  
+      請在下面的輸入欄輸入你所看見的檔案內容，並按下確認檢查答案～
 
     
       
