@@ -20,3 +20,6 @@ asset_index:
     open-working-directory: browse-history@fork-open-working-directory.png
     illustrate-working-tree-and-file-trees: browse-history@illustrate-working-tree-and-file-trees.png
     illustrate-working-tree-and-repository: browse-history@illustrate-working-tree-and-repository.png
+
+# checkout-revision
+    open-folder-in-explorer: checkout-revision@fork-open-folder-in-explorer.png

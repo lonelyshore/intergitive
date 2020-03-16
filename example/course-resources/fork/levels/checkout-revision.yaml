@@ -1,0 +1,35 @@
+!level
+  repoVcsSetups:
+    basic:
+      workingPath: basic
+      referenceStoreName: basic-operation
+  steps:
+    - !loadReference 
+      repoSetupName: basic
+      referenceName: init
+    - !checkpoint 
+      checkpointName: "beginning"
+
+    - !elaborate 
+      descriptionId: "level-data/checkout-revision/introduction"
+      needConfirm: true
+    - !instruct 
+      descriptionId: "level-data/checkout-revision/open-gui"
+      needConfirm: true
+    - !instruct 
+      descriptionId: "level-data/checkout-revision/open-target-folder"
+    - !verifyInput 
+      answer: "2"
+
+    - !instruct 
+      descriptionId: "level-data/checkout-revision/intruct-checkout-first"
+    - !verifyRepo
+    - !checkpoint 
+      checkpointName: "checkout-first"
+    
+
+
+      
+
+    
+    

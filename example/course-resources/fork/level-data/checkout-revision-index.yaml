@@ -1,0 +1,39 @@
+asset_index:
+  infile:
+#tutorial contents
+    introduction: |+2
+      .md
+      在前一回我們學習了如何使用${{t/gui}}來瀏覽任意過往留下的資料夾版本－－${{t/file-tree}}  
+      但是，看得到摸不著的感覺令人心癢難耐  
+      現在，就讓我們來學習如何把過往的${{t/file-tree}}給取出來放到目前的資料夾中  
+
+    open-gui: |+2
+      .md
+      為了能夠驗證我們確實有把不同歷史版本的資料夾還原到現在的資料夾中  
+      首先，請使用${{t/gui}}開啟我們位於`#{{basic}}`的練習用資料夾  
+
+    open-target-folder: |+2
+      .md
+      使用${{t/gui}}開啟資料夾後，讓我們來學一個小技巧來很快地在檔案管理員中檢視我們的資料夾  
+
+      請如下圖(一)所示進行操作：  
+      
+      ![illustration]({{images/open-folder-in-explorer}})  
+      <div class="img-title">圖(一)</div>  
+
+      請按下位於視窗右上角紅框所圈選的${{st/open-in}}後  
+      在跳出的選單上按下橘框所圈選的${{st/open-in-explorer}}  
+      我們的練習用資料夾就會以檔案管理員開啟  
+
+      完成以後，請使用上一章節所學的瀏覽${{t/work-tree}}的技巧  
+      比對目前資料夾的內容跟「第 1 號提交」與「第 6 號提交」的內容  
+      請回答目前的資料夾內容與哪一個提交一致呢？
+
+      1. 第 1 號提交
+      2. 第 6 號提交
+
+      請以數字(1或2)回答
+
+    instruct-checkout-first: |+2
+      .md
+      首先，就讓我們來回溯一下

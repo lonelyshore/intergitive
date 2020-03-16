@@ -18,3 +18,7 @@
           id: "fork-main-browse-history"
           nameKey: "levels/main.browse-history.name"
           configAssetId: "levels/browse-history"
+        - !level 
+          id: "fork-main-checkout-revision"
+          nameKey: "levels/main.checkout-revision.name"
+          configAssetId: "levels/checkout-revision"
