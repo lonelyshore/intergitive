@@ -23,3 +23,5 @@ asset_index:
 
 # checkout-revision
     open-folder-in-explorer: checkout-revision@fork-open-folder-in-explorer.png
+    checkout-first-context-menu: checkout-revision@fork-checkout-first-context-menu.png
+    checkout-first-confirm: checkout-revision@fork-checkout-first-confirm.png

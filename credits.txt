@@ -1,0 +1,44 @@
+- path: drawings/resources
+  - name: magnifier.svg
+    source: Openclipart
+    url: https://publicdomainvectors.org/en/free-clipart/Magnifying-glass-PC-icon-vector-clip-art/30792.html
+    modifications: changed color
+  - name: folder-open-black
+    source: Openclipart
+    url: https://publicdomainvectors.org/en/free-clipart/Open-black-folder/59380.html
+  - name: folder-open-blue
+    source: Openclipart
+    url: https://publicdomainvectors.org/en/free-clipart/Blue-opened-folder/59471.html
+  - name: folder-open-orange
+    source: Openclipart
+    url: https://publicdomainvectors.org/en/free-clipart/Orange-file-folder/59468.html
+  - name: folder-open-red
+    source: Openclipart
+    url: https://publicdomainvectors.org/en/free-clipart/Red-opened-folder/59467.html
+  - name: folder-open-violet
+    source: Openclipart
+    url: https://publicdomainvectors.org/en/free-clipart/Violet-opened-folder/59466.html
+  - name: folder-open-white
+    source: Openclipart
+    url: https://publicdomainvectors.org/en/free-clipart/Open-white-folder/59379.html
+  - name: folder-open-yellow
+    source: Openclipart
+    url: https://publicdomainvectors.org/en/free-clipart/Yellow-opened-folder/59464.html
+  - name: file
+    source: Openclipart
+    url: https://publicdomainvectors.org/en/free-clipart/Generic-file-icon/67197.html
+  - name: file-yellow
+    source: Openclipart
+    url: https://publicdomainvectors.org/en/free-clipart/Generic-file-icon/67197.html
+    modifications: changed color
+- path: example/course-resources/fork/level-data/assets/sound
+  - name: bird.mp3
+    source: freesound.org
+    author: unknown
+    url: https://freesound.org/people/deleted_user_229898/sounds/34207/
+    modifications: compress to mp3
+  - name: cicada.mp3
+    source: freesound.org
+    author: macdaddyno1
+    url: https://freesound.org/people/macdaddyno1/sounds/321591/
+    modifications: clipping and compress to mp3

@@ -10,6 +10,7 @@
     - !checkpoint 
       checkpointName: "beginning"
 
+  # intro & instruct open target folder
     - !elaborate 
       descriptionId: "level-data/checkout-revision/introduction"
       needConfirm: true
@@ -21,11 +22,69 @@
     - !verifyInput 
       answer: "2"
 
+    - !checkpoint 
+      checkpointName: "example"
+
+    - !elaborate 
+      descriptionId: "level-data/checkout-revision/introduce-checkpoint"
+      needConfirm: true
+
+  # instruct how to checkout first commit
     - !instruct 
       descriptionId: "level-data/checkout-revision/intruct-checkout-first"
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: ["checkout", "master~5"]
     - !verifyRepo
     - !checkpoint 
       checkpointName: "checkout-first"
+
+    - !elaborate 
+      descriptionId: "level-data/checkout-revision/intro-check-folder-content"
+    - !instruct 
+      descriptionId: "level-data/checkout-revision/instruct-play-first-sound"
+    - !verifyInput 
+      answer: "2"
+
+  # instruct on how to checkout third commit
+    - !elaborate 
+      descriptionId: "level-data/checkout-revision/suggest-checkout-third"
+      needConfirm: true
+    - !instruct 
+      descriptionId: "level-data/checkout-revision/instruct-checkout-third"
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: ["checkout", "master~3"]
+    - !verifyRepo 
+    - !checkpoint 
+      checkpointName: "checkout-third"
+
+    - !instruct 
+      descriptionId: "level-data/checkout-revision/instruct-play-third-sound"
+    - !verifyInput 
+      answer: "1"
+
+  # instruct on how to checkout sixth commit
+    - !elaborate 
+      descriptionId: "level-data/checkout-revision/suggest-checkout-sixth"
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: ["checkout", "master~0"]
+    - !verifyRepo 
+    - !checkpoint 
+      checkpointName: "checkout-sixth"
+
+    - !elaborate 
+      descriptionId: "level-data/checkout-revision/conclude-section"
+      needConfirm: true
+
+    
     
 
 
