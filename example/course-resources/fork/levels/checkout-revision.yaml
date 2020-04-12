@@ -26,13 +26,14 @@
 
   # instruct how to checkout first commit
     - !instruct 
-      descriptionId: "level-data/checkout-revision/intruct-checkout-first"
+      descriptionId: "level-data/checkout-revision/instruct-checkout-first"
     - !dev.needAction 
       actions:
         - !dev.act.git 
           repoSetupName: basic
           arguments: ["checkout", "master~5"]
     - !verifyRepo
+      referenceName: c1
     - !checkpoint 
       checkpointName: "checkout-first"
 
@@ -57,7 +58,8 @@
         - !dev.act.git 
           repoSetupName: basic
           arguments: ["checkout", "master~3"]
-    - !verifyRepo 
+    - !verifyRepo
+      referenceName: c2
     - !checkpoint 
       checkpointName: "checkout-third"
 
@@ -83,6 +85,7 @@
           repoSetupName: basic
           arguments: ["checkout", "master~0"]
     - !verifyRepo 
+      referenceName: c3
     - !checkpoint 
       checkpointName: "checkout-sixth"
 

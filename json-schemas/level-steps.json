@@ -43,7 +43,7 @@
                     "$ref": "config-commons.json#referenceName"
                 }
             },
-            "required": [ "repoSetupName" ],
+            "required": [ "repoSetupName", "referenceName" ],
             "additionalProperties": false
         },
         "verifyAllRepo": {
@@ -55,6 +55,7 @@
                     "$ref": "config-commons.json#referenceName"
                 }
             },
+            "required": [ "referenceName" ],
             "additionalProperties": false
         },
         "executeAction": {
