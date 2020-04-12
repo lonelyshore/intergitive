@@ -1,5 +1,9 @@
 asset_index:
   infile:
+    checkout-rev: "切換版本"
+    checkout-rev-f: "切換版本(checout revision)"
+    commit: 變更提交
+    commit-f: "變更提交(commit)"
     gui: " fork "
     graph-f: 線圖(graph)
     graph: 線圖
