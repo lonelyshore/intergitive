@@ -1,7 +1,7 @@
 asset_index:
   ondisk:
-    sound-bird: assets/sound/bird.mp3
-    sound-cicada: assets/sound/cicada.mp3
+    sound-bird: ../assets/sound/bird.mp3
+    sound-cicada: ../assets/sound/cicada.mp3
   infile:
 # build basic operation repo
     file-1:v1:
