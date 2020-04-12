@@ -11,8 +11,9 @@
             "program": "${workspaceFolder}/dev/course-maker",
             "args": [
                 "bake-course",
-                ".\\example\\resources+",
-                "course/main",
+                ".\\example",
+                "/",
+                "fork",
                 ".\\test\\resources\\repo-archive\\"
             ],
         },

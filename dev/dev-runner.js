@@ -160,7 +160,7 @@ const bakeLevel = function(levelItem, flatCourseItems, actionExecutorContext) {
                     let setup = repoVcsSetups[repoSetupName];
                     return fs.emptyDir(path.join(fileSystemBaseFolder, setup.workingPath))
                     .then(() => {
-                        return fs.emptyDir(path.join(fileSystemBaseFolder, repoStoreSubPath, setup.referenceStoreName))
+                        return fs.ensureDir(path.join(fileSystemBaseFolder, repoStoreSubPath, setup.referenceStoreName))
                     });
                 });
             },
