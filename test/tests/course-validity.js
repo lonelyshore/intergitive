@@ -310,7 +310,7 @@ function validateLevels(course, levelConfigAndNames, loaderPair, courseName) {
                                 return validateRepoReferences;
                             })
                             .catch(err => {
-                                errors.push(`Failed to validate ${repoSetupName} because:\n${err}`);
+                                errors.push(`Failed to validate ${repoSetupName} because:\n${err}\nstack:${err.stack}`);
                             })
                             .then(() => {
                                 return Promise.resolve(errors)
@@ -491,6 +491,15 @@ function validateLevels(course, levelConfigAndNames, loaderPair, courseName) {
                                             assetDemand.assetId
                                         )
                                         .then(text => validateTextReplacements(text, assetDemand.host, loader, levelConfig.repoVcsSetups));
+                                    }
+                                    else {
+                                        return loader.getFullAssetPath(assetDemand.assetId)
+                                        .then(fullAssetPath => {
+                                            return fs.access(fullAssetPath)
+                                            .catch(() => {
+                                                errors.push(`Cannot access asset given id ${assetDemand.assetId} for host ${assetDemand.host}; fail to access it at path ${fullAssetPath}`);
+                                            });
+                                        });
                                     }
                                 }
                             })
