@@ -26,7 +26,7 @@ function operate(args) {
                 console.log(`
     bake-course: bake for a course
       arguments:
-        relativeBasePath: path to resource folder where common assets and course definition files located
+        relativeBasePath: path to folder where common assets (resources) and course asset folder (course-resources) located
         bundlePaths: asset loader bundle tokens separated by slashes ('/'). Pass a single slash for empty bundles
         selectedCourse: asset id of the baked course, without "course/" prefix
         sourceRepoStorePath: path to repo store that is used to bake the course`);
@@ -96,7 +96,7 @@ function operate(args) {
 function printUsage() {
     console.log(`
     Usage:
-      bake-course <commonResourcePath> <courseResourcePath> <courseAssetId> <sourceRepoStorePath>: bake for a course`);
+      bake-course <relativeBasePath> <bundlePaths> <selectedCourse> <sourceRepoStorePath>: bake for a course`);
 }
 
 function normalizePath(pathValue) {
