@@ -25,6 +25,7 @@
       needConfirm: true
     - !instruct 
       descriptionId: "level-data/browse-history/use-file-tree-viewer"
+      needConfirm: true
     - !instruct 
       descriptionId: "level-data/browse-history/read-file-tree-viewer"
     - !verifyInput 
@@ -55,6 +56,7 @@
 # read file tree will not change working directory
     - !elaborate 
       descriptionId: "level-data/browse-history/read-file-tree-not-affect-working-directory"
+      needConfirm: true
     - !instruct 
       descriptionId: "level-data/browse-history/check-working-directory"
     - !verifyInput 
@@ -64,6 +66,9 @@
       needConfirm: true     
     - !illustrate 
       descriptionId: "level-data/browse-history/illustrate-file-tree"
+      needConfirm: true
+    - !illustrate 
+      descriptionId: "level-data/browse-history/illustrate-browse-history"
       needConfirm: true
 
     - !elaborate 
