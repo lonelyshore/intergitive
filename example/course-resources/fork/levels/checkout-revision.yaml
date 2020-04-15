@@ -3,6 +3,7 @@
     basic:
       workingPath: basic
       referenceStoreName: basic-operation
+      checkpointStoreName: basic-operation-checkpoints
   steps:
     - !loadReference 
       repoSetupName: basic
