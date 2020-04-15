@@ -5,7 +5,7 @@ asset_index:
     commit: 變更提交
     commit-f: "變更提交(commit)"
     gui: " fork "
-    graph-f: 線圖(graph)
+    graph-f: "線圖 (graph) "
     graph: 線圖
     file-tree-f: 檔案樹(file tree)
     file-tree: 檔案樹

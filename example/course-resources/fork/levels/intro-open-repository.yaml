@@ -119,6 +119,8 @@
     - !instruct 
       descriptionId: "level-data/intro-open-repository/open-directory-in-fork"
       needConfirm: true
+    - !instruct 
+      descriptionId: "level-data/intro-open-repository/instruct-verify-open"
     - !verifyInput 
       answer: "6"
 
