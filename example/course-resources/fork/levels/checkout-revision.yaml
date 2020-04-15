@@ -40,8 +40,9 @@
 
     - !elaborate 
       descriptionId: "level-data/checkout-revision/intro-check-folder-content"
+      needConfirm: true
     - !instruct 
-      descriptionId: "level-data/checkout-revision/open-target-folder"
+      descriptionId: "level-data/checkout-revision/instruct-open-folder-reminder"
       needConfirm: true
     - !instruct 
       descriptionId: "level-data/checkout-revision/instruct-play-first-sound"
@@ -78,7 +79,7 @@
       needConfirm: true
 
   # instruct on how to checkout sixth commit
-    - !elaborate 
+    - !instruct 
       descriptionId: "level-data/checkout-revision/suggest-checkout-sixth"
     - !dev.needAction 
       actions:

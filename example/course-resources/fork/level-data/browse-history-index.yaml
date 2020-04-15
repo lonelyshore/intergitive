@@ -242,7 +242,7 @@ asset_index:
 
       所以上面的概念圖(十)就會變成像下圖(十一)這樣：  
 
-      ![illustration]({{images/illustrate-checkout-revision}})  
+      ![illustration]({{images/illustrate-browse-file-tree}})  
       <div class="img-title">圖(十一)</div>  
 
       與圖(十)類似，圖(十一)左邊是${{t/work-tree}}，只是右邊換成了一個一個的圓點代表過往的資料夾版本  

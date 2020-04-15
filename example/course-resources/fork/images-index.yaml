@@ -19,11 +19,11 @@ asset_index:
     read-readme-of-second-commit: browse-history@read-readme-of-second-commit.png
     open-working-directory: browse-history@fork-open-working-directory.png
     illustrate-working-tree-and-file-trees: browse-history@illustrate-working-tree-and-file-trees.png
-    illustrate-checkout-revision: browse-history@illustrate-browse-file-tree.gif
+    illustrate-browse-file-tree: browse-history@illustrate-browse-file-tree.gif
 
 # checkout-revision
     open-folder-in-explorer: checkout-revision@fork-open-folder-in-explorer.png
     checkout-first-context-menu: checkout-revision@fork-checkout-first-context-menu.png
     checkout-first-confirm: checkout-revision@fork-checkout-first-confirm.png
-    illustrate-browse-file-tree: checkout-revision@illustrate-checkout-revision.gif
+    illustrate-checkout-revision: checkout-revision@illustrate-checkout-revision.gif
     
