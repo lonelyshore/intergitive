@@ -38,7 +38,7 @@
     "etest-core": "npm run \"load-native-electron\" && electron-mocha --renderer --recursive \"./test/tests/*.js\" --grep \"#core\"",
     "etest-core-debug": "npm run \"load-native-electron\" && electron-mocha --interactive --inspect --renderer --recursive \"./test/tests/*.js\" --grep \"#core\"",
     "==== Build =====": "",
-    "build-win64": "npm run \"load-native-electron\" && electron-packager . intergitive --platform=win32 --arch=x64 --ignore=\"^/\\.module_cache/\" --ignore=\"^/test\" --ignore=\"^/playground\" --ignore=\"^/bake/\" --out=\"out\"",
+    "build-win64": "npm run \"load-native-electron\" && electron-packager . intergitive --platform=win32 --arch=x64 --ignore=\"^/\\.module_cache/\" --ignore=\"^/test\" --ignore=\"^/playground\" --ignore=\"^/bake\" --ignore=\"^/drawings\" --out=\"out\"",
     "build-win64-dev": "npm run \"load-native-electron\" && electron-packager . intergitive --platform=win32 --arch=x64 --prune=false",
     "load-native-node": "node \"./dev/module-switch.js\" load nodegit node-10-11",
     "load-native-electron": "node \"./dev/module-switch.js\" load nodegit electron-4",
