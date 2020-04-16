@@ -159,7 +159,7 @@ asset_index:
       
       還記得上一章節中我們強調了，瀏覽過往版本的${{t/file-tree}}不會對${{t/work-tree}}造成影響  
       只要把圖(四)和圖(五)互相對照就會發現  
-      圖(四)裡面的${{t/work-tree}}的顏色不斷變化，表是每次操作${{t/work-tree}}的內容都會改變  
+      圖(四)裡面的${{t/work-tree}}的顏色不斷變化，表示每次操作${{t/work-tree}}的內容都會改變  
       相反的，圖(五)裡面的${{t/work-tree}}則永遠保持白色，表示不會被改變  
       
     suggest-checkout-sixth: |+2
