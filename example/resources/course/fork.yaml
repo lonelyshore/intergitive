@@ -22,3 +22,11 @@
           id: "fork-main-checkout-revision"
           nameKey: "levels/main.checkout-revision.name"
           configAssetId: "levels/checkout-revision"
+    - !sequential-section 
+      id: "fork-main-section-create-commits"
+      nameKey: "levels/main.section-create-commits.name"
+      children:
+        - !level 
+          id: "fork-main-commit-one-file"
+          nameKey: "levels/main.commit-one-file.name"
+          configAssetId: "levels/commit-one-file"

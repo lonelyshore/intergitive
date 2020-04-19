@@ -1,14 +1,25 @@
 asset_index:
   infile:
     main.course-name: "fork 使用教學"
+  # name of sections
     main.section-intro.name: "第一章：fork 安裝與瀏覽版本"
+    main.section-create-commits.name: "第二章：建立版本歷史與檔案狀態"
+
+  # level names of section one
     main.intro-install.name: "第一節：安裝"
     main.intro-open-repository.name: "第二節：使用 fork 開啟資料夾"
     main.browse-history.name: "第三節：瀏覽版本歷史"
     main.checkout-revision.name: "第四節：切換工作樹版本"
+
+  # level names of section two
+    main.commit-one-file.name: "第一節：快照一個檔案"
     
   ondisk:
+  # level configs of section one: intro
     intro-install: "intro-install.yaml"
     intro-open-repository: "intro-open-repository.yaml"
     browse-history: "browse-history.yaml"
     checkout-revision: "checkout-revision.yaml"
+
+  # level configs of section two: create commits
+    commit-one-file: "commit-one-file.yaml"
