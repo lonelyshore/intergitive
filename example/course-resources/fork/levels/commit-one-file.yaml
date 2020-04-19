@@ -6,7 +6,6 @@
       checkpointStoreName: basic-operation-checkpoints
   steps:
     - !loadLastLevelFinalSnapshot {}
-    - !checkpoint 
-      checkpointName: "beginning"
+    
 
   # intro & instruct open target folder
