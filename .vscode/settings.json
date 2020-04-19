@@ -44,6 +44,7 @@
         "!instruct mapping",
         "!partialCheckpoint mapping",
         "!checkpoint mapping",
+        "!loadOneReference mapping",
         "!loadReference mapping",
         "!playActions mapping",
         "!loadLastLevelFinalSnapshot mapping",

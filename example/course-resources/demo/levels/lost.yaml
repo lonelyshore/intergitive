@@ -33,7 +33,7 @@
       descriptionId: "level-data/lost/description:elaborate:explain-load-reference-and-checkpoint"
       needConfirm: true
 
-    - !loadReference
+    - !loadOneReference
       repoSetupName: local
       referenceName: merge
     - !checkpoint

@@ -6,7 +6,7 @@
         referenceStoreName: "test-local-ref"
         checkpointStoreName: "test-local-checkpoints"
   steps:
-    - !loadReference
+    - !loadOneReference
       repoSetupName: local
       referenceName: clean
     - !openWorkingPath

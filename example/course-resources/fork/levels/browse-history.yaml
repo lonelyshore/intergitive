@@ -15,7 +15,7 @@
       descriptionId: "level-data/browse-history/file-tree-viewer"
       needConfirm: true
 
-    - !loadReference 
+    - !loadOneReference 
       repoSetupName: basic
       referenceName: init
 

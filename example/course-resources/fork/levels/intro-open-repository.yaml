@@ -102,7 +102,7 @@
           repoSetupName: basic
           referenceName: init
 
-    - !loadReference
+    - !loadOneReference
       repoSetupName: basic
       referenceName: init
 

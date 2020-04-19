@@ -380,7 +380,7 @@ function validateLevels(course, levelConfigAndNames, loaderPair, courseName) {
                                 return [{
                                     repoName: step.repoSetupName,
                                     referenceName: step.referenceName,
-                                    host: '!loadReference'
+                                    host: '!loadOneReference'
                                 }];
                             }
                             else if (step instanceof configStep.LoadLastLevelFinalSnapshotStep) {

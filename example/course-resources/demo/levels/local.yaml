@@ -22,7 +22,7 @@
       descriptionId: "level-data/demo/description:verify-input:puzzle"
       answer: "${{ demo/answer:puzzle }}"
     
-    - !loadReference
+    - !loadOneReference
       repoSetupName: local
       referenceName: clean
 

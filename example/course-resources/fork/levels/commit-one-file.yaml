@@ -1,0 +1,14 @@
+!level
+  repoVcsSetups:
+    basic:
+      workingPath: basic
+      referenceStoreName: basic-operation
+      checkpointStoreName: basic-operation-checkpoints
+  steps:
+    - !loadOneReference 
+      repoSetupName: basic
+      referenceName: init
+    - !checkpoint 
+      checkpointName: "beginning"
+
+  # intro & instruct open target folder

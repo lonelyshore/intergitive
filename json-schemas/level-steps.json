@@ -186,6 +186,23 @@
             ],
             "additionalProperties": false
         },
+        "loadAllReference": {
+            "type": "object",
+            "title": "[Step] Load Reference for All Git Repos",
+            "description": "automatically loads git snapshot with reference name <referenceName> for all repos",
+            "properties": {
+                "referenceName": {
+                    "$ref": "config-commons.json#/referenceName"
+                },
+                "appendCheckpoint": {
+                    "$ref": "config-commons.json#appendCheckpoint"
+                }
+            },
+            "required": [
+                "referenceName"
+            ],
+            "additionalProperties": false
+        },
         "autoPlayActions": {
             "type": "object",
             "title": "[Step] Auto Play Actions",
