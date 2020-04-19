@@ -231,9 +231,12 @@
                     "items": {
                         "$ref": "config-commons.json#/repoSetupName"
                     }
+                },
+                "appendCheckpoint": {
+                    "$ref": "config-commons.json#appendCheckpoint"
                 }
             },
-            "required": [ "repoSetupNames" ],
+            "required": [],
             "additionalProperties": false
         },
         "openWorkingPath":  {

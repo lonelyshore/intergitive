@@ -5,9 +5,7 @@
       referenceStoreName: basic-operation
       checkpointStoreName: basic-operation-checkpoints
   steps:
-    - !loadOneReference 
-      repoSetupName: basic
-      referenceName: init
+    - !loadLastLevelFinalSnapshot {}
     - !checkpoint 
       checkpointName: "beginning"
 

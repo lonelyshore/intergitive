@@ -393,7 +393,9 @@ function validateLevels(course, levelConfigAndNames, loaderPair, courseName) {
                                 });
                             }
                             else if (step instanceof configStep.LoadLastLevelFinalSnapshotStep) {
-                                return step.repoSetupNames.map(repoSetupName => {
+                                let loadedRepoSetupNames =
+                                    step.repoSetupNames || repoSetupNames;
+                                return loadedRepoSetupNames.map(repoSetupName => {
                                     return {
                                         repoName: repoSetupName,
                                         referenceName: `${previousLevelId}-final-snapshot`,

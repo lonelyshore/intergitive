@@ -129,8 +129,10 @@ const bakeLevel = function(levelItem, flatCourseItems, actionExecutorContext) {
                 let previousLevel = courseConfig.findLastLevel(flatCourseItems, levelItem);
                 let previousLevelId = previousLevel ? previousLevel.id : null;
 
+                let loadedRepoSetupNames =
+                    step.repoSetupNames || repoVcsSetupNames;
     
-                let loadRefActions = repoVcsSetupNames.map(repoVcsSetupName => {
+                let loadRefActions = loadedRepoSetupNames.map(repoVcsSetupName => {
                     return new actionConf.LoadReferenceAction(
                         repoVcsSetupName,
                         `${previousLevelId}-final-snapshot`
