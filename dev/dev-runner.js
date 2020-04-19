@@ -112,6 +112,18 @@ const bakeLevel = function(levelItem, flatCourseItems, actionExecutorContext) {
                     });
                 });
             }
+            else if (step instanceof stepConf.LoadAllReferenceStep) {
+                repoVcsSetupNames.forEach(repoVcsSetupName => {
+                    bakeActions = bakeActions.then(() => {
+                        let loadRefAction = new actionConf.LoadReferenceAction(
+                            repoVcsSetupName,
+                            step.referenceName
+                        );
+
+                        return loadRefAction.executeBy(actionExecutor);
+                    });
+                });               
+            }
             else if (step instanceof stepConf.LoadLastLevelFinalSnapshotStep) {
                 
                 let previousLevel = courseConfig.findLastLevel(flatCourseItems, levelItem);

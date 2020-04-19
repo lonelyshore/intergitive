@@ -5,8 +5,7 @@
       referenceStoreName: basic-operation
       checkpointStoreName: basic-operation-checkpoints
   steps:
-    - !loadOneReference 
-      repoSetupName: basic
+    - !loadReference 
       referenceName: init
 
   # intro & instruct open target folder

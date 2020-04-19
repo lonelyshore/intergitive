@@ -383,6 +383,15 @@ function validateLevels(course, levelConfigAndNames, loaderPair, courseName) {
                                     host: '!loadOneReference'
                                 }];
                             }
+                            else if (step instanceof configStep.LoadReferenceStep) {
+                                return repoSetupNames.map(repoSetupName => {
+                                    return {
+                                        repoName: repoSetupName,
+                                        referenceName: step.referenceName,
+                                        host: '!loadReference'
+                                    };
+                                });
+                            }
                             else if (step instanceof configStep.LoadLastLevelFinalSnapshotStep) {
                                 return step.repoSetupNames.map(repoSetupName => {
                                     return {
