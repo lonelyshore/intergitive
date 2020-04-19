@@ -24,6 +24,9 @@
                 },
                 "descriptionId": {
                     "$ref": "config-commons.json#assetId"
+                },
+                "appendCheckpoint": {
+                    "$ref": "config-commons.json#appendCheckpoint"
                 }
             },
             "required": [
@@ -41,6 +44,9 @@
                 },
                 "referenceName": {
                     "$ref": "config-commons.json#referenceName"
+                },
+                "appendCheckpoint": {
+                    "$ref": "config-commons.json#appendCheckpoint"
                 }
             },
             "required": [ "repoSetupName", "referenceName" ],
@@ -53,6 +59,9 @@
             "properties": {
                 "referenceName": {
                     "$ref": "config-commons.json#referenceName"
+                },
+                "appendCheckpoint": {
+                    "$ref": "config-commons.json#appendCheckpoint"
                 }
             },
             "required": [ "referenceName" ],
@@ -166,6 +175,9 @@
                 },
                 "referenceName": {
                     "$ref": "config-commons.json#/referenceName"
+                },
+                "appendCheckpoint": {
+                    "$ref": "config-commons.json#appendCheckpoint"
                 }
             },
             "required": [
