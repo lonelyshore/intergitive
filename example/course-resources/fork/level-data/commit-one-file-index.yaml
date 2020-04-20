@@ -1,0 +1,40 @@
+asset_index:
+  infile:
+# course contents
+    intro-goal: |+2
+      .md
+      在先前的章節中，我們介紹了如何瀏覽不同版本的資料夾歷史  
+      或者更精確地說，是如何瀏覽${{t/file-tree}}以及切換${{t/work-tree}}到不同的版本  
+
+      在這一章節中，我們將學習如何增加新版本的${{t/file-tree}}  
+
+    brief-workflow: |+2
+      .md
+      從先前的章節所學來看，不難想像增加新版本的大致流程會是甚麼樣子  
+      基本上，就是把目前${{t/work-tree}}的狀態保存成一個檔案樹，然後放進${{t/repo}}之中  
+
+      下面的圖(一)大致說明了這個流程
+
+      ![illustration]({{images/brief-how-to-commit}})  
+      <div class="img-title">圖(一)</div>  
+
+      讓我們依序理解上圖發生的事情：  
+      1. 一開始我們資料夾的狀態。${{t/work-tree}}是紅色的資料夾，表示和${{t/repo}}最新的紅色${{t/file-tree}}一致
+      2. 我們修改資料夾的內容，讓${{t/work-tree}}變成綠色的
+      3. 複製一份${{t/file-tree}}到${{t/repo}}裡面
+      4. 把${{t/file-tree}}包裝成圓點，跟紅色圓點串起來
+      5. 完成新增版本。請注意${{t/work-tree}}是綠色的資料夾，表示和${{t/repo}}最新的綠色${{t/file-tree}}一致  
+
+      那麼，接下來就讓我們嘗試看看新增一個新版本吧！
+
+    add-file: |+2
+      .md
+      請開啟位於 `#{{basic}}` 的資料夾，並且如下圖(二)指示增加一個檔名為 `new` 的純文字檔  
+
+      ![illustration]({{images/add-new-file}})  
+      <div class="img-title">圖(二)</div>  
+
+
+
+# course materials
+    empty: ""

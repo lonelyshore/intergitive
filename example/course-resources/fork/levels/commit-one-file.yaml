@@ -6,8 +6,27 @@
       checkpointStoreName: basic-operation-checkpoints
   steps:
     - !loadLastLevelFinalSnapshot {}
-  # intro & instruct open target folder
+  # intro & instruct add new file
     - !elaborate 
       descriptionId: "level-data/commit-one-file/intro-goal"
     - !illustrate 
       descriptionId: "level-data/commit-one-file/brief-workflow"
+    - !instruct 
+      descriptionId: "level-data/commit-one-file/add-file"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !act.moveFile 
+          sourceAssetIds:
+            - "$level-data/commit-one-file/empty"
+          destinationPaths:
+            - new.txt
+    - !verifyRepo 
+      referenceName: add-new-file
+
+    - !instruct 
+      descriptionId: "level-data/commit-one-file/instruct-open-fork"
+    - !instruct 
+      descriptionId: "level-data/commit-one-file/instruct-open-commit"
+    - !elaborate 
+      descriptionId: "level-data/commit-one-file/intro-commit-page"
