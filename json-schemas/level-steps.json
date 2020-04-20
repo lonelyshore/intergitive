@@ -92,7 +92,7 @@
                 },
                 "needConfirm": {
                     "type": "boolean",
-                    "default": true
+                    "default": false 
                 }
             },
             "required": [ "descriptionId" ],
@@ -108,7 +108,7 @@
                 },
                 "needConfirm": {
                     "type": "boolean",
-                    "default": true
+                    "default": false
                 }
             },
             "required": [ "descriptionId" ],
@@ -124,7 +124,7 @@
                 },
                 "needConfirm": {
                     "type": "boolean",
-                    "default": true
+                    "default": false
                 }
             },
             "required": [ "descriptionId" ],

@@ -5,8 +5,6 @@
       descriptionId: "level-data/intro-install/introduce-fork"
     - !instruct 
       descriptionId: "level-data/intro-install/download"
-      needConfirm: true
     - !instruct 
       descriptionId: "level-data/intro-install/install"
-      needConfirm: true
     

@@ -6,6 +6,8 @@
       checkpointStoreName: basic-operation-checkpoints
   steps:
     - !loadLastLevelFinalSnapshot {}
-    
-
   # intro & instruct open target folder
+    - !elaborate 
+      descriptionId: "level-data/commit-one-file/intro-goal"
+    - !illustrate 
+      descriptionId: "level-data/commit-one-file/brief-workflow"

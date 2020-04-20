@@ -11,20 +11,18 @@
   # intro & instruct open target folder
     - !elaborate 
       descriptionId: "level-data/checkout-revision/introduction"
-      needConfirm: true
     - !checkpoint 
       checkpointName: "ready-for-operation"
     - !elaborate 
       descriptionId: "level-data/checkout-revision/introduce-checkpoint"
-      needConfirm: true
     - !instruct 
       descriptionId: "level-data/checkout-revision/open-gui"
-      needConfirm: true
 
 
   # instruct how to checkout first commit
     - !instruct 
       descriptionId: "level-data/checkout-revision/instruct-checkout-first"
+      needConfirm: false
     - !dev.needAction 
       actions:
         - !dev.act.git 
@@ -35,21 +33,20 @@
 
     - !elaborate 
       descriptionId: "level-data/checkout-revision/intro-check-folder-content"
-      needConfirm: true
     - !instruct 
       descriptionId: "level-data/checkout-revision/instruct-open-folder-reminder"
-      needConfirm: true
     - !instruct 
       descriptionId: "level-data/checkout-revision/instruct-play-first-sound"
+      needConfirm: false
     - !verifyInput 
       answer: "2"
 
   # instruct on how to checkout third commit
     - !elaborate 
       descriptionId: "level-data/checkout-revision/suggest-checkout-third"
-      needConfirm: true
     - !instruct 
       descriptionId: "level-data/checkout-revision/instruct-checkout-third"
+      needConfirm: false
     - !dev.needAction 
       actions:
         - !dev.act.git 
@@ -60,20 +57,20 @@
 
     - !instruct 
       descriptionId: "level-data/checkout-revision/instruct-play-third-sound"
+      needConfirm: false
     - !verifyInput 
       answer: "1"
 
     - !illustrate 
       descriptionId: "level-data/checkout-revision/illustrate-checkout-revision"
-      needConfirm: true
 
     - !illustrate 
       descriptionId: "level-data/checkout-revision/illustrate-browse-history"
-      needConfirm: true
 
   # instruct on how to checkout sixth commit
     - !instruct 
       descriptionId: "level-data/checkout-revision/suggest-checkout-sixth"
+      needConfirm: false
     - !dev.needAction 
       actions:
         - !dev.act.git 
@@ -84,7 +81,6 @@
 
     - !elaborate 
       descriptionId: "level-data/checkout-revision/conclude-section"
-      needConfirm: true
 
     
     
