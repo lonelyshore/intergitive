@@ -27,3 +27,5 @@ asset_index:
     checkout-first-confirm: checkout-revision@fork-checkout-first-confirm.png
     illustrate-checkout-revision: checkout-revision@illustrate-checkout-revision.gif
     
+# commit-one-file
+    brief-how-to-commit: commit-one-file@brief-how-to-commit.gif

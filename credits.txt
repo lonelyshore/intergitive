@@ -31,6 +31,9 @@
     source: Openclipart
     url: https://publicdomainvectors.org/en/free-clipart/Generic-file-icon/67197.html
     modifications: changed color
+  - name: folder-open-green
+    source: Openclipart
+    url: https://publicdomainvectors.org/en/free-clipart/Opening-green-directory/59469.html
 - path: example/course-resources/fork/level-data/assets/sound
   - name: bird.mp3
     source: freesound.org
