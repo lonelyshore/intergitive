@@ -34,6 +34,38 @@ asset_index:
       ![illustration]({{images/add-new-file}})  
       <div class="img-title">圖(二)</div>  
 
+      首先，請在資料夾的任意空白處按下滑鼠右鍵，展開右鍵選單  
+      在選單中，將滑鼠移到如上圖紅框圈選範圍所示的「新增」選項上，展開「新增」子選單  
+      然後，在子選單中找到如橘框圈選範圍所示的「文字文件」選項，按下滑鼠左鍵，新增文字文件  
+
+      新增完成後，將文件改名為 `new` 就完成了  
+
+      請在新增成功後，按下「確認」按鈕檢查是否成功
+
+    instruct-open-fork: |+2
+      .md
+      接下來，就讓我們操作${{t/gui}}來將剛才新增檔案之後的資料夾狀態保存進${{t/repo}}之中  
+      請使用${{t/gui}}開啟 `#{{basic}}`  
+
+    instruct-open-commit: |+2
+      .md
+      我們將使用${{t/gui}}的${{st/changes-tab}}來完成增加版本歷史的目標  
+      請如下圖(三)所示，按下${{t/gui}}視窗左側紅框圈選處的「Changes」項目  
+      開啟${{st/changes-tab}}  
+
+      ![illustration]({{images/open-changes-tab}})  
+      <div class="img-title">圖(三)</div>  
+
+      開啟完成後，應該會看見如下圖(四)的畫面  
+
+      ![illustration]({{images/changes-tab}})  
+      <div class="img-title">圖(四)</div>  
+
+      成功開啟後，請按下「確認」按鈕以繼續  
+
+    intro-commit-page: |+2
+      .md
+      
 
 
 # course materials
