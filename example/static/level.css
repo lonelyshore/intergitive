@@ -179,6 +179,12 @@ img[alt=illustration] {
     margin-right: auto;
 }
 
+.side-by-side-container::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
 .instruct {
     border-radius: 2px;
     color: #6F879C;

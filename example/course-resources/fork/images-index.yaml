@@ -33,3 +33,7 @@ asset_index:
     open-changes-tab: commit-one-file@open-changes-tab.png
     changes-tab: commit-one-file@changes-tab.png
     fill-commit-message: commit-one-file@fill-commit-message.png
+    back-to-all-commits-tab: commit-one-file@back-to-all-commits-tab.png
+    commit-added-graph-view: commit-one-file@commit-added-graph-view.png
+    stage-new-file: commit-one-file@stage-new-file.png
+    new-file-staged-add-commit: commit-one-file@new-file-staged-add-commit.png

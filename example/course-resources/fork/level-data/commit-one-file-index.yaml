@@ -69,6 +69,17 @@ asset_index:
       接下來，我們將專心於操作上面圖(四)紅框圈選的範圍  
       請參考下面圖(五-1)和圖(五-2)，按照接下來指示的步驟操作：  
 
+      <div class="side-by-side-container">
+        <div style="float: left;width: 50%;padding: 5px;">
+          <img src="{{images/stage-new-file}}" alt="illustration">
+          <div class="img-title">圖(五-1)</div>  
+        </div>
+        <div style="float: left;width: 50%;padding: 5px;">
+          <img src="{{images/new-file-staged-add-commit}}" alt="illustration">
+          <div class="img-title">圖(五-2)</div>  
+        </div>
+      </div> 
+
       如上圖(五-1)紅框圈選所示，我們會看到剛才新增加的「new.txt」被列在左上方「${{st/unstaged-changes}}」的列表中  
       請使用滑鼠左鍵選取 「new.txt」 使它呈現藍底反白  
       然後按下圖(五-1)橘框所圈選的「${{st/act-stage}}」按鈕  
@@ -107,13 +118,13 @@ asset_index:
       為了檢視我們的成果，請如下圖(七)所示  
       按下紅框圈選的${{st/all-commits-tab}}，切換到檢視${{t/graph}}的介面  
 
-      ![illustration]({{images/all-commits-tab}})  
+      ![illustration]({{images/back-to-all-commits-tab}})  
       <div class="img-title">圖(七)</div>  
       
       切換完成後，如下圖(八)所示  
       我們會看見${{t/graph}}上從六個圓點變成七個，最上面的一個就是剛才新增加的${{level-data/commit-one-file/commit-message}}  
 
-      ![illustration]({{images/all-commits-tab}})  
+      ![illustration]({{images/commit-added-graph-view}})  
       <div class="img-title">圖(八)</div>  
 
     checkout-previous-revision: |+2
@@ -146,14 +157,24 @@ asset_index:
       在本章節中，我們學會了如何增加一個新的版本歷史到${{t/repo}}  
 
       現在讓我們來回想一下圖(一)所介紹的大致流程  
-      當初其實刻意把某一個橋段給說得非常概略和模糊  
+      當初其實刻意把某一個橋段給匆匆帶過  
       那就是「3. 把${{t/work-tree}}複製一份到${{t/repo}}裡面」以及「4. 把${{t/file-tree}}包裝成圓點，跟紅色圓點串起來」  
 
-      實際上我們到底是如何作到的呢？  
+      實際上我們到底是如何完成的呢？  
       其實是拆分成了三步來完成的，請參考以下圖(九-1)與圖(九-2)所築格顯示的步驟  
 
+      <div class="side-by-side-container">
+        <div style="float: left;width: 50%;padding: 5px;">
+          <img src="{{images/stage-new-file}}" alt="illustration">
+          <div class="img-title">圖(九-1)</div>  
+        </div>
+        <div style="float: left;width: 50%;padding: 5px;">
+          <img src="{{images/new-file-staged-add-commit}}" alt="illustration">
+          <div class="img-title">圖(九-2)</div>  
+        </div>
+      </div> 
 
-      上面圖(九-1)顯示的是概念上發生的事情，圖(九-2)是我們實際作的操作  
+      上面圖(九-1)顯示的是概念上 git 系統發生的事情，圖(九-2)是我們實際作的操作  
       發生的事情依序介紹如下  
 
       0. 我們增加了「new.txt」，準備要把${{t/work-tree}}複製到${{t/repo}}的狀態。對應到圖(一)的第 2. 步
@@ -163,9 +184,10 @@ asset_index:
 
     conclusion: |+2
       .md
+      現在，我們終於能充分的了解新增一個版本背後所發生的事情  
       從圖(九-1)可以注意到，我們的概念圖裡面出現了一個新的區域－－中間的暫存區  
-      這個暫存區的存在，實際上是很多初來乍到的人容易感到困惑的原因之一  
-      因次我們這一章剩下的小節都會繼續圍繞著它來介紹，敬請期待～
+      這個暫存區到底有甚麼功用，又應該如何使用呢？  
+      我們將在這一章剩下的小節繼續圍繞著它來介紹，敬請期待～
 
 # course materials
     empty: ""
