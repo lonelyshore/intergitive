@@ -69,11 +69,11 @@ asset_index:
       接下來，我們將專心於操作上面圖(四)紅框圈選的範圍  
       請參考下面圖(五-1)和圖(五-2)，按照接下來指示的步驟操作：  
 
-      如上圖(五-1)紅框圈選所示，我們會看到剛才新增加的「new.txt」被列在左上方「Unstaged Changes」的列表中  
+      如上圖(五-1)紅框圈選所示，我們會看到剛才新增加的「new.txt」被列在左上方「${{st/unstaged-changes}}」的列表中  
       請使用滑鼠左鍵選取 「new.txt」 使它呈現藍底反白  
-      然後按下圖(五-1)橘框所圈選的「Stage」按鈕  
+      然後按下圖(五-1)橘框所圈選的「${{st/act-stage}}」按鈕  
 
-      按下按鈕後，我們會注意到「new.txt」被移動到左下方的「Staged Changes」，如圖(五-2)所示  
+      按下按鈕後，我們會注意到「new.txt」被移動到左下方的「${{st/staged-changes}}」，如圖(五-2)所示  
       這個操作，表示我們想要把新增的「new.txt」紀錄到版本歷史中  
 
       完成操作後，請按下「確認」按鈕檢核是否操作正確並繼續
@@ -113,9 +113,59 @@ asset_index:
       切換完成後，如下圖(八)所示  
       我們會看見${{t/graph}}上從六個圓點變成七個，最上面的一個就是剛才新增加的${{level-data/commit-one-file/commit-message}}  
 
-      
+      ![illustration]({{images/all-commits-tab}})  
+      <div class="img-title">圖(八)</div>  
+
+    checkout-previous-revision: |+2
+      .md
+      為了驗證新增加的版本歷史確實有記錄下我們新增加的檔案  
+      讓我們切換到不同的版本歷史看看  
+
+      請操作${{t/gui}}的${{t/graph}}介面，切換到「第 6 號提交」  
+
+    confirm-sixth-commit: |+2
+      .md
+      ${{t/checkout-rev}}到「第 6 號提交」後，請使用檔案管理員開啟位於 `#{{basic}}` 的資料夾  
+      我們會注意到剛才新增的「new.txt」現在不見了  
+
+    checkout-seventh-commit: |+2
+      .md
+      現在，請${{t/checkout-rev}}回「${{level-data/commit-one-file/commit-message}}」  
+    
+    confirm-seventh-commit: |+2
+      .md
+      透過 git 的力量，我們又回到了「${{level-data/commit-one-file/commit-message}}」的版本  
+      現在，請再次觀察位於 `#{{basic}}` 的資料夾內容，請問「new.txt」是否復活了呢？  
+
+      1. 是
+      2. 否
+      請以數字(1/2)回答
+
+    explain-staging: |+2
+      .md
+      在本章節中，我們學會了如何增加一個新的版本歷史到${{t/repo}}  
+
+      現在讓我們來回想一下圖(一)所介紹的大致流程  
+      當初其實刻意把某一個橋段給說得非常概略和模糊  
+      那就是「3. 把${{t/work-tree}}複製一份到${{t/repo}}裡面」以及「4. 把${{t/file-tree}}包裝成圓點，跟紅色圓點串起來」  
+
+      實際上我們到底是如何作到的呢？  
+      其實是拆分成了三步來完成的，請參考以下圖(九-1)與圖(九-2)所築格顯示的步驟  
 
 
+      上面圖(九-1)顯示的是概念上發生的事情，圖(九-2)是我們實際作的操作  
+      發生的事情依序介紹如下  
+
+      0. 我們增加了「new.txt」，準備要把${{t/work-tree}}複製到${{t/repo}}的狀態。對應到圖(一)的第 2. 步
+      1. 我們在${{st/changes-tab}}按下「${{st/act-stage}}」按鈕，把綠色的${{t/work-tree}}複製一份放到中間的暫存區
+      2. 填入輔助訊息
+      3. 按下「Commit 1 File」按鈕，把中間位置的綠色${{t/file-tree}}和輔助訊息包裝成圓點，放進${{t/repo}}
+
+    conclusion: |+2
+      .md
+      從圖(九-1)可以注意到，我們的概念圖裡面出現了一個新的區域－－中間的暫存區  
+      這個暫存區的存在，實際上是很多初來乍到的人容易感到困惑的原因之一  
+      因次我們這一章剩下的小節都會繼續圍繞著它來介紹，敬請期待～
 
 # course materials
     empty: ""

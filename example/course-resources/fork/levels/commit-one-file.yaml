@@ -24,7 +24,7 @@
           destinationPaths:
             - new.txt
     - !verifyRepo 
-      referenceName: add-new-file
+      referenceName: "add-new-file"
 
     - !instruct 
       descriptionId: "level-data/commit-one-file/instruct-open-fork"
@@ -39,7 +39,7 @@
         - !act.stageAll 
           repoSetupName: basic
     - !verifyRepo 
-      referenceName: stage-new
+      referenceName: "stage-new"
     
     - !instruct 
       descriptionId: "level-data/commit-one-file/fill-message-and-commit"
@@ -54,4 +54,40 @@
 
     - !elaborate 
       descriptionId: "level-data/commit-one-file/view-graph"
+    - !instruct 
+      descriptionId: "level-data/commit-one-file/checkout-previous-revision"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ "checkout", "master^" ]
+    - !verifyRepo 
+      referenceName: "checkout-sixth-commit"
+
+    - !instruct 
+      descriptionId: "level-data/commit-one-file/confirm-sixth-commit"
+    - !instruct 
+      descriptionId: "level-data/commit-one-file/checkout-seventh-commit"
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ "checkout", "master~0" ]
+    - !verifyRepo 
+      referenceName: "checkout-seventh-commit"
+
+    - !illustrate 
+      descriptionId: "level-data/commit-one-file/confirm-seventh-commit"
+      needConfirm: false
+    - !verifyInput 
+      answer: "1"
+
+    - !illustrate 
+      descriptionId: "level-data/commit-one-file/explain-staging"
+    - !elaborate 
+      descriptionId: "level-data/commit-one-file/conclusion"
+    
+
+
 
