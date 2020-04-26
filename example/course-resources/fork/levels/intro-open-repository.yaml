@@ -97,7 +97,7 @@
           repoSetupName: basic
           arguments: [ "commit", "-m", "第 6 號提交" ]
 
-      # save reference
+      # save reference to init
         - !dev.act.saveReference 
           repoSetupName: basic
           referenceName: init

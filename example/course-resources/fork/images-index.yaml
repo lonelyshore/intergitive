@@ -32,3 +32,4 @@ asset_index:
     add-new-file: commit-one-file@add-new-file.png
     open-changes-tab: commit-one-file@open-changes-tab.png
     changes-tab: commit-one-file@changes-tab.png
+    fill-commit-message: commit-one-file@fill-commit-message.png

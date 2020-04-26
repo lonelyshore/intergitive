@@ -57,16 +57,66 @@ asset_index:
       <div class="img-title">圖(三)</div>  
 
       開啟完成後，應該會看見如下圖(四)的畫面  
+      紅框所圈選的範圍換成了之前沒有見過的介面  
 
       ![illustration]({{images/changes-tab}})  
       <div class="img-title">圖(四)</div>  
 
       成功開啟後，請按下「確認」按鈕以繼續  
 
-    intro-commit-page: |+2
+    stage-new-file: |+2
       .md
+      接下來，我們將專心於操作上面圖(四)紅框圈選的範圍  
+      請參考下面圖(五-1)和圖(五-2)，按照接下來指示的步驟操作：  
+
+      如上圖(五-1)紅框圈選所示，我們會看到剛才新增加的「new.txt」被列在左上方「Unstaged Changes」的列表中  
+      請使用滑鼠左鍵選取 「new.txt」 使它呈現藍底反白  
+      然後按下圖(五-1)橘框所圈選的「Stage」按鈕  
+
+      按下按鈕後，我們會注意到「new.txt」被移動到左下方的「Staged Changes」，如圖(五-2)所示  
+      這個操作，表示我們想要把新增的「new.txt」紀錄到版本歷史中  
+
+      完成操作後，請按下「確認」按鈕檢核是否操作正確並繼續
+
+    fill-message-and-commit: |+2
+      .md
+      我們距離新增一個版本非常接近了  
+      決定了想要紀錄的檔案是剛才新增的「new.txt」之後  
+      我們只需要再留下一些關於這次版本紀錄的訊息，就可以新增一個版本紀錄了  
+
+      請參考下面圖(六)，按照接下來的指示操作  
+
+      ![illustration]({{images/fill-commit-message}})  
+      <div class="img-title">圖(六)</div>  
+
+      請使用滑鼠左鍵點擊上圖紅框圈選的文字輸入欄  
+      然後輸入以下的訊息：  
+
+      ```
+      ${{level-data/commit-one-file/commit-message}}
+      ```
       
+      輸入完成後，請按下上圖橘框圈選的「Commit 1 File」按鈕  
+      請注意不要按到旁邊的顯示「v」小按鈕  
+
+      完成後，請按下「確認」按鈕檢核是否操作正確  
+
+    view-graph: |+2
+      .md
+      恭喜！我們成功完成新增一份版本到${{t/repo}}的任務  
+      為了檢視我們的成果，請如下圖(七)所示  
+      按下紅框圈選的${{st/all-commits-tab}}，切換到檢視${{t/graph}}的介面  
+
+      ![illustration]({{images/all-commits-tab}})  
+      <div class="img-title">圖(七)</div>  
+      
+      切換完成後，如下圖(八)所示  
+      我們會看見${{t/graph}}上從六個圓點變成七個，最上面的一個就是剛才新增加的${{level-data/commit-one-file/commit-message}}  
+
+      
+
 
 
 # course materials
     empty: ""
+    commit-message: "第 7 號提交"
