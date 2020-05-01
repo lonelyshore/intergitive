@@ -89,7 +89,7 @@ describe("Dev Action Executor", function() {
             return fs.remove(repoParentPath);
         });
 
-        describe.only('Arbitrary Git Command', function() {
+        describe('Arbitrary Git Command', function() {
 
             it('Parse dollar sign ($)', function() {
 
