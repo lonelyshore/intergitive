@@ -80,7 +80,35 @@ class DevActionExecutor extends ActionExecutor {
     executeGitCommand(repoSetupName, commandArguments) {
         return this[getRepo](repoSetupName)
         .then(repo => {
-            return repo.raw(commandArguments);
+
+            let convertArguemtns = commandArguments.reduce(
+                (convertArgumentsPromise, argument) => {
+                    return convertArgumentsPromise.then(convertedArgs => {
+                        return this.exploitTextAsset(
+                            argument,
+                            (originalArgument) => {
+                                convertedArgs.push(originalArgument)
+                                return convertedArgs;
+                            },
+                            (converted) => {
+                                convertedArgs.push(converted);
+                                return convertedArgs;
+                            },
+                            (argsAsFilePath) => { 
+                                throw new Error(
+                                    `Does not expect git command arguments can be converted to path. Invalid argument: ${argument}`
+                                );
+                            }
+                        );
+                    });
+                },
+                Promise.resolve([])
+            );
+
+            return convertArguemtns
+            .then(convertedArguments => {
+                return repo.raw(convertedArguments);
+            });
         })
         .catch(err => {
             console.error(`[executeGitCommand] error occured when executing git command [${commandArguments.join([","])}]\nerror: ` + err.message);

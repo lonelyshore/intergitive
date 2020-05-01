@@ -89,6 +89,44 @@ describe("Dev Action Executor", function() {
             return fs.remove(repoParentPath);
         });
 
+        describe.only('Arbitrary Git Command', function() {
+
+            it('Parse dollar sign ($)', function() {
+
+                const assetBasePath = 'git-operations';
+                const replacedCommandId = `${assetBasePath}/replacedCommand`;
+                const replacedArgId = `${assetBasePath}/replacedArgLocal`;
+                const replacedVarNameId = `${assetBasePath}/replacedVarName`;
+
+                const timestamp = Math.floor(Date.now() / 1000).toString();
+
+                let action = new actionTypes.GitCommandAction(
+                    testRepoSetupName,
+                    [
+                        `$${replacedCommandId}`,
+                        `$${replacedArgId}`,
+                        `$${replacedVarNameId}`,
+                        `${timestamp}`
+                    ]
+                );
+
+                return action.executeBy(actionExecutor)
+                .then(() => {
+                    return repo.raw([
+                        'config',
+                        '--local',
+                        '--get',
+                        'unused.test'
+                    ])
+                    .then(result => {
+                        return result.trim();
+                    })
+                    .should.eventually.equal(timestamp);
+                });
+            });
+
+        });
+
         describe("Stage", function() {
 
             it("stage single file", function() {
