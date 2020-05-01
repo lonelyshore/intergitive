@@ -18,7 +18,7 @@
       needConfirm: false
     - !dev.needAction 
       actions:
-        - !act.moveFile 
+        - !act.writeFile   
           sourceAssetIds:
             - "$level-data/commit-one-file/empty"
           destinationPaths:

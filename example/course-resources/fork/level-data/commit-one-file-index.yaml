@@ -171,11 +171,11 @@ asset_index:
 
       <div class="side-by-side-container">
         <div style="float: left;width: 50%;padding: 5px;">
-          <img src="{{images/stage-new-file}}" alt="illustration">
+          <img src="{{images/brief-commit-concept}}" alt="illustration">
           <div class="img-title">圖(九-1)</div>  
         </div>
         <div style="float: left;width: 50%;padding: 5px;">
-          <img src="{{images/new-file-staged-add-commit}}" alt="illustration">
+          <img src="{{images/brief-commit-gui}}" alt="illustration">
           <div class="img-title">圖(九-2)</div>  
         </div>
       </div> 
