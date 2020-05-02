@@ -1,0 +1,6 @@
+asset_index:
+  infile:
+    replacedCommand: config
+    replacedArgLocal: "--local"
+    replacedVarName: "unused.test"
+    
