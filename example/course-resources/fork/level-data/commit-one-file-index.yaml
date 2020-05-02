@@ -70,11 +70,11 @@ asset_index:
       請參考下面圖(五-1)和圖(五-2)，按照接下來指示的步驟操作：  
 
       <div class="side-by-side-container">
-        <div style="float: left;width: 50%;padding: 5px;">
+        <div style="float: left;width: 46%;padding: 2%;">
           <img src="{{images/stage-new-file}}" alt="illustration">
           <div class="img-title">圖(五-1)</div>  
         </div>
-        <div style="float: left;width: 50%;padding: 5px;">
+        <div style="float: left;width: 46%;padding: 2%;">
           <img src="{{images/new-file-staged-add-commit}}" alt="illustration">
           <div class="img-title">圖(五-2)</div>  
         </div>
@@ -108,13 +108,14 @@ asset_index:
       ```
       
       輸入完成後，請按下上圖橘框圈選的「Commit 1 File」按鈕  
-      請注意不要按到旁邊的顯示「v」小按鈕  
+      請注意**不要**按到旁邊的顯示「v」小按鈕  
 
       完成後，請按下「確認」按鈕檢核是否操作正確  
 
     view-graph: |+2
       .md
-      恭喜！我們成功完成新增一份版本到${{t/repo}}的任務  
+      恭喜！我們終於達成新增一份版本到${{t/repo}}的任務  
+
       為了檢視我們的成果，請如下圖(七)所示  
       按下紅框圈選的${{st/all-commits-tab}}，切換到檢視${{t/graph}}的介面  
 
@@ -129,8 +130,7 @@ asset_index:
 
     checkout-previous-revision: |+2
       .md
-      為了驗證新增加的版本歷史確實有記錄下我們新增加的檔案  
-      讓我們切換到不同的版本歷史看看  
+      為了驗證新增加的版本歷史確實有記錄下我們新增加的檔案，讓我們切換到不同的版本歷史看看  
 
       請操作${{t/gui}}的${{t/graph}}介面，切換到「第 6 號提交」  
 
@@ -185,7 +185,8 @@ asset_index:
     conclusion: |+2
       .md
       現在，我們終於能充分的了解新增一個版本背後所發生的事情  
-      從圖(九)可以注意到，我們的概念圖裡面出現了一個新的區域－－中間的暫存區  
+      從圖(九)左半可以注意到，我們的概念圖裡面出現了一個新的區域－－中間的暫存區  
+
       這個暫存區到底有甚麼功用，又應該如何使用呢？  
       我們將在這一章剩下的小節繼續圍繞著它來介紹，敬請期待～
 
