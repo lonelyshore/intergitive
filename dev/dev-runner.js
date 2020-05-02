@@ -50,6 +50,8 @@ const loadReferenceMakerMapping = function(repoVcsSetups, storePath) {
  */
 const bakeLevel = function(levelItem, flatCourseItems, actionExecutorContext) {
 
+    console.log(`baking ${levelItem.id}`);
+
     return actionExecutorContext.assetLoader.loadTextContent(levelItem.configAssetId)
     .then(text => {
         return yaml.safeLoad(text, { schema: LEVEL_SCHEMA });

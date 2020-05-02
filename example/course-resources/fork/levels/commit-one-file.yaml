@@ -22,7 +22,7 @@
           sourceAssetIds:
             - "$level-data/commit-one-file/empty"
           destinationPaths:
-            - new.txt
+            - basic/new.txt
     - !verifyRepo 
       referenceName: "add-new-file"
 
@@ -69,6 +69,7 @@
       descriptionId: "level-data/commit-one-file/confirm-sixth-commit"
     - !instruct 
       descriptionId: "level-data/commit-one-file/checkout-seventh-commit"
+      needConfirm: false
     - !dev.needAction 
       actions:
         - !dev.act.git 
@@ -77,7 +78,7 @@
     - !verifyRepo 
       referenceName: "checkout-seventh-commit"
 
-    - !illustrate 
+    - !instruct  
       descriptionId: "level-data/commit-one-file/confirm-seventh-commit"
       needConfirm: false
     - !verifyInput 

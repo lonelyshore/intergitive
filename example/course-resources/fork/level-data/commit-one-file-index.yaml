@@ -158,40 +158,34 @@ asset_index:
 
       現在讓我們來回顧一下圖(一)所介紹的大致流程  
       有  
-      1. 修改資料夾的內容，讓${{t/work-tree}}變成綠色的
-      2. 複製一份${{t/file-tree}}到${{t/repo}}裡面
-      3. 把${{t/file-tree}}包裝成圓點，跟紅色圓點串起來
-      4. 完成新增版本  
+      1. 資料夾的最初狀態
+      2. 修改資料夾的內容，讓${{t/work-tree}}變成綠色的
+      3. 複製一份${{t/file-tree}}到${{t/repo}}裡面
+      4. 把${{t/file-tree}}包裝成圓點，跟紅色圓點串起來
+      5. 完成新增版本  
 
       當我們仔細的觀察就會發現
-      其實其中的 2. 與 3. 的步驟是匆匆帶過，並沒有明確說明要如何達成  
+      其實其中的 3. 與 4. 的步驟是匆匆帶過，並沒有明確說明要如何達成  
 
       實際上我們到底是如何完成的呢？  
-      其實是拆分成了三步來完成的，請參考以下圖(九-1)與圖(九-2)所築格顯示的步驟  
+      其實是拆分成三步來完成的，請參考以下圖(九)所逐格顯示的第 3. 到 5. 步驟   
 
-      <div class="side-by-side-container">
-        <div style="float: left;width: 50%;padding: 5px;">
-          <img src="{{images/brief-commit-concept}}" alt="illustration">
-          <div class="img-title">圖(九-1)</div>  
-        </div>
-        <div style="float: left;width: 50%;padding: 5px;">
-          <img src="{{images/brief-commit-gui}}" alt="illustration">
-          <div class="img-title">圖(九-2)</div>  
-        </div>
-      </div> 
+      ![illustration]({{images/brief-commit-concept}})  
+      <div class="img-title">圖(九)</div>  
 
-      上面圖(九-1)顯示的是概念上 git 系統發生的事情，圖(九-2)是我們實際作的操作  
+      上面圖(九)左半顯示的是概念上 git 系統發生的事情，圖(九)右半是我們實際作的操作  
       發生的事情依序介紹如下  
 
-      0. 我們增加了「new.txt」，準備要把${{t/work-tree}}複製到${{t/repo}}的狀態。對應到圖(一)的第 2. 步
-      1. 我們在${{st/changes-tab}}按下「${{st/act-stage}}」按鈕，把綠色的${{t/work-tree}}複製一份放到中間的暫存區
-      2. 填入輔助訊息
-      3. 按下「Commit 1 File」按鈕，把中間位置的綠色${{t/file-tree}}和輔助訊息包裝成圓點，放進${{t/repo}}
+      1. 資料夾的初始狀態，一開始是紅色的版本
+      2. 我們增加了「new.txt」，讓${{t/work-tree}}變成綠色的
+      3. 我們在${{st/changes-tab}}按下「${{st/act-stage}}」按鈕，把綠色的${{t/work-tree}}複製一份放到中間的暫存區
+      4. 填入輔助訊息
+      5. 按下「Commit 1 File」按鈕，把中間位置的綠色${{t/file-tree}}和輔助訊息包裝成圓點，放進${{t/repo}}
 
     conclusion: |+2
       .md
       現在，我們終於能充分的了解新增一個版本背後所發生的事情  
-      從圖(九-1)可以注意到，我們的概念圖裡面出現了一個新的區域－－中間的暫存區  
+      從圖(九)可以注意到，我們的概念圖裡面出現了一個新的區域－－中間的暫存區  
       這個暫存區到底有甚麼功用，又應該如何使用呢？  
       我們將在這一章剩下的小節繼續圍繞著它來介紹，敬請期待～
 
