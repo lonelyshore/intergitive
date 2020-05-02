@@ -88,6 +88,12 @@
       descriptionId: "level-data/commit-one-file/explain-staging"
     - !elaborate 
       descriptionId: "level-data/commit-one-file/conclusion"
+
+    - !dev.devAction # checkout master secretly so we can create commits naturally later on
+      actions:
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ "checkout", "-f", "master" ]
     
 
 
