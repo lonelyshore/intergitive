@@ -577,13 +577,23 @@ function validateLevels(course, levelConfigAndNames, loaderPair, courseName) {
                          * @returns {Array<AssetDemand>}
                          */
                         function collectAssetDemandsFromAction(action) {
-                            if (action instanceof configAction.WriteFileAction) {
+                            if ('sourceAssetIds' in action) {
                                 return action.sourceAssetIds.map(id => {
                                     return new AssetDemand(
                                         id.replace(/^\$/, ''),
-                                        '!act.writeFile',
+                                        action.klass,
                                         id.startsWith('$')
                                     )
+                                });
+                            }
+                            else if ('arguments' in action) {
+                                return action.arguments.filter(argument => argument.startsWith('$'))
+                                .map(argument => {
+                                    return new AssetDemand(
+                                        argument.replace(/^\$/, ''),
+                                        action.klass,
+                                        true
+                                    );
                                 });
                             }
                             else if (action instanceof configAction.LoadRepoReferenceArchiveAction) {
