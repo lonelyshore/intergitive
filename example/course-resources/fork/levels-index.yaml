@@ -13,6 +13,7 @@ asset_index:
 
   # level names of section two
     main.commit-one-file.name: "第一節：快照一個檔案"
+    main.commit-files-separately.name: "第二節：分批快照檔案"
     
   ondisk:
   # level configs of section one: intro
@@ -23,3 +24,4 @@ asset_index:
 
   # level configs of section two: create commits
     commit-one-file: "commit-one-file.yaml"
+    

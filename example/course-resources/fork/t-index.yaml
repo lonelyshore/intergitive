@@ -4,6 +4,8 @@ asset_index:
     checkout-rev-f: "切換版本(checout revision)"
     commit: 變更提交
     commit-f: "變更提交(commit)"
+    commit-s: 提交
+    commit-s-f: 提交(commit)
     gui: " fork "
     graph-f: "線圖 (graph) "
     graph: 線圖
@@ -17,3 +19,5 @@ asset_index:
     local-repo-f: 本地倉庫(local repository)
     repo-f: 倉庫(repository)
     repo: 倉庫
+    revision: 版本
+    revision-f: 版本(revision)

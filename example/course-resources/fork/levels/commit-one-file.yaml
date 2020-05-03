@@ -84,6 +84,9 @@
     - !verifyInput 
       answer: "1"
 
+    - !elaborate 
+      descriptionId: "level-data/commit-one-file/intro-commit"
+
     - !illustrate 
       descriptionId: "level-data/commit-one-file/explain-staging"
     - !elaborate 
@@ -94,6 +97,9 @@
         - !dev.act.git 
           repoSetupName: basic
           arguments: [ "checkout", "-f", "master" ]
+        - !dev.act.saveReference 
+          repoSetupName: basic
+          referenceName: "added-seventh-commit"
     
 
 

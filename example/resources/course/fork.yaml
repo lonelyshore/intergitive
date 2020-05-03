@@ -30,3 +30,7 @@
           id: "fork-main-commit-one-file"
           nameKey: "levels/main.commit-one-file.name"
           configAssetId: "levels/commit-one-file"
+        - !level 
+          id: "fork-main-commit-files-separately"
+          nameKey: "levels/main.commit-files-separately.name"
+          configAssetId: "levels/commit-files-separately"

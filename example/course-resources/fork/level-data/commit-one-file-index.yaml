@@ -123,15 +123,19 @@ asset_index:
       <div class="img-title">圖(七)</div>  
       
       切換完成後，如下圖(八)所示  
-      我們會看見${{t/graph}}上從六個圓點變成七個，最上面的一個就是剛才新增加的${{level-data/commit-one-file/commit-message}}  
+      我們會看見${{t/graph}}上從六個圓點變成七個，最上面的一個就是剛才新增加的「${{level-data/commit-one-file/commit-message}}」  
 
       ![illustration]({{images/commit-added-graph-view}})  
       <div class="img-title">圖(八)</div>  
 
-    checkout-previous-revision: |+2
-      .md
+      這個新增加的版本跟其它的六個版本一樣  
+      我們可以任意的瀏覽它的${{t/file-tree}}，也可以在需要的時候隨意的切換過去  
+
       為了驗證新增加的版本歷史確實有記錄下我們新增加的檔案，讓我們切換到不同的版本歷史試試看  
 
+    checkout-previous-revision: |+2
+      .md
+      先讓我們倒轉時間回到增加「new.txt」之前  
       請操作${{t/gui}}的${{t/graph}}介面，切換到「第 6 號提交」  
 
     confirm-sixth-commit: |+2
@@ -152,17 +156,34 @@ asset_index:
       2. 否
       請以數字(1/2)回答
 
+    intro-commit: |+2
+      .md
+      上面的實驗，證明了我們成功增添了新的${{t/revision-f}}到${{t/repo}}中！  
+      我們的努力，讓${{t/graph}}上增加了一個可以切換的新版本－－「${{level-data/commit-one-file/commit-message}}」
+      這時候，或許你會開始好奇，到底「第 X 號提交」的**「${{t/commit-s}}」**是甚麼意思呢？  
+
+      **「${{t/commit-s}}」**其實是從英文「commit」而來  
+      還記得我們增加版本的時候，在上面的圖(六)中說明的最後一個步驟就是要「commit」  
+      意思是要「提交」一個新的版本  
+
+      雖然${{t/commit-s-f}}是表達建立版本的動作，但是在各家 git 教學或說明文件中，也時常衍伸來指稱建立出來的版本  
+      為了加以區分，當我們要表達建立版本的動作時，會使用**「${{t/commit-s}}」**  
+      而要稱呼建立出來的版本時，則會使用**「${{t/revision}}」**或**「${{t/commit}}」**  
+
+      咦？那麼「${{t/revision}}」和「${{t/commit}}」又有甚麼分別呢？  
+      這個問題，就讓我們留到之後再回答  
+      現在我們就先以${{t/revision}}為主，暫時忘記${{t/commit}}的存在吧  
+
     explain-staging: |+2
       .md
-      上面的驗證步驟，證明了我們成功增添了新的版本歷史到${{t/repo}}中！
-
-      現在讓我們來回顧一下圖(一)所介紹的大致流程  
+      
+      現在讓我們來回顧一下圖(一)所介紹的建立一個${{t/revision}}的大致流程  
       有  
       1. 資料夾的最初狀態
       2. 修改資料夾的內容
       3. 複製一份${{t/file-tree}}到${{t/repo}}裡面
       4. 把${{t/file-tree}}包裝成圓點，跟前一個圓點串起來
-      5. 完成新增版本  
+      5. 完成新增${{t/revision}}  
 
       當我們仔細的觀察就會發現
       其實其中的 3. 與 4. 的步驟是匆匆帶過，並沒有明確說明要如何達成  
@@ -176,8 +197,8 @@ asset_index:
       上面圖(九)左半顯示的是概念上 git 系統發生的事情，圖(九)右半是我們實際作的操作  
       發生的事情依序介紹如下  
 
-      1. 資料夾的初始狀態，一開始是紅色的版本
-      2. 我們增加了「new.txt」，讓${{t/work-tree}}變成綠色的
+      1. 資料夾的初始狀態，一開始是紅色的
+      2. 我們增加了「new.txt」，讓${{t/work-tree}}變成綠色的表示有所不同
       3. 我們在${{st/changes-tab}}按下「${{st/act-stage}}」按鈕，把綠色的${{t/work-tree}}複製一份放到中間的暫存區
       4. 填入輔助訊息
       5. 按下「Commit 1 File」按鈕，把中間位置的綠色${{t/file-tree}}和輔助訊息包裝成圓點，放進${{t/repo}}
