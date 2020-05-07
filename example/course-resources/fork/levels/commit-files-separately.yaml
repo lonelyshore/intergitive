@@ -1,0 +1,69 @@
+!level
+  repoVcsSetups:
+    basic:
+      workingPath: basic
+      referenceStoreName: basic-operation
+      checkpointStoreName: basic-operation-checkpoints
+  steps:
+    - !loadReference 
+      referenceName: "added-seventh-commit"
+
+  # intro & instruct add new file
+    - !elaborate 
+      descriptionId: "level-data/commit-files-separately/intro-goal"
+    - !instruct 
+      descriptionId: "level-data/commit-files-separately/add-new-files"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !act.writeFile 
+          sourceAssetIds:
+            - "level-data/commit-files-separately/empty"
+            - "level-data/commit-files-separately/empty"
+            - "level-data/commit-files-separately/empty"
+            - "level-data/commit-files-separately/empty" 
+          destinationPaths:
+            - new1.txt
+            - new2.txt
+            - new3.txt
+            - new4.txt
+    - !verifyRepo 
+      referenceName: "add-new-files"
+
+  # instruct commit new1.txt
+    - !elaborate 
+      descriptionId: "level-data/commit-files-separately/will-commit-separately"
+    - !instruct 
+      descriptionId: "level-data/commit-files-separately/stage-first"
+      needConfirm: false
+    - !dev.needAction  
+      actions:
+        - !act.stage 
+          repoSetupName: basic
+          pathSpecs:
+            - new1.txt
+    - !verifyRepo 
+      referenceName: "stage-new1"
+
+    - !instruct
+      descriptionId: "level-data/commit-files-separately/commit-first"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ "commit", "-m", "$level-data/commit-files-separately/first-commit-message" ]
+    - !verifyRepo 
+      referenceName: "commit-new1"
+
+    - !elaborate 
+      descriptionId: "level-data/commit-files-separately/"
+
+      
+
+
+
+    
+
+
+

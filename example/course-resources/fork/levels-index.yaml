@@ -24,4 +24,5 @@ asset_index:
 
   # level configs of section two: create commits
     commit-one-file: "commit-one-file.yaml"
+    commit-files-separately: "commit-files-separately.yaml"
     

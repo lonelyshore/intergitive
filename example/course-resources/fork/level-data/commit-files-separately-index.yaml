@@ -1,0 +1,71 @@
+asset_index:
+  infile:
+# course contents
+    intro-goal: |+2
+      .md
+      在前一節之中我們介紹了在資料夾中新增**一個**檔案的時候，如何把「新增了檔案的資料夾」建立一份${{t/revision}}  
+      那麼，當資料夾中新增了**多個**檔案的時候，又會有甚麼不同呢？讓我們來探索看看  
+
+    add-new-files: |+2
+      .md
+      首先，我們需要在資料夾中新增幾個檔案才行  
+      請按照前一節所教的技巧，在 `#{{basic}}` 資料夾中建立以下檔名的純文字檔案：  
+
+      - new1
+      - new2
+      - new3
+      - new4
+
+      完成後，請按下「確認」按鈕來確認檔案有順利新增完成
+
+    will-commit-separately: |+2
+      .md
+      完成新增檔案後，讓我們看看${{t/gui}}的${{st/changes-tab}}目前是甚麼狀態  
+      請使用${{t/gui}}開啟 `#{{basic}}` 資料夾  
+      然後，按照上一節所教的方法，切換到${{st/changes-tab}}  
+      切換成功後，應該會出現如下圖(一)所示的畫面：
+
+      ![illustration]({{images/four-dirty-work-tree}})  
+      <div class="img-title">圖(一)</div>  
+
+      可以看到，在上圖(一)紅框所圈選的${{st/unstaged-changes}}裡面有我們新增加的檔案們  
+      接下來，讓我們嘗試一次只使用其中一個檔案來建立${{t/revision}}  
+
+    stage-first: |+2
+      .md
+      請回想上一節的指示，並參照下圖(二-1)與圖(二-2)的步驟，將 `new1` 選入${{st/staged-changes}}  
+
+      <div class="side-by-side-container">
+        <div style="float: left;width: 46%;padding: 2%;">
+          <img src="{{images/stage-new-one-only}}" alt="illustration">
+          <div class="img-title">圖(二-1)</div>  
+        </div>
+        <div style="float: left;width: 46%;padding: 2%;">
+          <img src="{{images/only-new-one-staged}}" alt="illustration">
+          <div class="img-title">圖(二-2)</div>  
+        </div>
+      </div> 
+
+      完成後，請按下「確認」按鈕來確認檔案有順利選入
+
+    commit-first: |+2
+      .md
+      現在，我們確認 `new1` 處於${{st/staged-changes}}中  
+      接下來，讓我們${{t/commit}}一份${{t/revision}}  
+
+      請回想上一節的指示，並參照下圖(三)  
+      將「${{level-data/commit-files-separately/first-commit-message}}」填入紅框圈選範圍  
+
+      ![illustration]({{images/fill-commit-message-new-one}})  
+      <div class="img-title">圖(三)</div>  
+
+      輸入完成後，請按下上圖橘框圈選的「Commit 1 File」按鈕，完成${{t/commit}}的手續  
+
+      請按下「確認」按鈕來確認${{t/revision}}順利建立  
+
+    
+
+
+# course materials
+    empty: ""
+    first-commit-message: "增加new1"

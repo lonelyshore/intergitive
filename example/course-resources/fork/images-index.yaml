@@ -38,3 +38,9 @@ asset_index:
     back-to-all-commits-tab: commit-one-file@back-to-all-commits-tab.png
     commit-added-graph-view: commit-one-file@commit-added-graph-view.png
     brief-commit-concept: commit-one-file@brief-commit-concept.gif
+
+# commit-files-separately
+    four-dirty-work-tree: commit-files-separately@four-dirty-work-tree.png
+    stage-new-one-only: commit-files-separately@stage-new-one-only.png
+    only-new-one-staged: commit-files-separately@only-new-one-staged.png
+    only-commit-new-one: commit-files-separately@only-commit-new-one.png

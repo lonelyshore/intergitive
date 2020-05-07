@@ -21,3 +21,10 @@ asset_index:
     repo: 倉庫
     revision: 版本
     revision-f: 版本(revision)
+    unstaged-en: " unstaged "
+    staged-en: " staged "
+    stage-en: " stage "
+    unstaged-f: "未核選的變更(unstaged)"
+    staged-f: "已核選的變更(staged)"
+    stage-f: "核選(stage)"
+    stage: "核選"
