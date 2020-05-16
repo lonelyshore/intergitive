@@ -26,5 +26,8 @@ asset_index:
     stage-en: " stage "
     unstaged-f: "未核選的變更(unstaged)"
     staged-f: "已核選的變更(staged)"
+    staged: "已核選的變更"
     stage-f: "核選(stage)"
     stage: "核選"
+    index-f: "變更暫存(index)"
+    index: "變更暫存"

@@ -43,5 +43,9 @@ asset_index:
     four-dirty-work-tree: commit-files-separately@four-dirty-work-tree.png
     stage-new-one-only: commit-files-separately@stage-new-one-only.png
     only-new-one-staged: commit-files-separately@only-new-one-staged.png
-    only-commit-new-one: commit-files-separately@only-commit-new-one.png
-    only-new-two-staged: commit-files-separately@only-new-two-staged.png
+    fill-commit-message-new-one: commit-files-separately@fill-commit-message-new-one.png
+    commi-separately-without-index: commit-files-separately@commi-separately-without-index.png
+    commit-separately-with-index: commit-files-separately@commit-separately-with-index.png
+    illustrate-stage-file-to-index: commit-files-separately@illustrate-stage-file-to-index.png
+    hint-click-stage-all: commit-files-separately@hint-click-stage-all.png
+    clicked-stage-all: commit-files-separately@clicked-stage-all.png

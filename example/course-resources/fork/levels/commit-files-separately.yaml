@@ -57,9 +57,10 @@
 
     - !illustrate  
       descriptionId: "level-data/commit-files-separately/explain-separate-commit-by-index"
+    - !elaborate 
+      descriptionId: "level-data/commit-files-separately/introduce-index"
 
   # instrut commit new2.txt
-
     - !instruct 
       descriptionId: "level-data/commit-files-separately/stage-second"
       needConfirm: false
@@ -73,6 +74,44 @@
 
     - !illustrate 
       descriptionId: "level-data/commit-files-separately/explain-stage"
+    - !instruct 
+      descriptionId: "level-data/commit-files-separately/commit-second"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ "commit", "-m", "$level-data/commit-files-separately/second-commit-message" ]
+    - !verifyRepo 
+      referenceName: "commit-new2"
+
+  # instruct commit new3.txt and new4.txt
+    - !elaborate 
+      descriptionId: "level-data/commit-files-separately/introduce-commit-multiple"
+    - !instruct 
+      descriptionId: "level-data/commit-files-separately/stage-all"
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ "add", "-A"]
+    - !verifyRepo 
+      referenceName: "stage-new3-and-new4"  
+
+    - !instruct 
+      descriptionId: "level-data/commit-files-separately/commit-remain"
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ "commit", "-m", "$level-data/commit-files-separately/last-commit-message" ]
+    - !verifyRepo 
+      referenceName: "commit-new3-and-new4"
+
+    - !elaborate 
+      descriptionId: "level-data/commit-files-separately/summary"
+
+
 
       
 
