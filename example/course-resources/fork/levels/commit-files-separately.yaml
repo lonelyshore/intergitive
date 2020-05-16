@@ -18,10 +18,10 @@
       actions:
         - !act.writeFile 
           sourceAssetIds:
-            - "level-data/commit-files-separately/empty"
-            - "level-data/commit-files-separately/empty"
-            - "level-data/commit-files-separately/empty"
-            - "level-data/commit-files-separately/empty" 
+            - "$level-data/commit-files-separately/empty"
+            - "$level-data/commit-files-separately/empty"
+            - "$level-data/commit-files-separately/empty"
+            - "$level-data/commit-files-separately/empty" 
           destinationPaths:
             - new1.txt
             - new2.txt
