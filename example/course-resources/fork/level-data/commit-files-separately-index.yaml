@@ -63,7 +63,65 @@ asset_index:
 
       請按下「確認」按鈕來確認${{t/revision}}順利建立  
 
+    explain-separate-commit-by-index: |+2
+      .md
+      恭喜，我們又成功新增了一個${{t/revision}}  
+
+      如果去瀏覽${{t/file-tree}}  
+      你會發現雖然我們剛才在資料夾一口氣新增了四份新檔案，剛才新${{t/revision}}的${{t/file-tree}}裡面只有包含「new1」一個  
+      也就是說，我們可以從複數的檔案變化裡面，只選取一部分來建立${{t/revision}}  
+
+      這件事情 git 如何完成的呢？  
+      實際上它正是透過上個章節最後介紹到的暫存區來達成  
+      請讓我們用下面的圖(四-1)和圖(四-2)來說明這件事情  
+      
+      <div class="side-by-side-container">
+        <div style="float: left;width: 46%;padding: 2%;">
+          <img src="{{images/commi-separately-without-index}}" alt="illustration">
+          <div class="img-title">圖(四-1)</div>  
+        </div>
+        <div style="float: left;width: 46%;padding: 2%;">
+          <img src="{{images/commit-separately-with-index}}" alt="illustration">
+          <div class="img-title">圖(四-2)</div>  
+        </div>
+      </div>  
+
+      為了對照，先讓我們假設**並不存在**暫存區，也就是圖(四-1)所描述的情況  
+      左邊的${{t/work-tree}}下面有一個黃色一個白色的檔案，代表目前新增加的檔案  
+      當我們想要建立一份資料夾快照的時候，快照的對象直接就是${{t/work-tree}}
+      所以，${{t/work-tree}}裡面的白色檔案和黃色檔案同時會被保存進同一個${{t/revision}}  
+
+      相對的，圖(四-2)呈現實際上 git 的情況，存在一個中間的暫存區  
+      左邊的${{t/work-tree}}下面同樣有一白一黃兩個檔案  
+      不一樣的是，${{t/work-tree}}和${{t/repo}}之間多出了一個暫存區  
+
+      當我們建立${{t/repo}}的一個新版本時，內容的來源是來自於暫存區而非${{t/work-tree}}  
+      因為圖(四-2)中暫存區裡只有黃色檔案，所以最後建立的${{t/revision}}只有黃色而沒有白色檔案  
+      實際上，這就正是剛才我們做的事情：從四個新檔案裏面，挑出「new1」放進暫存區，建立${{t/reivion}}  
+
+      總結來說，多出暫存區的效果是，我們可以透過修改它的內容來控制所建立出來${{t/revision}}的內容  
+      想像一下，當我們在工作的資料夾裡面產生了非常多的檔案(例如徹夜趕工所以改了很多東西)  
+      如果這時候想要分批的建立版本快照，我們可以透過分批把檔案放進暫存區裡面來達成  
+      
+      接下來，讓我們繼續藉由提交 new2 的變更來詳細解說如何控制暫存區的內容
+
+    stage-second: |+2
+      .md
+      請按照前面說明的方法，將 `new2` 選入${{st/staged-changes}}  
+      完成之後，請按下「確認」
+
+    explain-stage: |+2
+      .md
+      現在，${{t/gui}}的${{st/changes-tab}}看起來應該像是下圖(五)的樣子  
+
+      ![illustration]({{images/only-new-two-staged}})  
+      <div class="img-title">圖(四)</div>  
+
+      
+
+
     
+
 
 
 # course materials

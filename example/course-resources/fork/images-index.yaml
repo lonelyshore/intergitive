@@ -44,3 +44,4 @@ asset_index:
     stage-new-one-only: commit-files-separately@stage-new-one-only.png
     only-new-one-staged: commit-files-separately@only-new-one-staged.png
     only-commit-new-one: commit-files-separately@only-commit-new-one.png
+    only-new-two-staged: commit-files-separately@only-new-two-staged.png

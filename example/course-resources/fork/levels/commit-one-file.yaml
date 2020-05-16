@@ -36,8 +36,9 @@
       needConfirm: false
     - !dev.needAction 
       actions:
-        - !act.stageAll 
+        - !dev.act.git
           repoSetupName: basic
+          arguments: [ "add", "-A" ]
     - !verifyRepo 
       referenceName: "stage-new"
     
