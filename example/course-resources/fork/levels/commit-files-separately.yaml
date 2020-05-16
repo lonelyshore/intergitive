@@ -23,10 +23,10 @@
             - "$level-data/commit-files-separately/empty"
             - "$level-data/commit-files-separately/empty" 
           destinationPaths:
-            - new1.txt
-            - new2.txt
-            - new3.txt
-            - new4.txt
+            - basic/new1.txt
+            - basic/new2.txt
+            - basic/new3.txt
+            - basic/new4.txt
     - !verifyRepo 
       referenceName: "add-new-files"
 
@@ -90,6 +90,7 @@
       descriptionId: "level-data/commit-files-separately/introduce-commit-multiple"
     - !instruct 
       descriptionId: "level-data/commit-files-separately/stage-all"
+      needConfirm: false
     - !dev.needAction 
       actions:
         - !dev.act.git 
@@ -100,6 +101,7 @@
 
     - !instruct 
       descriptionId: "level-data/commit-files-separately/commit-remain"
+      needConfirm: false
     - !dev.needAction 
       actions:
         - !dev.act.git 

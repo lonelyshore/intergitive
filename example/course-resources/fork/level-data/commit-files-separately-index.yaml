@@ -54,7 +54,7 @@ asset_index:
       接下來，讓我們${{t/commit}}一份${{t/revision}}  
 
       請回想上一節的指示，並參照下圖(三)  
-      將「${{level-data/commit-files-separately/first-commit-message}}」填入紅框圈選範圍  
+      將「`${{level-data/commit-files-separately/first-commit-message}}`」填入紅框圈選範圍  
 
       ![illustration]({{images/fill-commit-message-new-one}})  
       <div class="img-title">圖(三)</div>  
