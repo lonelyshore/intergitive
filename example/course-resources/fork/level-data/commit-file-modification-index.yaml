@@ -1,0 +1,117 @@
+asset_index:
+  infile:
+# course contents
+    intro: |+2
+      .md
+      目前為止，我們學會了如何把**新增**的檔案保存到${{t/repo}}之中  
+      但是在操作檔案的過程中，我們可能會修改甚至刪除檔案  
+      而這些變化，其實都被 git 看在眼裡，我們可以透過 git 把這些操作的結果都保留起來  
+
+      在這一節中，我們將介紹**修改**的檔案和**新增**的檔案之間有甚麼異同  
+
+    modify-file: |+2
+      .md
+      首先，請讓我們先修改一份檔案的內容  
+      請開啟位於「#{{basic}}」的「1」這份檔案  
+
+      開啟之後，應該會注意到目前它的內容是「${{level-data/intro-open-repository/file-1:v2}}」  
+      請將「第2版」的「**2**」改成「**3**」<br>
+      也就是說，將這份檔案的內容改成「${{level-data/commit-file-modification/file-1-v3}}」  
+
+      完成之後，請按下「確認」鍵進行確認  
+
+    view-changes-tab: |+2
+      .md
+      現在，我們已經完成了對檔案的修改  
+      當我們打開${{t/gui}}的${{st/changes-tab}}頁面，應該會看到如下圖(一)的情況
+
+      ![illustration]({{images/unstaged-modified-file-in-changes-tab}})  
+      <div class="img-title">圖(一)</div>  
+
+    intro-icon-diff: |+2
+      .md
+      從上圖的紅框中，我們可以看到被修改的檔案  
+      你或許已經注意到，「被修改的檔案」和「新增的檔案」的圖標略有出入  
+      下圖(二)分別對照了「新增的檔案」和「被修改的檔案」的圖標  
+      下次見到時，我們就可以區分不同狀態的檔案了  
+
+      ![illustration]({{images/compare-new-and-modified-file-status-icon}})  
+      <div class="img-title">圖(二)</div>  
+
+    select-modified-file: |+2
+      .md
+      除了圖標的不同，還有另一件有趣的事情值得介紹  
+      請如下圖(三)紅框圈選範圍所示，使用滑鼠左鍵單點選取「1.txt」  
+
+      ![illustration]({{images/introduce-changes-tab-file-diff}})  
+      <div class="img-title">圖(三)</div>  
+
+    intro-file-diff: |+2
+      .md
+      完成之後，${{t/gui}}將會如上圖右側橘框圈選範圍一樣顯示  
+      而顯示的內容，則是目前選中檔案所經歷的修改  
+      
+      <p class="red-backed inline-txt">紅色底的字樣</p>，代表舊版的內容<br>
+      <p class="green-backed inline-txt ">綠色底的字樣</p>，則代表新版的內容  
+
+      恰如上圖(三)所示  
+      我們會看見我們修改前的檔案內容被以紅底標註(第「2」版)  
+      而新的版本則以綠底標註(第「3」版)  
+      當修改完眾多檔案後，我們可以使用這個功能來確認修改的內容，非常方便～  
+
+      接下來，就讓我們將使用這份修改後的檔案建立一份${{t/revision}}到${{t/repo}}吧  
+
+    stage-modified-file: |+2
+      .md
+      請按照我們熟悉的作法，使用「Stage」按鈕，將「1.txt」的變更核選  
+
+      完成後，請按下「確認」按鈕進行查驗  
+
+    elaborate-stage-modification: |+2
+      .md
+      如同新增檔案，被修改的檔案也可以被加入暫存  
+      下圖(四)說明了當我們核選剛才修改的檔案時，所發生的事情  
+
+      ![illustration]({{images/illustrate-stage-modified-file}})  
+      <div class="img-title">圖(四)</div>  
+
+      上圖依照順序說明了下列的事件：  
+      1. 1.txt 還沒有被修改之前的狀態。我們使用白色的檔案代表修改前的 1.txt  
+         請注意這個時候${{t/work-tree}}與${{t/index}}中都各有一份白色檔案  
+      2. 我們修改了 1.txt。${{t/work-tree}}裡面的白色檔案變成黃色，但是${{t/index}}裡面保持白色檔案  
+      3. 我們核選 1.txt，表示黃色檔案被搬移到${{t/index}}之中  
+
+      接下來，請讓我們繼續完成${{t/commit-s}}這個資料夾${{t/revision}}  
+
+    commit-modified-file: |+2
+      .md
+      請按照之前所學  
+      以「`${{level-data/commit-file-modification/commit-message}}`」作為提交訊息  
+      建立一份新的${{t/revision}}  
+
+      完成後，請按下「確認」按鈕進行確認  
+
+    elaborate-commit-modofied-file: |+2
+      .md
+      恭喜，我們完成了第一個修改完檔案之後建立的資料夾版本紀錄  
+
+      在這裡偷偷地分享一下  
+      其實，如果把不同版本的 1.txt 看成**不同的檔案**，會更容易理解 git 的操作  
+
+      也就是說，當我們修改資料夾中的 1.txt (上面圖(四)的白色檔案)的時候  
+      它等於是變成一份不同的檔案(上面圖(四)的黃色檔案)  
+
+      當我們核選這個修改，就是把這份新檔案從${{t/work-tree}}搬到${{t/index}}，覆蓋掉裡面的舊檔案  
+      最後，我們${{t/commit-s}}了一份${{t/revision}}，表示我們保存了資料夾使用了新版本檔案的紀錄  
+
+    summary: |+2
+      .md
+      最後，讓我們總結一下這個簡短的小節  
+      在這一節中，我們學到了如何將修改的檔案變化，保存到 git 的${{t/repo}}裡面  
+      我們在這一節的開頭還順便地提及了檔案除了新增和修改之外，還有第三個狀態－－**刪除**  
+      在下一節中，我們將學習如何將「檔案的刪除」這一虛無縹緲的狀態保存到${{t/repo}}之中～
+
+# course materials
+    file-1-v3: "1號檔案第3版"
+    commit-message: "修改1號檔案"
+    

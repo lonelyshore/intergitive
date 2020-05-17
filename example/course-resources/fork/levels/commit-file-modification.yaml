@@ -1,0 +1,72 @@
+!level
+  repoVcsSetups:
+    basic:
+      workingPath: basic
+      referenceStoreName: basic-operation
+      checkpointStoreName: basic-operation-checkpoints
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+  # intro & instruct modify new file
+    - !elaborate 
+      descriptionId: "level-data/commit-file-modification/intro"
+    - !instruct 
+      descriptionId: "level-data/commit-file-modification/modify-file"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/commit-file-modification/file-1-v3"
+          destinationPaths:
+            - basic/1.txt
+    - !verifyRepo 
+      referenceName: "change-1-to-v3"
+
+  # intro modified file shown in GUI
+    - !instruct 
+      descriptionId: "level-data/commit-file-modification/view-changes-tab"
+    - !elaborate
+      descriptionId: "level-data/commit-file-modification/intro-icon-diff"
+    - !instruct 
+      descriptionId: "level-data/commit-file-modification/select-modified-file"
+    - !elaborate 
+      descriptionId: "level-data/commit-file-modification/intro-file-diff"
+
+  # explain & instruct stage file modification
+    - !instruct 
+      descriptionId: "level-data/commit-file-modification/stage-modified-file"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ "add", "--", "1.txt" ]
+    - !verifyRepo 
+      referenceName: "stage-1-v3"
+    - !elaborate 
+      descriptionId: "level-data/commit-file-modification/elaborate-stage-modification"
+
+  # explain & instruct commit file modification
+    - !instruct 
+      descriptionId: "level-data/commit-file-modification/commit-modified-file"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ "commit", "-m", "$level-data/commit-file-modification/commit-message" ]
+    - !verifyRepo 
+      referenceName: "commit-1-v3"
+
+    - !elaborate 
+      descriptionId: "level-data/commit-file-modification/elaborate-commit-modofied-file"
+    - !elaborate 
+      descriptionId: "level-data/commit-file-modification/summary"
+
+
+    
+
+
+
+

@@ -234,6 +234,18 @@ img[alt=illustration] {
     vertical-align: middle;
 }
 
+.inline-txt {
+    display: inline;
+}
+
+.red-backed {
+    background-color: rgb(255, 229, 229);
+}
+
+.green-backed {
+    background-color: rgb(226, 253, 227);
+}
+
 [blocked] {
     pointer-events: none;
     opacity: 0.4;
