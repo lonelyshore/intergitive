@@ -34,3 +34,8 @@
           id: "fork-main-commit-files-separately"
           nameKey: "levels/main.commit-files-separately.name"
           configAssetId: "levels/commit-files-separately"
+        - !level 
+          id: "fork-main-commit-file-modification"
+          nameKey: "levels/main.commit-file-modification.name"
+          configAssetId: "levels/commit-file-modification"
+
