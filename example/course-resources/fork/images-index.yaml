@@ -44,8 +44,8 @@ asset_index:
     stage-new-one-only: commit-files-separately@stage-new-one-only.png
     only-new-one-staged: commit-files-separately@only-new-one-staged.png
     fill-commit-message-new-one: commit-files-separately@fill-commit-message-new-one.png
-    commi-separately-without-index: commit-files-separately@commi-separately-without-index.png
+    commit-separately-without-index: commit-files-separately@commit-separately-without-index.png
     commit-separately-with-index: commit-files-separately@commit-separately-with-index.png
-    illustrate-stage-file-to-index: commit-files-separately@illustrate-stage-file-to-index.png
+    illustrate-stage-file-to-index: commit-files-separately@illustrate-stage-file-to-index.gif
     hint-click-stage-all: commit-files-separately@hint-click-stage-all.png
     clicked-stage-all: commit-files-separately@clicked-stage-all.png

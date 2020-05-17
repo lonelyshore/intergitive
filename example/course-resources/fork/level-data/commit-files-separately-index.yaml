@@ -33,18 +33,16 @@ asset_index:
 
     stage-first: |+2
       .md
-      請回想上一節的指示，並參照下圖(二-1)與圖(二-2)的步驟，將 `new1` 選入${{st/staged-changes}}  
+      請回想上一節的指示，並參照下圖(二)與圖(三)的步驟，將 `new1` 選入${{st/staged-changes}}  
 
-      <div class="side-by-side-container">
-        <div style="float: left;width: 46%;padding: 2%;">
-          <img src="{{images/stage-new-one-only}}" alt="illustration">
-          <div class="img-title">圖(二-1)</div>  
-        </div>
-        <div style="float: left;width: 46%;padding: 2%;">
-          <img src="{{images/only-new-one-staged}}" alt="illustration">
-          <div class="img-title">圖(二-2)</div>  
-        </div>
-      </div> 
+      ![illustration]({{images/stage-new-one-only}})  
+      <div class="img-title">圖(二)</div>  
+
+      如上圖所示，請在選擇 new1 之後，按下橘框所圈選的按鈕  
+      成功後，會看到 new1 如紅框圈選移動到下方
+
+      ![illustration]({{images/only-new-one-staged}})  
+      <div class="img-title">圖(三)</div>  
 
       完成後，請按下「確認」按鈕來確認檔案有順利選入
 
@@ -53,11 +51,11 @@ asset_index:
       現在，我們確認 `new1` 處於${{st/staged-changes}}中  
       接下來，讓我們${{t/commit}}一份${{t/revision}}  
 
-      請回想上一節的指示，並參照下圖(三)  
+      請回想上一節的指示，並參照下圖(四)  
       將「`${{level-data/commit-files-separately/first-commit-message}}`」填入紅框圈選範圍  
 
       ![illustration]({{images/fill-commit-message-new-one}})  
-      <div class="img-title">圖(三)</div>  
+      <div class="img-title">圖(四)</div>  
 
       輸入完成後，請按下上圖橘框圈選的「Commit 1 File」按鈕，完成${{t/commit}}的手續  
 
@@ -67,37 +65,37 @@ asset_index:
       .md
       恭喜，我們又成功新增了一個${{t/revision}}  
 
-      如果去瀏覽${{t/file-tree}}  
-      你會發現雖然我們剛才在資料夾一口氣新增了四份新檔案，剛才新${{t/revision}}的${{t/file-tree}}裡面只有包含「new1」一個  
+      如果這個時候去瀏覽${{t/file-tree}}，我們會發現一件事情：  
+      雖然剛才我們在資料夾一口氣新增了四份新檔案，但是新增的${{t/revision}}的${{t/file-tree}}裡面只有包含「new1」一個  
       也就是說，我們可以從複數的檔案變化裡面，只選取一部分來建立${{t/revision}}  
 
       這件事情 git 如何完成的呢？  
-      實際上它正是透過上個章節最後介紹到的暫存區來達成  
-      請讓我們用下面的圖(四-1)和圖(四-2)來說明這件事情  
+      實際上它是透過前一個章節最後介紹到的暫存區來達成  
+      請讓我們用下面的圖(五)和圖(六)來說明這件事情  
       
-      <div class="side-by-side-container">
-        <div style="float: left;width: 46%;padding: 2%;">
-          <img src="{{images/commi-separately-without-index}}" alt="illustration">
-          <div class="img-title">圖(四-1)</div>  
-        </div>
-        <div style="float: left;width: 46%;padding: 2%;">
-          <img src="{{images/commit-separately-with-index}}" alt="illustration">
-          <div class="img-title">圖(四-2)</div>  
-        </div>
-      </div>  
+      ![illustration]({{images/commit-separately-without-index}})  
+      <div class="img-title">圖(五)</div>  
 
-      為了對照，先讓我們假設**並不存在**暫存區，也就是圖(四-1)所描述的情況  
-      左邊的${{t/work-tree}}下面有一個黃色一個白色的檔案，代表目前新增加的檔案  
-      當我們想要建立一份資料夾快照的時候，快照的對象直接就是${{t/work-tree}}
+      為了對照，先讓我們假設**並不存在**暫存區，也就是上圖(五)所描述的情況  
+      左邊的${{t/work-tree}}下面有一個白色一個黃色的檔案，代表目前新增加的檔案  
+
+      當我們想要建立一份資料夾快照的時候，快照的對象直接就是${{t/work-tree}}  
       所以，${{t/work-tree}}裡面的白色檔案和黃色檔案同時會被保存進同一個${{t/revision}}  
+      我們透過圖片右側新增的${{t/revision}}擁有白黃各半的外型來表達這件事情  
 
-      相對的，圖(四-2)呈現實際上 git 的情況，存在一個中間的暫存區  
+      ![illustration]({{images/commit-separately-with-index}})  
+      <div class="img-title">圖(六)</div>  
+
+      相對的，圖(六)呈現實際上 git 的情況，存在一個中間的暫存區  
       左邊的${{t/work-tree}}下面同樣有一白一黃兩個檔案  
       不一樣的是，${{t/work-tree}}和${{t/repo}}之間多出了一個暫存區  
 
       當我們建立${{t/repo}}的一個新版本時，內容的來源是來自於暫存區而非${{t/work-tree}}  
-      因為圖(四-2)中暫存區裡只有黃色檔案，所以最後建立的${{t/revision}}只有黃色而沒有白色檔案  
-      實際上，這就正是剛才我們做的事情：從四個新檔案裏面，挑出「new1」放進暫存區，建立${{t/revision}}  
+      因為圖(六)中暫存區裡只有白色檔案，最後建立的${{t/revision}}只有白色而沒有白色檔案  
+      我們賦予新增的${{t/revision}}白色的外觀來代表這個事實  
+
+      實際上，圖(六)所發生的就正是剛才我們做的事情：  
+      從四個新檔案裏面，挑出「new1」放進暫存區，建立${{t/revision}}  
 
     introduce-index: |+2
       .md
@@ -105,13 +103,12 @@ asset_index:
       想像一下，當我們在工作的資料夾裡面產生了非常多的檔案(例如徹夜趕工所以改了很多東西)  
       如果這時候想要分批的建立版本快照，我們可以透過分批把檔案放進暫存區裡面來達成  
 
-      因為暫存區有這樣重要的功能，它也有一個正式的名字
-      那就是是**${{t/index-f}}**  
+      因為暫存區有這樣重要的功能，它也有一個正式的名字－－**${{t/index-f}}**  
 
       在英文的文本中我們會見到幾個其它的用詞被交替使用，例如：cache, stage  
-      在往後的章節中，我們統一使用**${{t/index}}**
+      為了避免混淆，在往後的章節中，我們統一使用**${{t/index}}**  
       
-      接下來，讓我們繼續藉由提交 new2 的變更來詳細解說如何控制**${{t/index}}**的內容
+      接下來，讓我們繼續藉由將 new2 保存到${{t/repo}}來詳細解說如何控制**${{t/index}}**的內容
 
     stage-second: |+2
       .md
@@ -126,17 +123,17 @@ asset_index:
 
       我們是怎麼把 new2 放入${{t/index}}的呢？就是透過剛才操作的按鈕，**${{t/stage-f}}**  
       因此，我們知道${{t/stage}}的意思，就是把檔案從${{t/work-tree}}放入${{t/index}}  
-      下圖(五)說明了這一操作  
+      下面用動態圖圖(七)說明了這一操作  
 
       ![illustration]({{images/illustrate-stage-file-to-index}})  
-      <div class="img-title">圖(五)</div>  
+      <div class="img-title">圖(七)</div>  
 
       這個操作完成後，在${{t/gui}}上會看到的現象，就是 new2 出現在${{st/staged-changes}}之中  
       恩...不過為什麼我們說檔案被放進了${{t/index-f}}中，${{t/gui}}卻用${{st/staged-changes}}來表現呢？  
 
       其實這兩者不完全相同，但是又互相有關聯  
       關於後者的意涵，我們會在之後解釋  
-      目前我們只要知道${{t/stage}}的操作同時代表兩件事：  
+      目前我們只要知道${{t/stage}}j這一操作同時代表兩件事：  
       1. 把檔案從${{t/work-tree}}搬到${{t/index}}之中  
       2. 把檔案從${{t/unstaged-f}}的狀態，變成${{t/staged-f}}
 
@@ -145,7 +142,7 @@ asset_index:
     commit-second: |+2
       .md
       請按照先前說明過的方法  
-      輸入「`${{$level-data/commit-files-separately/second-commit-message}}`」作為提交訊息  
+      輸入「`${{level-data/commit-files-separately/second-commit-message}}`」作為提交訊息  
       然後提交${{t/revision}}  
 
       完成之後，請按下「確認」按鈕進行檢查  
@@ -161,20 +158,16 @@ asset_index:
     stage-all: |+2
       .md
       請切換到${{t/gui}}的${{st/changes-tab}}  
-      然後，如下圖(六-1)所示，按下紅框所圈選的，用來核選全部檔案的按鈕
+      然後，如下圖(八)，按下紅框所圈選的，用來一次核選全部檔案的按鈕
 
-      <div class="side-by-side-container">
-        <div style="float: left;width: 46%;padding: 2%;">
-          <img src="{{images/hint-click-stage-all}}" alt="illustration">
-          <div class="img-title">圖(六-1)</div>  
-        </div>
-        <div style="float: left;width: 46%;padding: 2%;">
-          <img src="{{images/clicked-stage-all}}" alt="illustration">
-          <div class="img-title">圖(六-2)</div>  
-        </div>
-      </div>  
+      ![illustration]({{images/hint-click-stage-all}})  
+      <div class="img-title">圖(八)</div>  
 
-      按下之後，${{t/gui}}應該會變成如上圖(六-2)的狀態  
+      按下之後，${{t/gui}}應該會變成如下圖(九)的狀態  
+
+      ![illustration]({{images/clicked-stage-all}})  
+      <div class="img-title">圖(九)</div>  
+
       從紅框圈選處，我們可以觀察到 new3 和 new4 兩個檔案都被列為${{t/staged}}  
       同時代表它們都被放入了${{t/index}}中
       
@@ -183,18 +176,19 @@ asset_index:
 
     commit-remain: |+2
       .md
-      請將「${{$level-data/commit-files-separately/last-commit-message}}」作為提交訊息輸入  
+      請將「${{level-data/commit-files-separately/last-commit-message}}」作為提交訊息輸入  
       然後${{t/commit-s}}${{t/revision}}到${{t/repo}}  
 
       完成之後，請按下「確認」按鈕進行檢查  
 
     summary: |+2
       .md
-      恭喜，我們完成了一次同時把兩個檔案加入到一份新${{t/revision}}的新壯舉  
+      恭喜，我們完成了一次同時把兩個檔案加入到一份新${{t/revision}}的新壯舉！！  
 
-      回顧一下這一個章節，我們學會了${{t/index}}可以用來分批建立${{t/revision}}  
-      也認識了「${{t/stage}}」這個動作可以把檔案從${{t/work-tree}}搬入${{t/index}}之中  
-      最後，還學到了可以一次將所有的檔案都搬入${{t/index}}的絕技  
+      回顧一下這一個章節，我們學會了
+      - 「${{t/index}}」可以用來分批建立${{t/revision}}  
+      - 也認識了「${{t/stage}}」這個動作可以把檔案從${{t/work-tree}}搬入${{t/index}}之中  
+      - 最後，還學到了可以一次將所有的檔案都搬入${{t/index}}的絕技  
 
       但是，到目前為止，我們都只知道如何保存新增加的檔案到${{t/repo}}之中  
       如果我們想要修改檔案又應該如何處理呢？請讓我們往下一個章節繼續看下去...
