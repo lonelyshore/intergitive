@@ -54,4 +54,4 @@ asset_index:
     unstaged-modified-file-in-changes-tab: commit-file-modification@unstaged-modified-file-in-changes-tab.png
     compare-new-and-modified-file-status-icon: commit-file-modification@compare-new-and-modified-file-status-icon.png
     introduce-changes-tab-file-diff: commit-file-modification@introduce-changes-tab-file-diff.png
-    illustrate-stage-modified-file: commit-file-modification@illustrate-stage-modified-file.png
+    illustrate-stage-modified-file: commit-file-modification@illustrate-stage-modified-file.gif
