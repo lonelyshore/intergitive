@@ -9,3 +9,4 @@ asset_index:
     unstaged-changes: " Unstaged Changes (未核選變更)"
     staged-changes: " Staged Changes (核選的變更)"
     act-stage: " Stage (核選)"
+    act-unstage: " Unstage (取消核選)"

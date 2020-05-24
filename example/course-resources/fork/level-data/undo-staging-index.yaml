@@ -22,7 +22,110 @@ asset_index:
       請使用下面的「${{c/dirty-work-tree}}」的步驟  
       按下「執行」按鈕，來自動將預計的檔案修改加入到目標的資料夾中(`#{{basic}}`)  
 
+    stage-all: |+2
+      .md
+      透過剛剛的步驟，目前的資料夾中有一個新增的檔案「新檔案五」以及被修改的檔案  
+      請將這些改變全部${{t/stage}}  
+
+      完成後，請按下「執行」進行檢查  
+
+    unstage: |+2
+      .md
+      現在，使用${{t/gui}}開啟位於「`#{{basic}}`」的資料夾  
+      並且開啟${{st/changes-tab}}  
+
+      我們會看到如下圖(一)紅框圈選範圍所示  
+      修改的「3.txt」和新增的「不想要.txt」都在${{t/staged}}的區域中  
+
+      ![illustration]({{images/staged-one-dirty-one-unwanted}})  
+      <div class="img-title">圖(一)</div>  
+
+      正如「不想要」這個名字所揭示的  
+      我們其實並不想要這個檔案被加到現在準備新增的${{t/revision}}中  
+      
+      我們可以按照下圖(二)的指示  
+      選中「不想要」，然後按下紅框圈選的「${{st/act-unstage}}」按鈕  
+      把不想要的檔案變更從${{t/staged}}中移除  
+
+      ![illustration]({{images/instruct-unstage-unwanted}})  
+      <div class="img-title">圖(二)</div>  
+
+      完成後，請按下「執行」按鈕進行檢查  
+
+    confirm-unstaged: |+2
+      .md
+      我們成功的把不想要的檔案給從${{t/staged}}裡面移除了  
+      現在打開${{st/changes-tab}}應該會看見如下圖的情況  
+
+      ![illustration]({{images/illustrate-unstaged-unwanted}})  
+      <div class="img-title">圖(三)</div>  
+
+      觀察上圖紅框和橘框圈選的部分  
+      我們會發現「不想要」這個檔案已經從${{t/staged}}變成${{t/unstaged}}  
+      按照慣例，讓我們稍微探究一下背後究竟發生甚麼事情吧  
+
+    illustrate-unstage: |+2
+      .md
+      經過先前的章節的洗禮，我們其實大概能猜到剛才的操作發生了甚麼事情  
+      因為${{t/staged}}是${{t/index}}和${{t/head}}之間的差異  
+      ${{t/unstage}}要做的，應該就是要減小這兩者之間的差異  
+
+      下面的圖(四)描繪的是在${{t/unstage}}之前的情況  
+
+      ![illustration]({{images/concept-before-unstage-unwanted}})  
+      <div class="img-title">圖(四)</div>  
+
+      從上圖可以看到  
+      在${{t/work-tree}}還有${{t/index}}之中有一黃一紅兩個檔案  
+      我們用黃色代表修改的檔案，而紅色代表**不想要**的檔案  
+      而在${{t/head}}中只有一個白色的檔案，代表黃色檔案的前身  
+      為了簡化，我們忽略了所有其它沒有被修改的檔案  
+
+      當我們${{t/unstage}}「不想要」的檔案  
+      我們希望${{t/index}}中紅色檔案的狀態能夠變得和${{t/head}}一樣  
+      也就是，我們希望它從${{t/index}}中消失  
+      所以，實際上發生的事情是像下面圖(五)所描述的一樣  
+
+      ![illustration]({{images/concept-after-unstage-unwanted}})  
+      <div class="img-title">圖(五)</div>  
+
+      從上圖可以看到，我們從${{t/head}}抓取了紅色檔案的狀態  
+      因為紅色檔案實際上不存在於${{t/head}}裡，所以${{t/index}}就把它給刪除了  
+
+      接下來，讓我們把剩下的一個修改也${{t/unstage}}吧～
+
+    unstage-more: |+2
+      .md
+      請按照剛才所教的方法，將「3.txt」的修改也從${{t/staged}}中移到${{t/unstaged}}  
+
+      完成後，請按下「執行」進行檢查  
+
+    work-tree-intact: |+2
+      .md
+      恭喜，現在我們已經充分掌握如何${{t/unstage}}  
+
+      這時我們忽然想起有件事情可能令人擔憂：  
+      萬一我突然又想要把這些檔案加回到${{t/index}}並且${{t/commit-s}}${{t/revision}}呢？  
+
+      不用擔心！  
+      正如剛才介紹的  
+      ${{t/unstage}}只會牽涉到把${{t/head}}的狀態複製到${{t/index}}之中  
+      並不會影響實際資料夾中的狀態  
+
+      我們可以打開位於「`#{{basic}}`」確認「不想要.txt」這份檔案使否仍然存在，來加以驗證  
+
+    summary: |+2
+      .md
+      在這個章節中  
+      我們學習了如何${{t/unstage}}檔案  
+      並且也了解了它背後的原理，直到它不會影響到${{t/work-tree}}中的檔案  
+
+      但是萬一我們真的想要徹底地捨棄所有的修改，回歸原點呢？  
+      別著急，我們將在下一個章節裡面慢慢介紹如何做到！  
+
 # course materials
-    dirty-1: 
+    modify-3: '不想要的修改'
+    unwanted: 'blahblahblah'
+    unwanted-path: 'basic/不想要.txt'
 
       

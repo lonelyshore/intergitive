@@ -12,15 +12,62 @@
       descriptionId: "level-data/undo-staging/intro"
     - !instruct 
       descriptionId: "level-data/undo-staging/add-files"
+      needConfirm: false
     - !execute 
       descriptionId: "c/dirty-work-tree"
       actions:
         - !act.writeFile 
           sourceAssetIds:
-            - "$level-data/undo-staging/dirty-1"
-            - "$level-data/undo-staging/dirty-2"
+            - "$level-data/undo-staging/modify-3"
+            - "$level-data/undo-staging/unwanted"
           destinationPaths:
-            - null
+            - basic/3.txt
+            - "$level-data/undo-staging/unwanted-path"
+    - !instruct 
+      descriptionId: "level-data/undo-staging/stage-all"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ "add", "-A" ]
+    - !verifyRepo 
+      referenceName: "undo-staging-stage-all"
+  
+  # intro unstage
+    - !instruct
+      descriptionId: "level-data/undo-staging/unstage"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ "reset", "--mixed", "--", "$level-data/undo-staging/unwanted-path" ]
+    - !verifyRepo 
+      referenceName: "undo-staging-unstage-unwanted"
+    - !elaborate 
+      descriptionId: "level-data/undo-staging/confirm-unstaged"
+    - !illustrate 
+      descriptionId: "level-data/undo-staging/illustrate-unstage"
+
+  # more unstage
+    - !instruct 
+      descriptionId: "level-data/undo-staging/unstage-more"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ "reset", "--mixed", "--", "3.txt" ]
+    - !verifyRepo 
+      referenceName: "undo-staging-unstage-more"
+
+    - !elaborate 
+      descriptionId: "level-data/undo-staging/work-tree-intact"
+    - !elaborate 
+      descriptionId: "level-data/undo-staging/summary"
+
+
 
     
 
