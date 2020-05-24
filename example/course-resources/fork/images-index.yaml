@@ -61,3 +61,5 @@ asset_index:
     list-three-basic-file-icons: commit-file-deletion@list-three-basic-file-icons.png
     concept-show-file-deleted-from-work-tree: commit-file-deletion@concept-show-file-deleted-from-work-tree.png
     concept-show-unstaged-files: commit-file-deletion@concept-show-unstaged-files.png
+    staged-deleted-file-in-changes-tab: commit-file-deletion@staged-deleted-file-in-changes-tab.png
+    concept-show-staged-files: commit-file-deletion@concept-show-staged-files.png

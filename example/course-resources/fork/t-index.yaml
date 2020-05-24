@@ -30,5 +30,7 @@ asset_index:
     staged: "已核選的變更"
     stage-f: "核選(stage)"
     stage: "核選"
+    head-f: "工作中版本(head)"
+    head: "工作中版本"
     index-f: "變更暫存(index)"
     index: "變更暫存"

@@ -40,8 +40,28 @@
       referenceName: "stage-deleted-1"
 
   # introduce staged list
-    - !elaborate 
+    - !illustrate  
       descriptionId: "level-data/commit-file-deletion/explain-staged-files"
+    - !elaborate 
+      descriptionId: "level-data/commit-file-deletion/more-on-head"
+  
+  # commit
+    - !instruct 
+      descriptionId: "level-data/commit-file-deletion/commit"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ "commit", "-m", "$level-data/commit-file-deletion/commit-msg"]
+    - !verifyRepo 
+      referenceName: "commit-delete-1"
+
+  # summary
+    - !elaborate 
+      descriptionId: "level-data/commit-file-deletion/warn-deleted-still-saved"
+    - !elaborate 
+      descriptionId: "level-data/commit-file-deletion/summary"
 
     
     
