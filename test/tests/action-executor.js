@@ -121,7 +121,7 @@ describe('Action Executor #core', function() {
             return fs.remove(utils.PLAYGROUND_PATH);
         });
 
-        describe('Write File', function() {
+        describe.only('Write File', function() {
 
             const appendFolderName = function(fileSubPaths, folderName) {
                 let ret = [];
@@ -211,9 +211,47 @@ describe('Action Executor #core', function() {
                 .should.eventually.equal(true);               
             });
 
+            it('creates folder', function() {
+                let targets = ['sub/file'];
+                let keys = ['$inFile1'];
+                let action = new actionTypes.WriteFileAction(
+                    keys,
+                    targets
+                );
+
+                return action.executeBy(actionExecutor)
+                .then(() => {
+                    return allFilesHasContents(
+                        utils.PLAYGROUND_PATH,
+                        targets,
+                        ['inFile1 raw content']
+                    );
+                })
+                .should.eventually.equal(true);
+            });
+
+            it('writes to translated path', function() {
+                let targets = ['$write-file/translated-path'];
+                let keys = ['$write-file/inFile1'];
+                let action = new actionTypes.WriteFileAction(
+                    keys,
+                    targets
+                );
+
+                return action.executeBy(actionExecutor)
+                .then(() => {
+                    return allFilesHasContents(
+                        utils.PLAYGROUND_PATH,
+                        ['神秘的路徑.txt'],
+                        ['inFile1 raw content']
+                    );
+                })
+                .should.eventually.equal(true);
+            });
+
             it('files not overwritting', function() {
                 
-                let targets = ['manyFiles1', 'manyFiles2']
+                let targets = ['manyFiles1', 'manyFiles2'];
                 let keys = appendFolderName(targets, 'write-file');
                 
                 let action = new actionTypes.WriteFileAction(
@@ -336,7 +374,7 @@ describe('Action Executor #core', function() {
                         ]);
                 })
                 .should.eventually.deep.equal([true, true]);
-            })
+            });
 
             it('source not exist should fail', function() {
                 

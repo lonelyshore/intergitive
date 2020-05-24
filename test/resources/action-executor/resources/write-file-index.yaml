@@ -2,6 +2,7 @@ asset_index:
   infile:
     inFile1: 'inFile1 raw content'
     inFile2: 'inFile2 raw content'
+    translated-path: '神秘的路徑.txt'
   ondisk:
     manyFiles1: "many-files-1.txt"
     manyFiles2: "many-files-2.txt"
