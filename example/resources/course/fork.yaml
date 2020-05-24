@@ -42,4 +42,8 @@
           id: "fork-main-commit-file-deletion"
           nameKey: "levels/main.commit-file-deletion.name"
           configAssetId: "levels/commit-file-deletion"
+        - !level 
+          id: "form-main-undo-staging"
+          nameKey: "levels/main.undo-staging.name"
+          configAssetId: "levels/undo-staging"
 

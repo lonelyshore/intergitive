@@ -1,3 +1,4 @@
+# "t" stands for "term". This file provides git terminology translations.
 asset_index:
   infile:
     checkout-rev: "切換版本"

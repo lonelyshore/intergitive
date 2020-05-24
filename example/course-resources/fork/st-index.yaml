@@ -1,3 +1,4 @@
+# "st" stands for "specific term". This file provides GUI specific terminology translations.
 asset_index:
   infile:
     open-in: "Open in (以...開啟)"

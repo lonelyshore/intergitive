@@ -1,0 +1,4 @@
+# "c" means "component". This file provides translations for course components
+asset_index:
+  infile:
+    dirty-work-tree: "增加檔案變更"

@@ -1,0 +1,33 @@
+!level
+  repoVcsSetups:
+    basic:
+      workingPath: basic
+      referenceStoreName: basic-operation
+      checkpointStoreName: basic-operation-checkpoints
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+  # intro & instruct add files
+    - !elaborate 
+      descriptionId: "level-data/undo-staging/intro"
+    - !instruct 
+      descriptionId: "level-data/undo-staging/add-files"
+    - !execute 
+      descriptionId: "c/dirty-work-tree"
+      actions:
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/undo-staging/dirty-1"
+            - "$level-data/undo-staging/dirty-2"
+          destinationPaths:
+            - null
+
+    
+
+
+
+    
+
+
+
+

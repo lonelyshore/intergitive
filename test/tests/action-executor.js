@@ -209,7 +209,7 @@ describe('Action Executor #core', function() {
                     );
                 })
                 .should.eventually.equal(true);               
-            })
+            });
 
             it('files not overwritting', function() {
                 
