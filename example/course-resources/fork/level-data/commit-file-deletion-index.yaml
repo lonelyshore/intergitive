@@ -22,11 +22,11 @@ asset_index:
       在核選前，讓我們先觀察一下${{t/gui}}的${{st/changes-tab}}吧  
 
       請使用${{t/gui}}開啟位於「`#{basic}`」的資料夾  
-      然後切換到${{t/changes-tab}}  
+      然後切換到${{st/changes-tab}}  
 
     introduce-deletion-mark: |+2
       .md
-      開啟${{t/changes-tab}}之後，我們會看到如下圖(一)的頁面  
+      開啟${{st/changes-tab}}之後，我們會看到如下圖(一)的頁面  
 
       ![illustration]({{images/unstaged-deleted-file-in-changes-tab}})  
       <div class="img-title">圖(一)</div>  
@@ -94,7 +94,7 @@ asset_index:
 
     explain-staged-files: |+2
       .md
-      現在，如下圖紅框圈選範圍所示，被刪除的「1.txt」出現在了${{t/staged-changes}}中  
+      現在，如下圖紅框圈選範圍所示，被刪除的「1.txt」出現在了${{st/staged-changes}}中  
       
       ![illustration]({{images/staged-deleted-file-in-changes-tab}})  
       <div class="img-title">圖(六)</div>  
