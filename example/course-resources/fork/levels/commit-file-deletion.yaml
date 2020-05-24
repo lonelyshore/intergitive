@@ -1,0 +1,55 @@
+!level
+  repoVcsSetups:
+    basic:
+      workingPath: basic
+      referenceStoreName: basic-operation
+      checkpointStoreName: basic-operation-checkpoints
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+  # intro & instruct delete file
+    - !elaborate 
+      descriptionId: "level-data/commit-file-deletion/intro"
+    - !instruct 
+      descriptionId: "level-data/commit-file-deletion/delete-one"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !act.removeFile 
+          targetPaths:
+            - basic/1.txt
+    - !verifyRepo 
+      referenceName: "delete-1"
+
+  # introduce unstaged list
+    - !instruct  
+      descriptionId: "level-data/commit-file-deletion/view-changes-tab"
+    - !elaborate 
+      descriptionId: "level-data/commit-file-deletion/introduce-deletion-mark"
+    - !illustrate 
+      descriptionId: "level-data/commit-file-deletion/explain-unstaged-files"
+    - !instruct 
+      descriptionId: "level-data/commit-file-deletion/stage-deleted"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ "add", "--", "1.txt" ]
+    - !verifyRepo 
+      referenceName: "stage-deleted-1"
+
+  # introduce staged list
+    - !elaborate 
+      descriptionId: "level-data/commit-file-deletion/explain-staged-files"
+
+    
+    
+
+
+
+    
+
+
+
+

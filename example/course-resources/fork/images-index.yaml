@@ -55,3 +55,9 @@ asset_index:
     compare-new-and-modified-file-status-icon: commit-file-modification@compare-new-and-modified-file-status-icon.png
     introduce-changes-tab-file-diff: commit-file-modification@introduce-changes-tab-file-diff.png
     illustrate-stage-modified-file: commit-file-modification@illustrate-stage-modified-file.gif
+
+# commit-file-deletion
+    unstaged-deleted-file-in-changes-tab: commit-file-deletion@unstaged-deleted-file-in-changes-tab.png
+    list-three-basic-file-icons: commit-file-deletion@list-three-basic-file-icons.png
+    concept-show-file-deleted-from-work-tree: commit-file-deletion@concept-show-file-deleted-from-work-tree.png
+    concept-show-unstaged-files: commit-file-deletion@concept-show-unstaged-files.png

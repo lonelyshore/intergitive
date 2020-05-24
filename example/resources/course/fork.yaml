@@ -38,4 +38,8 @@
           id: "fork-main-commit-file-modification"
           nameKey: "levels/main.commit-file-modification.name"
           configAssetId: "levels/commit-file-modification"
+        - !level 
+          id: "fork-main-commit-file-deletion"
+          nameKey: "levels/main.commit-file-deletion.name"
+          configAssetId: "levels/commit-file-deletion"
 

@@ -34,6 +34,10 @@
   - name: folder-open-green
     source: Openclipart
     url: https://publicdomainvectors.org/en/free-clipart/Opening-green-directory/59469.html
+  - name: file-delete-icon
+    source: Openclipart
+    url: https://publicdomainvectors.org/en/free-clipart/Grayscale-delete-file-icon-vector-clip-art/19860.html
+
 - path: example/course-resources/fork/level-data/assets/sound
   - name: bird.mp3
     source: freesound.org

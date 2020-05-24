@@ -15,6 +15,7 @@ asset_index:
     main.commit-one-file.name: "2-1 節：快照一個檔案"
     main.commit-files-separately.name: "2-2 節：分批快照檔案"
     main.commit-file-modification.name: "2-3 節：快照檔案修改"
+    main.commit-file-deletion.name: "2-4 節：快照檔案刪除"
     
   ondisk:
   # level configs of section one: intro
@@ -27,4 +28,5 @@ asset_index:
     commit-one-file: "commit-one-file.yaml"
     commit-files-separately: "commit-files-separately.yaml"
     commit-file-modification: "commit-file-modification.yaml"
+    commit-file-deletion: "commit-file-deletion.yaml"
     

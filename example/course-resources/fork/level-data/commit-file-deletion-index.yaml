@@ -1,0 +1,114 @@
+asset_index:
+  infile:
+# course contents
+    intro: |+2
+      .md
+      正如同前一個章節最後預告的，這一節我們將要嘗試把「資料夾刪除檔案之後」的狀態保存  
+      雖然大體上的操作跟之前幾個章節其實沒有甚麼差別  
+      但是藉由「被刪除的檔案」，可以促使我們反思並發現一些有趣的事實  
+      就讓我們來試試看吧～  
+
+    delete-one: |+2
+      .md
+      首先，我們要先從資料夾中找出一個可憐的犧牲品來刪除  
+      請使用檔案管理員開啟位於「`#{basic}`」的資料夾  
+      然後刪除其中的「1」這個文字文件  
+
+      完成後，請按下「執行」來進行檢查
+
+    view-changes-tab: |+2
+      .md
+      在把檔案刪除後，按照慣例就是要將這個變化${{t/stage}}  
+      在核選前，讓我們先觀察一下${{t/gui}}的${{st/changes-tab}}吧  
+
+      請使用${{t/gui}}開啟位於「`#{basic}`」的資料夾  
+      然後切換到${{t/changes-tab}}  
+
+    introduce-deletion-mark: |+2
+      .md
+      開啟${{t/changes-tab}}之後，我們會看到如下圖(一)的頁面  
+
+      ![illustration]({{images/unstaged-deleted-file-in-changes-tab}})  
+      <div class="img-title">圖(一)</div>  
+
+      眼尖的人會發現，紅框圈選的區塊中又出現了以前沒見過的紅色圖標標示出被刪除的檔案  
+      沒錯，既新增與修改兩種狀態後，${{t/gui}}的介面會使用不一樣的圖標標記被刪除的檔案  
+      結合之前見過的兩種圖標，我們這就收集到了三種圖標  
+
+      下面的圖(二)整理了目前所見到的三個圖標以及對應的檔案狀態：  
+
+      ![illustration]({{images/list-three-basic-file-icons}})  
+      <div class="img-title">圖(二)</div>  
+
+    explain-unstaged-files: |+2
+      .md
+      現在讓我們想一件有趣的事情：  
+      在我們把「1」這個檔案從資料夾之中刪除之後 git 是如何知道「1」曾經存在過，並且把它列在${{t/unstaged}}中的呢？  
+      它都已經被刪除了！  
+
+      為了解答這個問題，讓我們看一下下面的圖(三)
+
+      ![illustration]({{images/concept-show-file-deleted-from-work-tree}})  
+      <div class="img-title">圖(三)</div>  
+
+      圖(三)顯示了當我們把「1」從資料夾刪除之後的情況  
+      按照慣例，圖片最左邊的${{t/work-tree}}對應到資料夾中的現況  
+      我們用灰色並且帶上紅色「-」號的檔案符號代表被刪除的檔案  
+      然後多個黃色文件圖示重疊來代表資料夾中的其它檔案  
+
+      接下來讓我們觀察圖片中間的${{t/index}}  
+      之前提到，${{t/index}}就是${{t/work-tree}}的複製品  
+      而在現在這個時間點，它所紀錄的資料夾內容與${{t/work-tree}}略有不同：  
+      在${{t/work-tree}}裡面已經被刪除的檔案仍然還存在於${{t/index}}之中  
+      我們用白色文件圖示來代表它  
+
+      也就是說  
+      正如新增檔案和修改檔案之後，${{t/work-tree}}的狀態會和${{t/index}}出現落差一樣  
+      刪除檔案也會出現同樣的情況  
+      而 git 正是透過這個落差，來察覺到我們從資料夾之中刪去了一個檔案，或是任何其它的修改  
+
+      為了方便使用者觀察這個落差，git 會如下圖(四)一樣整理出一個清單  
+
+      ![illustration]({{images/concept-show-unstaged-files}})  
+      <div class="img-title">圖(四)</div>  
+
+      從上圖中，可以看到在${{t/work-tree}}和${{t/index}}之間出現了**${{t/unstaged-f}}**  
+      裡面的內容，正好就是被我們刪除的檔案  
+      而其它所有沒有修改的檔案，就不會出現在這個列表之中  
+
+      正如它的名字一樣  
+      這個清單列舉出來的是還沒被${{t/stage}}到${{t/index}}的變化  
+      這個概念上的清單，對應到${{t/gui}}之中，就是下圖用紅框圈選出來的${{st/unstaged-changes}}  
+
+      ![illustration]({{images/unstaged-deleted-file-in-changes-tab}})  
+      <div class="img-title">圖(五) (同圖(一))</div>  
+
+      現在，我們終於了解${{t/unstaged}}和${{t/index}}之間的微妙關係了：  
+      它列舉了所有可以從${{t/work-tree}}${{t/stage}}進入${{t/index}}的檔案變化  
+      接下來，就讓我們繼續將被刪除的檔案${{t/commit-s}}${{t/revision}}到${{t/repo}}中保存  
+      
+    stage-deleted: |+2
+      .md
+      請按照之前所學，將「1.txt」的刪除${{t/stage}}  
+      完成後，請按下「執行」進行檢查  
+
+    explain-staged-files: |+2
+      .md
+      現在，如下圖紅框圈選範圍所示，被刪除的「1.txt」出現在了${{t/staged-changes}}中  
+      
+      ![illustration]({{images/staged-deleted-file-in-changes-tab}})  
+      <div class="img-title">圖(六)</div>  
+
+      正如${{t/unstaged}}是${{t/work-tree}}與${{t/index}}的差異  
+      我們使用**${{t/staged-f}}**來稱呼${{t/index}}與${{t/repo}}的差異...嗯？  
+
+      我們回想一下，${{t/repo}}是用來稱呼 git 存放保留下來的**眾多**過往資料夾版本的地方  
+      所以，裡面我們可以想像裡面擺放了非常多份過往資料夾的複製品  
+      那麼，${{t/staged}}具體來說是${{t/index}}和**哪一份**複製品的差異呢？  
+
+      
+      
+
+
+
+# course materials
