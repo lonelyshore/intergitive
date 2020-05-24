@@ -213,7 +213,7 @@ describe('Action Executor #core', function() {
 
             it('creates folder', function() {
                 let targets = ['sub/file'];
-                let keys = ['$inFile1'];
+                let keys = ['$write-file/inFile1'];
                 let action = new actionTypes.WriteFileAction(
                     keys,
                     targets
