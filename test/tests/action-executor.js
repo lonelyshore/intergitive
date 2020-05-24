@@ -121,7 +121,7 @@ describe('Action Executor #core', function() {
             return fs.remove(utils.PLAYGROUND_PATH);
         });
 
-        describe.only('Write File', function() {
+        describe('Write File', function() {
 
             const appendFolderName = function(fileSubPaths, folderName) {
                 let ret = [];
