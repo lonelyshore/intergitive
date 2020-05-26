@@ -42,7 +42,7 @@
       actions:
         - !dev.act.git 
           repoSetupName: basic
-          arguments: [ "reset", "--mixed", "--", "$level-data/undo-staging/unwanted-path" ]
+          arguments: [ "reset", "--", "$level-data/undo-staging/unwanted-path-in-basic" ]
     - !verifyRepo 
       referenceName: "undo-staging-unstage-unwanted"
     - !elaborate 
@@ -58,7 +58,7 @@
       actions:
         - !dev.act.git 
           repoSetupName: basic
-          arguments: [ "reset", "--mixed", "--", "3.txt" ]
+          arguments: [ "reset", "--", "3.txt" ]
     - !verifyRepo 
       referenceName: "undo-staging-unstage-more"
 

@@ -3,8 +3,7 @@ asset_index:
 # course contents
     intro: |+2
       .md
-      在前一節  
-      我們預告了將要把目前在這一章學到的「建立${{t/revision}}」的流程逆轉  
+      在前一節，我們預告了將要把目前在這一章學到的「建立${{t/revision}}」的流程逆轉  
       在這一節，我們將先學習如何把「${{t/stage}}」所造成的${{t/index}}變化給復原  
 
       就讓我們按照下列步驟進行來一探究竟吧～
@@ -25,16 +24,15 @@ asset_index:
     stage-all: |+2
       .md
       透過剛剛的步驟，目前的資料夾中有一個新增的檔案「新檔案五」以及被修改的檔案  
-      請將這些改變全部${{t/stage}}  
+
+      現在，請使用${{t/gui}}開啟位於「`#{{basic}}`」的資料夾，並且開啟${{st/changes-tab}}  
+      將這些改變全部${{t/stage}}，加入${{t/staged}}名單  
 
       完成後，請按下「執行」進行檢查  
 
     unstage: |+2
       .md
-      現在，使用${{t/gui}}開啟位於「`#{{basic}}`」的資料夾  
-      並且開啟${{st/changes-tab}}  
-
-      我們會看到如下圖(一)紅框圈選範圍所示  
+      現在，我們會看到如下圖(一)紅框圈選範圍所示  
       修改的「3.txt」和新增的「不想要.txt」都在${{t/staged}}的區域中  
 
       ![illustration]({{images/staged-one-dirty-one-unwanted}})  
@@ -127,5 +125,6 @@ asset_index:
     modify-3: '不想要的修改'
     unwanted: 'blahblahblah'
     unwanted-path: 'basic/不想要.txt'
+    unwanted-path-in-basic: '不想要.txt'
 
       
