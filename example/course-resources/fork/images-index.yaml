@@ -70,3 +70,7 @@ asset_index:
     illustrate-unstaged-unwanted: undo-staging@illustrate-unstaged-unwanted.png
     concept-before-unstage-unwanted: undo-staging@concept-before-unstage-unwanted.png
     concept-after-unstage-unwanted: undo-staging@concept-after-unstage-unwanted.png
+
+# discard-changes
+    instruct-invoke-discard-changes-modal: discard-changes@instruct-invoke-discard-changes-modal.png
+    confirm-discard-changes-modal: discard-changes@confirm-discard-changes-modal.png

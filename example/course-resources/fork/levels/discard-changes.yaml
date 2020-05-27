@@ -1,0 +1,26 @@
+!level
+  repoVcsSetups:
+    basic:
+      workingPath: basic
+      referenceStoreName: basic-operation
+      checkpointStoreName: basic-operation-checkpoints
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+  # intro & instruct modify new file
+    - !elaborate 
+      descriptionId: "level-data/discard-changes/intro"
+    - !instruct 
+      descriptionId: "level-data/discard-changes/discard-unwanted"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ "checkout", "--", "$level-data/undo-staging/unwanted-path-in-basic" ]
+    - !verifyRepo 
+      referenceName: "discard-unwanted-file"
+
+    
+
+

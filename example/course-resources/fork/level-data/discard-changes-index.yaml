@@ -1,0 +1,45 @@
+asset_index:
+  infile:
+# course contents
+    intro: |+2
+      .md
+      在這一章節中，我們將要來把從前一章節殘留在${{t/work-tree}}中的修改給完全捨棄  
+
+      在開始進行之前，這邊要慎重地警告  
+      **所有被捨棄的變更永遠也找不回來**  
+
+      因此，往後我們在自己的專案裡面捨棄變更的時候，一定要三思而後行  
+
+    discard-unwanted: |+2
+      .md
+      首先，請使用${{t/gui}}打開位於「`#{{basic}}`」的資料夾  
+      然後開啟${{st/changes-tab}}  
+
+      因為這個章節資料夾的內容繼承了上個章節殘留下來的結果  
+      可以注意到這時候${{t/gui}}應該有一個新增的檔案還有一個檔案修改  
+
+      請按照下圖(一)所指示的步驟  
+      對準「不想要」這份檔案按下滑鼠右鍵，叫出操作選單  
+      然後在選單上找到如紅框圈選的${{st/discard-changes}}，並且按下去  
+
+      ![illustration]({{images/instruct-invoke-discard-changes-modal}})  
+      <div class="img-title">圖(一)</div>  
+
+      完成之後，應該會出現如下圖(二)的對話框  
+
+      ![illustration]({{images/confirm-discard-changes-modal}})  
+      <div class="img-title">圖(二)</div>        
+
+      這個對話框的內容大意是：  
+      「  
+        請問是否想要捨棄選中的檔案的變更？  
+        請小心這項操作不能復原
+      」 
+
+      因為我們的目的就是要捨棄變更，所以請按下上圖紅框圈選的「Discard」 (捨棄)按鈕  
+
+      完成之後，請按下「執行」按鈕進行檢查
+    
+
+
+# course materials

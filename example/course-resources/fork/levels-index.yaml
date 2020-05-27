@@ -17,6 +17,7 @@ asset_index:
     main.commit-file-modification.name: "2-3 節：快照檔案修改"
     main.commit-file-deletion.name: "2-4 節：快照檔案刪除"
     main.undo-staging.name: "2-5 節：復原暫存"
+    main.discard-changes.name: "2-6 節：放棄變更"
     
   ondisk:
   # level configs of section one: intro
@@ -31,4 +32,5 @@ asset_index:
     commit-file-modification: "commit-file-modification.yaml"
     commit-file-deletion: "commit-file-deletion.yaml"
     undo-staging: "undo-staging.yaml"
+    discard-changes: "discard-changes.yaml"
     
