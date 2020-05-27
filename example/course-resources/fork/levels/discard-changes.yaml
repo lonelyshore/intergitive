@@ -7,7 +7,7 @@
   steps:
     - !loadLastLevelFinalSnapshot {}
 
-  # intro & instruct modify new file
+  # intro & instruct discard file
     - !elaborate 
       descriptionId: "level-data/discard-changes/intro"
     - !instruct 
@@ -21,6 +21,39 @@
     - !verifyRepo 
       referenceName: "discard-unwanted-file"
 
+  # instruct discard another
+    - !elaborate
+      descriptionId: "level-data/discard-changes/explain-discard"
+    - !instruct 
+      descriptionId: "level-data/discard-changes/confirm-modified-content"
+      needConfirm: false
+    - !verifyInput 
+      answer: "3"
+
+    - !instruct 
+      descriptionId: "level-data/discard-changes/discard-modified"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ "checkout", "--", "3.txt" ]
+    - !verifyRepo 
+      referenceName: "discard-unwanted-modification-file-3"
+
+  # elaborate and summary
+    - !elaborate 
+      descriptionId: "level-data/discard-changes/remind-file-restored-from-index"
+    - !instruct 
+      descriptionId: "level-data/discard-changes/check-content-of-3"
+      needConfirm: false
+    - !verifyInput 
+      answer: "1"
+
+    - !elaborate 
+      descriptionId: "level-data/discard-changes/explain-discard-3"
+    - !elaborate 
+      descriptionId: "level-data/discard-changes/summary"
     
 
 

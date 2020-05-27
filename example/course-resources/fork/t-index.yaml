@@ -20,8 +20,8 @@ asset_index:
     local-repo-f: 本地倉庫(local repository)
     repo-f: 倉庫(repository)
     repo: 倉庫
-    revision: 版本
-    revision-f: 版本(revision)
+    revision: 變更版本
+    revision-f: 變更版本(revision)
     unstaged-en: " unstaged "
     staged-en: " staged "
     stage-en: " stage "

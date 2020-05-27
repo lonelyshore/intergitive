@@ -10,3 +10,4 @@ asset_index:
     staged-changes: " Staged Changes (核選的變更)"
     act-stage: " Stage (核選)"
     act-unstage: " Unstage (取消核選)"
+    discard-changes: "Discard changes... (捨棄變更)"
