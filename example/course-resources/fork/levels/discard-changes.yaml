@@ -15,9 +15,8 @@
       needConfirm: false
     - !dev.needAction 
       actions:
-        - !dev.act.git 
-          repoSetupName: basic
-          arguments: [ "checkout", "--", "$level-data/undo-staging/unwanted-path-in-basic" ]
+        - !act.removeFile 
+          targetPaths: ["$level-data/undo-staging/unwanted-path"]
     - !verifyRepo 
       referenceName: "discard-unwanted-file"
 
