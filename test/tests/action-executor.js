@@ -420,7 +420,7 @@ describe('Action Executor #core', function() {
             });
         });
 
-        describe('Remove File', function() {
+        describe.only('Remove File', function() {
 
             it('remove single', function() {
                 
@@ -442,6 +442,21 @@ describe('Action Executor #core', function() {
                         fs.exists(path.join(utils.PLAYGROUND_PATH, 'untouched'))
                         .should.eventually.be.true
                     ]);
+                });
+            });
+
+            it('remove translated path', function() {
+
+                let targets = ['$write-file/translated-path'];
+                let action = new actionTypes.RemoveFileAction(
+                    targets
+                );
+
+                return initializeFolder(['神秘的路徑.txt'], utils.PLAYGROUND_PATH)
+                .then(() => action.executeBy(actionExecutor))
+                .then(() => {
+                    return fs.access(path.join(utils.PLAYGROUND_PATH, '神秘的路徑.txt'))
+                    .should.eventually.be.rejected;
                 });
             });
 
