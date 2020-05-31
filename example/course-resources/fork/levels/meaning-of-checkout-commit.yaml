@@ -43,7 +43,7 @@
       actions:
         - !dev.act.git 
           repoSetupName: basic
-          arguments: [ "checkout", "--", "===read me===.txt" ]
+          arguments: [ "checkout", "-f", "master~11" ]
     - !verifyRepo 
       referenceName: "checkout-from-12th-to-1st"
 
