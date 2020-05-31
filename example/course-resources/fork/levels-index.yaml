@@ -4,6 +4,7 @@ asset_index:
   # name of sections
     main.section-intro.name: "第一章：fork 安裝與瀏覽版本"
     main.section-create-commits.name: "第二章：建立版本歷史與檔案狀態"
+    main.section-elaborate-commits.name: "第三章：保存的版本的性質"
 
   # level names of section one
     main.intro-install.name: "1-1 節：安裝"
@@ -18,6 +19,7 @@ asset_index:
     main.commit-file-deletion.name: "2-4 節：快照檔案刪除"
     main.undo-staging.name: "2-5 節：復原暫存"
     main.discard-changes.name: "2-6 節：放棄變更"
+    main.meaning-of-checkout-commit.name: "2-7 節：切換版本的意義"
     
   ondisk:
   # level configs of section one: intro
@@ -33,4 +35,5 @@ asset_index:
     commit-file-deletion: "commit-file-deletion.yaml"
     undo-staging: "undo-staging.yaml"
     discard-changes: "discard-changes.yaml"
+    meaning-of-checkout-commit: "meaning-of-checkout-commit.yaml"
     

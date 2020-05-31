@@ -1,0 +1,162 @@
+asset_index:
+  infile:
+# course contents
+    intro: |+2
+      .md
+      在上一個章節的結尾  
+      我們歸納了在這一大章中學習了如何讓檔案在三個不同的地方流轉  
+      這三個地方分別是「${{t/work-tree}}」、「${{t/index}}」還有「${{t/repo}}」  
+
+      但其實早在第一大章，我們在${{t/graph}}上面切換不同版本的時候  
+      就已經在不知情的狀況下讓檔案在這三個位置上流動  
+
+    illustrate-checkout: |+2
+      .md
+      為了說明切換版本是如何觸發檔案在三個位置之間流轉  
+      請參考下面一系列的圖示與說明  
+
+      ![illustration]({{images/illustrate-places-checkout-last-commit}})  
+      <div class="img-title">圖(一)</div>  
+
+      上圖(一)普通地展示了一個受 git 管控的資料夾通常的狀況  
+      我們可以注意到，位在最右側的${{t/repo}}下擺放了三個不同顏色的圓圈  
+      每一個圓圈都代表一個版本        
+      因為${{t/head}}指向最上面的一個版本  
+      ${{t/work-tree}}和${{t/index}}都使用和${{t/head}}一樣顏色的資料夾  
+      代表他們內容完全一致  
+
+      當我們切換到不同版本時，有趣的事情就發生了  
+      假設我們切換到${{t/repo}}中從上往下數第二個的版本  
+      事情會按照下面圖(二-1)還有圖(二-2)依序發生：
+
+      <div class="side-by-side-container">
+        <div style="float: left;width: 46%;padding: 2%;">
+          <img src="{{images/illustrate-checkout-step-one}}" alt="illustration">
+          <div class="img-title">圖(二-1)</div>  
+        </div>
+        <div style="float: left;width: 46%;padding: 2%;">
+          <img src="{{images/illustrate-checkout-step-two}}" alt="illustration">
+          <div class="img-title">圖(二-2)</div>  
+        </div>
+      </div> 
+
+      首先發生的是圖(二-1)所描述的事情  
+      因為我們想要切換版本到紅色的版本，${{t/head}}率先被挪動到對應的位置上面  
+      這個時候，我們會發現${{t/work-tree}}以及${{t/index}}和${{t/head}}所代表的資料夾顏色就不同了  
+      表示他們的檔案內容有差異  
+
+      為了消除這之間的差異，就會發生圖(二-2)的事情  
+      git 會把${{t/head}}所保存的${{t/file-tree}}放入${{t/index}}還有${{t/work-tree}}裡面  
+      如此一來，我們才能實際使用的資料夾內容(也就是${{t/work-tree}})任意的轉換成過往保存的版本  
+
+    hint-dirty-checkout: |+2
+      .md
+      現在我們理解了「切換版本」實際做的事情  
+      也就是重新定位${{t/head}}還有把${{t/index}}以及${{t/work-tree}}的內容更新到和${{t/head}}一致  
+
+      當${{t/work-tree}}和${{t/index}}一致或${{t/index}}和${{t/head}}一致的時候  
+      我們說這是**「${{t/clean-f}}的${{t/work-tree}}」**或是**「${{t/clean}}的${{t/index}}」**  
+      與「${{t/clean}}」相對的，當${{t/work-tree}}或${{t/index}}中有任何檔案新增/修改/刪除的時候  
+      我們就稱作**「${{t/dirty-f}}」**  
+
+      我們這時候會注意到  
+      剛才描述切換版本的前後，${{t/work-tree}}和${{t/index}}都是保持${{t/clean}}的狀態  
+      但如果我們在這兩者是**${{t/dirty}}**的情況下嘗試切換版本的話，又會發生甚麼事情呢？  
+
+      接下來就讓我們實驗看看吧！
+
+    modify-readme: |+2
+      .md
+      為了要實驗，我們需要先刻意的製造${{t/dirty}}的情況  
+      因為檔案修改的內容本身並不重要，這邊我們就一切從簡  
+
+      請按下下一個區塊的「執行」按鈕，來套用修改到資料夾中的檔案  
+
+    try-checkout-first: |+2
+      .md
+      透過剛才的步驟，我們修改了「===read me===.txt」這份檔案的內容  
+      達到了${{t/work-tree}}${{t/dirty}}的條件  
+
+      現在，請嘗試切換版本到「${{level-data/intro-open-repository/msg-1}}」  
+      並且回答切換後的情況是下列何者：
+
+      1. **成功**切換到「${{level-data/intro-open-repository/msg-1}}」。${{t/work-tree}}狀態變成${{t/clean}}  
+      2. **成功**切換到「${{level-data/intro-open-repository/msg-1}}」。被修改的檔案保持原狀  
+      3. **無法**切換版本。${{t/work-tree}}維持${{t/dirty}}  
+      4. **無法**切換版本。剛才的修改被清除  
+
+      請以數字(1/2/3/4)回答  
+
+    explain-checkout-fail: |+2
+      .md
+      我們發現了當${{t/work-tree}}是${{t/dirty}}的時候，git 拒絕了切換版本的操作  
+      主要的原因與我們修改的檔案有關  
+
+      如果去翻看${{t/graph}}和${{t/file-tree}}  
+      會發現我們所修改的「===read me===」在最初的${{t/revision}}(切換的目標)和最後的${{t/revision}}(切換的起點)之間，有反覆修改過幾次  
+
+      當我們以最後的${{t/revision}}為基準修改了這個檔案，然後又想要切換到最初的${{t/revision}}時  
+      git 就必須要把這份檔案還原為最初的${{t/revision}}中的內容  
+      如果它這樣做，就表示我們的修改會**消失**  
+
+      因為 git 是被設計來保存工作進度的  
+      如果在 git 的操作過程中，反而造成我們的修改突然消失，會很諷刺的違背了它的設計目的  
+      所以， git 在遇到這樣的情況時，會無法完成切換版本的操作  
+      從而確保我們的修改不會消失  
+
+    how-to-checkout-when-dirty: |+2
+      .md
+      既然了解了問題的原因，那麼有辦法解決嗎？  
+      如果有一天我們修改了資料夾裡的檔案之後，又不得不切換版本該怎麼辦呢？  
+
+      我們知道了 git 拒絕執行的原因是因為檔案的修改  
+      反過來說，只要將${{t/work-tree}}和${{t/index}}復原成${{t/clean}}的狀態  
+      就可以毫無攔阻的切換版本了  
+
+    clean-and-checkout: |+2
+      .md
+      請按照之前所學，捨棄目前所有的變更  
+      然後，切換版本到「${{level-data/intro-open-repository/msg-1}}」  
+
+      完成之後，請按下「執行」進行查驗  
+
+    summary: |+2
+      .md
+      在這個章節中  
+      我們學到了切換版本實際上就是把檔案從${{t/head}}中取出  
+      然後覆蓋到${{t/index}}以及${{t/work-tree}}之中  
+
+      更進一步的，因為這個操作的本質  
+      我們發現了${{t/dirty}}的${{t/work-tree}}有可能會妨害我們無法切換版本  
+
+      實際上不同的${{t/work-tree}}還有${{t/index}}的修改情況  
+      有可能會造成無法切換版本，也有可能並不影響  
+      但是已經超過這裡的教學範圍，我們就不再繼續深究  
+
+      總結目前為止我們學習到的東西  
+      其實說穿了就是把檔案在${{t/work-tree}}、${{t/index}}還有${{t/repo}}之間搬移  
+      這也是 git 最核心的功能：  
+      透過將檔案放入${{t/index}}還有${{t/repo}}這些使用者通常碰不到的地方  
+      來將不同版本的檔案妥善存放，方便有朝一日取回來  
+
+      說到這裡，就有一絲烏雲飛過  
+      如果我們把眾多的檔案一直不停地堆放進${{t/repo}}裡面  
+      當我們想要找回特定版本的檔案的時候，有辦法從眾多檔案裡面找出來嗎？  
+      
+      在接下來的章節中  
+      我們將會介紹 git 為了有組織地歸檔，以及方便我們將來把檔案找回來，所設計的功能  
+      敬請期待～
+
+    
+
+
+# course materials
+    modified-readme: "新的內容"
+
+    
+
+    
+
+
+
+

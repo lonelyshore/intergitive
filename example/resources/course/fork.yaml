@@ -50,4 +50,12 @@
           id: "fork-main-discard-changes"
           nameKey: "levels/main.discard-changes.name"
           configAssetId: "levels/discard-changes"
+        - !level 
+          id: "fork-main-meaning-of-checkout-commit"
+          nameKey: "levels/main.meaning-of-checkout-commit.name"
+          configAssetId: "levels/meaning-of-checkout-commit"
+    - !sequential-section 
+      id: "fork-main-section-elaborate-commits"
+      nameKey: "levels/main.section-elaborate-commits.name"
+      children: []
 

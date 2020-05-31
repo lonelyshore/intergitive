@@ -74,3 +74,8 @@ asset_index:
 # discard-changes
     instruct-invoke-discard-changes-modal: discard-changes@instruct-invoke-discard-changes-modal.png
     confirm-discard-changes-modal: discard-changes@confirm-discard-changes-modal.png
+
+# meaning-of-checkout-commit
+    illustrate-places-checkout-last-commit: meaning-of-checkout-commit@illustrate-places-checkout-last-commit.png
+    illustrate-checkout-step-one: meaning-of-checkout-commit@illustrate-checkout-step-one.png
+    illustrate-checkout-step-two: meaning-of-checkout-commit@illustrate-checkout-step-two.png

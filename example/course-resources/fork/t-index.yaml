@@ -3,6 +3,10 @@ asset_index:
   infile:
     checkout-rev: "切換版本"
     checkout-rev-f: "切換版本(checout revision)"
+    clean-f: "無修改(clean/乾淨)"
+    clean: "無修改"
+    dirty-f: "有修改(dirty/骯髒)"
+    dirty: "有修改"
     commit: 變更提交
     commit-f: "變更提交(commit)"
     commit-s: 提交

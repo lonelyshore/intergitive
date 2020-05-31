@@ -39,7 +39,7 @@
           arguments: [ "add", "-A" ]
         - !dev.act.git 
           repoSetupName: basic
-          arguments: [ "commit", "-m", "第 1 號提交" ]
+          arguments: [ "commit", "-m", "$level-data/intro-open-repository/msg-1" ]
 
       # second commit, for browsing
         - !act.writeFile 
@@ -50,7 +50,7 @@
         - *stageAll
         - !dev.act.git 
           repoSetupName: basic
-          arguments: [ "commit", "-m", "第 2 號提交" ]
+          arguments: [ "commit", "-m", "$level-data/intro-open-repository/msg-2" ]
       
       # third commit, garbage
         - !act.writeFile 
@@ -63,7 +63,7 @@
         - *stageAll
         - !dev.act.git 
           repoSetupName: basic
-          arguments: [ "commit", "-m", "第 3 號提交" ]
+          arguments: [ "commit", "-m", "$level-data/intro-open-repository/msg-3" ]
 
       # fourth commit, for browsing second time
         - !act.writeFile 
@@ -74,7 +74,7 @@
         - *stageAll
         - !dev.act.git 
           repoSetupName: basic
-          arguments: [ "commit", "-m", "第 4 號提交" ]
+          arguments: [ "commit", "-m", "$level-data/intro-open-repository/msg-4" ]
         
       # fifth commit, for browsing third time
         - !act.writeFile 
@@ -85,7 +85,7 @@
         - *stageAll
         - !dev.act.git 
           repoSetupName: basic
-          arguments: [ "commit", "-m", "第 5 號提交" ]
+          arguments: [ "commit", "-m", "$level-data/intro-open-repository/msg-5" ]
 
       # sixth comit, garbage
         - !act.removeFile 
@@ -95,7 +95,7 @@
         - *stageAll 
         - !dev.act.git 
           repoSetupName: basic
-          arguments: [ "commit", "-m", "第 6 號提交" ]
+          arguments: [ "commit", "-m", "$level-data/intro-open-repository/msg-6" ]
 
       # save reference to init
         - !dev.act.saveReference 

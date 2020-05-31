@@ -1,0 +1,52 @@
+!level
+  repoVcsSetups:
+    basic:
+      workingPath: basic
+      referenceStoreName: basic-operation
+      checkpointStoreName: basic-operation-checkpoints
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+  # intro & instruct modify new file
+    - !elaborate 
+      descriptionId: "level-data/meaning-of-checkout-commit/intro"
+    - !illustrate 
+      descriptionId: "level-data/meaning-of-checkout-commit/illustrate-checkout"
+    - !elaborate 
+      descriptionId: "level-data/meaning-of-checkout-commit/hint-dirty-checkout"
+
+  # experiment
+    - !instruct
+      descriptionId: "level-data/meaning-of-checkout-commit/modify-readme"
+      needConfirm: false
+    - !execute 
+      actions:
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/meaning-of-checkout-commit/modified-readme"
+          destinationPaths:
+            - "basic/===read me===.txt"
+    - !instruct 
+      descriptionId: "level-data/meaning-of-checkout-commit/try-checkout-first"
+      needConfirm: false
+    - !verifyInput 
+      answer: "3"  
+
+    - !elaborate 
+      descriptionId: "level-data/meaning-of-checkout-commit/explain-checkout-fail"
+    - !elaborate 
+      descriptionId: "level-data/meaning-of-checkout-commit/how-to-checkout-when-dirty"
+    - !instruct
+      descriptionId: "level-data/meaning-of-checkout-commit/clean-and-checkout"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: basic
+          arguments: [ "checkout", "--", "===read me===.txt" ]
+    - !verifyRepo 
+      referenceName: "checkout-from-12th-to-1st"
+
+    - !elaborate 
+      descriptionId: "level-data/meaning-of-checkout-commit/summary"
+      
