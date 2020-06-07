@@ -79,3 +79,12 @@ asset_index:
     illustrate-places-checkout-last-commit: meaning-of-checkout-commit@illustrate-places-checkout-last-commit.png
     illustrate-checkout-step-one: meaning-of-checkout-commit@illustrate-checkout-step-one.png
     illustrate-checkout-step-two: meaning-of-checkout-commit@illustrate-checkout-step-two.png
+
+# commit-properties
+    illustrate-mark-commit-info-gui: meaning-of-checkout-commit@illustrate-mark-commit-info-gui.png
+    illustrate-commit-author-and-date: meaning-of-checkout-commit@illustrate-commit-author-and-date.png
+    instruct-invoke-repository-setting: meaning-of-checkout-commit@instruct-invoke-repository-setting.png
+    instruct-change-author: meaning-of-checkout-commit@instruct-change-author.png
+    illustrate-commit-message-display: meaning-of-checkout-commit@illustrate-commit-message-display.png
+    illustrate-hash-display: meaning-of-checkout-commit@illustrate-hash-display.png
+    illustrate-gui-search-commit: meaning-of-checkout-commit@illustrate-gui-search-commit.png

@@ -1,0 +1,177 @@
+asset_index:
+  infile:
+# course contents
+    intro: |+2
+      .md
+      現在我們已經很熟悉如何製作一個新的${{t/revision}}了  
+
+      在上一章的最末尾提到  
+      為了方便找尋先前保存進${{t/repo}}的變更  
+      ${{t/revision}}除了${{t/file-tree}}之外還有一些額外資訊  
+
+      在這一章之中，我們將稍微介紹這些資訊  
+
+    focus-commit-info: |+2
+      .md
+      請使用${{t/gui}}開啟位於「`#{{basic}}`」的資料夾  
+      並且切換到${{t/graph}}頁面，應該會看到如下圖的畫面：  
+
+      ![illustration]({{images/illustrate-mark-commit-info-gui}})  
+      <div class="img-title">圖(一)</div>  
+
+      如上圖(一)所示  
+      當我們在頁籤上選擇紅框所圈選的「Commit(變更提交)」之後  
+      就會出現如橘框所示的${{t/commit}}資訊頁面
+
+      這個資訊頁面顯示了跟這個${{t/revision}}有關的各項資訊  
+      善用這些資訊，將可以幫我們快速找到想要的${{t/revision}}  
+      接下來，就讓我們逐條介紹這些資訊的內容  
+
+    author-and-date: |+2
+      .md
+      在紀錄檔案的版本資訊的時候  
+      最直覺會想到要記錄的就屬「作者」以及「修改日期」了  
+
+      如下圖(二)所示，在${{t/commit}}資訊頁面和${{t/graph}}上都同時有這兩項資訊  
+
+      ![illustration]({{images/illustrate-commit-author-and-date}})  
+      <div class="img-title">圖(二)</div>  
+
+      從上圖可以看到  
+      紅框圈選的範圍是作者名稱  
+      橘框圈選的範圍則是這個${{t/revision}}的建立日期  
+
+      建立日期的部分非常直覺，就是這個${{t/revision}}被${{t/commit-s}}的時間點  
+
+      作者名稱是這個${{t/revision}}的原作者設定在 git 上用以識別身分的名字  
+      和登入電腦用的使用者名稱可以沒有任何關聯  
+      
+      這個時候我們會注意到  
+      在之前的練習中所建立的${{t/revision}}的作者全部都是「Someone」  
+      如果你有興趣，可以按照下一個區塊的說明來設定任何你喜歡的名字(非強制)  
+
+    set-author-name: |+2
+      .md
+      如果想要設定作者名稱，請依序按照下列圖示進行操作  
+
+      首先，請如下圖所示  
+      在左上角的工具列上點選如紅框所圈選的「Repository(倉庫)」  
+      然後在展開的項目清單中點選如橘框所圈選的「Settings for This Repository...(設定此倉庫...)」  
+
+      ![illustration]({{images/instruct-invoke-repository-setting}})  
+      <div class="img-title">圖(三)</div>  
+
+      完成操作後，會如出現如下圖的設定對話框  
+
+      ![illustration]({{images/instruct-change-author}})  
+      <div class="img-title">圖(四)</div>  
+
+      請如上圖所示  
+      選擇紅框圈選的「General(一般)」分頁  
+      然後分別在橘框還有綠框圈選處填入想要的名字和信箱  
+      完成之後，按下藍框圈選的「Close(關閉)」按鈕，來保存變更  
+
+    commit-message: |+2
+      .md
+      回到 git 所紀錄的${{t/commit}}資訊頁面  
+      除了作者還有建立日期之外，另一個常用的資訊是「提交訊息」  
+
+      提交訊息在${{t/gui}}中會如下圖(五)紅框圈選處進行顯示  
+
+      ![illustration]({{images/illustrate-commit-message-display}})  
+      <div class="img-title">圖(五)</div>      
+
+      我們其實都跟「提交訊息」很熟悉了  
+      在前面的章節中，當我們想要建立一個${{t/revision}}/${{t/commit}}的時候  
+      都要輸入一段文字用來描述目前要保存的內容有哪些  
+      這段文字，就是提交訊息  
+
+      在這個教學中  
+      為了簡化流程，都會直接要求輸入事先設計好的提交訊息  
+      實際上提交訊息是用來記錄一個${{t/revision}}有哪些內容的重要管道  
+      通常要花一些心思認真填寫  
+
+      關於如何填寫會比較好本身已經超過這個教學的篇幅  
+      這裡稍微提供幾個建議還有**錯誤範例**，提供參考：  
+
+      1. 要讓未來的讀者能夠知道這個${{t/revision}}的修改目標還有內容  
+        - 好的做法： <code class="green-backed inline-txt ">增加 A 功能：修改檔案 1 和 2</code>  
+        - 不好的做法： <code class="red-backed inline-txt ">修改</code>  
+      2. 避免和描述${{t/revision}}無關的內容，這樣不會幫助到未來的讀者而且製造雜訊
+        - 不好的做法： <code class="red-backed inline-txt ">累了想睡zzz</code>  
+      3. 避免長篇大論，沒有人看得完全部的訊息
+        - 不好的做法： <code class="red-backed inline-txt ">臣亮言：先帝創業未半，而中道崩殂。今天下三分，益州疲弊，此誠危急存亡之秋也...</code>(後續審略)  
+
+    commit-hash: |+2
+      .md
+      前面我們介紹了幾種可以描述一個${{t/commit}}的資訊  
+      但是沒有任何一項是獨一無二的  
+
+      也就是說，有可能有兩個以上的${{t/commit}}  
+      他們的作者、建立時間或是提交訊息會重複  
+      通常這並不會造成困擾  
+      但有些時候我們無可避免需要每一個${{t/commit}}有一種獨一無二的方式來識別他們  
+      例如有一天我們需要跟別人說「我改了一個檔案，你可以在**那一個**${{t/revision}}找到他」  
+      我們要如何指稱「那一個」呢？  
+
+      就好像人的指紋是獨一無二的一樣，我們可以用「指紋」來識別出不同的人  
+      在 git 裡面，每一個${{t/revision}}也都有一個叫做「**${{t/hash-f}}**」的獨一無二(幾乎是)的識別  
+
+      如下圖所示，在${{t/gui}}中我們可以在紅框圈起來的地方發現${{t/hash}}  
+
+      ![illustration]({{images/illustrate-hash-display}})  
+      <div class="img-title">圖(六)</div>  
+
+      如果仔細一看，會發現每一個${{t/revision}}的${{t/hash}}都不一樣  
+      這些${{t/hash}}都是在建立${{t/revision}}的時候 git 自動生成的  
+      而每一個${{t/hash}}，都一定是由 0-9 還有 a-f 的文字組成，沒有例外  
+      我們可以使用這一長串英數字母來指稱一個${{t/revision}}  
+
+    sha-1: |+2
+      .md
+      眼尖的人可能注意到  
+      在${{t/gui}}的介面上顯示的是「SHA」而不是「hash」  
+      這並不是拼錯字，而是 git 的${{t/hash}}有幾個別稱  
+
+      其實「${{t/hash-f}}」指的是概念上我們希望有一組英數字來獨一無二的描述一個${{t/revision}}  
+      而「SHA」是其中一種實現的方法  
+      就好像「食物」是指可以任何可以吃的東西，而「魯肉飯」是其中一種可以吃的東西一樣  
+      因為 git 都是使用「SHA-1」來產生${{t/hash}}  
+      所以「SHA」、「SHA-1」都很常被拿來指稱${{t/hash}}  
+      但意思都是一樣的  
+
+    hash-coverage: |+2
+      .md
+      再來說到${{t/hash}}看起來一長串  
+      很難真的拿來和別人說「我做了一個`0a3aae4c08f8ad7d990900122a6769a5dda2008c`的${{t/revision}}」  
+      其實通常這一長串只要取用前面 5-6 位就非常足夠  
+      原因是每一位數都是 0-9 以及 a-f 等 16 種變化  
+      實際上 5-6 位就已經包含百萬到千萬種變化，表示可以描述這麼多的不同${{t/revision}}  
+      一個人一輩子都無法用 git 做出這麼多${{t/revision}}的  
+
+    search-commit: |+2
+      .md
+      現在我們知道了一個${{t/revision}}上其實除了${{t/file-tree}}紀錄了資料夾內容之外  
+      還有各種各樣的輔助資料  
+      當我們想要尋找特定的${{t/revision}}的時候，可以利用這些輔助資料  
+      我們可以如下圖所示操作，來使用${{t/gui}}提供的搜尋功能  
+
+      ![illustration]({{images/illustrate-gui-search-commit}})  
+      <div class="img-title">圖(七)</div>  
+
+      請在${{t/gui}}上找到紅框所圈選的「Search(搜尋)」按鈕，並且按下  
+      按下之後，就會出現橘框圈選的搜尋列  
+      我們可以在裡面填入作者、提交訊息或是${{t/hash}}來搜尋  
+
+    summary: |+2
+      .md
+      在這一章節中，我們介紹了一個${{t/commit}}上面紀錄的輔助資訊  
+      這些資訊可以用來協助我們找到想要的${{t/revision}}  
+
+      目前為止，我們對於**一個**${{t/commit}}已經研究得非常透徹  
+      從現在開始，我們將會把重心逐漸轉向應該如何看待與使用**一群**${{t/commit}}  
+
+
+    
+      
+    

@@ -20,7 +20,9 @@ asset_index:
     main.undo-staging.name: "2-5 節：復原暫存"
     main.discard-changes.name: "2-6 節：放棄變更"
     main.meaning-of-checkout-commit.name: "2-7 節：切換版本的意義"
-    
+
+  # level names of section three
+    main.commit-properties.name: "3-1 節：總覽版本資料"
   ondisk:
   # level configs of section one: intro
     intro-install: "intro-install.yaml"
@@ -36,4 +38,7 @@ asset_index:
     undo-staging: "undo-staging.yaml"
     discard-changes: "discard-changes.yaml"
     meaning-of-checkout-commit: "meaning-of-checkout-commit.yaml"
+
+  # level configs of section three: elaborate commits
+    commit-properties: "commit-properties.yaml"
     

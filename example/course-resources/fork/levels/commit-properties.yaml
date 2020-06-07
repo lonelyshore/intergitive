@@ -1,0 +1,30 @@
+!level
+  repoVcsSetups:
+    basic:
+      workingPath: basic
+      referenceStoreName: basic-operation
+      checkpointStoreName: basic-operation-checkpoints
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+  # intro & instruct modify new file
+    - !elaborate 
+      descriptionId: "level-data/commit-properties/intro"
+    - !elaborate 
+      descriptionId: "level-data/commit-properties/focus-commit-info"
+    - !elaborate 
+      descriptionId: "level-data/commit-properties/author-and-date"
+    - !elaborate 
+      descriptionId: "level-data/commit-properties/set-author-name"
+    - !elaborate 
+      descriptionId: "level-data/commit-properties/commit-message"
+    - !elaborate 
+      descriptionId: "level-data/commit-properties/commit-hash"
+    - !elaborate 
+      descriptionId: "level-data/commit-properties/sha-1"
+    - !elaborate 
+      descriptionId: "level-data/commit-properties/hash-coverage"
+    - !elaborate 
+      descriptionId: "level-data/commit-properties/search-commit"
+    - !elaborate 
+      descriptionId: "level-data/commit-properties/summary"

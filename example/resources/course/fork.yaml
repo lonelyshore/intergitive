@@ -2,7 +2,7 @@
   id: "fork-course"
   nameKey: "levels/main.course-name"
   children:
-    - !sequential-section
+    - !sequential-section # chapter 1: basics
       id: "fork-main-secion-intro"
       nameKey: "levels/main.section-intro.name"
       children:
@@ -22,7 +22,7 @@
           id: "fork-main-checkout-revision"
           nameKey: "levels/main.checkout-revision.name"
           configAssetId: "levels/checkout-revision"
-    - !sequential-section 
+    - !sequential-section # chapter 2: creating commits
       id: "fork-main-section-create-commits"
       nameKey: "levels/main.section-create-commits.name"
       children:
@@ -54,8 +54,12 @@
           id: "fork-main-meaning-of-checkout-commit"
           nameKey: "levels/main.meaning-of-checkout-commit.name"
           configAssetId: "levels/meaning-of-checkout-commit"
-    - !sequential-section 
+    - !sequential-section # chapter 3: properties of commits
       id: "fork-main-section-elaborate-commits"
       nameKey: "levels/main.section-elaborate-commits.name"
-      children: []
+      children:
+        - !level 
+          id: "fork-main-commit-properties"
+          nameKey: "levels/main.commit-properties.name"
+          configAssetId: "levels/commit-properties"
 
