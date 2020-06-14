@@ -13,7 +13,7 @@ asset_index:
 
     focus-commit-info: |+2
       .md
-      請使用${{t/gui}}開啟位於「`#{{basic}}`」的資料夾  
+      請使用${{t/gui}}開啟位於「`#{{commits-advanced}}`」的資料夾  
       並且切換到${{t/graph}}頁面，應該會看到如下圖的畫面：  
 
       ![illustration]({{images/illustrate-mark-commit-info-gui}})  
@@ -170,6 +170,43 @@ asset_index:
 
       目前為止，我們對於**一個**${{t/commit}}已經研究得非常透徹  
       從現在開始，我們將會把重心逐漸轉向應該如何看待與使用**一群**${{t/commit}}  
+
+# repository assets
+    file-1:v1: "初始內容"
+    file-1:v2: |+2
+      自2002年開始，林納斯·托瓦茲決定使用BitKeeper作為Linux核心主要的版本控制系統用以維護程式碼。因為BitKeeper為專有軟體，這個決定在社群中長期遭受質疑。在Linux社群中，特別是理察·斯托曼與自由軟體基金會的成員，主張應該使用開放原始碼的軟體來作為Linux核心的版本控制系統。林納斯·托瓦茲曾考慮過採用現成軟體作為版本控制系統（例如Monotone），但這些軟體都存在一些問題，特別是效能不佳。現成的方案，如CVS的架構，受到林納斯·托瓦茲的批評[12]。
+      2005年，安德魯·垂鳩寫了一個簡單程式，可以連接BitKeeper的儲存庫，BitKeeper著作權擁有者拉里·麥沃伊認為安德魯·垂鳩對BitKeeper內部使用的協定進行逆向工程，決定收回無償使用BitKeeper的授權。Linux核心開發團隊與BitMover公司進行磋商，但無法解決他們之間的歧見。林納斯·托瓦茲決定自行開發版本控制系統替代BitKeeper，以十天的時間編寫出git第一個版本[13][14]。 
+    file-1:v3: |+2
+      以下文字，取自維基百科上 git 條目的「歷史」部分(https://zh.wikipedia.org/wiki/Git)
+
+      自2002年開始，林納斯·托瓦茲決定使用BitKeeper作為Linux核心主要的版本控制系統用以維護程式碼。因為BitKeeper為專有軟體，這個決定在社群中長期遭受質疑。在Linux社群中，特別是理察·斯托曼與自由軟體基金會的成員，主張應該使用開放原始碼的軟體來作為Linux核心的版本控制系統。林納斯·托瓦茲曾考慮過採用現成軟體作為版本控制系統（例如Monotone），但這些軟體都存在一些問題，特別是效能不佳。現成的方案，如CVS的架構，受到林納斯·托瓦茲的批評[12]。
+      2005年，安德魯·垂鳩寫了一個簡單程式，可以連接BitKeeper的儲存庫，BitKeeper著作權擁有者拉里·麥沃伊認為安德魯·垂鳩對BitKeeper內部使用的協定進行逆向工程，決定收回無償使用BitKeeper的授權。Linux核心開發團隊與BitMover公司進行磋商，但無法解決他們之間的歧見。林納斯·托瓦茲決定自行開發版本控制系統替代BitKeeper，以十天的時間編寫出git第一個版本[13][14]。 
+    file-2:v1: |+2
+      pie = 3.1415926
+    file-2:v2: |+2
+      pie = 3.1415926
+      golden ratio = 1.61803
+    file-2:v3: |+2
+      pi = 3.1415926
+      golden ratio = 1.61803
+    file-2:v4: |+2
+      pi = 3.1415926
+      golden ratio = 1.61803
+      e = 2.71828
+      
+
+    file-2-name: "commits-advanced/常數.txt"
+
+    short-message: "哈哈"
+    long-message: |+2
+      這裡第一段說明了 git 的發展背景，是由於「林納斯·托瓦茲決定使用BitKeeper作為Linux核心主要的版本控制系統用以維護程式碼。因為BitKeeper為專有軟體，這個決定在社群中長期遭受質疑。在Linux社群中，特別是理察·斯托曼與自由軟體基金會的成員，主張應該使用開放原始碼的軟體來作為Linux核心的版本控制系統。」
+      然後，第二段則說明了確切造成 git 開發的決定性因素，是因為「BitKeeper決定收回無償使用BitKeeper的授權。Linux核心開發團隊與BitMover公司進行磋商，但無法解決他們之間的歧見。林納斯·托瓦茲決定自行開發版本控制系統替代BitKeeper，以十天的時間編寫出git第一個版本」
+      這些文字，都是擷取自維基百科上 git 條目的歷史部分
+    proper-message: |+2
+      為了尊重版權，補上 1 的內容出處
+    diff1-message: "查看變化 1"
+    diff2-message: "查看變化 2"
+    diff3-message: "查看變化 3"
 
 
     

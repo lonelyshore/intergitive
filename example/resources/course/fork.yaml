@@ -62,4 +62,8 @@
           id: "fork-main-commit-properties"
           nameKey: "levels/main.commit-properties.name"
           configAssetId: "levels/commit-properties"
+        - !level 
+          id: "fork-main-commit-backtrace"
+          nameKey: "levels/main.commit-backtrace.name"
+          configAssetId: "levels/commit-backtrace"
 

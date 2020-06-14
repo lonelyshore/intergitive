@@ -88,3 +88,10 @@ asset_index:
     illustrate-commit-message-display: commit-properties@illustrate-commit-message-display.png
     illustrate-hash-display: commit-properties@illustrate-hash-display.png
     illustrate-gui-search-commit: commit-properties@illustrate-gui-search-commit.png
+
+#commit-backtrace
+    illustrate-mark-commit-parent: commit-backtrace@illustrate-mark-commit-parent.png
+    illustrate-mark-commit-parent-with-graph: commit-backtrace@illustrate-mark-commit-parent-with-graph.png
+    illustrate-commit-parent-child-pairs: commit-backtrace@illustrate-commit-parent-child-pairs.png
+    illustrate-connect-grand-parent: commit-backtrace@illustrate-connect-grand-parent.png
+    illustrate-commit-sequence: commit-backtrace@illustrate-commit-sequence.png

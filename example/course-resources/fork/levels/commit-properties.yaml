@@ -1,11 +1,116 @@
 !level
   repoVcsSetups:
-    basic:
-      workingPath: basic
-      referenceStoreName: basic-operation
-      checkpointStoreName: basic-operation-checkpoints
+    commits-advanced:
+      workingPath: commits-advanced
+      referenceStoreName: commits-advanced
+      checkpointStoreName: commits-advanced-checkpoints
   steps:
-    - !loadLastLevelFinalSnapshot {}
+  # build basic operation repo
+    - !dev.devAction 
+      actions:
+      # init git
+        - !dev.act.git
+          repoSetupName: commits-advanced
+          arguments:
+            - init
+        - !dev.act.git 
+          repoSetupName: commits-advanced
+          arguments: [ config, "--local", user.name, someone]
+        - !dev.act.git 
+          repoSetupName: commits-advanced
+          arguments: [ config, "--local", user.email, someone@some.mail]
+        - !dev.act.git 
+          repoSetupName: commits-advanced
+          arguments: [ config, "--local", core.autocrlf, input]
+
+      # commit-1, short message
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/commit-properties/file-1:v1"
+          destinationPaths:
+            - "commits-advanced/1.txt"
+        - !dev.act.git &stageAll
+          repoSetupName: commits-advanced
+          arguments: [ "add", "-A" ]
+        - !dev.act.git 
+          repoSetupName: commits-advanced
+          arguments: [ "commit", "-m", "$level-data/commit-properties/short-message" ]
+
+      # second commit, long message
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/commit-properties/file-1:v2"
+          destinationPaths:
+            - "commits-advanced/1.txt"
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: commits-advanced 
+          arguments: [ "commit", "-m", "$level-data/commit-properties/long-message" ]
+
+      # third commit, proper message
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/commit-properties/file-1:v3"
+          destinationPaths:
+            - "commits-advanced/1.txt"
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: commits-advanced 
+          arguments: [ "commit", "-m", "$level-data/commit-properties/proper-message" ]
+
+      # forth commit, for observing difference 1
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/commit-properties/file-2:v1"
+          destinationPaths:
+            - "$level-data/commit-properties/file-2-name"
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: commits-advanced 
+          arguments: [ "commit", "-m", "$level-data/commit-properties/diff1-message" ]
+        
+      # fifth commit, inserted non-sense message
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/commit-properties/file-2:v2"
+          destinationPaths:
+            - "$level-data/commit-properties/file-2-name"
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: commits-advanced 
+          arguments: [ "commit", "-m", "$level-data/commit-properties/short-message" ]
+
+      # sixth commit, for observing difference 2
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/commit-properties/file-2:v3"
+          destinationPaths:
+            - "$level-data/commit-properties/file-2-name"
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: commits-advanced 
+          arguments: [ "commit", "-m", "$level-data/commit-properties/diff2-message" ]
+
+      # seventh commit, for observing difference 3
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/commit-properties/file-2:v4"
+          destinationPaths:
+            - "$level-data/commit-properties/file-2-name"
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: commits-advanced 
+          arguments: [ "commit", "-m", "$level-data/commit-properties/diff3-message" ]
+
+
+      # save reference to init
+        - !dev.act.saveReference 
+          repoSetupName: commits-advanced
+          referenceName: init
+
+    - !loadOneReference
+      repoSetupName: commits-advanced
+      referenceName: init
 
   # intro & instruct modify new file
     - !elaborate 
