@@ -1,0 +1,24 @@
+!level
+  repoVcsSetups:
+    basic:
+      workingPath: basic
+      referenceStoreName: basic-operation
+      checkpointStoreName: basic-operation-checkpoints
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+  # intro & instruct modify new file
+    - !elaborate 
+      descriptionId: "level-data/commit-backtrace/intro"
+    - !illustrate  
+      descriptionId: "level-data/commit-backtrace/notify-commit-parent"
+    - !illustrate 
+      descriptionId: "level-data/commit-backtrace/illustrate-commit-parent-with-graph"
+    - !elaborate 
+      descriptionId: "level-data/commit-backtrace/elaborate-parent-commit"
+    - !illustrate  
+      descriptionId: "level-data/commit-backtrace/illustrate-commit-sequence"
+    - !elaborate 
+      descriptionId: "level-data/commit-backtrace/summary"
+
+

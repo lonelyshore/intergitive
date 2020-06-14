@@ -1,0 +1,113 @@
+asset_index:
+  infile:
+# course contents
+    intro: |+2
+      .md
+      在上一章節裡面，我們介紹了一個${{t/revision}}上面紀錄的各項資訊  
+
+      其實一個${{t/revision}}除了紀錄關於**自己**建立時的相關資訊還有${{t/hash}}之外  
+      還紀錄了與在它之前的${{t/revision}}之間的關聯  
+      究竟是甚麼樣的關聯呢？就讓我們來實際觀察看看吧  
+
+    notify-commit-parent: |+2
+      .md
+      請使用${{t/gui}}開啟位於「`#{{basic}}`」的資料夾  
+      並且切換到${{t/graph}}頁面，應該會看到如下圖的${{t/revision}}資訊頁面  
+
+      ![illustration]({{images/illustrate-mark-commit-parent}})  
+      <div class="img-title">圖(一)</div>  
+
+      上圖紅框圈選的範圍，是上一個章節忽略沒有談到的部分  
+      我們會看到它寫著「PARENTS」，意思是**父母輩變更版本**  
+      
+      仔細看它的內容，會發現跟上一章節介紹的${{t/hash}}十分相似  
+      實際上，它確實就是紀錄著${{t/hash}}沒錯  
+      只不過，紀錄的是目前選中的${{t/revision}}的前一個提交的${{t/hash}}  
+
+      要詳細說明這一點，我們就要連同${{t/graph}}一起來觀察才行  
+      請見下一個圖解區塊的說明
+
+    illustrate-commit-parent-with-graph: |+2
+      .md
+      如果我們把注意力同時放到${{t/gui}}的${{t/graph}}上  
+      就會看到如下圖的情況：  
+
+      ![illustration]({{images/illustrate-mark-commit-parent-with-graph}})  
+      <div class="img-title">圖(二)</div>  
+
+      從上圖(二)可見  
+      我們用橘色框線圈選目前 GUI 上選中的${{t/revision}}的${{t/hash}}  
+      同時在線圖上或是資訊頁面上都有一樣的${{t/hash}}  
+
+      然後，我們用紅色框線圈選被選中的${{t/revision}}的父母變更版本  
+      紅色框線的範圍在變更提交的資訊頁面上如同圖(一)一樣  
+      而在線圖上，我們會發現紅色框線選出來的${{t/revision}}，恰恰好是位在橘色框線下面  
+
+    elaborate-parent-commit: |+2
+      .md
+      請回憶當我們增加新的${{t/revision}}的時候  
+      最新的版本總是會位在線圖的**最上面**  
+
+      也就是說，越老的版本，位在線圖的越下方；越新的版本，則位在越上方  
+      因此，前面圖(二)的紅色框線選中的${{t/revision}}比橘色框線選中的${{t/revision}}老  
+      更準確的說，前者是後者的成長基礎，是後者的「父母」  
+      因此，才得這樣的名字  
+
+    illustrate-commit-sequence: |+2
+      .md
+      現在我們發現了每一個${{t/revision}}還額外紀錄了它的父母是誰  
+      這樣的資訊有甚麼用呢？  
+      且讓我們以下面一系列圖示說明  
+
+      ![illustration]({{images/illustrate-commit-parent-child-pairs}})  
+      <div class="img-title">圖(三)</div>  
+
+      首先我們從圖(三)可以看到幾個兩兩一組上下排列的圓球  
+      按照往例，圓球就代表了${{t/revision}}  
+      而上下排列的圓球，代表了一對親子${{t/revision}}  
+      
+      每一隊親子${{t/revision}}中  
+      位在上面的代表子，而位在下面的代表親  
+      中間的黑線，則表示因為子上面紀錄了親的${{t/hash}}，所以產生了連結  
+
+      也就是說，圖(三)代表我們擁有一群${{t/revision}}  
+      而且他們都各自紀錄了自己的父母${{t/revision}}是誰  
+
+      接下來，讓我們看下面的圖(四)  
+
+      ![illustration]({{images/illustrate-connect-grand-parent}})  
+      <div class="img-title">圖(四)</div>  
+
+      圖(四)的左側其實和剛才的圖(三)完全一樣  
+      從圖(三)裡面，我們以紅色和橘色框線選出了其中特別的兩組親子${{t/revision}}  
+      
+      紅色框線選中的組合中，父母${{t/revision}}(位於下面)是綠色的  
+      而橘色框線選中的組合中，則是子${{t/revision}}(位於上面)是綠色的  
+
+      按照之前的慣例，同樣顏色的圓圈其實代表了同一個${{t/revision}}  
+      所以如果我們把這兩組親子${{t/revision}}共通的綠色${{t/revision}}疊合起來  
+      就會形成圖(四)右邊的「三代同堂」的景象  
+
+      在圖(四)右側，我們可以看見有三個${{t/revision}}  
+      紅色${{t/revision}}是綠色的子  
+      而綠色${{t/revision}}又是藍色的子  
+      簡單來說，紅色${{t/revision}}就是藍色${{t/revision}}的孫輩${{t/revision}}  
+
+      既然我們可以把兩組親子串接成三代同堂，我們就可以繼續把所有其它的親子${{t/revision}}串接起來  
+      如此以往，就會得到如下圖(五)的樣子
+
+      ![illustration]({{images/illustrate-commit-sequence}})  
+      <div class="img-title">圖(五)</div>  
+    
+      圖(五)的左側依然還是和圖(三)一致  
+      圖片的右側，則是我們依序把圖(三)的親子組合配對串接起來形成一長串${{t/revision}}的譜系  
+
+      其實我們都對圖(五)右側一長串的${{t/revision}}很熟悉了  
+      它就是我們整個教學一開始的${{t/graph}}
+
+    summary: |+2
+      .md
+      在這個章節裡面，我們發現到每一個${{t/revision}}都紀錄了自己的父母是誰  
+      而只要我們一路反覆的追尋父母${{t/revision}}逆流而上  
+      就會形成一連串的**${{t/revision}}歷史**  
+      整串歷史描述了一個受 git 管控的資料夾的內容，是如何的隨著時間變化  
