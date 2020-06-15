@@ -1,9 +1,9 @@
 !level
   repoVcsSetups:
-    basic:
-      workingPath: basic
-      referenceStoreName: basic-operation
-      checkpointStoreName: basic-operation-checkpoints
+    commits-advanced:
+      workingPath: commits-advanced
+      referenceStoreName: commits-advanced
+      checkpointStoreName: commits-advanced-checkpoints
   steps:
     - !loadLastLevelFinalSnapshot {}
 
