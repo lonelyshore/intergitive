@@ -217,8 +217,8 @@ stages:
       - local  
     actions:
       - !act.moveFile
-        sourcePath: repo/second_folder/seventh_file
-        targetPath: repo/second_folder/periodic_table
+        sourcePaths: [ "repo/second_folder/seventh_file" ]
+        targetPaths: [ "repo/second_folder/periodic_table" ]
       - !act.stageAll
         repoSetupName: local
       - !dev.act.git

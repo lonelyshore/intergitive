@@ -104,8 +104,8 @@
 
       #  commit, for observing difference 3
         - !act.moveFile 
-          sourcePath: "$level-data/commit-properties/file-2-name"
-          targetPath: "$level-data/commit-properties/file-2-name-2"
+          sourcePaths: ["$level-data/commit-properties/file-2-name"]
+          targetPaths: ["$level-data/commit-properties/file-2-name-2"]
         - *stageAll
         - !dev.act.git 
           repoSetupName: commits-advanced 

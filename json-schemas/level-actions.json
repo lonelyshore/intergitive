@@ -52,16 +52,26 @@
             "title": "[Action] Move File",
             "description": "Move files from <sourcePath> to <targetPath>",
             "properties": {
-                "sourcePath": {
-                    "$ref": "config-commons.json#/relativePath"
+                "sourcePaths": {
+                    "type": "array",
+                    "title": "Source Paths",
+                    "description": "relative paths of moved files",
+                    "items": {
+                        "$ref": "config-commons.json#/relativePath"
+                    }
                 },
-                "targetPath": {
-                    "$ref": "config-commons.json#/relativePath"
+                "targetPaths": {
+                    "type": "array",
+                    "title": "Target Paths",
+                    "description": "relative target paths of moved files",
+                    "items": {
+                        "$ref": "config-commons.json#/relativePath"
+                    }
                 }
             },
             "required": [
-                "sourcePath",
-                "targetPath"
+                "sourcePaths",
+                "targetPaths"
             ],
             "additionalProperties": false
         },
