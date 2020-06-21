@@ -30,8 +30,14 @@
       descriptionId: "level-data/commit-diff/inspect-diff-2"
       needConfirm: false
     - !verifyInput 
-      answer: "2"
-      
+      answer: "1"
+
+    - !instruct 
+      descriptionId: "level-data/commit-diff/inspect-diff-3"
+      needConfirm: false
+    - !verifyInput 
+      answer: "3"
+
     - !elaborate 
       descriptionId: "level-data/commit-diff/summary"
 

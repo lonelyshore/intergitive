@@ -182,27 +182,86 @@ asset_index:
       2005年，安德魯·垂鳩寫了一個簡單程式，可以連接BitKeeper的儲存庫，BitKeeper著作權擁有者拉里·麥沃伊認為安德魯·垂鳩對BitKeeper內部使用的協定進行逆向工程，決定收回無償使用BitKeeper的授權。Linux核心開發團隊與BitMover公司進行磋商，但無法解決他們之間的歧見。林納斯·托瓦茲決定自行開發版本控制系統替代BitKeeper，以十天的時間編寫出git第一個版本[13][14]。 
 
     file-2:v1: |+2
-      妙蛙花生湯
-      傑尼龜
-      小火龍
-    file-2:v2: |+2
-      妙蛙花生湯
-      傑尼龜
-      小火龍
       酷拉皮卡丘
-    file-2:v3: |+2
       妙蛙花生湯
-      傑尼龜
+    file-2:v2: |+2
+      酷拉皮卡丘
+      妙蛙花生湯
       小火龍
+    file-2:v3: |+2
       皮卡丘
+      妙蛙花生湯
+      小火龍
+    file-2:v4: |+2
+      妙蛙花生湯
+      皮卡丘
+      小火龍
+      傑尼龜
+    file-3:v1: |+2
+      ｏ｜　｜　
+      －＋－＋－
+      　｜　｜　
+      －＋－＋－
+      　｜　｜　
+    file-3:v2: |+2
+      ｏ｜　｜　
+      －＋－＋－
+      　｜ｘ｜　
+      －＋－＋－
+      　｜　｜　
+    file-3:v3: |+2
+      ｏ｜　｜　
+      －＋－＋－
+      　｜ｘ｜　
+      －＋－＋－
+      ｏ｜　｜　
+    file-3:v4: |+2
+      ｏ｜　｜　
+      －＋－＋－
+      ｘ｜ｘ｜　
+      －＋－＋－
+      ｏ｜　｜　
+    
+
+    file-4:v1: |+2
+      1. 刺激1995
+      2. 教父
+      3. 教父第二集
+      4. 黑暗騎士
+      5. 十二怒漢
+    file-4:v2: |+2
+      1. 刺激1995
+      2. 教父
+      3. 教父第二集
+      4. 黑暗騎士
+      5. 十二怒漢
+      6. 辛德勒的名單
+      7. 魔戒三部曲：王者再臨
+      8. 黑色追緝令
+      9. 黃昏三鏢客
+      10. 魔戒首部曲：魔戒現身
+    file-4:v3: |+2
+      1. 刺激1995
+      2. 教父
+      3. 教父第二集
+      4. 黑暗騎士
+      5. 十二怒漢
+      6. 辛德勒的名單
+      7. 魔戒三部曲：王者再臨
+      8. 黑色追緝令
+      9. 黃昏三鏢客
+      10. 魔戒首部曲：魔戒現身
+      11. 鬥陣俱樂部
+      12. 阿甘正傳
+      13. 全面啟動
+      14. 星際大戰五部曲：帝國大反擊
+      15. 魔戒二部曲：雙城奇謀
 
 
     file-2-name: "commits-advanced/神奇寶貝.txt"
     file-2-filename: "神奇寶貝.txt"
-    file-2-name-2: "commits-advanced/寶可夢.txt"
-    file-2-filename-2: "寶可夢.txt"
-    file-3-name: "commits-advanced/化學元素.txt"
-    file-3-filename: "化學元素.txt"
+    file-3-name: "commits-advanced/圈圈叉叉.txt"
+    file-3-filename: "圈圈叉叉.txt"
     file-4-name: "commits-advanced/網路電影資料庫.txt"
     file-4-filename: "網路電影資料庫.txt"
 
@@ -216,6 +275,11 @@ asset_index:
     diff1-message: "查看變化 1"
     diff2-message: "查看變化 2"
     diff3-message: "查看變化 3"
+    add-other-files-message: "加入圈圈叉叉和電影清單"
+    change-1-message: "修改"
+    change-2-message: "修改"
+    change-3-message: "修改"
+    change-4-message: "修改"
 
 
     

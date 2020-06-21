@@ -23,7 +23,7 @@
           repoSetupName: commits-advanced
           arguments: [ config, "--local", core.autocrlf, input]
 
-      # commit-1, short message
+      # short message
         - !act.writeFile 
           sourceAssetIds:
             - "$level-data/commit-properties/file-1:v1"
@@ -36,7 +36,7 @@
           repoSetupName: commits-advanced
           arguments: [ "commit", "-m", "$level-data/commit-properties/short-message" ]
 
-      # second commit, long message
+      # long message
         - !act.writeFile 
           sourceAssetIds:
             - "$level-data/commit-properties/file-1:v2"
@@ -46,8 +46,21 @@
         - !dev.act.git 
           repoSetupName: commits-advanced 
           arguments: [ "commit", "-m", "$level-data/commit-properties/long-message" ]
+      
+      # add two file-3 and file-4
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/commit-properties/file-3:v1"
+            - "$level-data/commit-properties/file-4:v1"
+          destinationPaths:
+            - "$level-data/commit-properties/file-3-name"
+            - "$level-data/commit-properties/file-4-name"
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: commits-advanced 
+          arguments: [ "commit", "-m", "$level-data/commit-properties/add-other-files-message" ]
 
-      # third commit, proper message
+      # proper message
         - !act.writeFile 
           sourceAssetIds:
             - "$level-data/commit-properties/file-1:v3"
@@ -58,7 +71,7 @@
           repoSetupName: commits-advanced 
           arguments: [ "commit", "-m", "$level-data/commit-properties/proper-message" ]
 
-      # forth commit, for observing difference 1
+      # for observing difference 1
         - !act.writeFile 
           sourceAssetIds:
             - "$level-data/commit-properties/file-2:v1"
@@ -69,7 +82,7 @@
           repoSetupName: commits-advanced 
           arguments: [ "commit", "-m", "$level-data/commit-properties/diff1-message" ]
         
-      # fifth commit, inserted non-sense message
+      # inserted non-sense message
         - !act.writeFile 
           sourceAssetIds:
             - "$level-data/commit-properties/file-2:v2"
@@ -80,7 +93,18 @@
           repoSetupName: commits-advanced 
           arguments: [ "commit", "-m", "$level-data/commit-properties/short-message" ]
 
-      # sixth commit, for observing difference 2
+      # update file-3(2)
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/commit-properties/file-3:v2"
+          destinationPaths:
+            - "$level-data/commit-properties/file-3-name"
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: commits-advanced 
+          arguments: [ "commit", "-m", "$level-data/commit-properties/change-1-message" ]
+
+      # for observing difference 2
         - !act.writeFile 
           sourceAssetIds:
             - "$level-data/commit-properties/file-2:v3"
@@ -91,25 +115,51 @@
           repoSetupName: commits-advanced 
           arguments: [ "commit", "-m", "$level-data/commit-properties/diff2-message" ]
 
-      # seventh commit, add two other files
+      # update file-3(3) and file-4(2)
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/commit-properties/file-3:v3"
+            - "$level-data/commit-properties/file-4:v2"
+          destinationPaths:
+            - "$level-data/commit-properties/file-3-name"
+            - "$level-data/commit-properties/file-4-name"
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: commits-advanced 
+          arguments: [ "commit", "-m", "$level-data/commit-properties/change-2-message" ]
+
+      # update file-3(4)
         - !act.writeFile 
           sourceAssetIds:
             - "$level-data/commit-properties/file-3:v3"
           destinationPaths:
-            - "$level-data/commit-properties/file-2-name"
+            - "$level-data/commit-properties/file-3-name"
         - *stageAll
         - !dev.act.git 
           repoSetupName: commits-advanced 
-          arguments: [ "commit", "-m", "$level-data/commit-properties/diff2-message" ]
+          arguments: [ "commit", "-m", "$level-data/commit-properties/change-3-message" ]
 
-      #  commit, for observing difference 3
-        - !act.moveFile 
-          sourcePaths: ["$level-data/commit-properties/file-2-name"]
-          targetPaths: ["$level-data/commit-properties/file-2-name-2"]
+      # for observing difference 3
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/commit-properties/file-2:v4"
+          destinationPaths:
+            - "$level-data/commit-properties/file-4-name"
         - *stageAll
         - !dev.act.git 
           repoSetupName: commits-advanced 
           arguments: [ "commit", "-m", "$level-data/commit-properties/diff3-message" ]
+
+      # update file-4(2)
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/commit-properties/file-4:v2"
+          destinationPaths:
+            - "$level-data/commit-properties/file-4-name"
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: commits-advanced 
+          arguments: [ "commit", "-m", "$level-data/commit-properties/change-4-message" ]
 
 
       # save reference to init

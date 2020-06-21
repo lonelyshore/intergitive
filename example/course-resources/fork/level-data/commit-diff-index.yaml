@@ -44,9 +44,9 @@ asset_index:
       然後，請檢視它與前一個${{t/revision}}之間的${{t/diff}}  
 
       請回答這個${{t/revision}}增加的是下列哪一個檔案？  
-      1. 常識.txt
+      1. 數碼寶貝.txt
       2. ${{level-data/commit-properties/file-2-filename}}
-      3. 常規.txt
+      3. 神奇海螺.txt
 
       請以數字(1/2/3)回答  
 
@@ -71,8 +71,35 @@ asset_index:
 
       請檢視提交訊息為「${{level-data/commit-properties/diff2-message}}」的${{t/revision}}${{t/diff}}  
       並且回答修改的內容是下列何者  
-      1. 刪除「燒賣」
-      2. 
+      1. 修正皮卡丘的名字：刪除「酷拉」
+      2. 修正妙蛙花的名字：刪除「生湯」
+      3. 加入「傑尼龜」
+
+      請以數字(1/2/3)回答  
+
+    inspect-diff-3: |+2
+      .md
+      恭喜再次回答正確
+      讓我們最後一次繼續練習如何觀察${{t/diff}}  
+
+      請檢視提交訊息為「${{level-data/commit-properties/diff3-message}}」的${{t/revision}}${{t/diff}}  
+      並且回答修改的內容是下列何者  
+      1. 修改皮卡丘的名字成為「李奧納多皮卡丘」
+      2. 修正妙蛙花的名字：刪除「生湯」
+      3. 加入「傑尼龜」      
+
+      請以數字(1/2/3)回答  
+
+    summary: |+2
+      .md
+      在這一章節中  
+      我們學習到了如何從${{t/gui}}上觀察${{t/revision}}和前一個版本的**${{t/diff}}**  
+      至此為止  
+      我們已經大致了解了一個${{t/revision}}上紀錄了那些內容  
+      這些內容都可以用來輔助我們尋找想要的${{t/revision}}  
+
+      擁有了目前的知識後
+      在下一章之中，我們將學習如何更深入的利用${{t/graph}}來找到想要的檔案的版本  
 
       
 
