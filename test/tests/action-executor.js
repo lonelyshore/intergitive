@@ -20,6 +20,9 @@ const actionTypes = require('../../dev/config-action');
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
+const { util } = require('chai');
+const { promises } = require('dns');
+const { writeFile } = require('fs');
 
 chai.use(chaiAsPromised);
 chai.should();
@@ -420,7 +423,7 @@ describe('Action Executor #core', function() {
             });
         });
 
-        describe.only('Remove File', function() {
+        describe('Remove File', function() {
 
             it('remove single', function() {
                 
@@ -570,32 +573,70 @@ describe('Action Executor #core', function() {
             })
         });
 
-        describe('Move File', function() {
+        describe.only('Move File', function() {
+
+            function convertFileNamesToFullPath(names) {
+                return names.map(
+                    name => path.join(utils.PLAYGROUND_PATH, name)
+                );
+            }
+
+            function writeFiles(paths) {
+                return paths.reduce(
+                    (previousTask, currentPath) => {
+                        return previousTask.then(() => {
+                            return fs.writeFile(currentPath, currentPath);
+                        })
+                    }, 
+                    Promise.resolve()
+                );
+            }
+
+            function assertFilesMoved(sourcePaths, targetPaths) {
+                let assertRemoved = sourcePaths.map(source => {
+                    return fs.access(source).should.be.rejected;
+                });
+
+                let assertExists = targetPaths.map(target => {
+                    return fs.access(target).should.be.fulfilled;
+                });
+
+                return Promise.all(assertRemoved.concat(assertExists));
+            }
+
+            function testFilesMoved(sourceNames, targetNames) {
+                let sourcePaths = convertFileNamesToFullPath(sourceNames);
+                let targetPaths = convertFileNamesToFullPath(targetNames);
+
+                let action = new actionTypes.MoveFileAction(
+                    sourceNames,
+                    targetNames
+                );
+
+                return writeFiles(sourcePaths)
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return assertFilesMoved(sourcePaths, targetPaths);
+                });
+            }
 
             it('move a file', function() {
 
                 let sourceName = 'source';
                 let targetName = 'target';
-                let sourcePath = path.join(utils.PLAYGROUND_PATH, sourceName);
-                let targetPath = path.join(utils.PLAYGROUND_PATH, targetName);
-                let content = 'some contents';
+                
+                return testFilesMoved([sourceName], [targetName]);
 
-                let action = new actionTypes.MoveFileAction(
-                    sourceName,
-                    targetName
-                );
-
-                return fs.writeFile(sourcePath, content)
-                .then(() => {
-                    return action.executeBy(actionExecutor);
-                })
-                .then(() => {
-                    return Promise.all([
-                        fs.exists(sourcePath).should.eventually.equal(false, `${sourcePath} should not exist`),
-                        fs.exists(targetPath).should.eventually.equal(true, `${targetPath} should exists`)
-                    ]);
-                });
             });
+
+            it('move files', function() {
+                let sourceNames = ['source-1', 'source-2'];
+                let targetNames = ['target-1', 'target-2'];
+                
+                return testFilesMoved(sourceNames, targetNames);
+            })
         });
     });
 
