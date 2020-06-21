@@ -91,12 +91,21 @@
           repoSetupName: commits-advanced 
           arguments: [ "commit", "-m", "$level-data/commit-properties/diff2-message" ]
 
-      # seventh commit, for observing difference 3
+      # seventh commit, add two other files
         - !act.writeFile 
           sourceAssetIds:
-            - "$level-data/commit-properties/file-2:v4"
+            - "$level-data/commit-properties/file-3:v3"
           destinationPaths:
             - "$level-data/commit-properties/file-2-name"
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: commits-advanced 
+          arguments: [ "commit", "-m", "$level-data/commit-properties/diff2-message" ]
+
+      #  commit, for observing difference 3
+        - !act.moveFile 
+          sourcePath: "$level-data/commit-properties/file-2-name"
+          targetPath: "$level-data/commit-properties/file-2-name-2"
         - *stageAll
         - !dev.act.git 
           repoSetupName: commits-advanced 

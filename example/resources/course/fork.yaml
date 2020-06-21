@@ -66,4 +66,8 @@
           id: "fork-main-commit-backtrace"
           nameKey: "levels/main.commit-backtrace.name"
           configAssetId: "levels/commit-backtrace"
+        - !level 
+          id: "fork-main-commit-diff"
+          nameKey: "levels/main.commit-diff.name"
+          configAssetId: "levels/commit-diff"
 

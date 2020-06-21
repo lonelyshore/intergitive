@@ -1,0 +1,38 @@
+!level
+  repoVcsSetups:
+    commits-advanced:
+      workingPath: commits-advanced
+      referenceStoreName: commits-advanced
+      checkpointStoreName: commits-advanced-checkpoints
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+  # intro & instruct modify new file
+    - !elaborate 
+      descriptionId: "level-data/commit-diff/intro"
+    - !instruct 
+      descriptionId: "level-data/commit-diff/guide-lookup-diff"
+    - !elaborate 
+      descriptionId: "level-data/commit-diff/read-diff"
+    - !instruct 
+      descriptionId: "level-data/commit-diff/inspect-diff-1"
+      needConfirm: false
+    - !verifyInput 
+      answer: "2"
+
+    - !instruct 
+      descriptionId: "level-data/commit-diff/verify-diff-not-file-tree"
+      needConfirm: false
+    - !verifyInput 
+      answer: "2"
+
+    - !instruct 
+      descriptionId: "level-data/commit-diff/inspect-diff-2"
+      needConfirm: false
+    - !verifyInput 
+      answer: "2"
+
+    - !elaborate 
+      descriptionId: "level-data/commit-diff/summary"
+
+

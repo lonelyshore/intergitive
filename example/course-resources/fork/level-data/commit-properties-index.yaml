@@ -180,21 +180,31 @@ asset_index:
 
       自2002年開始，林納斯·托瓦茲決定使用BitKeeper作為Linux核心主要的版本控制系統用以維護程式碼。因為BitKeeper為專有軟體，這個決定在社群中長期遭受質疑。在Linux社群中，特別是理察·斯托曼與自由軟體基金會的成員，主張應該使用開放原始碼的軟體來作為Linux核心的版本控制系統。林納斯·托瓦茲曾考慮過採用現成軟體作為版本控制系統（例如Monotone），但這些軟體都存在一些問題，特別是效能不佳。現成的方案，如CVS的架構，受到林納斯·托瓦茲的批評[12]。
       2005年，安德魯·垂鳩寫了一個簡單程式，可以連接BitKeeper的儲存庫，BitKeeper著作權擁有者拉里·麥沃伊認為安德魯·垂鳩對BitKeeper內部使用的協定進行逆向工程，決定收回無償使用BitKeeper的授權。Linux核心開發團隊與BitMover公司進行磋商，但無法解決他們之間的歧見。林納斯·托瓦茲決定自行開發版本控制系統替代BitKeeper，以十天的時間編寫出git第一個版本[13][14]。 
-    file-2:v1: |+2
-      pie = 3.1415926
-    file-2:v2: |+2
-      pie = 3.1415926
-      golden ratio = 1.61803
-    file-2:v3: |+2
-      pi = 3.1415926
-      golden ratio = 1.61803
-    file-2:v4: |+2
-      pi = 3.1415926
-      golden ratio = 1.61803
-      e = 2.71828
-      
 
-    file-2-name: "commits-advanced/常數.txt"
+    file-2:v1: |+2
+      妙蛙花生湯
+      傑尼龜
+      小火龍
+    file-2:v2: |+2
+      妙蛙花生湯
+      傑尼龜
+      小火龍
+      酷拉皮卡丘
+    file-2:v3: |+2
+      妙蛙花生湯
+      傑尼龜
+      小火龍
+      皮卡丘
+
+
+    file-2-name: "commits-advanced/神奇寶貝.txt"
+    file-2-filename: "神奇寶貝.txt"
+    file-2-name-2: "commits-advanced/寶可夢.txt"
+    file-2-filename-2: "寶可夢.txt"
+    file-3-name: "commits-advanced/化學元素.txt"
+    file-3-filename: "化學元素.txt"
+    file-4-name: "commits-advanced/網路電影資料庫.txt"
+    file-4-filename: "網路電影資料庫.txt"
 
     short-message: "哈哈"
     long-message: |+2

@@ -1,0 +1,75 @@
+asset_index:
+  infile:
+# course contents
+    intro: |+2
+      .md
+      在上個章節的最後，我們說到了${{t/revision}}反覆串接就構成了資料夾變化的歷史  
+      其實一個${{t/revision}}紀錄父母是誰這件事情  
+      除了構成歷史，也方便讓我們知道它相對於父母「修改」了甚麼  
+
+      這邊所謂的「修改」  
+      就是每個${{t/revision}}與前一個${{t/revision}}的${{t/file-tree}}內容的差別  
+      在這個章節中，我們將介紹如何觀察這件事情  
+
+    guide-lookup-diff: |+2
+      .md
+      首先，請使用${{t/gui}}打開位於「`#{{commits-advanced}}`」的資料夾  
+      然後如下圖操作，選擇紅框圈選的「Changes」頁籤  
+
+      ![illustration]({{images/illustrate-mark-commit-diff-gui}})  
+      <div class="img-title">圖(一)</div>  
+
+      完成操作之後
+      我們就可以在上圖橘框圈選的範圍內  
+      檢視一個${{t/revision}}與父母輩之間的差別  
+
+      這個差別，通常大家都叫做${{t/revision}}的**${{t/diff-f}}**  
+      
+
+    read-diff: |+2
+      .md
+      檢視${{t/revision}}變更內容的頁面使用的表達方式  
+      和我們之前在${{st/unstaged-changes}}或${{st/staged-changes}}中所看到的一樣  
+
+      在檔案的變化上，分成「新增」、「刪除」還有「修改」等狀態  
+      而在檔案內容的變化上，
+      又分成代表刪除的<p class="red-backed inline-txt">紅色底的字樣</p>，
+      還有代表新增的<p class="green-backed inline-txt">綠色底的字樣</p>  
+
+      接下來，就讓我們來練習一下如何使用這個介面吧  
+
+    inspect-diff-1: |+2
+      .md
+      請操作${{t/gui}}，從${{t/graph}}上選擇提交訊息為「${{level-data/commit-properties/diff1-message}}」的${{t/revision}}  
+      然後，請檢視它與前一個${{t/revision}}之間的${{t/diff}}  
+
+      請回答這個${{t/revision}}增加的是下列哪一個檔案？  
+      1. 常識.txt
+      2. ${{level-data/commit-properties/file-2-filename}}
+      3. 常規.txt
+
+      請以數字(1/2/3)回答  
+
+    verify-diff-not-file-tree: |+2
+      .md
+      恭喜回答正確~  
+
+      雖然現在才強調有點遲  
+      但是請注意「${{t/diff}}」和很久以前提的「${{t/revision}}的${{t/file-tree}}」並不相同  
+      倒不如說，前者正是兩個${{t/revision}}的${{t/file-tree}}之間的落差  
+
+      剛剛我們看到「${{level-data/commit-properties/diff1-message}}」的變更只有涉及到**一個檔案**  
+      現在，請按照以前所學，檢視同一個${{t/revision}}的${{t/file-tree}}之中有幾個檔案  
+      來驗證${{t/file-tree}}和${{t/diff}}是不同的東西  
+
+      請以阿拉伯數字直接輸入${{t/file-tree}}裡面有幾個檔案
+
+    inspect-diff-2: |+2
+      .md
+      從上面我們可以得知${{t/file-tree}}確實和${{t/diff}}不同  
+      接下來，讓我們繼續練習如何觀察
+      
+
+
+
+    
