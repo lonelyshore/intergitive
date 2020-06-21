@@ -42,3 +42,5 @@ asset_index:
     index: "變更暫存"
     hash-f: "特徵碼(hash)"
     hash: "特徵碼"
+    diff-f: "變更內容(diff)"
+    diff: 變更內容

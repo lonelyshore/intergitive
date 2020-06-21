@@ -31,7 +31,7 @@
       needConfirm: false
     - !verifyInput 
       answer: "2"
-
+      
     - !elaborate 
       descriptionId: "level-data/commit-diff/summary"
 

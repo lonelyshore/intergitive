@@ -67,7 +67,13 @@ asset_index:
     inspect-diff-2: |+2
       .md
       從上面我們可以得知${{t/file-tree}}確實和${{t/diff}}不同  
-      接下來，讓我們繼續練習如何觀察
+      接下來，讓我們繼續練習如何觀察${{t/diff}}  
+
+      請檢視提交訊息為「${{level-data/commit-properties/diff2-message}}」的${{t/revision}}${{t/diff}}  
+      並且回答修改的內容是下列何者  
+      1. 刪除「燒賣」
+      2. 
+
       
 
 
