@@ -604,9 +604,11 @@ describe('Action Executor #core', function() {
                 return Promise.all(assertRemoved.concat(assertExists));
             }
 
-            function testFilesMoved(sourceNames, targetNames) {
-                let sourcePaths = convertFileNamesToFullPath(sourceNames);
-                let targetPaths = convertFileNamesToFullPath(targetNames);
+            function testFilesMoved(
+                sourceNames,
+                targetNames,
+                sourcePaths,
+                targetPaths) {
 
                 let action = new actionTypes.MoveFileAction(
                     sourceNames,
@@ -624,18 +626,45 @@ describe('Action Executor #core', function() {
 
             it('move a file', function() {
 
-                let sourceName = 'source';
-                let targetName = 'target';
+                let sourceNames = ['source'];
+                let targetNames = ['target'];
+                let sourcePaths = convertFileNamesToFullPath(sourceNames);
+                let targetPaths = convertFileNamesToFullPath(targetNames);
                 
-                return testFilesMoved([sourceName], [targetName]);
-
+                return testFilesMoved(
+                    sourceNames,
+                    targetNames,
+                    sourcePaths,
+                    targetPaths
+                );
             });
 
             it('move files', function() {
                 let sourceNames = ['source-1', 'source-2'];
                 let targetNames = ['target-1', 'target-2'];
+                let sourcePaths = convertFileNamesToFullPath(sourceNames);
+                let targetPaths = convertFileNamesToFullPath(targetNames);
                 
-                return testFilesMoved(sourceNames, targetNames);
+                return testFilesMoved(
+                    sourceNames,
+                    targetNames,
+                    sourcePaths,
+                    targetPaths
+                );
+            });
+
+            it('move file with translated name', function() {
+                let sourceNames = ['$write-file/translated-path'];
+                let targetNames = ['$write-file/translated-path-2'];
+                let sourcePaths = convertFileNamesToFullPath(['神秘的路徑.txt']);
+                let targetPaths = convertFileNamesToFullPath(['另一個路徑.txt']);
+
+                return testFilesMoved(
+                    sourceNames,
+                    targetNames,
+                    sourcePaths,
+                    targetPaths
+                );
             })
         });
     });
