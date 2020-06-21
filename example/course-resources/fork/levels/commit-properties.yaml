@@ -144,7 +144,7 @@
           sourceAssetIds:
             - "$level-data/commit-properties/file-2:v4"
           destinationPaths:
-            - "$level-data/commit-properties/file-4-name"
+            - "$level-data/commit-properties/file-2-name"
         - *stageAll
         - !dev.act.git 
           repoSetupName: commits-advanced 

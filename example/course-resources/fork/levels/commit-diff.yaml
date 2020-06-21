@@ -24,7 +24,7 @@
       descriptionId: "level-data/commit-diff/verify-diff-not-file-tree"
       needConfirm: false
     - !verifyInput 
-      answer: "2"
+      answer: "4"
 
     - !instruct 
       descriptionId: "level-data/commit-diff/inspect-diff-2"

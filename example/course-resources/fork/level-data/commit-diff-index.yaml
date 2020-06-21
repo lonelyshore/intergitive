@@ -59,8 +59,8 @@ asset_index:
       倒不如說，前者正是兩個${{t/revision}}的${{t/file-tree}}之間的落差  
 
       剛剛我們看到「${{level-data/commit-properties/diff1-message}}」的變更只有涉及到**一個檔案**  
-      現在，請按照以前所學，檢視同一個${{t/revision}}的${{t/file-tree}}之中有幾個檔案  
-      來驗證${{t/file-tree}}和${{t/diff}}是不同的東西  
+      現在，請按照以前所學，檢視同一個${{t/revision}}的**${{t/file-tree}}**之中有幾個檔案  
+      如果數量不是一，我們就證明了**${{t/file-tree}}**和$**${{t/diff}}**是不同的東西  
 
       請以阿拉伯數字直接輸入${{t/file-tree}}裡面有幾個檔案
 
