@@ -28,7 +28,7 @@ asset_index:
 
     read-diff: |+2
       .md
-      檢視${{t/revision}}變更內容的頁面使用的表達方式  
+      ${{t/revision}}的變更內容頁面使用的表達方式  
       和我們之前在${{st/unstaged-changes}}或${{st/staged-changes}}中所看到的一樣  
 
       在檔案的變化上，分成「新增」、「刪除」還有「修改」等狀態  
@@ -60,7 +60,7 @@ asset_index:
 
       剛剛我們看到「${{level-data/commit-properties/diff1-message}}」的變更只有涉及到**一個檔案**  
       現在，請按照以前所學，檢視同一個${{t/revision}}的**${{t/file-tree}}**之中有幾個檔案  
-      如果數量不是一，我們就證明了**${{t/file-tree}}**和$**${{t/diff}}**是不同的東西  
+      如果數量不是一，我們就證明了**${{t/file-tree}}**和**${{t/diff}}**是不同的東西  
 
       請以阿拉伯數字直接輸入${{t/file-tree}}裡面有幾個檔案
 
