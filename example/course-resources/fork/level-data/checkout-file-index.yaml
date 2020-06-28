@@ -73,8 +73,8 @@ asset_index:
       .md
       「切換整個資料夾的版本」和「切換特定檔案的版本」所做的事情幾乎一樣    
       根據我們在以前章節的說明  
-      前者就是把${{t/head}}指向過去某個版本的${{t/file-tree}}  
-      然後把${{t/file-tree}}複製到${{t/work-tree}}以及${{t/index}}之中  
+      前者就是把${{t/head}}指向過去某個${{t/revision}}
+      然後把該版本的${{t/file-tree}}複製到${{t/work-tree}}以及${{t/index}}之中  
 
       切換特定檔案的版本則是把特定的檔案從指定的${{t/file-tree}}複製到同樣的兩個地方  
       最大的差別是${{t/head}}並不會改變  
@@ -83,8 +83,8 @@ asset_index:
       ![illustration]({{images/illusrate-staged-unstaged-after-checkout-file}})  
       <div class="img-title">圖(五)</div>  
 
-      從上圖中，我們以黃色檔案代表被切換版本的特定檔案  
-      因此，${{t/work-tree}}還有${{t/index}}裡面都各有一個黃色檔案  
+      從上圖中，我們以紅色檔案的圖片代表特定檔案被切換到紅色${{t/revision}}  
+      因此，${{t/work-tree}}還有${{t/index}}裡面都各有一個紅色檔案  
       同時，我們以白色檔案的圖片代表這個檔案在最新版本(也就是${{t/head}})的狀態  
       因此，白色檔案的圖片出現在${{t/head}}的${{t/work-tree}}中  
 

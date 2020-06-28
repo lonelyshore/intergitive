@@ -5,7 +5,7 @@ asset_index:
     main.section-intro.name: "第一章：fork 安裝與瀏覽版本"
     main.section-create-commits.name: "第二章：建立版本歷史與檔案狀態"
     main.section-elaborate-commits.name: "第三章：保存的版本的性質"
-    main.section-advanced-history-browsing: "第四張：進階瀏覽版本歷史與回溯版本"
+    main.section-advanced-history-browsing: "第四章：進階瀏覽版本歷史與回溯版本"
 
   # level names of section one
     main.intro-install.name: "1-1 節：安裝"

@@ -15,6 +15,11 @@
     - !instruct 
       descriptionId: "level-data/checkout-file/checkout-file-2-first"
       needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: commits-advanced
+          arguments: [ "checkout", "master~5", "--", "$level-data/commit-properties/file-2-filename" ]
     - !verifyRepo 
       referenceName: "checkout-file-2-first"
   
@@ -26,16 +31,21 @@
     - !illustrate 
       descriptionId: "level-data/checkout-file/illusrate-staged-unstaged-after-checkout-file"
   
-  # introduce checkout file before certain change
-    - !elaborate 
-      descriptionId: "level-data/checkout-file/introduce-checkout-previous-state"
-    - !instruct 
-      descriptionId: "level-data/checkout-file/checkout-file-2-before-first"
-      needConfirm: false
-    - !verifyRepo 
-      referenceName: "checkout-file-2-before-first"
-    - !elaborate 
-      descriptionId: "level-data/checkout-file/confirm-file-2-checkouted-before-first"
+  # introduce checkout file before certain change (removed)
+    # - !elaborate 
+    #   descriptionId: "level-data/checkout-file/introduce-checkout-previous-state"
+    # - !instruct 
+    #   descriptionId: "level-data/checkout-file/checkout-file-2-before-first"
+    #   needConfirm: false
+    # - !dev.needAction 
+    #   actions:
+    #     - !act.removeFile 
+    #       targetPaths: [ "$level-data/commit-properties/file-2-name" ]
+
+    # - !verifyRepo 
+    #   referenceName: "checkout-file-2-before-first"
+    # - !elaborate 
+    #   descriptionId: "level-data/checkout-file/confirm-file-2-checkouted-before-first"
 
     - !elaborate 
       descriptionId: "level-data/checkout-file/summary"
