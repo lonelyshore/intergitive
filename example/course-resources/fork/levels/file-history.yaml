@@ -1,0 +1,33 @@
+!level
+  repoVcsSetups:
+    commits-advanced:
+      workingPath: commits-advanced
+      referenceStoreName: commits-advanced
+      checkpointStoreName: commits-advanced-checkpoints
+  steps:
+    - !loadReference
+      referenceName: init
+
+  # intro 
+    - !elaborate 
+      descriptionId: "level-data/file-history/intro"
+    - !instruct 
+      descriptionId: "level-data/file-history/instruct-show-file-history"
+    - !elaborate 
+      descriptionId: "level-data/file-history/introduce-file-history-gui"
+      needConfirm: false
+    - !verifyInput 
+      answer: "3"
+
+    - !instruct 
+      descriptionId: "level-data/file-history/instruct-show-file-4-history"
+      needConfirm: false
+    - !verifyInput 
+      answer: "3"
+
+    - !elaborate 
+      descriptionId: "level-data/file-history/summary"
+
+
+
+

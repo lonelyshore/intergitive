@@ -1,0 +1,79 @@
+asset_index:
+  infile:
+# course content
+    intro: |+2
+      .md
+      在前一個章節的尾聲中  
+      我們提到了雖然知道如何回溯檔案到特定版本，但要如何選定想要的版本很麻煩  
+      在實際的使用情境中  
+      如果可以知道想要回溯的檔案**自身的演變歷史**，就可以大大地幫助我們決定應該要選用哪一個版本  
+
+      在這一章節中，我們將學習如何瀏覽單一檔案的變化歷史  
+      那麼，就讓我們立刻開始吧  
+
+    instruct-show-file-history: |+2
+      .md
+      要觀看一個檔案的歷史，需要從瀏覽${{t/file-tree}}的介面進行操作  
+      為了方便可以看到各種檔案的歷史，我們可以選擇瀏覽最末尾的${{t/revision}}的${{t/file-tree}}  
+      因為在這個版本通常擁有最多的檔案  
+
+      請如下圖按照順序操作，來檢視「${{level-data/commit-properties/file-3-filename}}」這個檔案的歷史  
+
+      ![illustration]({{images/instruct-view-file-history}})  
+      <div class="img-title">圖(一)</div>  
+    
+      如上圖所示  
+      首先，請在${{t/graph}}上選擇最末尾的${{t/revision}}，並且切換到${{t/file-tree}}的介面  
+      然後，在${{t/file-tree}}裡面對「${{level-data/commit-properties/file-3-filename}}」按下右鍵，展開右鍵選單  
+      最後，選擇選單上以紅色框線圈起的「${{st/show-file-history}}」  
+
+      選擇該項目後，就會出現如下圖的**檔案歷史**介面  
+
+      ![illustration]({{images/gui-file-history}})  
+      <div class="img-title">圖(二)</div>   
+
+    introduce-file-history-gui: |+2
+      .md
+      從上圖(二)中可見，整個介面分割成了左邊紅框圈選和右邊橘框圈選兩個區塊  
+      左邊的區塊顯示了目前檢視的檔案有哪些不同的版本  
+      右邊的區塊，則顯示目前被選中的版本的修改內容  
+      如果從左邊的區塊由舊到新(從下往上)依序選擇不同的版本  
+      就可以從右側區塊觀察檔案的變化過程  
+
+      請回答「${{level-data/commit-properties/file-3-filename}}」總共有幾種不同的版本呢？  
+
+      1. 一種
+      2. 兩種
+      3. 三種  
+
+      請以數字(1/2/3)回答  
+
+    
+    instruct-show-file-4-history: |+2
+      .md
+      在檔案歷史的介面中，一個檔案究竟經過了哪些修改立刻變得一目了然  
+      我們可以使用這個介面來輔助找出想要回溯的檔案版本  
+
+      在練習這件事之前，先讓我們把「${{level-data/commit-properties/file-3-filename}}」的檔案歷史介面給關閉  
+      然後，開啟「${{level-data/commit-properties/file-4-filename}}」的檔案歷史介面  
+
+      從檔案歷史可以看出來，這個檔案的版本繁多  
+      假設我們想要回溯到某一版剛剛增加了「8. 黑色追緝令」這一行  
+      請問這一版會是從下數上來的第幾版呢？  
+
+      1. 第一版
+      2. 第三版
+      3. 第五版
+      4. 第七版  
+
+      請以數字(1/2/3/4)回答  
+      
+    summary: |+2
+      .md
+      恭喜，我們現在已經學會了如何透過檔案歷史的介面，觀察檔案的變化  
+      仔細閱覽檔案的變化，有助於我們找到特定的檔案版本  
+      這樣，就可以把檔案回溯到想要的版本了  
+
+      在下一章節，我們就會練習如何一氣呵成的完成這一整件事情  
+
+

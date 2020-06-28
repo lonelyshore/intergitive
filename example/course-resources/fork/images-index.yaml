@@ -106,3 +106,7 @@ asset_index:
     instruct-seek-out-staged-unstaged-after-checkout-file-2: checkout-file@illusrate-staged-unstaged-after-checkout-fileinstruct-seek-out-staged-unstaged-after-checkout-file-2.png
     illusrate-staged-unstaged-after-checkout-file: checkout-file@illusrate-staged-unstaged-after-checkout-file.png
     instruct-checkout-file-before-specific-commit: checkout-file@instruct-checkout-file-before-specific-commit.png
+
+# file-history
+    instruct-view-file-history: file-history@instruct-view-file-history.png
+    gui-file-history: file-history@gui-file-history.png

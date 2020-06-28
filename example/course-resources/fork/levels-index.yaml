@@ -29,6 +29,7 @@ asset_index:
 
   # level names of section four
     main.checkout-file.name: "回溯檔案到特定版本"
+    main.file-history.name: "單一檔案的版本歷史"
 
   ondisk:
   # level configs of section one: intro
@@ -53,4 +54,4 @@ asset_index:
 
   # level configs of section four: advanced history browsing
     checkout-file: "checkout-file.yaml"
-  
+    file-history: "file-history.yaml"

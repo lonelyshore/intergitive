@@ -78,4 +78,7 @@
           id: "fork-main-checkout-file"
           nameKey: "levels/main.checkout-file.name"
           configAssetId: "levels/checkout-file"
-
+        - !level 
+          id: "fork-main-file-history"
+          nameKey: "levels/main.file-history.name"
+          configAssetId: "levels/file-history"

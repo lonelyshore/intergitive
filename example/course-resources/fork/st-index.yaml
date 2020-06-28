@@ -14,3 +14,4 @@ asset_index:
     reset-file-item: "Reset File To (重設檔案為)"
     reset-file-sub-current: "State At Commit... (該變更版本的狀態)"
     reset-file-sub-previous: "State Before Commit... (該變更版本之前的狀態)"
+    show-file-history: "Show File History... (顯示檔案歷史...)"

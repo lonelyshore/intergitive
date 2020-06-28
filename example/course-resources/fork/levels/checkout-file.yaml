@@ -19,7 +19,7 @@
       actions:
         - !dev.act.git 
           repoSetupName: commits-advanced
-          arguments: [ "checkout", "master~5", "--", "$level-data/commit-properties/file-2-filename" ]
+          arguments: [ "checkout", "file-2-v1", "--", "$level-data/commit-properties/file-2-filename" ]
     - !verifyRepo 
       referenceName: "checkout-file-2-first"
   

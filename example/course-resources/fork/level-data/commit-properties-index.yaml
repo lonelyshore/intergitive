@@ -225,11 +225,36 @@ asset_index:
 
     file-4:v1: |+2
       1. 刺激1995
+    file-4:v2: |+2
+      1. 刺激1995
+      2. 教父
+      3. 教父第二集
+      4. 黑暗騎士
+    file-4:v3: |+2
+      1. 刺激1995
       2. 教父
       3. 教父第二集
       4. 黑暗騎士
       5. 十二怒漢
-    file-4:v2: |+2
+      6. 辛德勒的名單
+    file-4:v4: |+2
+      1. 刺激1995
+      2. 教父
+      3. 教父第二集
+      4. 黑暗騎士
+      5. 十二怒漢
+      6. 辛德勒的名單
+      7. 魔戒三部曲：王者再臨
+    file-4:v5: |+2
+      1. 刺激1995
+      2. 教父
+      3. 教父第二集
+      4. 黑暗騎士
+      5. 十二怒漢
+      6. 辛德勒的名單
+      7. 魔戒三部曲：王者再臨
+      8. 黑色追緝令
+    file-4:v6: |+2
       1. 刺激1995
       2. 教父
       3. 教父第二集
@@ -240,7 +265,7 @@ asset_index:
       8. 黑色追緝令
       9. 黃昏三鏢客
       10. 魔戒首部曲：魔戒現身
-    file-4:v3: |+2
+    file-4:v7: |+2
       1. 刺激1995
       2. 教父
       3. 教父第二集
@@ -252,18 +277,15 @@ asset_index:
       9. 黃昏三鏢客
       10. 魔戒首部曲：魔戒現身
       11. 鬥陣俱樂部
-      12. 阿甘正傳
-      13. 全面啟動
-      14. 星際大戰五部曲：帝國大反擊
-      15. 魔戒二部曲：雙城奇謀
+      12. 阿甘正傳 
 
 
     file-2-name: "commits-advanced/神奇寶貝.txt"
     file-2-filename: "神奇寶貝.txt"
-    file-3-name: "commits-advanced/圈圈叉叉.txt"
-    file-3-filename: "圈圈叉叉.txt"
-    file-4-name: "commits-advanced/網路電影資料庫.txt"
-    file-4-filename: "網路電影資料庫.txt"
+    file-3-name: "commits-advanced/ooxx.txt"
+    file-3-filename: "ooxx.txt"
+    file-4-name: "commits-advanced/IMDB.txt"
+    file-4-filename: "IMDB.txt"
 
     short-message: "哈哈"
     long-message: |+2
