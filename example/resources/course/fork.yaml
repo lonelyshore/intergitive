@@ -70,4 +70,12 @@
           id: "fork-main-commit-diff"
           nameKey: "levels/main.commit-diff.name"
           configAssetId: "levels/commit-diff"
+    - !sequential-section # chapter 4: advanced history browsing
+      id: "fork-main-section-advaneced-history-browsing"
+      nameKey: "levels/main.section-advanced-history-browsing"
+      children:
+        - !level 
+          id: "fork-main-checkout-file"
+          nameKey: "levels/main.checkout-file.name"
+          configAssetId: "levels/checkout-file"
 

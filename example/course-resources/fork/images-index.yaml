@@ -98,3 +98,10 @@ asset_index:
 
 # commit-diff
     illustrate-mark-commit-diff-gui: commit-diff@illustrate-mark-commit-diff-gui.png
+
+# checkout-file
+    illustrate-view-commit-diff-gui: checkout-file@illustrate-view-commit-diff-gui.png
+    instruct-checkout-file-at-specific-commit-1: checkout-file@instruct-checkout-file-at-specific-commit-1.png
+    instruct-checkout-file-at-specific-commit-2: checkout-file@instruct-checkout-file-at-specific-commit-2.png
+    instruct-seek-out-staged-unstaged-after-checkout-file-2: illusrate-staged-unstaged-after-checkout-fileinstruct-seek-out-staged-unstaged-after-checkout-file-2.png
+    illusrate-staged-unstaged-after-checkout-file: illusrate-staged-unstaged-after-checkout-fileillusrate-staged-unstaged-after-checkout-file.png

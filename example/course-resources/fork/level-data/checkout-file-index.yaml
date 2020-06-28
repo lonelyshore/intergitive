@@ -1,0 +1,139 @@
+asset_index:
+  infile:
+# course content
+    intro: |+2
+      .md
+      在先前的章節中  
+      我們學會了如何把資料夾中的**所有檔案**切換成特定版本  
+      但有些時候，我們只想要切換**特定的檔案**而已  
+
+      在這一章節中，我們將學習如何做到這件事情  
+
+    view-diff-of-first-change: |+2
+      .md  
+      要回溯特定檔案的版本，首先必須先知道要回溯**哪個檔案**以及**哪個版本**  
+      在這一章節中，我們將集中在回溯「${{level-data/commit-properties/file-2-filename}}」這一個檔案的版本  
+
+      至於指定想要使用的版本，我們可以透過前一個章節所學到的用來檢視${{t/revision}}的${{t/diff}}頁面來達成  
+      請回憶前一個章節所學，如下圖(一)的操作，來檢視「選擇提交訊息為「${{level-data/commit-properties/diff1-message}}」的${{t/diff}}  
+
+      ![illustration]({{images/illustrate-view-commit-diff-gui}})  
+      <div class="img-title">圖(一)</div>  
+      
+      首先，請在${{t/graph}}上選擇目標的${{t/revision}}  
+      然後選擇紅框圈選的「Changes」分頁  
+
+    checkout-file-2-first: |+2
+      .md
+      從${{t/diff}}中，我們可以看見目前選擇的${{t/revision}}新增了「${{level-data/commit-properties/file-2-filename}}」一個檔案  
+      也就是說，這個${{t/revision}}擁有這份檔案第一次出現時的狀態  
+
+      現在我們想要將這個檔案切換為這個初始版本  
+      請如下圖(二)和圖(三)所示操作  
+
+      ![illustration]({{images/instruct-checkout-file-at-specific-commit-1}})  
+      <div class="img-title">圖(二)</div>  
+
+      首先，請如上圖  
+      對著我們想要切換版本的檔案按下滑鼠右鍵，展開選單  
+      在選單上，我們可以找到紅框圈選的「${{st/reset-file-item}}」的選項  
+      選擇這個選項後，則會進一步展開子選單讓我們微調要切換的版本  
+
+      請如上圖所示，在子選單上選擇橘框圈選的「${{st/reset-file-sub-current}}」  
+      然後會出現如下圖(三)的確認對話框  
+
+      ![illustration]({{images/instruct-checkout-file-at-specific-commit-2}})  
+      <div class="img-title">圖(三)</div>  
+
+      這個對話框的大致意思是「請問是否要重設選定的檔案到目前選定的版本？如果確認，會覆蓋掉資料夾中的檔案」  
+      請如上圖所示，選擇紅框所圈選的確認按鈕  
+
+    confirm-file-2-changed: |+2
+      .md
+      恭喜，我們現在成功切換「${{level-data/commit-properties/file-2-filename}}」為初始狀態了  
+      如果有興趣的話，可以打開位於「#{{commits-advanced}}」的資料夾  
+      實際確認這個檔案的內容已經變成第一個版本的樣子  
+
+    see-folder-staged-and-unstaged: |+2
+      .md
+      在切換特定檔案的版本後  
+      令人不禁開始好奇這個時候資料夾的「${{st/unstaged-changes}}」以及「${{st/staged-changes}}」的狀態如何了  
+
+      且讓我們稍微回想一下之前的教學  
+      操作${{t/gui}}切換到「${{st/changes-tab}}」，應該會看到如下圖所示的情況  
+
+      ![illustration]({{images/instruct-seek-out-staged-unstaged-after-checkout-file-2}})  
+      <div class="img-title">圖(四)</div>  
+
+      從上圖紅框圈選範圍中我們可以注意到  
+      切換檔案之後，會造就「${{t/staged}}」裡面出現目標的檔案  
+      這是為什麼呢？且讓我們稍微搭配圖片解說  
+
+    illusrate-staged-unstaged-after-checkout-file: |+2
+      .md
+      「切換整個資料夾的版本」和「切換特定檔案的版本」所做的事情幾乎一樣    
+      根據我們在以前章節的說明  
+      前者就是把${{t/head}}指向過去某個版本的${{t/file-tree}}  
+      然後把${{t/file-tree}}複製到${{t/work-tree}}以及${{t/index}}之中  
+
+      切換特定檔案的版本則是把特定的檔案從指定的${{t/file-tree}}複製到同樣的兩個地方  
+      最大的差別是${{t/head}}並不會改變  
+      因此，以概念圖來表達這件事情，就會如下圖所顯示  
+
+      ![illustration]({{images/illusrate-staged-unstaged-after-checkout-file}})  
+      <div class="img-title">圖(五)</div>  
+
+      從上圖中，我們以黃色檔案代表被切換版本的特定檔案  
+      因此，${{t/work-tree}}還有${{t/index}}裡面都各有一個黃色檔案  
+      同時，我們以白色檔案的圖片代表這個檔案在最新版本(也就是${{t/head}})的狀態  
+      因此，白色檔案的圖片出現在${{t/head}}的${{t/work-tree}}中  
+
+      讓我們回顧一下，「${{t/unstaged}}」是左邊的${{t/work-tree}}和中間的${{t/index}}的差別  
+      所以${{t/unstaged}}應該沒有任何項目  
+      與之相對的，「${{t/staged}}」則是中間的「${{t/index}}」和右邊的「${{t/head}}的${{t/file-tree}}」的落差  
+      因為${{t/head}}維持不動，所以${{t/staged}}出現被我們切換版本的檔案非常的合理  
+      
+    introduce-checkout-previous-state: |+2
+      .md
+      通常，我們除了會想要把檔案回溯到特定的版本之外  
+      還有可能會想要回到「特定的修改發生之前」  
+      也就是說，我們希望可以還原特定的修改  
+
+      因為這樣的需求非常常見，所以${{t/gui}}也支援這樣方便的操作  
+      接下來，讓我們練習一下如何使用  
+
+    
+    checkout-file-2-before-first: |+2
+      .md
+      請如同前面提過的步驟  
+      在${{t/gui}}的${{t/graph}}上選擇檢視「${{level-data/commit-properties/diff1-message}}」的${{t/diff}}  
+      然後仿照剛才的作法，對「${{level-data/commit-properties/file-2-filename}}」這個檔案展開右鍵選單  
+      
+      和剛才不同的是  
+      如下圖所示，請從${{st/reset-file-item}}的子選單中，選擇紅色框線所圈選的「${{st/reset-file-sub-previous}}」  
+
+      ![illustration]({{images/instruct-checkout-file-before-specific-commit}})  
+      <div class="img-title">圖(六)</div>  
+
+      這個項目的意思表示我們希望將檔案切換成「選中的變更發生之前的狀態」  
+      選擇之後，同樣會跳出一個確認對話框  
+      請確認進行切換檔案以繼續  
+
+    confirm-file-2-checkouted-before-first: |+2
+      .md
+      現在，我們所選擇的檔案應該已經切換成選定版本發生之前的狀態  
+      而又因為我們選定的版本恰好是這個檔案第一次被加入時的版本  
+      現在，這個檔案應該會完全從資料夾中消失才對  
+      如果有興趣，可以打開資料夾確認這件事情  
+
+    summary: |+2
+      .md
+      在這個章節中，我們學習了如何切換特定檔案到先前的版本  
+      但是我們並沒有交代一個關鍵的問題：  
+      我們是如何知道要將一個檔案切換到哪個版本的呢？  
+
+      當然，根據慣例，我們將在下一個章節中介紹如何解決這個問題～
+
+
+
+    

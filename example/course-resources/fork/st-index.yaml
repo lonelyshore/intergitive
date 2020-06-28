@@ -11,3 +11,6 @@ asset_index:
     act-stage: " Stage (核選)"
     act-unstage: " Unstage (取消核選)"
     discard-changes: "Discard changes... (捨棄變更)"
+    reset-file-item: "Reset File To (重設檔案為)"
+    reset-file-sub-current: "State At Commit... (該變更版本的狀態)"
+    reset-file-sub-previous: "State Before Commit... (該變更版本之前的狀態)"
