@@ -85,7 +85,7 @@
           arguments: [ "commit", "-m", "$level-data/commit-properties/diff1-message" ]
         - !dev.act.git 
           repoSetupName: commits-advanced
-          arguments: [ "tag", "" ]
+          arguments: [ "tag", "file-2-v1" ]
         
       # inserted non-sense message (file-2(2) and file-4(3))
         - !act.writeFile 

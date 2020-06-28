@@ -13,7 +13,7 @@
       descriptionId: "level-data/file-history/intro"
     - !instruct 
       descriptionId: "level-data/file-history/instruct-show-file-history"
-    - !elaborate 
+    - !instruct 
       descriptionId: "level-data/file-history/introduce-file-history-gui"
       needConfirm: false
     - !verifyInput 
