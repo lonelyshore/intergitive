@@ -9,36 +9,36 @@
 
   # intro 
     - !elaborate 
-      descriptionId: "intro"
+      descriptionId: "level-data/checkout-file/intro"
     - !instruct 
-      descriptionId: "view-diff-of-first-change"
+      descriptionId: "level-data/checkout-file/view-diff-of-first-change"
     - !instruct 
-      descriptionId: "checkout-file-2-first"
+      descriptionId: "level-data/checkout-file/checkout-file-2-first"
       needConfirm: false
     - !verifyRepo 
       referenceName: "checkout-file-2-first"
   
   # illustrate checkout file
     - !instruct 
-      descriptionId: "confirm-file-2-changed"
+      descriptionId: "level-data/checkout-file/confirm-file-2-changed"
     - !instruct 
-      descriptionId: "see-folder-staged-and-unstaged"
+      descriptionId: "level-data/checkout-file/see-folder-staged-and-unstaged"
     - !illustrate 
-      descriptionId: "illusrate-staged-unstaged-after-checkout-file"
+      descriptionId: "level-data/checkout-file/illusrate-staged-unstaged-after-checkout-file"
   
   # introduce checkout file before certain change
     - !elaborate 
-      descriptionId: "introduce-checkout-previous-state"
+      descriptionId: "level-data/checkout-file/introduce-checkout-previous-state"
     - !instruct 
-      descriptionId: "checkout-file-2-before-first"
+      descriptionId: "level-data/checkout-file/checkout-file-2-before-first"
       needConfirm: false
     - !verifyRepo 
       referenceName: "checkout-file-2-before-first"
     - !elaborate 
-      descriptionId: "confirm-file-2-checkouted-before-first"
+      descriptionId: "level-data/checkout-file/confirm-file-2-checkouted-before-first"
 
     - !elaborate 
-      descriptionId: "summary"
+      descriptionId: "level-data/checkout-file/summary"
 
 
 
