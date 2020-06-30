@@ -110,3 +110,7 @@ asset_index:
 # file-history
     instruct-view-file-history: file-history@instruct-view-file-history.png
     gui-file-history: file-history@gui-file-history.png
+
+# file-checkout-combo
+    instruct-copy-hash: file-checkout-combo@instruct-copy-hash.png
+    instruct-select-hash-with-sha: file-checkout-combo@instruct-select-hash-with-sha.png

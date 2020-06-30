@@ -23,7 +23,7 @@
       descriptionId: "level-data/file-history/instruct-show-file-4-history"
       needConfirm: false
     - !verifyInput 
-      answer: "3"
+      answer: "2"
 
     - !elaborate 
       descriptionId: "level-data/file-history/summary"

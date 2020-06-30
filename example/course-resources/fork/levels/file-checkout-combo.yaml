@@ -1,0 +1,40 @@
+!level
+  repoVcsSetups:
+    commits-advanced:
+      workingPath: commits-advanced
+      referenceStoreName: commits-advanced
+      checkpointStoreName: commits-advanced-checkpoints
+  steps:
+    - !loadReference
+      referenceName: init
+
+  # intro 
+    - !elaborate 
+      descriptionId: "intro"
+    - !instruct 
+      descriptionId: "find-commit"
+      needConfirm: false
+    - !verifyInput 
+      answer: "3"
+
+    - !instruct 
+      descriptionId: "copy-sha"
+    - !instruct 
+      descriptionId: "find-commit-by-sha"
+    - !instruct 
+      descriptionId: "checkout-file"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: commits-advanced
+          arguments: [ "checkout", "file-4-v3", "--", "$level-data/commit-properties/file-4-filename" ]
+    - !verifyRepo 
+      referenceName: "checkout-file-4-v3"
+
+    - !elaborate 
+      descriptionId: "summary"
+
+
+
+

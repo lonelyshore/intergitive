@@ -99,6 +99,9 @@
         - !dev.act.git 
           repoSetupName: commits-advanced 
           arguments: [ "commit", "-m", "$level-data/commit-properties/short-message" ]
+        - !dev.act.git 
+          repoSetupName: commits-advanced
+          arguments: [ "tag", "file-4-v3" ]
 
       # update file-3(2) and file-4(4)
         - !act.writeFile 
