@@ -82,3 +82,7 @@
           id: "fork-main-file-history"
           nameKey: "levels/main.file-history.name"
           configAssetId: "levels/file-history"
+        - !level 
+          id: "fork-main-file-checkout-combo"
+          nameKey: "levels/main.file-checkout-combo.name"
+          configAssetId: "levels/file-checkout-combo"
