@@ -15,3 +15,4 @@ asset_index:
     reset-file-sub-current: "State At Commit... (該變更版本的狀態)"
     reset-file-sub-previous: "State Before Commit... (該變更版本之前的狀態)"
     show-file-history: "Show File History... (顯示檔案歷史)"
+    copy-commit-hash: "Copy Commit SHA (複製變更版本的特徵碼)"

@@ -10,19 +10,19 @@
 
   # intro 
     - !elaborate 
-      descriptionId: "intro"
+      descriptionId: "level-data/file-checkout-combo/intro"
     - !instruct 
-      descriptionId: "find-commit"
+      descriptionId: "level-data/file-checkout-combo/find-commit"
       needConfirm: false
     - !verifyInput 
       answer: "3"
 
     - !instruct 
-      descriptionId: "copy-sha"
+      descriptionId: "level-data/file-checkout-combo/copy-sha"
     - !instruct 
-      descriptionId: "find-commit-by-sha"
+      descriptionId: "level-data/file-checkout-combo/find-commit-by-sha"
     - !instruct 
-      descriptionId: "checkout-file"
+      descriptionId: "level-data/file-checkout-combo/checkout-file"
       needConfirm: false
     - !dev.needAction 
       actions:
@@ -33,7 +33,7 @@
       referenceName: "checkout-file-4-v3"
 
     - !elaborate 
-      descriptionId: "summary"
+      descriptionId: "level-data/file-checkout-combo/summary"
 
 
 
