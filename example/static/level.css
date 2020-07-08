@@ -246,6 +246,14 @@ img[alt=illustration] {
     background-color: rgb(226, 253, 227);
 }
 
+table.distribute {
+    width: 100%;
+}
+
+td.cell {
+    text-align: center;
+}
+
 [blocked] {
     pointer-events: none;
     opacity: 0.4;

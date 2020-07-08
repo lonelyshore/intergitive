@@ -114,3 +114,11 @@ asset_index:
 # file-checkout-combo
     instruct-copy-hash: file-checkout-combo@instruct-copy-hash.png
     instruct-select-hash-with-sha: file-checkout-combo@instruct-select-hash-with-sha.png
+
+# commit-and-diverse
+    instruct-select-head: commit-and-diverse@instruct-select-head.png
+    capture-commit-and-diverse-graph-after-commit-1: commit-and-diverse@capture-commit-and-diverse-graph-after-commit-1.png
+    illustrate-commit-and-head-step-1: commit-and-diverse@illustrate-commit-and-head-step-1.png
+    illustrate-commit-and-head-step-2: commit-and-diverse@illustrate-commit-and-head-step-2.png
+    illustrate-commit-and-head-step-3: commit-and-diverse@illustrate-commit-and-head-step-3.png
+    illustrate-diversed-history-reverted: commit-and-diverse@illustrate-diversed-history-reverted.png

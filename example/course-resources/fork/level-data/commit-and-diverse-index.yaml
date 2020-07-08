@@ -1,0 +1,374 @@
+asset_index:
+  infile:
+# course content
+    intro: |+2
+      .md
+      現在，我們已經充分的理解${{t/revision}}的本質  
+      也學習了更進階的歷史瀏覽  
+      在我們開拓下一個階段的學習目標之前  
+      先讓我們來稍微複習一下如何新增${{t/revision}}吧  
+      當我們完成之後，就會明白這和我們接下來要開拓的新學習目標是密切相關的  
+
+      按照慣例，請先使用${{t/gui}}打開位於「#{{commits-advanced}}」的資料夾來檢查  
+
+    notify-on-last-commit: |+2
+      .md
+      在建立${{t/revision}}之前  
+      讓我們先注意一件之前沒有特別強調，但其實格外重要的事情  
+      那就是  
+      目前，我們的${{t/head}}是指向整個${{t/graph}}的最末端  
+      
+      如果想要驗證這一論述的正確性，可以進行以下的步驟
+
+    jump-to-last-commit: |+2
+      .md
+      ${{t/gui}}其實有一個方便的功能  
+      可以快速的在${{t/graph}}上選取${{t/head}}  
+
+      為了更容易感受到這項功能的效果  
+      首先，請在${{t/graph}}上選擇位於最下面的${{t/revision}}  
+
+      然後，請按照下圖指示操作，在${{t/graph}}上快速選取${{t/head}}  
+
+      ![illustration]({{images/instruct-select-head}})  
+      <div class="img-title">圖(一)</div>  
+
+      請如上圖所示  
+      在${{t/gui}}的工具列上找到紅框圈選的「${{st/toolbar-view}}」並且按下展開選單  
+      然後在選單上面找到橘框圈選的「${{st/view-show-head}}」  
+      按下去之後，${{t/head}}就會在${{t/graph}}上被選取  
+
+      請回答進行完上述操作後，目前${{t/graph}}選中的版本位於${{t/graph}}何處？  
+
+      1. 最上面
+      2. 最下面
+      3. 正中間
+      4. 中間偏上
+
+      請以數字(1/2/3/4)回答  
+
+    brief-commit-steps: |+2
+      .md
+      經過剛剛的操作，我們現在已經確信目前的${{t/head}}是處在${{t/graph}}的尾端了  
+      為了方便識別，請記得目前的${{t/head}}的變更訊息是「${{level-data/commit-properties/end-message}}」  
+      我們等下會回來確認這件事情  
+
+      那麼，接下來就來建立一個新的${{t/revision}}吧  
+      
+      讓我們回憶一下大略的步驟：
+      1. 在資料夾中製造變化：新增/修改/刪除檔案
+      2. 將想要保存的變化放入${{t/staged}}
+      3. 填入提交訊息
+      4. 建立${{t/revision}}  
+
+      就讓我們一步一步接著來吧  
+
+    modify-folder-1: |+2
+      .md
+      首先，請按下「執行」按鈕，來修改「#{{commits-advanced}}」的內容  
+
+    stage-and-commit-1: |+2
+      .md
+      現在，資料夾之中應該已經出現新增的檔案  
+      請按照之前所學，操作${{t/gui}}將**所有**出現的檔案變化都${{t/stage}}  
+      然後以「${{level-data/commit-and-diverse/commit-message-1}}」作為變更訊息，建立${{t/revision}}  
+
+      完成之後，請按下「執行」按鈕檢核是否順利完成  
+
+    head-advanced: |+2
+      .md
+      我們成功地建立了一個新的${{t/revision}}  
+      如果這個時候去觀察${{t/gui}}的${{t/graph}}，會得到如下圖所示的結果  
+
+      ![illustration]({{images/capture-commit-and-diverse-graph-after-commit-1}})  
+      <div class="img-title">圖(二)</div>  
+
+      從上圖，我們可以注意到幾點  
+
+      1. 原本我們所在的「${{level-data/commit-properites/end-message}}」變得不再是最末端了  
+      2. 取而代之的，是我們剛增加的「${{level-data/commit-and-diverse/commit-message-1}}」成為${{t/graph}}的最尾端  
+      3. 上面提到的兩個${{t/revision}}前者是後者的父母輩，在${{t/graph}}上他們被連在一起
+
+      這個時候，或許你會不禁產生疑問  
+      「${{t/head}}」原本指向的是「${{level-data/commit-properites/end-message}}」  
+      那麼在我們增加新的版本後，它應該指向哪裡呢？  
+
+    confirm-new-head: |+2
+      .md
+      要找出${{t/head}}的位置，請按照前面所教過的方法  
+      操作${{t/gui}}來快速選中${{t/head}}目前所在的位置  
+
+      完成之後，請回答${{t/head}}目前的位置  
+      1. 留在原位(「${{level-data/commit-properites/end-message}}」)
+      2. 移動到新版本(「${{level-data/commit-and-diverse/commit-message-1}}」)
+
+      請以數字(1/2)作答  
+
+    explain-head-advance: |+2
+      .md
+      通過上面的操作  
+      我們發現在建立${{t/revision}}之後，${{t/head}}會跟著移動到最新的版本上  
+
+      以下，我們用一系列的圖片來依序說明建立${{t/reivison}}所發生的事情  
+      順便複習一下以前所學  
+
+      ![illustration]({{images/illustrate-commit-and-head-step-1}})  
+      <div class="img-title">圖(三)</div>  
+
+      上圖顯示的是我們即將建立${{t/revision}}的前夕  
+      這個時候，準備建立${{t/revision}}的素材都已經準備好了  
+      包含放在${{t/index}}中的新的資料夾版本(以黃色資料夾代表)，還有變更訊息  
+
+      請注意這個時候的${{t/head}}指向右側整串${{t/graph}}最尾端的白色圓圈上  
+      準備就緒之後，我們就按下「提交」的按鈕  
+      然後發生如下圖的事情  
+
+      ![illustration]({{images/illustrate-commit-and-head-step-2}})  
+      <div class="img-title">圖(四)</div>  
+      
+      在上圖中，git 把圖(三)中準備好的素材  
+      融合成一個新的${{t/revision}}(圖右側黃色圓圈)  
+
+      新的版本上，除了記錄最新一版的資料夾以及變更訊息  
+      還包含了我們在前面章節學到的作者名字、建立時間、${{t/hash}}  
+      以及最重要的，「父母${{t/revision}}是誰」這件事情  
+
+      從上圖可見，新建立的黃色${{t/revision}}連接到原本${{t/head}}所在的白色圓圈  
+      這件事情並不是巧合  
+      當我們建立新${{t/revision}}的時候  
+      **新的一版必定會以當前的${{t/head}}作為父母輩**  
+
+      當新的${{t/revision}}被成功加入${{t/graph}}之後  
+      如我們已經知道的，會像下圖所示  
+      將${{t/head}}移動到新建立的${{t/revision}}(黃色圓圈)上  
+
+      ![illustration]({{images/illustrate-commit-and-head-step-3}})  
+      <div class="img-title">圖(五)</div>  
+
+      上面的三個階段構成了一次建立新${{t/revision}}的過程  
+      那麼為什麼${{t/head}}要移動到新版本上呢？  
+      這是因為${{t/head}}如同字面上的意思，是我們在資料夾「工作中」使用的版本  
+      既然我們修改了資料夾之後保存了一版到${{t/repo}}之中  
+      實際上我們資料夾「工作中」的版本就正是這個新增加的版本  
+      因此，${{t/head}}應該要挪動上去才名符其實  
+
+    how-about-head-not-on-end: |+2
+      .md
+      現在我們重新複習也徹底了解了建立${{t/revision}}的時候發生的事情  
+      這時候一個奇怪的問題冒了出來  
+
+      一直以來，我們都是在${{t/head}}處在${{t/graph}}最末端的情況建立${{t/revision}}  
+      所以${{t/graph}}就像蓋高樓一樣直線往上長  
+      如果我們把${{t/head}}挪到${{t/graph}}中間然後建立${{t/revision}}又會發生甚麼事情呢？  
+
+      接下來，就讓我們來實驗看看吧！
+
+    checkout-file-3-v1: |+2
+      .md
+      首先，讓我們把${{t/head}}切換到一個好地方  
+      請回憶先前所學關於切換${{t/head}}的操作  
+      在${{t/gui}}的${{t/graph}}上找到變更訊息為「${{level-data/commit-properties/add-other-files-message}}」的版本  
+      按下右鍵展開選單，然後找到「${{st/checkout-revision}}」的選項  
+      按下之後切換版本  
+
+      完成之後，請按下「執行」確認  
+
+    confirm-file-3-version: |+2
+      .md
+      請開啟位於「#{{commits-advanced}}」的資料夾  
+      接下來，我們將會專注於修改「${{level-data/commit-properties/file-3-filename}}」這份檔案  
+
+      首先，讓我們來認識這份檔案  
+      顧名思義，這是一個用來玩圈圈叉叉的檔案  
+      目前它的檔案內容是下列何者呢？  
+
+      <table class="distribute">
+        <tbody>
+          <tr>
+            <td class="cell">
+              ｏ｜　｜　<br>
+              －＋－＋－<br>
+              ｘ｜ｘ｜　<br>
+              －＋－＋－<br>
+              ｏ｜　｜　<br>
+            </td>
+            <td class="cell">
+              ｏ｜　｜　<br>
+              －＋－＋－<br>
+              ｘ｜ｘ｜　<br>
+              －＋－＋－<br>
+              　｜　｜ｏ<br>
+            </td>
+            <td class="cell">
+              ｏ｜　｜　<br>
+              －＋－＋－<br>
+              　｜　｜　<br>
+              －＋－＋－<br>
+              　｜　｜　<br>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center;font-weight: bold;">1</td>
+            <td style="text-align: center;font-weight: bold;">2</td>
+            <td style="text-align: center;font-weight: bold;">3</td>
+          </tr>
+        </tbody>
+      </table>
+
+      請以數字(1/2/3)作答  
+
+    change-file-3-and-commit: |+2
+      .md
+      現在，我們將要修改「${{level-data/commit-properties/file-3-filename}}」來改變盤面  
+      請按下下面的「執行」按鈕，來將檔案的內容改變  
+
+    commit-file-3-change-1: |+2
+      .md
+      接著，請以「${{level-data/commit-properties/file-3-filename}}」的變化建立${{t/revision}}  
+      變更訊息請使用「${{level-data/commit-and-diverse/commit-message-2}}」  
+
+      完成之後，請按下「執行」來確認  
+
+    confirm-diversed-graph: |+2
+      .md
+      恭喜，我們完成了從${{t/graph}}的中間創造${{t/revision}}的實驗  
+      現在，請觀察${{t/gui}}的${{t/graph}}  
+      它現在的形狀最接近下列何者的描述呢？  
+
+      1. 新的${{t/revision}}從${{t/graph}}尾端長出去，一直線的「|」型  
+      2. 新的${{t/revision}}在${{t/graph}}頂端連成圓圈，直線上有一個小圈的「P」型
+      3. 新的${{t/revision}}從${{t/graph}}中段(剛才的${{t/head}})長出去，分岔出兩個分支的「Y」型  
+
+      請以數字(1/2/3)回答  
+
+    explain-diversed-graph: |+2
+      .md
+      現在我們發現了一個有趣的現象  
+      以${{t/graph}}中央的點而非尾端的點作為${{t/head}}的時候建立${{t/revision}}  
+      會令${{t/graph}}出現以前從來沒看過的「Y」型分岔  
+
+      其實這個分岔是非常理所當然的  
+      新增${{t/revision}}對${{t/head}}來說就是增加一個新${{t/revision}}做小孩  
+      而非尾端的${{t/head}}，一定表示目前它有一個${{t/revision}}小孩  
+      因此，再增加一個${{t/revision}}，就會形成一個父母帶兩個小孩的分岔情況  
+
+      這個分岔，恰恰代表了**我們的檔案歷史出現了分歧**  
+      就有如科幻電影的平行時空  
+      接下來，讓我們快速驗證一下「${{level-data/commit-properties/file-3-filename}}」是否出現了平行時空  
+
+    confirm-file-3-change-1: |+2
+      .md
+      首先，讓我們檢查一下剛才修改的檔案  
+      請檢視剛才我們新增的「${{level-data/commit-and-diverse/commit-message-2}}」的${{t/file-tree}}  
+      從裡面觀察「${{level-data/commit-properties/file-3-filename}}」的內容  
+
+      請問這個盤面中把「X」給下到了哪個位置上呢？  
+
+      1. 正中央
+      2. 左下
+      3. 右上
+
+      請以數字(1/2/3)回答  
+
+    confirm-file-3-original: |+2
+      .md
+      接著，讓我們觀察一下同樣的檔案在原本的歷史裡面的樣貌  
+      請檢視「${{level-data/commit-properties/change-1-message}}」的${{t/file-tree}}  
+      從裡面觀察「${{level-data/commit-properties/file-3-filename}}」的內容  
+
+      請問這個盤面中把「X」給下到了哪個位置上呢？  
+
+      1. 正中央
+      2. 左下
+      3. 右上
+
+      請以數字(1/2/3)回答  
+
+    parallel-universes: |+2
+      .md
+      從上面兩個問答的區塊，我們不難發現確實這個檔案出現了如下表的兩種不同的版本  
+
+      <table class="distribute">
+        <tbody>
+          <tr>
+            <td class="cell">
+              ｏ｜　｜　<br>
+              －＋－＋－<br>
+              　｜ｘ｜　<br>
+              －＋－＋－<br>
+              　｜　｜　<br>
+            </td>
+            <td class="cell">
+              ｏ｜　｜　<br>
+              －＋－＋－<br>
+              　｜　｜　<br>
+              －＋－＋－<br>
+              ｘ｜　｜　<br>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center;font-weight: bold;">表(一-1) 原本版本</td>
+            <td style="text-align: center;font-weight: bold;">表(一-2) 分歧版本</td>
+          </tr>
+        </tbody>
+      </table>
+
+      事實上，製造出這樣的分歧正是 git 主要用途：  
+      在開發/撰寫東西到一半的時候  
+      我們有時候會想要做一些不同的嘗試，或者單純需要同時維持多份不同的版本存在於世界上  
+      這個時候，我們就會刻意的創造出分歧，讓 git 幫我們保留住每一個分歧的歷史  
+
+    checkout-original-end: |+2
+      .md
+      不過，其實目前我們離自由的操作分歧的歷史還是有一段差距  
+      為了瞭解這件事，請按照接下來的指示進行操作  
+
+      首先，請切換${{t/head}}的版本到「${{level-data/commit-and-diverse/mod-1-file-path}}」之上  
+      完成切換後，請按下「執行」鍵確認  
+
+    close-and-reopen-gui: |+2
+      .md
+      接下來，請關閉${{t/gui}}然後再重新用他開啟一次位於「#{{commits-advanced}}」的資料夾  
+      神奇的是，這個時候的線圖應該會如下圖一般  
+      重新從「Y」形變回「|」型  
+
+      ![illustration]({{images/illustrate-diversed-history-reverted}})  
+      <div class="img-title">圖(六)</div>  
+
+      不只如此，我們剛才新增的${{t/revision}}「${{level-data/commit-and-diverse/commit-message-2}}」也一併消失了！  
+      這下可該怎麼辦才好呢？  
+
+    summary: |+2
+      .md
+      莫急莫慌莫緊張  
+      先讓我們回顧一下整個事情的經過  
+
+      在這一章節中，我們複習了如何建立${{t/revision}}  
+      然後，也了解了${{t/head}}是新建立的${{t/revision}}的立足之地  
+      只要調整這個立足之地，我們甚至可以讓${{t/graph}}出現分歧  
+
+      然而，事情並沒有我們想的順利  
+      當我們把${{t/head}}切換到分歧的另一端之後  
+      剛才創造的分歧就有可能會直接消失  
+
+      分歧的消失其實完全是預料之中，而且與 git 如何記錄與表達歷史的分歧有關  
+      而在之後的章節中，我們將逐步深入的了解如何創造與管理歷史的分歧  
+      避免辛苦開創的分歧再次的人間蒸發  
+
+# repository assets
+    mod-1: "1, 1, 2, 3, 5, 8, 13"
+    mod-1-file-path: "commits-advanced/數列.txt"
+    commit-message-1: "新的尾端"
+    commit-message-2: "神之一手"
+    file-3-new-1: |+2
+      ｏ｜　｜　
+      －＋－＋－
+      　｜　｜　
+      －＋－＋－
+      ｘ｜　｜　
+
+
+
+    
+
+    

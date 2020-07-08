@@ -28,9 +28,10 @@ asset_index:
     main.commit-diff.name: "3-3 節：觀察變更版本之間的差異"
 
   # level names of section four
-    main.checkout-file.name: "回溯檔案到特定版本"
-    main.file-history.name: "單一檔案的版本歷史"
-    main.file-checkout-combo.name: "組合技－－回溯檔案到其版本歷史上的特定版"
+    main.checkout-file.name: "4-1 節：回溯檔案到特定版本"
+    main.file-history.name: "4-2 節：單一檔案的版本歷史"
+    main.file-checkout-combo.name: "4-3 節：組合技－－回溯檔案到其版本歷史上的特定版"
+    main.commit-and-diverse.name: "4-4 節：回顧建立變更版本與製造歷史分歧"
 
   ondisk:
   # level configs of section one: intro
@@ -57,3 +58,4 @@ asset_index:
     checkout-file: "checkout-file.yaml"
     file-history: "file-history.yaml"
     file-checkout-combo: "file-checkout-combo.yaml"
+    commit-and-diverse: "commit-and-diverse.yaml"

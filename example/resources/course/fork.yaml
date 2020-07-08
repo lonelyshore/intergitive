@@ -86,3 +86,7 @@
           id: "fork-main-file-checkout-combo"
           nameKey: "levels/main.file-checkout-combo.name"
           configAssetId: "levels/file-checkout-combo"
+        - !level 
+          id: "fork-main-commit-and-diverse"
+          nameKey: "levels/main.commit-and-diverse.name"
+          configAssetId: "levels/commit-and-diverse"

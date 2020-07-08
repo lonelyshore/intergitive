@@ -21,7 +21,7 @@ asset_index:
 
       如上圖(一)所示  
       當我們在頁籤上選擇紅框所圈選的「Commit(變更提交)」之後  
-      就會出現如橘框所示的${{t/commit}}資訊頁面
+      就會出現如橘框所示的${{t/commit}}資訊頁面  
 
       這個資訊頁面顯示了跟這個${{t/revision}}有關的各項資訊  
       善用這些資訊，將可以幫我們快速找到想要的${{t/revision}}  
@@ -302,6 +302,7 @@ asset_index:
     change-2-message: "修改"
     change-3-message: "修改"
     change-4-message: "修改"
+    end-message: "歷史尾端...?"
 
 
     
