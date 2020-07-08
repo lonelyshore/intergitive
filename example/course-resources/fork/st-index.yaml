@@ -17,3 +17,4 @@ asset_index:
     show-file-history: "Show File History... (顯示檔案歷史)"
     copy-commit-hash: "Copy Commit SHA (複製變更版本的特徵碼)"
     toolbar-view: "View (檢視...)"
+    view-show-head: "Show HEAD (顯示工作中版本)"

@@ -75,7 +75,7 @@ asset_index:
 
       完成之後，請按下「執行」按鈕檢核是否順利完成  
 
-    head-advanced: |+2
+    question-head-location: |+2
       .md
       我們成功地建立了一個新的${{t/revision}}  
       如果這個時候去觀察${{t/gui}}的${{t/graph}}，會得到如下圖所示的結果  
@@ -85,12 +85,12 @@ asset_index:
 
       從上圖，我們可以注意到幾點  
 
-      1. 原本我們所在的「${{level-data/commit-properites/end-message}}」變得不再是最末端了  
+      1. 原本我們所在的「${{level-data/commit-properties/end-message}}」變得不再是最末端了  
       2. 取而代之的，是我們剛增加的「${{level-data/commit-and-diverse/commit-message-1}}」成為${{t/graph}}的最尾端  
       3. 上面提到的兩個${{t/revision}}前者是後者的父母輩，在${{t/graph}}上他們被連在一起
 
       這個時候，或許你會不禁產生疑問  
-      「${{t/head}}」原本指向的是「${{level-data/commit-properites/end-message}}」  
+      「${{t/head}}」原本指向的是「${{level-data/commit-properties/end-message}}」  
       那麼在我們增加新的版本後，它應該指向哪裡呢？  
 
     confirm-new-head: |+2
@@ -99,7 +99,7 @@ asset_index:
       操作${{t/gui}}來快速選中${{t/head}}目前所在的位置  
 
       完成之後，請回答${{t/head}}目前的位置  
-      1. 留在原位(「${{level-data/commit-properites/end-message}}」)
+      1. 留在原位(「${{level-data/commit-properties/end-message}}」)
       2. 移動到新版本(「${{level-data/commit-and-diverse/commit-message-1}}」)
 
       請以數字(1/2)作答  
@@ -109,7 +109,7 @@ asset_index:
       通過上面的操作  
       我們發現在建立${{t/revision}}之後，${{t/head}}會跟著移動到最新的版本上  
 
-      以下，我們用一系列的圖片來依序說明建立${{t/reivison}}所發生的事情  
+      以下，我們用一系列的圖片來依序說明建立${{t/revision}}所發生的事情  
       順便複習一下以前所學  
 
       ![illustration]({{images/illustrate-commit-and-head-step-1}})  
@@ -217,7 +217,7 @@ asset_index:
 
       請以數字(1/2/3)作答  
 
-    change-file-3-and-commit: |+2
+    change-file-3: |+2
       .md
       現在，我們將要修改「${{level-data/commit-properties/file-3-filename}}」來改變盤面  
       請按下下面的「執行」按鈕，來將檔案的內容改變  

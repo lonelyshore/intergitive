@@ -10,22 +10,22 @@
 
   # intro 
     - !elaborate 
-      descriptionId: "intro"
+      descriptionId: "level-data/commit-and-diverse/intro"
 
   # notify we are on the last commit
     - !elaborate 
-      descriptionId: "notify-on-last-commit"
+      descriptionId: "level-data/commit-and-diverse/notify-on-last-commit"
     - !instruct 
-      descriptionId: "jump-to-last-commit"
+      descriptionId: "level-data/commit-and-diverse/jump-to-last-commit"
       needConfirm: false
     - !verifyInput 
       answer: "1"
 
   # create new commit
     - !elaborate 
-      descriptionId: "brief-commit-steps"
+      descriptionId: "level-data/commit-and-diverse/brief-commit-steps"
     - !execute 
-      descriptionId: "modify-folder-1"
+      descriptionId: "level-data/commit-and-diverse/modify-folder-1"
       actions:
         - !act.writeFile 
           sourceAssetIds:
@@ -33,7 +33,7 @@
           destinationPaths:
             - "$level-data/commit-and-diverse/mod-1-file-path"
     - !instruct 
-      descriptionId: "stage-and-commit-1"
+      descriptionId: "level-data/commit-and-diverse/stage-and-commit-1"
       needConfirm: false
     - !dev.needAction 
       actions:
@@ -48,20 +48,20 @@
 
   # explain that after commit, head is advanced
     - !elaborate 
-      descriptionId: "question-head-location"
+      descriptionId: "level-data/commit-and-diverse/question-head-location"
     - !instruct 
-      descriptionId: "confirm-new-head"
+      descriptionId: "level-data/commit-and-diverse/confirm-new-head"
       needConfirm: false
     - !verifyInput 
       answer: "2"
     - !illustrate 
-      descriptionId: "explain-head-advance"
+      descriptionId: "level-data/commit-and-diverse/explain-head-advance"
 
   # encourage conduct an experiment that head is not on the end of graph
     - !elaborate 
-      descriptionId: "how-about-head-not-on-end"
+      descriptionId: "level-data/commit-and-diverse/how-about-head-not-on-end"
     - !instruct 
-      descriptionId: "checkout-file-3-v1"
+      descriptionId: "level-data/commit-and-diverse/checkout-file-3-v1"
       needConfirm: false
     - !dev.needAction 
       actions:
@@ -72,56 +72,56 @@
       referenceName: "checkout-file-3-v1"
 
     - !instruct 
-      descriptionId: "confirm-file-3-version"
+      descriptionId: "level-data/commit-and-diverse/confirm-file-3-version"
       needConfirm: false
-    - !verifyRepo 
+    - !verifyInput 
       answer: "3"
 
     - !instruct 
-      descriptionId: "change-file-3"
+      descriptionId: "level-data/commit-and-diverse/change-file-3"
       needConfirm: false
     - !execute 
       actions:
       - !act.writeFile 
         sourceAssetIds:
-          - "level-data/commit-and-diverse/file-3-new-1"
+          - "$level-data/commit-and-diverse/file-3-new-1"
         destinationPaths:
           - "level-data/commit-properties/file-3-name"
 
     - !instruct 
-      descriptionId: "commit-file-3-change-1"
+      descriptionId: "level-data/commit-and-diverse/commit-file-3-change-1"
       needConfirm: false
     - !verifyRepo 
       referenceName: "commit-file-3-change-1"
 
     - !instruct 
-      descriptionId: "confirm-diversed-graph"
+      descriptionId: "level-data/commit-and-diverse/confirm-diversed-graph"
       needConfirm: false
     - !verifyInput 
       answer: "3"
 
   # explain usage of diverse
     - !elaborate 
-      descriptionId: "explain-diversed-graph"
+      descriptionId: "level-data/commit-and-diverse/explain-diversed-graph"
       
     - !instruct 
-      descriptionId: "confirm-file-3-change-1"
+      descriptionId: "level-data/commit-and-diverse/confirm-file-3-change-1"
       needConfirm: false
     - !verifyInput 
       answer: "2"
 
     - !instruct 
-      descriptionId: "confirm-file-3-original"
+      descriptionId: "level-data/commit-and-diverse/confirm-file-3-original"
       needConfirm: false
     - !verifyInput 
       answer: "1"
 
     - !elaborate 
-      descriptionId: "parallel-universes"
+      descriptionId: "level-data/commit-and-diverse/parallel-universes"
 
   # lose commit deliberately
     - !instruct 
-      descriptionId: "checkout-original-end"
+      descriptionId: "level-data/commit-and-diverse/checkout-original-end"
       needConfirm: false
     - !dev.needAction 
       actions:
@@ -132,10 +132,10 @@
       referenceName: "checkout-original-end"
 
     - !instruct 
-      descriptionId: "close-and-reopen-gui"
+      descriptionId: "level-data/commit-and-diverse/close-and-reopen-gui"
 
     - !elaborate 
-      descriptionId: "summary"
+      descriptionId: "level-data/commit-and-diverse/summary"
 
 
 
