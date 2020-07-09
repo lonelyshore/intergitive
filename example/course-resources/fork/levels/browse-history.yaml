@@ -46,6 +46,7 @@
 
     - !instruct 
       descriptionId: "level-data/browse-history/read-readme-of-forth-commit"
+      needConfirm: false
     - !verifyInput 
       answer: "${{level-data/intro-open-repository/file-read-me:v2}}"
       
