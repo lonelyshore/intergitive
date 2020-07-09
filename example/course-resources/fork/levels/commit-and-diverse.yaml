@@ -25,7 +25,7 @@
     - !elaborate 
       descriptionId: "level-data/commit-and-diverse/brief-commit-steps"
     - !execute 
-      descriptionId: "level-data/commit-and-diverse/modify-folder-1"
+      descriptionId: "level-data/commit-and-diverse/modify-folder"
       actions:
         - !act.writeFile 
           sourceAssetIds:
@@ -86,11 +86,19 @@
         sourceAssetIds:
           - "$level-data/commit-and-diverse/file-3-new-1"
         destinationPaths:
-          - "level-data/commit-properties/file-3-name"
+          - "$level-data/commit-properties/file-3-name"
 
     - !instruct 
       descriptionId: "level-data/commit-and-diverse/commit-file-3-change-1"
       needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: "commits-advanced"
+          arguments: [ "add", "-A" ]
+        - !dev.act.git 
+          repoSetupName: "commits-advanced"
+          arguments: [ "commit", "-m", "$level-data/commit-and-diverse/commit-message-2" ]
     - !verifyRepo 
       referenceName: "commit-file-3-change-1"
 

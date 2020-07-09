@@ -63,15 +63,18 @@ asset_index:
 
       就讓我們一步一步接著來吧  
 
-    modify-folder-1: |+2
-      .md
-      首先，請按下「執行」按鈕，來修改「#{{commits-advanced}}」的內容  
+      首先，請在下面的「${{level-data/commit-and-diverse/modify-folder}}」步驟中  
+      按下「執行」按鈕，來修改「#{{commits-advanced}}」的內容  
+
+    modify-folder: "修改資料夾"
 
     stage-and-commit-1: |+2
       .md
       現在，資料夾之中應該已經出現新增的檔案  
       請按照之前所學，操作${{t/gui}}將**所有**出現的檔案變化都${{t/stage}}  
-      然後以「${{level-data/commit-and-diverse/commit-message-1}}」作為變更訊息，建立${{t/revision}}  
+
+      核選完成後，我們需要填入${{t/commit-msg}}  
+      請以「**${{level-data/commit-and-diverse/commit-message-1}}**」作為${{t/commit-msg}}，建立${{t/revision}}  
 
       完成之後，請按下「執行」按鈕檢核是否順利完成  
 
@@ -166,8 +169,10 @@ asset_index:
     checkout-file-3-v1: |+2
       .md
       首先，讓我們把${{t/head}}切換到一個好地方  
+
       請回憶先前所學關於切換${{t/head}}的操作  
       在${{t/gui}}的${{t/graph}}上找到變更訊息為「${{level-data/commit-properties/add-other-files-message}}」的版本  
+
       按下右鍵展開選單，然後找到「${{st/checkout-revision}}」的選項  
       按下之後切換版本  
 
@@ -220,7 +225,7 @@ asset_index:
     change-file-3: |+2
       .md
       現在，我們將要修改「${{level-data/commit-properties/file-3-filename}}」來改變盤面  
-      請按下下面的「執行」按鈕，來將檔案的內容改變  
+      請按下下面「${{level-data/commit-and-diverse/modify-folder}}」步驟中的「執行」按鈕，來將檔案的內容改變  
 
     commit-file-3-change-1: |+2
       .md
@@ -323,7 +328,7 @@ asset_index:
       不過，其實目前我們離自由的操作分歧的歷史還是有一段差距  
       為了瞭解這件事，請按照接下來的指示進行操作  
 
-      首先，請切換${{t/head}}的版本到「${{level-data/commit-and-diverse/mod-1-file-path}}」之上  
+      首先，請切換${{t/head}}的版本到「${{level-data/commit-and-diverse/commit-message-1}}」之上  
       完成切換後，請按下「執行」鍵確認  
 
     close-and-reopen-gui: |+2
@@ -332,7 +337,7 @@ asset_index:
       神奇的是，這個時候的線圖應該會如下圖一般  
       重新從「Y」形變回「|」型  
 
-      ![illustration]({{images/illustrate-diversed-history-reverted}})  
+      ![illustration]({{images/capture-commit-and-diverse-graph-after-commit-1}})  
       <div class="img-title">圖(六)</div>  
 
       不只如此，我們剛才新增的${{t/revision}}「${{level-data/commit-and-diverse/commit-message-2}}」也一併消失了！  
