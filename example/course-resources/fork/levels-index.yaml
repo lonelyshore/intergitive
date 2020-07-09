@@ -11,7 +11,7 @@ asset_index:
     main.intro-install.name: "1-1 節：安裝"
     main.intro-open-repository.name: "1-2 節：使用 fork 開啟資料夾"
     main.browse-history.name: "1-3 節：瀏覽版本歷史"
-    main.checkout-revision.name: "104 節：切換工作樹版本"
+    main.checkout-revision.name: "1-4 節：切換工作樹版本"
 
   # level names of section two
     main.commit-one-file.name: "2-1 節：快照一個檔案"
