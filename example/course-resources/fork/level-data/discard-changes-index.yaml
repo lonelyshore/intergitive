@@ -101,7 +101,7 @@ asset_index:
       也了解到了所謂的「捨棄變更」，其實就是將${{t/index}}中保存的檔案狀態覆蓋回${{t/work-tree}}之中  
 
       至此為止，我們完整的學習了讓檔案從${{t/work-tree}}，經過${{t/index}}，直到${{t/repo}}的流向  
-      也就是${{t/commit-s}}${{t/revision}}
+      也就是${{t/commit-s}}${{t/revision}}  
       也學習了完全相反的逆流的方向  
       也就是復原暫存還有捨棄變更  
 
