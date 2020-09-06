@@ -43,7 +43,10 @@
     "build-win64-dev": "npm run \"load-native-electron\" && electron-packager . intergitive --platform=win32 --arch=x64 --prune=false",
     "load-native-node": "node \"./dev/module-switch.js\" load nodegit node-10-11",
     "load-native-electron": "node \"./dev/module-switch.js\" load nodegit electron-4",
-    "raw": "mocha --recursive \"./test/tests/*.js\""
+    "raw": "mocha --recursive \"./test/tests/*.js\"",
+
+    "postinstall": "node \"./dev/module-switch.js\" init"
+
   },
   "author": "zedaizd",
   "license": "ISC"
