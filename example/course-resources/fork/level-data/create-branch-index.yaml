@@ -19,7 +19,7 @@ asset_index:
 
     diverse-history-restored: |+2
       .md
-      現在，請使用${{t/gui}}開啟位於「`#{{commits-advaced}}`」的資料夾  
+      現在，請使用${{t/gui}}開啟位於「`#{{commits-advanced}}`」的資料夾  
       如果已經開啟，可能需要關掉然後重新開啟一次  
 
       現在，之前創造過而又消失的分歧，應該已經被重新找回  
@@ -63,7 +63,7 @@ asset_index:
       <div class="img-title">圖(三)</div>  
 
       首先，請如上圖(三)所示  
-      找到紅框圈選所示的，${{t/rev-msg}}為「${{level-data/commit-and-diverse/commit-message-2}}」的${{t/revision}}  
+      找到紅框圈選所示的，${{t/commit-msg}}為「${{level-data/commit-and-diverse/commit-message-2}}」的${{t/revision}}  
       對準這個${{t/revision}}按下右鍵，叫出右鍵選單  
 
       接著，在選單中選擇如橘框圈選的「${{st/create-branch}}」  
@@ -73,12 +73,12 @@ asset_index:
       <div class="img-title">圖(四)</div>  
 
       接著，請如上圖所示  
-      在紅框圈選的輸入框中，打入新${{t/branch}}的名字－－「${{level-data/created-branch-name-1}}」  
+      在紅框圈選的輸入框中，打入新${{t/branch}}的名字－－「${{level-data/create-branch/created-branch-name-1}}」  
 
       輸入完成之後，請如圖所示，按下橘框圈選的「${{st/create-branch-modal-confirm}}」按鈕  
       按下按鈕後，新的${{t/branch}}就會建立  
       再次觀察${{t/gui}}的${{t/graph}}介面  
-      應該會看見如下圖(五)所示，有一個寫著「${{level-data/created-branch-name-1}}」的方形標記  
+      應該會看見如下圖(五)所示，有一個寫著「${{level-data/create-branch/created-branch-name-1}}」的方形標記  
       代表我們成功的建立${{t/branch}}了！  
 
       ![illustration]({{images/instruct-create-branch-result}})  
@@ -88,11 +88,11 @@ asset_index:
 
     urge-verify-effect-of-branch: |+2
       .md
-      根據我們前面的猜想，在建立了「${{level-data/created-branch-name-1}}」這個${{t/branch}}之後  
+      根據我們前面的猜想，在建立了「${{level-data/create-branch/created-branch-name-1}}」這個${{t/branch}}之後  
       可以隨意${{t/checkout-rev}}，也不會再發生辛苦建立的${{t/revision}}消失不見的慘案  
       現在，就讓我們來再次切換看看吧！  
 
-      請按照先前所學，${{t/checkout-rev}}到${{t/rev-msg}}為「${{level-data/commit-properties/end-message}}」的${{t/revision}}上  
+      請按照先前所學，${{t/checkout-rev}}到${{t/commit-msg}}為「${{level-data/commit-properties/end-message}}」的${{t/revision}}上  
       完成後，請按下「執行」按鈕來確認操作正確  
 
     confirm-effect-of-branch: |+2
@@ -104,7 +104,7 @@ asset_index:
       <div class="img-title">圖(六)</div>  
 
       從圖中我們可以觀察到  
-      雖然我們和上一章節最後${{t/checkout-revi}}到了一樣的地方(「${{level-data/commit-properties/end-message}}」)  
+      雖然我們和上一章節最後${{t/checkout-rev}}到了一樣的地方(「${{level-data/commit-properties/end-message}}」)  
       但是歷史依然分岔成「Y」字形  
       這表示${{t/branch}}真的如我們所願，將歷史的分歧給保留了下來！  
 

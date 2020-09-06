@@ -19,3 +19,4 @@ asset_index:
     toolbar-view: "View (檢視...)"
     view-show-head: "Show HEAD (顯示工作中版本)"
     create-branch: "Create New Branch...(建立新分支...)"
+    create-branch-modal-confirm: "Create(建立)"

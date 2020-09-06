@@ -9,40 +9,40 @@
 
   # intro 
     - !elaborate 
-      descriptionId: "level-data/intro"
+      descriptionId: "level-data/create-branch/intro"
 
   # restore diverse history
     - !instruct 
-      descriptionId: "level-data/instruct-restore-diverse-history"
+      descriptionId: "level-data/create-branch/instruct-restore-diverse-history"
       needConfirm: false
     - !execute 
-      descriptionId: "level-data/execute-restore-diverse-history"
+      descriptionId: "level-data/create-branch/execute-restore-diverse-history"
       actions:
         - !act.loadReference 
           repoSetupName: "commits-advanced"
           referenceName: "commit-file-3-change-1"
     - !elaborate 
-      descriptionId: "level-data/diverse-history-restored"
+      descriptionId: "level-data/create-branch/diverse-history-restored"
 
   # create new commit
     - !illustrate 
-      descriptionId: "level-data/observe-diversed-history"
+      descriptionId: "level-data/create-branch/observe-diversed-history"
     - !elaborate 
-      descriptionId: "level-data/urge-branch-hold-commit"
+      descriptionId: "level-data/create-branch/urge-branch-hold-commit"
     - !instruct 
-      descriptionId: "level-data/instruct-create-branch"
+      descriptionId: "level-data/create-branch/instruct-create-branch"
       needConfirm: false
     - !dev.needAction 
       actions:
         - !dev.act.git 
           repoSetupName: "commits-advanced"
-          arguments: [ "branch", "$level-data/created-branch-name-1" ]
+          arguments: [ "branch", "$level-data/create-branch/created-branch-name-1" ]
     - !verifyRepo 
       referenceName: "diversed-branch-1"
 
   # verify branch holds commit, diversed history is preserved
     - !illustrate 
-      descriptionId: "level-data/urge-verify-effect-of-branch"
+      descriptionId: "level-data/create-branch/urge-verify-effect-of-branch"
       needConfirm: false
     - !dev.needAction 
       actions:
@@ -52,10 +52,10 @@
     - !verifyRepo 
       referenceName: "checkout-original-end-again"
     - !elaborate 
-      descriptionId: "level-data/confirm-effect-of-branch"
+      descriptionId: "level-data/create-branch/confirm-effect-of-branch"
 
     - !elaborate 
-      descriptionId: "level-data/commit-and-diverse/summary"
+      descriptionId: "level-data/create-branch/summary"
 
 
 
