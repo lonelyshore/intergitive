@@ -45,7 +45,7 @@
     "load-native-electron": "node \"./dev/module-switch.js\" load nodegit electron-4",
     "raw": "mocha --recursive \"./test/tests/*.js\"",
 
-    "postinstall": "node \"./dev/module-switch.js\" init"
+    "postinstall": "node \"./dev/post-install.js\""
 
   },
   "author": "zedaizd",
