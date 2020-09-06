@@ -1,8 +1,11 @@
-var sys = require('sys');
 var exec = require('child_process').exec;
 var os = require('os');
 
-function puts(error, stdout, stderr) { sys.puts(stdout) }
+function puts(error, stdout, stderr) { 
+   console.error(error);
+   console.log(stdout);
+   console.error(stderr);
+}
 
 // Run command depending on the OS
 if (os.type() === 'Windows_NT') 
