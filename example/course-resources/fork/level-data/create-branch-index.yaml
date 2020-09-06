@@ -1,0 +1,121 @@
+asset_index:
+  infile:
+# course content
+    intro: |+2
+      .md
+      在前一節中  
+      我們發現到雖然可以在 git 中創造分歧的歷史  
+      但是這個分歧可能稍有不慎就會自己消失  
+      在這一節中，我們將學習如何保存分歧  
+
+      首先，讓我們把之前曾經創造的分歧給找回來吧  
+
+    instruct-restore-diverse-history: |+2
+      .md
+      請按下下面的按鈕，執行自動操作  
+      就可以把位於「`#{{commits-advanced}}`」的 git ${{t/repo}}先前創造的分歧給恢復  
+
+    execute-restore-diverse-history: "恢復${{t/repo}}分歧"
+
+    diverse-history-restored: |+2
+      .md
+      現在，請使用${{t/gui}}開啟位於「`#{{commits-advaced}}`」的資料夾  
+      如果已經開啟，可能需要關掉然後重新開啟一次  
+
+      現在，之前創造過而又消失的分歧，應該已經被重新找回  
+      請按下「確認」按鈕然後繼續進行  
+
+    observe-diversed-history: |+2
+      .md
+      現在，讓我們重新仔細觀察擁有分歧的${{t/graph}}，也就是下面圖(一)  
+      為了方便觀察，我們在圖(一)上把分歧的甲、乙兩條枝幹分別用紅色(甲)以及綠色(乙)框線圈起來  
+
+      ![illustration]({{images/elaborate-observe-diversed-history}})  
+      <div class="img-title">圖(一)</div>  
+
+      當我們靜下來觀察，就會發現一件奇怪的事情  
+      從前一節所得到的經驗是  
+      我們新創造出的綠色框線圈選的枝幹乙，會在我們切換到到別的版本時自行消失  
+      但是為何當我們創造出枝幹乙，還沒有切換之前，枝幹甲不會自行消失呢？  
+      這一定表示枝幹甲有甚麼比枝幹乙特別的地方  
+
+      這個特別的地方，是在於這兩條枝幹各自的末端  
+      下圖(二)把兩條枝幹末端的特寫拼接在一起方便比較  
+
+      ![illustration]({{images/elaborate-observe-diversed-branch-tips}})  
+      <div class="img-title">圖(二)</div>  
+
+      上圖左側是枝幹甲的末端，右側則是枝幹乙的末端  
+      我們不難發現，左邊比起右邊多出一個寫著「master」的方形標記  
+      這個其實就是讓枝幹不會消失的秘訣  
+
+    urge-branch-hold-commit: |+2
+      .md
+      上面提到方形的標記，叫作「**${{t/branch-f}}**」  
+      要想讓分歧的歷史不會消失，就要在分出的枝幹末端黏上一個${{t/branch}}  
+      現在，就讓我們來試試看吧  
+
+    instruct-create-branch: |+2
+      .md
+      請依照下列指示依序操作，在分出的枝幹末端上建立${{t/branch}}  
+
+      ![illustration]({{images/instruct-create-branch-1}})  
+      <div class="img-title">圖(三)</div>  
+
+      首先，請如上圖(三)所示  
+      找到紅框圈選所示的，${{t/rev-msg}}為「${{level-data/commit-and-diverse/commit-message-2}}」的${{t/revision}}  
+      對準這個${{t/revision}}按下右鍵，叫出右鍵選單  
+
+      接著，在選單中選擇如橘框圈選的「${{st/create-branch}}」  
+      選擇該選項之後，就會出現如下圖(四)的畫面  
+
+      ![illustration]({{images/instruct-create-branch-2}})  
+      <div class="img-title">圖(四)</div>  
+
+      接著，請如上圖所示  
+      在紅框圈選的輸入框中，打入新${{t/branch}}的名字－－「${{level-data/created-branch-name-1}}」  
+
+      輸入完成之後，請如圖所示，按下橘框圈選的「${{st/create-branch-modal-confirm}}」按鈕  
+      按下按鈕後，新的${{t/branch}}就會建立  
+      再次觀察${{t/gui}}的${{t/graph}}介面  
+      應該會看見如下圖(五)所示，有一個寫著「${{level-data/created-branch-name-1}}」的方形標記  
+      代表我們成功的建立${{t/branch}}了！  
+
+      ![illustration]({{images/instruct-create-branch-result}})  
+      <div class="img-title">圖(五)</div>  
+
+      完成上述步驟後，請按下下方的「執行」按鈕來驗證是否正確  
+
+    urge-verify-effect-of-branch: |+2
+      .md
+      根據我們前面的猜想，在建立了「${{level-data/created-branch-name-1}}」這個${{t/branch}}之後  
+      可以隨意${{t/checkout-rev}}，也不會再發生辛苦建立的${{t/revision}}消失不見的慘案  
+      現在，就讓我們來再次切換看看吧！  
+
+      請按照先前所學，${{t/checkout-rev}}到${{t/rev-msg}}為「${{level-data/commit-properties/end-message}}」的${{t/revision}}上  
+      完成後，請按下「執行」按鈕來確認操作正確  
+
+    confirm-effect-of-branch: |+2
+      .md
+      現在，如果我們檢視${{t/gui}}的${{t/graph}}  
+      應該是如下圖(六)所呈現的狀況  
+      
+      ![illustration]({{images/demonstrate-effect-of-branch}})  
+      <div class="img-title">圖(六)</div>  
+
+      從圖中我們可以觀察到  
+      雖然我們和上一章節最後${{t/checkout-revi}}到了一樣的地方(「${{level-data/commit-properties/end-message}}」)  
+      但是歷史依然分岔成「Y」字形  
+      這表示${{t/branch}}真的如我們所願，將歷史的分歧給保留了下來！  
+
+    summary: |+2
+      .md
+      在這一章節中，我們學到了「${{t/branch}}」是一個有趣的方形標記  
+      被它標上的歷史分歧，就會穩定的保留下來，不會因為${{t/checkout-rev}}就消失不見  
+      可以說，${{t/branch}}和 git 處理版本歷史的分歧有緊密的關聯  
+      是 git 一大重要組成元素  
+
+      在接下來的章節中，我們都將圍繞著${{t/branch}}的各種操作來說明  
+
+# repository assets
+    created-branch-name-1: "new-1"

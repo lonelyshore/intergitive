@@ -43,5 +43,7 @@ asset_index:
     hash-f: "特徵碼(hash)"
     hash: "特徵碼"
     diff-f: "變更內容(diff)"
-    diff: 變更內容
-    commit-msg: 變更訊息
+    diff: "變更內容"
+    commit-msg: "變更訊息"
+    branch: "分支"
+    branch-f: "分支(branch)"

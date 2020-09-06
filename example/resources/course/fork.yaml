@@ -90,3 +90,11 @@
           id: "fork-main-commit-and-diverse"
           nameKey: "levels/main.commit-and-diverse.name"
           configAssetId: "levels/commit-and-diverse"
+    - !sequential-section # chapter 5: create and checkout branches
+      id: "fork-main-section-create-and-checkout-branches"
+      nameKey: "levels/main.section-create-and-checkout-branches"
+      children:
+        - !level 
+          id: "fork-main-create-branch"
+          nameKey: "levels/main.create-branch.name"
+          configAssetId: "levels/create-branch"

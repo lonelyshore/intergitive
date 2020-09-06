@@ -6,6 +6,7 @@ asset_index:
     main.section-create-commits.name: "第二章：建立版本歷史與檔案狀態"
     main.section-elaborate-commits.name: "第三章：保存的版本的性質"
     main.section-advanced-history-browsing: "第四章：進階瀏覽版本歷史與回溯版本"
+    main.section-create-and-checkout-branches: "第五章：建立與切換分支－－創建分歧"
 
   # level names of section one
     main.intro-install.name: "1-1 節：安裝"
@@ -33,6 +34,9 @@ asset_index:
     main.file-checkout-combo.name: "4-3 節：組合技－－回溯檔案到其版本歷史上的特定版"
     main.commit-and-diverse.name: "4-4 節：回顧建立變更版本與製造歷史分歧"
 
+  # level names of section five
+    main.create-branch.name: "5-1 節：建立分支標註出特定版本"
+
   ondisk:
   # level configs of section one: intro
     intro-install: "intro-install.yaml"
@@ -59,3 +63,6 @@ asset_index:
     file-history: "file-history.yaml"
     file-checkout-combo: "file-checkout-combo.yaml"
     commit-and-diverse: "commit-and-diverse.yaml"
+
+  # level configs of section five: create and checkout branches
+    create-branch: "create-branch.yaml"

@@ -1,0 +1,62 @@
+!level
+  repoVcsSetups:
+    commits-advanced:
+      workingPath: commits-advanced
+      referenceStoreName: commits-advanced
+      checkpointStoreName: commits-advanced-checkpoints
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+  # intro 
+    - !elaborate 
+      descriptionId: "level-data/intro"
+
+  # restore diverse history
+    - !instruct 
+      descriptionId: "level-data/instruct-restore-diverse-history"
+      needConfirm: false
+    - !execute 
+      descriptionId: "level-data/execute-restore-diverse-history"
+      actions:
+        - !act.loadReference 
+          repoSetupName: "commits-advanced"
+          referenceName: "commit-file-3-change-1"
+    - !elaborate 
+      descriptionId: "level-data/diverse-history-restored"
+
+  # create new commit
+    - !illustrate 
+      descriptionId: "level-data/observe-diversed-history"
+    - !elaborate 
+      descriptionId: "level-data/urge-branch-hold-commit"
+    - !instruct 
+      descriptionId: "level-data/instruct-create-branch"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: "commits-advanced"
+          arguments: [ "branch", "$level-data/created-branch-name-1" ]
+    - !verifyRepo 
+      referenceName: "diversed-branch-1"
+
+  # verify branch holds commit, diversed history is preserved
+    - !illustrate 
+      descriptionId: "level-data/urge-verify-effect-of-branch"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: "commits-advanced"
+          arguments: [ "checkout", "-f", "master~0" ]
+    - !verifyRepo 
+      referenceName: "checkout-original-end-again"
+    - !elaborate 
+      descriptionId: "level-data/confirm-effect-of-branch"
+
+    - !elaborate 
+      descriptionId: "level-data/commit-and-diverse/summary"
+
+
+
+

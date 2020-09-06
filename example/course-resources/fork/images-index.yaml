@@ -121,3 +121,11 @@ asset_index:
     illustrate-commit-and-head-step-1: commit-and-diverse@illustrate-commit-and-head-step-1.png
     illustrate-commit-and-head-step-2: commit-and-diverse@illustrate-commit-and-head-step-2.png
     illustrate-commit-and-head-step-3: commit-and-diverse@illustrate-commit-and-head-step-3.png
+
+# create-branch
+    elaborate-observe-diversed-history: create-branch@elaborate-observe-diversed-history.png
+    elaborate-observe-diversed-branch-tips: create-branch@elaborate-observe-diversed-branch-tips.png
+    instruct-create-branch-1: create-branch@instruct-create-branch-1.png
+    instruct-create-branch-2: create-branch@instruct-create-branch-2.png
+    instruct-create-branch-result: create-branch@instruct-create-branch-result.png
+    demonstrate-effect-of-branch: create-branch@demonstrate-effect-of-branch.png
