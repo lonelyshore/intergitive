@@ -40,13 +40,7 @@ asset_index:
       這一定表示枝幹甲有甚麼比枝幹乙特別的地方  
 
       這個特別的地方，是在於這兩條枝幹各自的末端  
-      下圖(二)把兩條枝幹末端的特寫拼接在一起方便比較  
-
-      ![illustration]({{images/elaborate-observe-diversed-branch-tips}})  
-      <div class="img-title">圖(二)</div>  
-
-      上圖左側是枝幹甲的末端，右側則是枝幹乙的末端  
-      我們不難發現，左邊比起右邊多出一個寫著「master」的方形標記  
+      我們不難發現，枝幹甲比起枝幹乙多出一個寫著「master」的方形標記  
       這個其實就是讓枝幹不會消失的秘訣  
 
     urge-branch-hold-commit: |+2

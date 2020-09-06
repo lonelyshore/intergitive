@@ -124,7 +124,6 @@ asset_index:
 
 # create-branch
     elaborate-observe-diversed-history: create-branch@elaborate-observe-diversed-history.png
-    elaborate-observe-diversed-branch-tips: create-branch@elaborate-observe-diversed-branch-tips.png
     instruct-create-branch-1: create-branch@instruct-create-branch-1.png
     instruct-create-branch-2: create-branch@instruct-create-branch-2.png
     instruct-create-branch-result: create-branch@instruct-create-branch-result.png
