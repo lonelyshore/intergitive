@@ -330,7 +330,7 @@ asset_index:
       不過，其實目前我們離自由的操作分歧的歷史還是有一段差距  
       為了瞭解這件事，請按照接下來的指示進行操作  
 
-      首先，請切換${{t/head}}的版本到「${{level-data/commit-and-diverse/commit-message-1}}」之上  
+      首先，請切換${{t/head}}的版本到「**${{level-data/commit-properties/end-message}}**」之上  
       完成切換後，請按下「執行」鍵確認  
 
     close-and-reopen-gui: |+2

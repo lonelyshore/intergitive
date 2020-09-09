@@ -48,7 +48,7 @@
       actions:
         - !dev.act.git 
           repoSetupName: "commits-advanced"
-          arguments: [ "checkout", "-f", "master~0" ]
+          arguments: [ "checkout", "-f", "master~1" ]
     - !verifyRepo 
       referenceName: "checkout-original-end-again"
     - !elaborate 
