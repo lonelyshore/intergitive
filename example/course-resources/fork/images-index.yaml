@@ -128,3 +128,8 @@ asset_index:
     instruct-create-branch-2: create-branch@instruct-create-branch-2.png
     instruct-create-branch-result: create-branch@instruct-create-branch-result.png
     demonstrate-effect-of-branch: create-branch@demonstrate-effect-of-branch.png
+
+# checkout-branch
+    new-commit-has-no-branch: checkout-branch@new-commit-has-no-branch.png
+    instruct-checkout-master-1: checkout-branch@instruct-checkout-master-1.png
+    compare-master-before-after-commit: checkout-branch@compare-master-before-after-commit.png

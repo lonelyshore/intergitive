@@ -3,6 +3,8 @@ asset_index:
   infile:
     checkout-rev: "切換版本"
     checkout-rev-f: "切換版本(checout revision)"
+    checkout-branch: "切換分支"
+    checkout-branch-f: "切換分支(checkout branch)"
     clean-f: "無修改(clean/乾淨)"
     clean: "無修改"
     dirty-f: "有修改(dirty/骯髒)"

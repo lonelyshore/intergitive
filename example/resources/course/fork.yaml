@@ -98,3 +98,7 @@
           id: "fork-main-create-branch"
           nameKey: "levels/main.create-branch.name"
           configAssetId: "levels/create-branch"
+        - !level 
+          id: "fork-main-checkout-branch"
+          nameKey: "levels/main.checkout-branch.name"
+          configAssetId: "levels/checkout-branch"

@@ -1,0 +1,126 @@
+asset_index:
+  infile:
+# course content
+    intro: |+2
+      .md
+      在前一節中，我們認識了「分支」這個神奇的小東西  
+      只要有它的存在，我們就可以避免辛苦建立的${{t/revision}}平白消失無蹤  
+      所以我們可以安心地繼續建立新的${{t/revision}}了嗎？  
+
+      不如讓我們來作個小實驗吧~  
+      請按照接下來的步驟在實驗用的${{t/repo}}建立一個${{t/revision}}  
+      然後切換回到目前所在的${{t/revision}}，來觀察看看  
+
+    open-repo-and-add-modifications: |+2
+      .md
+      首先，如果還沒有使用${{t/gui}}開啟位於「`#{{commits-advnaced}}`」的實驗用資料夾的話
+      請先操作${{t/gui}}將其開啟  
+
+      然後，請按下下面「${{level-data/commit-and-diverse/modify-folder}}」步驟中的「執行」按鈕  
+      這會在實驗用的資料夾製造一些檔案修改並加以${{t/stage}}  
+
+      順帶一提，之後為了方便起見  
+      當我們想要建立${{t/revision}}的時候都會透過這種方式，將不會再贅述  
+
+    commit-1: |+2
+      .md
+      請將目前已經${{t/stage}}的變化  
+      加上「${{level-data/checkout-branch/commit-message-1}}」作為${{t/commit-msg}}  
+      建立${{t/revision}}  
+
+      完成後，請按下下方「執行」按鈕確認並檢驗  
+
+    notify-no-branch-on-new-commit: |+2
+      .md
+      現在，我們建立了一個新的${{t/revision}}  
+      然而，當我們觀察${{t/graph}}的時候會不難發現  
+      如下圖(一)所示，我們新建立的${{t/revision}}身上並沒有我們想要的神奇${{t/branch}}  
+
+      ![illustration]({{images/new-commit-has-no-branch}})  
+      <div class="img-title">圖(一)</div>  
+
+      也就是說，當我們把${{t/head}}切換到別的${{t/revision}}時  
+      剛才建立的${{t/revision}}就又會消失  
+
+    checkout-starting-commit: |+2
+      .md
+      請操作${{t/gui}}，切換到${{t/commit-msg}}為「${{level-data/commit-properties/end-message}}」的${{t/revision}}上  
+      完成之後，請按下下方「確認」來檢查是否操作正確  
+
+    confirm-diversity-eliminated: |+2
+      .md
+      現在，我們又回到了一開始出發的${{t/revision}}  
+      而這時候如果觀察${{t/graph}}  
+      應該毫不意外的會發現，剛才建立的${{t/revision}}「${{level-data/checkout-branch/commit-message-1}}」又消失不見了  
+
+      因此，我們知道了：  
+      1. 有${{t/branch}}標記的${{t/revision}}，在${{t/head}}移到別的地方去之後也不會消失  
+      2. 從有${{t/branch}}標記的${{t/revision}}的父母輩建立${{t/revision}}，並不會得到上述的特性  
+         ${{t/head}}移到別的地方去之後，還是會消失  
+      3. 結合這兩點，我們想要的，是建立${{t/revision}}的同時，${{t/branch}}也會跟著更新成指向新的${{t/revision}}  
+         而這其實正是分支的基本功能，接下來，就讓我們來試試看吧！  
+
+    intro-checkout-branch: |+2
+      .md
+      為了讓${{t/branch}}能夠追逐新建立的${{t/revision}}  
+      我們要學習一個新的技巧－－「**${{t/checkout-branch-f}}**」  
+
+      嗯...「**切換**」這個詞好像之前我們已經用得很多了  
+      沒錯！之前我們學習的，是切換「**${{t/revision}}**」  
+      現在，我們將學習切換「**${{t/branch}}**」  
+      操作其實也非常相近  
+
+      接下來，請按照下面的步驟  
+      依序${{t/checkout-branch}}，然後建立${{t/revision}}  
+
+    instruct-checkout-master: |+2
+      .md
+      首先，請如下圖(二)所示  
+      在${{t/graph}}上找到有「master」標記的${{t/revision}}  
+      然後對這個${{t/revision}}按下滑鼠右鍵，叫出選單  
+
+      ![illustration]({{images/instruct-checkout-master-1}})  
+      <div class="img-title">圖(二)</div>        
+
+      因為我們想要「**切換(checkout)**」到「**master**」  
+      請如下圖所示，在選單上選擇如紅框圈選的「master」，引出下一層選單  
+      然後，在第二層選單上，選擇如橘框圈選的「${{st/checkout-branch-item}}」  
+
+      完成之後，請按下下方的「執行」按鈕來確認是否正確  
+
+    hint-checkout-master-done: |+2
+      .md
+      恭喜，現在我們完成了「${{t/checkout-branch}}」的操作了  
+      接下來，讓我們試試看現在再建立${{t/revision}}的話，會有甚麼不一樣的現象吧  
+
+    instruct-add-modifications-2: |+2
+      .md
+      請按下下面「${{level-data/commit-and-diverse/modify-folder}}」步驟中的「執行」按鈕  
+      以在實驗用的資料夾製造一些檔案修改並加以${{t/stage}}  
+
+    notify-branch-moved: |+2
+      .md
+      剛才，我們在${{t/checkout-branch}}到 master 之後重新建立${{t/revision}}  
+      如果這時候觀察${{t/graph}}}，並且和建立${{t/revision}}之前比較  
+      會得到如下圖(三)的比較圖  
+
+      ![illustration]({{images/compare-master-before-after-commit}})  
+      <div class="img-title">圖(三)</div>  
+
+      圖的左側是建立${{t/revision}}，右側則是之後  
+      我們可以明顯的注意到，寫著「master」的方形標記－－也就是${{t/branch}}的標記－－緊跟著不動  
+      這證明了，**當我們${{t/checkout-branch}}之後，${{t/branch}}會跟隨建立${{t/revision}}一起前進**  
+
+    
+
+      
+
+    summary: |+2
+      .md
+
+# repository assets
+    commit-message-1: "實驗的變化"
+    mod-1: "美國貧窮線的標準跟臺灣貧窮線的標準比起來，其實都有很多的包袱，像今天上午我依照憲法的規定向貴院提出施政報告，等到簽了以後，至於多到多少，亡羊補牢，我們現在沒有零和啊"
+    mod-1-file-path: "commits-advanced/冬我不會讓你們兩人獨處的.txt"
+    mod-2: "只要將防海嘯閘門放到定位，畢竟歐董事長是民營公司的董事會負責人，正式被提名後，而我們守住的，不過剛才妳提到經濟部有未執行率達到99%的，我都會替他們發"
+    mod-2-file-path: "commits-advanced/怎麼會是欺騙呢.txt"

@@ -1,0 +1,105 @@
+!level
+  repoVcsSetups:
+    commits-advanced:
+      workingPath: commits-advanced
+      referenceStoreName: commits-advanced
+      checkpointStoreName: commits-advanced-checkpoints
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+  # intro 
+    - !elaborate 
+      descriptionId: "level-data/intro"
+
+  # commit on a non-tip non-branch commit
+    - !instruct
+      descriptionId: "level-data/open-repo-and-add-modifications"
+      needConfirm: false
+    - !execute 
+      descriptionId: "level-data?commit-and-diverse/modify-folder"
+      actions:
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/mod-1"
+          destinationPaths:
+            - "$level-data/mod-1-file-path"
+        - !act.stageAll 
+          repoSetupName: commits-advanced
+    - !instruct 
+      descriptionId: "level-data/commit-1"
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: commits-advanced
+          arguments: [ "commit", "-m", "$level-data/commit-message-1" ]
+    - !verifyRepo 
+      referenceName: "checkout-branch-commit-1"
+
+  # verify new commit does not have branch attached
+    - !elaborate 
+      descriptionId: "level-data/notify-no-branch-on-new-commit"
+    - !instruct
+      descriptionId: "level-data/checkout-starting-commit"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: commits-advanced
+          arguments: [ "checkout", "-f", "master~1" ]
+    - !verifyRepo 
+      referenceName: "checkout-branch-checkout-starting-commit"
+
+    - !elaborate 
+      descriptionId: "level-data/confirm-diversity-eliminated"
+
+  # checkout branch: master
+    - !instruct  
+      descriptionId: "level-data/intro-checkout-master"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: commits-advanced
+          arguments: [ "checkout", "-f", "master" ]
+    - !verifyRepo 
+      referenceName: "checkout-branch-checkout-master"
+
+  # commit on master
+    - !elaborate 
+      descriptionId: "level-data/hint-checkout-master-done"
+    - !instruct 
+      descriptionId: "level-data/instruct-add-modifications-2"
+      needConfirm: false
+    - !execute 
+      descriptionId: "level-data?commit-and-diverse/modify-folder"
+      actions:
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/mod-1"
+          destinationPaths:
+            - "$level-data/mod-1-file-path"
+        - !act.stageAll 
+          repoSetupName: commits-advanced
+    - !instruct 
+      descriptionId: "level-data/commit-1"
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: commits-advanced
+          arguments: [ "commit", "-m", "$level-data/commit-message-1" ]
+    - !verifyRepo 
+      referenceName: "checkout-branch-commit-2"
+
+  # elaborate head on branch
+    - !elaborate 
+      descriptionId: "level-data/notify-branch-moved"
+    - !elaborate 
+      descriptionId: "level-data/"
+
+
+    - !elaborate 
+      descriptionId: "level-data/summary"
+
+
+
+
