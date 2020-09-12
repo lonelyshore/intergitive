@@ -65,11 +65,6 @@ asset_index:
       為了讓${{t/branch}}能夠追逐新建立的${{t/revision}}  
       我們要學習一個新的技巧－－「**${{t/checkout-branch-f}}**」  
 
-      嗯...「**切換**」這個詞好像之前我們已經用得很多了  
-      沒錯！之前我們學習的，是切換「**${{t/revision}}**」  
-      現在，我們將學習切換「**${{t/branch}}**」  
-      操作其實也非常相近  
-
       接下來，請按照下面的步驟  
       依序${{t/checkout-branch}}，然後建立${{t/revision}}  
 
@@ -102,7 +97,7 @@ asset_index:
       .md
       剛才，我們在${{t/checkout-branch}}到 master 之後重新建立${{t/revision}}  
       如果這時候觀察${{t/graph}}}，並且和建立${{t/revision}}之前比較  
-      會得到如下圖(三)的比較圖  
+      會得到如下圖(三)的比較圖：  
 
       ![illustration]({{images/compare-master-before-after-commit}})  
       <div class="img-title">圖(三)</div>  
@@ -111,9 +106,90 @@ asset_index:
       我們可以明顯的注意到，寫著「master」的方形標記－－也就是${{t/branch}}的標記－－緊跟著不動  
       這證明了，**當我們${{t/checkout-branch}}之後，${{t/branch}}會跟隨建立${{t/revision}}一起前進**  
 
-    
+    notify-current-branch-mark: |+2
+      .md
+      讓我們繼續觀察${{t/graph}}上的「master」還有「${{level-data/create-branch/created-branch-name-1}}」兩個${{t/branch}}的標記  
+      會得到如下圖(四)的比較圖：  
 
+      ![illustration]({{images/compare-current-and-other-branch-mark}})  
+      <div class="img-title">圖(四)</div>  
+
+      上圖左側是「master」而右側是「${{level-data/create-branch/created-branch-name-1}}」的標記  
+
+      仔細一看，我們不難發現「master」上面多了一個記號，而另一邊則沒有  
+      這個記號標示出了「當前的${{t/branch}}」的意思  
+
+      當我們透過前面的操作「**切換**」到一個${{t/branch}}之後  
+      目標的${{t/branch}}就會被標成「當前的${{t/branch}}」  
+      表示現在建立${{t/revision}}的話，這個${{t/branch}}會跟著移動  
+
+    elaborate-current-branch: |+2
+      .md
+      嗯...所謂的「當前的${{t/branch}}」到底又是甚麼意思呢？  
+      其實它是跟我們的一個老朋友：「**${{t/head-f}}**」有關  
+      請讓我們以下面的圖(五)來說明  
+
+      ![illustration]({{images/elaborate-checkout-branch-meaning}})  
+      <div class="img-title">圖(五)</div>  
+
+      按照慣例，我們以圓球代表「${{t/revision}}」，五邊形標籤代表「${{t/head}}」
+      而四方型標記，則代表「${{t/branch}}」  
+
+      上圖分別以從左到右的變化，來表示我們剛才學習的「${{t/checkout-branch}}」這個操作的效果  
+      也就是將${{t/head}}指向(挪動)到一個${{t/branch}}上面  
+
+      沒錯！${{t/branch}}也是一個${{t/head}}可以指向的東西  
+      而${{t/branch}}自己也總是會指向某一個${{t/revision}}  
+
+      說到這裡，指來指去的，是不是很讓人感到困惑呢？  
+      其實我們只需要知道
+      1. ${{t/checkout-branch}}會讓${{t/head}}指向一個${{t/branch}}
+      2. 接著，我們建立${{t/revision}}的時候，分支會跟著新建立的${{t/revision}}前進  
+      就好了  
+
+    more-on-current-branch: |+2
+      .md
+      如果有興趣深入了解前面說的指來指去的到底是甚麼意思，可以繼續閱讀這個區塊的說明  
+      或是也可以選擇直接按下「確認」按鈕跳過，繼續後面的步驟
+
+      現在，我們知道「切換到某某分支」的意思是  
+      ${{t/head}}會指向某某${{t/branch}}(以下簡稱 B)，而 B 又指向一個${{t/revision}}(以下簡稱 R)  
+      要理解這代表了甚麼，可以讓我們分段拆解它  
+
+      首先，我們曾經學過跟這句話的後半段很像的事情  
+      當${{t/head}}指向 R 的時候，表示以下幾件事情  
+
+      1. 可以操作的檔案被還原到 R 的狀態  
+      2. 如果修改了檔案，會跟 R 的狀態對比差異，顯示成${{t/unstaged}}以及${{t/staged}}  
+      3. 如果建立新的${{t/revision}}，它的父版本會是 R。${{t/head}}會指向新${{t/revision}}  
+
+      而實際上，${{t/head}}指向 B，且 B 指向 R  
+      就代表${{t/head}}可以間接地透過 B 得到 R  
+      所以這代表以下幾件事情  
+
+      1. 可以操作的檔案被還原到 R 的狀態(透過 B 得知)。這和前面說的 1. 一樣。  
+      2. 如果修改了檔案，會跟 R 的狀態(透過 B 得知)對比差異，顯示成${{t/unstaged}}以及${{t/staged}}。這也和前面的 2. 說的一樣。  
+      3. 如果建立新的${{t/revision}}，它的父版本會是 $ (原本 B 指向的${{t/revision}})。B 會指向新${{t/revision}}
+      4. 最後，額外加上 ${{t/head}}維持指向 B  
+
+      所得到的效果就是前面所說的  
+      ${{t/checkout-branch}}}到 B 之後，無論我們建立幾個新的${{t/revision}}  
+      B 都會跟著指到最新的${{t/revision}}  
+      而${{t/head}}維持指向 B  
       
+
+      嗯...「**切換**」這個詞好像之前我們已經用得很多了  
+      沒錯！以前我們學習的，是切換「**${{t/revision}}**」  
+      而剛才，我們將學習切換「**${{t/branch}}**」  
+      操作其實也非常相近  
+
+      實際上，這兩個切換是真的有共通點的  
+      所謂的「切換」，其實指的是要把「**${{t/head-f}}**」所指向的對象給改變  
+      請讓我們以下面的圖(五)還有圖(六)來輔助說明  
+
+
+
+
 
     summary: |+2
       .md

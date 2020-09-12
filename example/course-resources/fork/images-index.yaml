@@ -133,3 +133,4 @@ asset_index:
     new-commit-has-no-branch: checkout-branch@new-commit-has-no-branch.png
     instruct-checkout-master-1: checkout-branch@instruct-checkout-master-1.png
     compare-master-before-after-commit: checkout-branch@compare-master-before-after-commit.png
+    compare-current-and-other-branch-mark: checkout-branch@compare-current-and-other-branch-mark.png

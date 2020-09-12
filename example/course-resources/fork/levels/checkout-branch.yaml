@@ -91,10 +91,15 @@
       referenceName: "checkout-branch-commit-2"
 
   # elaborate head on branch
-    - !elaborate 
+    - !elaborate   
       descriptionId: "level-data/notify-branch-moved"
+    - !elaborate   
+      descriptionId: "level-data/notify-current-branch-mark"
+    - !illustrate  
+      descriptionId: "level-data/elaborate-current-branch"
     - !elaborate 
-      descriptionId: "level-data/"
+      descriptionId: "level-data/more-on-current-branch" 
+
 
 
     - !elaborate 
