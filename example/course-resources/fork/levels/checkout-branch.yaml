@@ -27,6 +27,7 @@
           repoSetupName: commits-advanced
     - !instruct 
       descriptionId: "level-data/checkout-branch/commit-1"
+      needConfirm: false
     - !dev.needAction 
       actions:
         - !dev.act.git 
@@ -84,6 +85,7 @@
           repoSetupName: commits-advanced
     - !instruct 
       descriptionId: "level-data/checkout-branch/commit-1"
+      needConfirm: false
     - !dev.needAction 
       actions:
         - !dev.act.git 

@@ -34,7 +34,9 @@ asset_index:
       .md
       現在，我們建立了一個新的${{t/revision}}  
       然而，當我們觀察${{t/graph}}的時候會不難發現  
-      如下圖(一)所示，我們新建立的${{t/revision}}身上並沒有我們想要的神奇${{t/branch}}  
+      如下圖(一)所示  
+      我們新建立的${{t/revision}}－－「${{level-data/checkout-branch/commit-message-1}}」－－身上並沒有我們想要的神奇${{t/branch}}  
+      亦即，它身上沒有寫著「master」的標記
 
       ![illustration]({{images/new-commit-has-no-branch}})  
       <div class="img-title">圖(一)</div>  
@@ -45,17 +47,18 @@ asset_index:
     checkout-starting-commit: |+2
       .md
       請操作${{t/gui}}，切換到${{t/commit-msg}}為「${{level-data/commit-properties/end-message}}」的${{t/revision}}上  
-      完成之後，請按下下方「確認」來檢查是否操作正確  
+      完成之後，請按下下方「執行」來檢查是否操作正確  
 
     confirm-diversity-eliminated: |+2
       .md
       現在，我們又回到了一開始出發的${{t/revision}}  
-      而這時候如果觀察${{t/graph}}  
+      而這時候如果我們將${{t/gui}}關閉之後重開，然後觀察${{t/graph}}  
       應該毫不意外的會發現，剛才建立的${{t/revision}}「${{level-data/checkout-branch/commit-message-1}}」又消失不見了  
 
       因此，我們知道了：  
       1. 有${{t/branch}}標記的${{t/revision}}，在${{t/head}}移到別的地方去之後也不會消失  
-      2. 從有${{t/branch}}標記的${{t/revision}}的父母輩建立${{t/revision}}，並不會得到上述的特性  
+      2. 話雖如此，從擁有${{t/branch}}標記的${{t/revision}}的父母輩出發(例如這裡的「${{level-data/commit-properties/end-message}}」)
+         建立${{t/revision}}，並不會得到上述的特性  
          ${{t/head}}移到別的地方去之後，還是會消失  
       3. 結合這兩點，我們想要的，是建立${{t/revision}}的同時，${{t/branch}}也會跟著更新成指向新的${{t/revision}}  
          而這其實正是分支的基本功能，接下來，就讓我們來試試看吧！  
@@ -77,7 +80,7 @@ asset_index:
       ![illustration]({{images/instruct-checkout-master-1}})  
       <div class="img-title">圖(二)</div>        
 
-      因為我們想要「**切換(checkout)**」到「**master**」  
+      因為我們想要「**切換(checkout)**」到「**master**」的關係  
       請如下圖所示，在選單上選擇如紅框圈選的「master」，引出下一層選單  
       然後，在第二層選單上，選擇如橘框圈選的「${{st/checkout-branch-item}}」  
 
@@ -102,7 +105,7 @@ asset_index:
       ![illustration]({{images/compare-master-before-after-commit}})  
       <div class="img-title">圖(三)</div>  
 
-      圖的左側是建立${{t/revision}}，右側則是之後  
+      圖的左側是建立${{t/revision}}之前，右側則是之後  
       我們可以明顯的注意到，寫著「master」的方形標記－－也就是${{t/branch}}的標記－－緊跟著不動  
       這證明了，**當我們${{t/checkout-branch}}之後，${{t/branch}}會跟隨建立${{t/revision}}一起前進**  
 
