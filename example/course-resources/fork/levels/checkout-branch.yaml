@@ -9,37 +9,37 @@
 
   # intro 
     - !elaborate 
-      descriptionId: "level-data/intro"
+      descriptionId: "level-data/checkout-branch/intro"
 
   # commit on a non-tip non-branch commit
     - !instruct
-      descriptionId: "level-data/open-repo-and-add-modifications"
+      descriptionId: "level-data/checkout-branch/open-repo-and-add-modifications"
       needConfirm: false
     - !execute 
-      descriptionId: "level-data?commit-and-diverse/modify-folder"
+      descriptionId: "level-data/commit-and-diverse/modify-folder"
       actions:
         - !act.writeFile 
           sourceAssetIds:
-            - "$level-data/mod-1"
+            - "$level-data/checkout-branch/mod-1"
           destinationPaths:
-            - "$level-data/mod-1-file-path"
+            - "$level-data/checkout-branch/mod-1-file-path"
         - !act.stageAll 
           repoSetupName: commits-advanced
     - !instruct 
-      descriptionId: "level-data/commit-1"
+      descriptionId: "level-data/checkout-branch/commit-1"
     - !dev.needAction 
       actions:
         - !dev.act.git 
           repoSetupName: commits-advanced
-          arguments: [ "commit", "-m", "$level-data/commit-message-1" ]
+          arguments: [ "commit", "-m", "$level-data/checkout-branch/commit-message-1" ]
     - !verifyRepo 
       referenceName: "checkout-branch-commit-1"
 
   # verify new commit does not have branch attached
     - !elaborate 
-      descriptionId: "level-data/notify-no-branch-on-new-commit"
+      descriptionId: "level-data/checkout-branch/notify-no-branch-on-new-commit"
     - !instruct
-      descriptionId: "level-data/checkout-starting-commit"
+      descriptionId: "level-data/checkout-branch/checkout-starting-commit"
       needConfirm: false
     - !dev.needAction 
       actions:
@@ -50,11 +50,13 @@
       referenceName: "checkout-branch-checkout-starting-commit"
 
     - !elaborate 
-      descriptionId: "level-data/confirm-diversity-eliminated"
+      descriptionId: "level-data/checkout-branch/confirm-diversity-eliminated"
 
   # checkout branch: master
+    - !elaborate 
+      descriptionId: "level-data/checkout-branch/intro-checkout-branch"
     - !instruct  
-      descriptionId: "level-data/intro-checkout-master"
+      descriptionId: "level-data/checkout-branch/instruct-checkout-master"
       needConfirm: false
     - !dev.needAction 
       actions:
@@ -66,44 +68,45 @@
 
   # commit on master
     - !elaborate 
-      descriptionId: "level-data/hint-checkout-master-done"
+      descriptionId: "level-data/checkout-branch/hint-checkout-master-done"
     - !instruct 
-      descriptionId: "level-data/instruct-add-modifications-2"
+      descriptionId: "level-data/checkout-branch/instruct-add-modifications-2"
       needConfirm: false
     - !execute 
-      descriptionId: "level-data?commit-and-diverse/modify-folder"
+      descriptionId: "level-data/commit-and-diverse/modify-folder"
       actions:
         - !act.writeFile 
           sourceAssetIds:
-            - "$level-data/mod-1"
+            - "$level-data/checkout-branch/mod-1"
           destinationPaths:
-            - "$level-data/mod-1-file-path"
+            - "$level-data/checkout-branch/mod-1-file-path"
         - !act.stageAll 
           repoSetupName: commits-advanced
     - !instruct 
-      descriptionId: "level-data/commit-1"
+      descriptionId: "level-data/checkout-branch/commit-1"
     - !dev.needAction 
       actions:
         - !dev.act.git 
           repoSetupName: commits-advanced
-          arguments: [ "commit", "-m", "$level-data/commit-message-1" ]
+          arguments: [ "commit", "-m", "$level-data/checkout-branch/commit-message-1" ]
     - !verifyRepo 
       referenceName: "checkout-branch-commit-2"
 
   # elaborate head on branch
     - !elaborate   
-      descriptionId: "level-data/notify-branch-moved"
+      descriptionId: "level-data/checkout-branch/notify-branch-moved"
     - !elaborate   
-      descriptionId: "level-data/notify-current-branch-mark"
+      descriptionId: "level-data/checkout-branch/notify-current-branch-mark"
+    - !elaborate 
+      descriptionId: "level-data/checkout-branch/findout-current-branch"
+
     - !illustrate  
-      descriptionId: "level-data/elaborate-current-branch"
+      descriptionId: "level-data/checkout-branch/elaborate-current-branch"
     - !elaborate 
-      descriptionId: "level-data/more-on-current-branch" 
-
-
+      descriptionId: "level-data/checkout-branch/more-on-current-branch" 
 
     - !elaborate 
-      descriptionId: "level-data/summary"
+      descriptionId: "level-data/checkout-branch/summary"
 
 
 

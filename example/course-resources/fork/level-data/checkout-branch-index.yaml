@@ -13,7 +13,7 @@ asset_index:
 
     open-repo-and-add-modifications: |+2
       .md
-      首先，如果還沒有使用${{t/gui}}開啟位於「`#{{commits-advnaced}}`」的實驗用資料夾的話
+      首先，如果還沒有使用${{t/gui}}開啟位於「`#{{commits-advanced}}`」的實驗用資料夾的話
       請先操作${{t/gui}}將其開啟  
 
       然後，請按下下面「${{level-data/commit-and-diverse/modify-folder}}」步驟中的「執行」按鈕  
@@ -123,14 +123,31 @@ asset_index:
       目標的${{t/branch}}就會被標成「當前的${{t/branch}}」  
       表示現在建立${{t/revision}}的話，這個${{t/branch}}會跟著移動  
 
+    findout-current-branch: |+2
+      .md
+      在之後的教學中，我們會發現 git 的複雜與威力正是來自於我們會頻繁的在多個${{t/branch}}之間切換  
+      在這個過程中，一不小心就會忘記自己到底跑去哪個${{t/branch}}  
+
+      因此，${{t/gui}}提供了一些簡便的方法來讓我們確認目前是切換到哪個${{t/branch}}  
+      因為我們剛剛${{t/checkout-branch}}到 master 上  
+      如果觀察${{t/gui}}的話應該會看到如下圖(五)紅框所方大的範圍中  
+      明確地顯示 master 來代表目前的${{t/branch}}  
+
+      ![illustration]({{images/elaborate-current-branch-display}})  
+      <div class="img-title">圖(五)</div>        
+
+      而當我們想要描述「 git 切換到某個${{t/branch}}之後的狀態」  
+      我們會形容它是「位於某某${{t/branch}}」或「處在${{t/branch}}上」  
+      例如現在，我們會說目前「位於 master 上」  
+
     elaborate-current-branch: |+2
       .md
-      嗯...所謂的「當前的${{t/branch}}」到底又是甚麼意思呢？  
+      嗯...所謂的「位於某某${{t/branch}}上」到底又是甚麼意思呢？  
       其實它是跟我們的一個老朋友：「**${{t/head-f}}**」有關  
-      請讓我們以下面的圖(五)來說明  
+      請讓我們以下面的圖(六)來說明  
 
       ![illustration]({{images/elaborate-checkout-branch-meaning}})  
-      <div class="img-title">圖(五)</div>  
+      <div class="img-title">圖(六)</div>  
 
       按照慣例，我們以圓球代表「${{t/revision}}」，五邊形標籤代表「${{t/head}}」
       而四方型標記，則代表「${{t/branch}}」  
@@ -149,7 +166,7 @@ asset_index:
 
     more-on-current-branch: |+2
       .md
-      如果有興趣深入了解前面說的指來指去的到底是甚麼意思，可以繼續閱讀這個區塊的說明  
+      如果有興趣深入了解前面說的指來指去的到底是甚麼意思，請繼續閱讀這個區塊的說明  
       或是也可以選擇直接按下「確認」按鈕跳過，繼續後面的步驟
 
       現在，我們知道「切換到某某分支」的意思是  
@@ -176,23 +193,24 @@ asset_index:
       ${{t/checkout-branch}}}到 B 之後，無論我們建立幾個新的${{t/revision}}  
       B 都會跟著指到最新的${{t/revision}}  
       而${{t/head}}維持指向 B  
-      
 
+    compare-checkout-revision-and-branch: |+2
+      .md
       嗯...「**切換**」這個詞好像之前我們已經用得很多了  
-      沒錯！以前我們學習的，是切換「**${{t/revision}}**」  
-      而剛才，我們將學習切換「**${{t/branch}}**」  
-      操作其實也非常相近  
-
-      實際上，這兩個切換是真的有共通點的  
-      所謂的「切換」，其實指的是要把「**${{t/head-f}}**」所指向的對象給改變  
-      請讓我們以下面的圖(五)還有圖(六)來輔助說明  
-
-
-
-
+      沒錯！我們剛剛學習切換的是「**${{t/branch}}**」  
+      而以前我們學習的，是切換「**${{t/revision}}**」  
+      
+      他們之間的差別只在於${{t/branch}}會否在建立${{t/revision}}時跟著移動  
+      因為我們大多數的時候都希望${{t/branch}}會跟著移動  
 
     summary: |+2
       .md
+      在這個章節中  
+      我們介紹了如何切換${{t/branch}}  
+      還有切換完之後，就可以確保${{t/branch}}可以跟隨著我們新增${{t/revision}}的腳步前進  
+      因為切換分支將會是一個非常頻繁使用的操作  
+      我們在下一個章節中還會繼續介紹如何有效率的切換分支  
+      
 
 # repository assets
     commit-message-1: "實驗的變化"
