@@ -74,15 +74,28 @@ asset_index:
       請按照前面所學，切換到「branch-2」  
       完成之後，請按下「執行」按鈕來確認有正確執行  
 
+    checkout-back-to-master: |+2
+      .md
+      非常好，現在我們已經越來越熟練了  
+      最後，讓我們切換回到「`master`」然後結束這個章節吧  
+
+    intruct-checkout-master: |+2
+      .md
+      請按照前面所學，切換到「master」  
+      完成之後，請按下「執行」按鈕來確認有正確執行  
+
+    summary: |+2
+      .md
+      在這個簡短的章節中  
+      我們介紹了${{t/gui}}上面的「${{t/branch}}列表」這個介面  
+      它清楚地列出目前${{t/repo}}中所有的${{t/branch}}  
+      也能讓我們方便快速的在幾個${{t/branch}}之間切換  
+
+
+
     compare-checkout-revision-and-branch: |+2
       .md
       現在我們已經非常熟悉如何${{t/checkout-branch}}了  
-      嗯...「**切換**」這個詞好像之前我們已經用得很多了  
-      沒錯！我們剛剛學習切換的是「**${{t/branch}}**」  
-      而以前我們學習的，是切換「**${{t/revision}}**」  
-      
-      他們之間的差別只在於${{t/branch}}會否在建立${{t/revision}}時跟著移動  
-      因為我們大多數的時候都希望${{t/branch}}會跟著移動  
 
     
 

@@ -1,0 +1,42 @@
+!level
+  repoVcsSetups:
+    commits-advanced:
+      workingPath: commits-advanced
+      referenceStoreName: commits-advanced
+      checkpointStoreName: commits-advanced-checkpoints
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+  # intro current branch display
+    - !elaborate 
+      descriptionId: "level-data/intro"
+    - !elaborate 
+      descriptionId: "level-data/findout-current-branch"
+    - !illustrate  
+      descriptionId: "level-data/elaborate-current-branch"
+
+  # elaborate checkout branch
+    - !elaborate 
+      descriptionId: "level-data/compare-checkout-revision-and-branch"
+    - !elaborate 
+      descriptionId: "level-data/more-on-current-branch" 
+
+  # intro detached head
+    - !elaborate 
+      descriptionId: "level-data/question-current-not-on-branch"
+    - !instruct 
+      descriptionId: "level-data/checkout-master-revision"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: commits-advnaced
+          arguments: [ "checkout", "-f", "master~0" ]
+    - !verifyRepo 
+      referenceName: "current-branch-checkout-master-revision"
+
+    - !instruct 
+      descriptionId: "level-data/intro-detached-head"
+      needConfirm: false
+    - !verifyInput 
+      answer: "1"

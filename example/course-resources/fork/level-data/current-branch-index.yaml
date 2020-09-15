@@ -1,0 +1,177 @@
+asset_index:
+  infile:
+  # course content
+    intro: |+2
+      .md
+      在上一個章節中，我們學習了如何${{t/checkout-branch}}  
+      並且在結尾的時候，我們重提了以前曾經學過的另一個切換：${{t/checkout-revision}}  
+      在這個章節中我們將說明這兩個切換之間究竟有甚麼異同  
+      進而更加了解${{t/checkout-branch}}所代表的意涵  
+
+    findout-current-branch: |+2
+      .md
+      在深入我們的主題之前，先讓我們岔開來思考一個小問題  
+      在日常使用 git 流程中，我們其實會頻繁的在多個${{t/branch}}之間切換  
+      在這個過程中，一不小心就會忘記自己到底跑去哪個${{t/branch}}  
+
+      為了輔助使用者辨明自己目前切換到哪個${{t/branch}}，${{t/gui}}提供了一些簡便的方法來讓我們確認目前是切換到哪個${{t/branch}}  
+      請使用${{t/gui}}開啟位於「`#{{commits-advanced}}`」的資料夾  
+      因為我們剛剛${{t/checkout-branch}}到 master 上  
+      如果觀察${{t/gui}}的話應該會看到如下圖(一)紅框所方大的範圍中  
+      明確地顯示 master 來代表目前的${{t/branch}}  
+
+      ![illustration]({{images/elaborate-current-branch-display}})  
+      <div class="img-title">圖(一)</div>  
+
+      順帶一提，當我們想要描述「 git 切換到某個${{t/branch}}之後的狀態」  
+      我們會形容它是「位於某某${{t/branch}}」或「處在${{t/branch}}上」  
+      例如現在，我們會說目前「位於 master 上」  
+
+    elaborate-current-branch: |+2
+      .md
+      嗯...所謂的「位於某某${{t/branch}}上」到底又是甚麼意思呢？  
+      其實它是跟我們的一個老朋友：「**${{t/head-f}}**」有關  
+      請讓我們以下面的圖(六)來說明  
+
+      ![illustration]({{images/elaborate-checkout-branch-meaning}})  
+      <div class="img-title">圖(二)</div>  
+
+      按照慣例，我們以圓球代表「${{t/revision}}」，五邊形標籤代表「${{t/head}}」
+      而四方型標記，則代表「${{t/branch}}」  
+
+      上圖分別以從左到右的變化，來表示我們剛才學習的「${{t/checkout-branch}}」這個操作的效果  
+      也就是將${{t/head}}指向(挪動)到一個${{t/branch}}上面  
+
+    compare-checkout-revision-and-branch: |+2
+      .md
+      現在，讓我們回想一下  
+      在以前學習${{t/checkout-revision}}的時候  
+      我們說明這個操作的效果是挪動「${{t/head}}」到某個「${{t/revision}}」  
+      現在，我們學習的${{t/checkout-branch}}  
+      則是挪動「${{t/head}}」到某個「${{t/branch}}」  
+
+      也就是說，當在 git 裡面說「切換」的時候  
+      其實總是在說要挪動${{t/head}}到某個地方  
+      而目前我們知道的，${{t/head}}可以去的地方有兩個：  
+      1. ${{t/revision}}
+      2. ${{t/branch}}  
+
+      而更進一步地說${{t/branch}}自己也總是會指向某一個${{t/revision}}  
+
+      說到這裡，指來指去的，是不是很讓人感到困惑呢？  
+      其實我們只需要知道
+      1. ${{t/checkout-branch}}會讓${{t/head}}指向一個${{t/branch}}
+      2. 接著，我們建立${{t/revision}}的時候，分支會跟著新建立的${{t/revision}}前進  
+      就好了  
+
+    more-on-current-branch: |+2
+      .md
+      如果有興趣深入了解前面說的指來指去的到底是甚麼意思，請繼續閱讀這個區塊的說明  
+      或是也可以選擇直接按下「確認」按鈕跳過，繼續後面的步驟
+
+      現在，我們知道「切換到某某分支」的意思是  
+      ${{t/head}}會指向某某${{t/branch}}(以下簡稱 B)，而 B 又指向一個${{t/revision}}(以下簡稱 R)  
+      要理解這代表了甚麼，可以讓我們分段拆解它  
+
+      首先，我們曾經學過跟這句話的後半段很像的事情  
+      當${{t/head}}指向 R 的時候，表示以下幾件事情  
+
+      1. 可以操作的檔案被還原到 R 的狀態  
+      2. 如果修改了檔案，會跟 R 的狀態對比差異，顯示成${{t/unstaged}}以及${{t/staged}}  
+      3. 如果建立新的${{t/revision}}，它的父版本會是 R。${{t/head}}會指向新${{t/revision}}  
+
+      而實際上，${{t/head}}指向 B，且 B 指向 R  
+      就代表${{t/head}}可以間接地透過 B 得到 R  
+      所以這代表以下幾件事情  
+
+      1. 可以操作的檔案被還原到 R 的狀態(透過 B 得知)。這和前面說的 1. 一樣。  
+      2. 如果修改了檔案，會跟 R 的狀態(透過 B 得知)對比差異，顯示成${{t/unstaged}}以及${{t/staged}}。這也和前面的 2. 說的一樣。  
+      3. 如果建立新的${{t/revision}}，它的父版本會是 $ (原本 B 指向的${{t/revision}})。B 會指向新${{t/revision}}
+      4. 最後，額外加上 ${{t/head}}維持指向 B  
+
+      所得到的效果就是前面所說的  
+      ${{t/checkout-branch}}}到 B 之後，無論我們建立幾個新的${{t/revision}}  
+      B 都會跟著指到最新的${{t/revision}}  
+      而${{t/head}}維持指向 B  
+
+    question-current-not-on-branch: |+2
+      .md
+      現在，我們已經充分了解了「位於某某分支上」所代表的意義  
+      但是，既然有「位於某某分支上」，是否也有可能「**不位於『任何』分支上**」呢？  
+
+      這當然是存在的！  
+      只要我們${{t/checkout-revision}}，其實就「**不位於任何分支上**」  
+      也就是從這個教學很前面的章節開始，我們時常都處於這個狀態  
+      現在，讓我們再次${{t/checkout-revision}}來回顧一下吧  
+
+    checkout-master-revision: |+2
+      .md
+      雖然聽起來可能是理所當然的事情，不過我們還是重新說明一次  
+      git 容許切換到${{t/graph}}上任何的${{t/revision}}  
+      即使這個${{t/revision}}上已經存在${{t/branch}}也是  
+
+      為了證明這點，請操作${{t/gui}}  
+      切換到「master」所在的「${{t/revision}}」上吧！  
+      請注意不要不小心切換到「master」上了  
+
+      完成之後，請按下「執行」按鈕確認一切正確  
+
+    question-current-not-on-branch-display: |+2
+      .md
+      切換完成之後，我們就成功的成為「不在任何分支上」的狀態  
+      
+      嗯...前面我們才說，${{t/gui}}為了方便會顯示目前所處的${{t/branch}}  
+      那麼，這時候它會顯示甚麼呢？  
+      請從下列選項中選擇最接近的答案  
+
+      1. 顯示「detached HEAD」  
+      2. 顯示「~~master~~」  
+      3. 甚麼都沒顯示  
+
+      請使用數字選項(1/2/3)來回答  
+
+    intro-detached-head: |+2
+      .md
+      恭喜回答正確  
+      當不在任何${{t/branch}}上的時候其實對 git 來說也是一個特別的狀態：  
+      「detached HEAD」  
+      意思是「分離的${{t/head}}」  
+
+      這裡的「分離」，其實就是用比較拗口的方式來表達「${{t/head}}沒有位在任何${{t/branch}}上，跟他們都分離開來了」  
+      順帶一提，在英文的情況中，有時會只單純用「detached(分離)」來形容這個狀態  
+
+    importance-of-detached-head: |+2
+      .md
+      那麼，「分離的${{t/head}}」為什麼會需要是一個狀態，還被賦予了這樣拗口難記的名字呢？  
+      這其實是因為它有一個重要的性質，一個我們已經很熟的性質：  
+      當處在這個狀態的時候，我們所增加的新的${{t/revision}}  
+      會在切換到別的${{t/revision}}或任何的${{t/branch}}之後，就消失不見  
+      導致我們極有可能會作白工  
+
+      正是因為這個緣故，這個狀態被專門起了這樣不太討喜的名字  
+      並且在絕大多數的 git 使用介面中(或甚至可能是全部)，**一旦使用者要進入這個狀態的時候，都會收到警告**  
+
+      但是另一方面，這個狀態又是不可避免的  
+      事實上，我們在前期的教學中正是因此可以自由的切換到任何${{t/revision}}  
+      來藉此瀏覽過往保存下來的檔案版本，方便我們學習 git 的一些特性  
+      而不用到一個特定的${{t/branch}}  
+
+    summary: |+2
+      .md
+      在這一章節中  
+      我們詳細的解說了${{t/checkout-branch}}的意涵是將${{t/head}}挪動到指定的${{t/branch}}上  
+      並且達成讓${{t/branch}}可以跟著新${{t/revision}}一起成長的效果  
+
+      另一方面  
+      我們也了解早先學習的${{t/checkout-revision}}其實會導致 git 進入「分離的${{t/head}}」這一狀態  
+      這個狀態中新建立的${{t/revision}}很容易會消失  
+      因此，**推薦的作法是，盡可能地保持位在某個分支之上**  
+
+      但是，有人可能會反駁  
+      「我們想要切換過去的${{t/revision}}上並不一定總是有${{t/branch}}  
+        會迫使我們不得不成為『分離的${{t/head}}』！」  
+
+      其實，這個論點並不一定成立  
+      不存在${{t/branch}}的話，我們自己創造就可以了！  
+      下一章節，我們將詳細回顧如何建立${{t/branch}}，來讓我們能夠更加自由的往返於不同${{t/revision}}間  
+

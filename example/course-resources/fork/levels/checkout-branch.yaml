@@ -100,14 +100,6 @@
     - !elaborate   
       descriptionId: "level-data/checkout-branch/notify-current-branch-mark"
     - !elaborate 
-      descriptionId: "level-data/checkout-branch/findout-current-branch"
-
-    - !illustrate  
-      descriptionId: "level-data/checkout-branch/elaborate-current-branch"
-    - !elaborate 
-      descriptionId: "level-data/checkout-branch/more-on-current-branch" 
-
-    - !elaborate 
       descriptionId: "level-data/checkout-branch/summary"
 
 

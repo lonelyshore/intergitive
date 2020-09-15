@@ -362,7 +362,7 @@
         - !dev.act.git 
           repoSetupName: checkout-branches
           arguments: [ "checkout", "-f", "branch-1" ]
-    - !verifyInput 
+    - !verifyRepo 
       referenceName: "checkout-branch-more-checkout-branch-1"
 
     - !elaborate 
@@ -375,7 +375,7 @@
         - !dev.act.git 
           repoSetupName: checkout-branches
           arguments: [ "checkout", "-f", "branch-2" ]
-    - !verifyInput 
+    - !verifyRepo  
       referenceName: "checkout-branch-more-checkout-branch-2"
 
     - !elaborate 
@@ -388,7 +388,7 @@
         - !dev.act.git 
           repoSetupName: checkout-branches
           arguments: [ "checkout", "-f", "master" ]
-    - !verifyInput 
+    - !verifyRepo  
       referenceName: "checkout-branch-more-checkout-master"
 
     - !elaborate 

@@ -37,7 +37,8 @@ asset_index:
   # level names of section five
     main.create-branch.name: "5-1 節：建立分支標註出特定版本"
     main.checkout-branch.name: "5-2 節：切換工作中版本到分支上並在分支上提交"
-    main.checkout-branch-more.name: "5-3 節：在多個分支間切換"
+    main.current-branch.name: "5-3 節：當前的分支與分離的工作版本"
+    main.checkout-branch-more.name: "5-4 節：在多個分支間切換"
 
   ondisk:
   # level configs of section one: intro
@@ -69,4 +70,6 @@ asset_index:
   # level configs of section five: create and checkout branches
     create-branch: "create-branch.yaml"
     checkout-branch: "checkout-branch.yaml"
+    current-branch: "current-branch.yaml"
     checkout-branch-more: "checkout-branch-more.yaml"
+    

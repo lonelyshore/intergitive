@@ -134,8 +134,10 @@ asset_index:
     instruct-checkout-master-1: checkout-branch@instruct-checkout-master-1.png
     compare-master-before-after-commit: checkout-branch@compare-master-before-after-commit.png
     compare-current-and-other-branch-mark: checkout-branch@compare-current-and-other-branch-mark.png
-    elaborate-current-branch-display: checkout-branch@elaborate-current-branch-display.png
-    elaborate-checkout-branch-meaning: checkout-branch@elaborate-checkout-branch-meaning.png
+
+# current-branch
+    elaborate-current-branch-display: current-branch@elaborate-current-branch-display.png
+    elaborate-checkout-branch-meaning: current-branch@elaborate-checkout-branch-meaning.png
 
 # checkout-branch-more
     itnro-branch-list: checkout-branch-more@itnro-branch-list.png
