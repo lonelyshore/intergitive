@@ -1,6 +1,91 @@
 asset_index:
   infile:
 # course content
+    intro: |+2
+      .md
+      從前一個章節中  
+      我們學到了如何${{t/checkout-branch}}  
+      
+      因為${{t/branch}}是 git 非常重要的功能  
+      除了在${{t/graph}}上操作
+      ${{gui}}還另外提供了另一個方便的「${{t/branch}}列表」的介面
+      以供使用者直接操作各個${{t/branch}}  
+
+      在這個章節中，我們將簡單介紹這個功能  
+
+    open-repo-and-count-branch-number: |+2
+      .md
+      從這個章節開始的接下來幾個章節  
+      我們將專注在 git 的${{t/branch}}上，而非${{t/worktree}}裡的檔案內容  
+      所以，我們將換用一個新的練習用${{t/repo}}  
+
+      請使用${{t/gui}}開啟位於「`#{{checkout-branches}}`」的${{t/repo}}  
+
+      開啟之後，請回答這個${{t/repo}}中，目前擁有多少個${{t/branch}}呢？  
+      請不要忘記 master 也是一個${{t/branch}}喔
+
+      1. 7
+      2. 8
+      3. 9
+
+      請以選項編號(1/2/3)回答
+
+    intro-branch-list: |+2
+      .md
+      我們在使用 git 的時候常常${{t/branch}}會越長越多  
+      就像這個${{t/repo}}一樣有很多${{t/branch}}散落在各處  
+      這種時候要管理${{t/repo}}其實還蠻麻煩的  
+      例如我們剛才就已經體會需要花一些功夫從${{t/graph}}上計算到底有多少個${{t/branch}}  
+
+      幸好，${{t/gui}}有一個${{t/branch}}列表的功能  
+      請見下圖(一)中，紅框圈選的範圍，就是${{t/branch}}列表  
+
+      ![illustration]({{images/itnro-branch-list}})  
+      <div class="img-title">圖(一)</div>  
+
+      這個列表上直白的條列出整個${{t/repo}}內的${{t/branch}}  
+      除此之外，仔細看圖中橘框圈選的「master」上面  
+      也有特殊的標記來標示出這是當前的${{t/branch}}  
+
+      這個列表除了展示${{t/branch}}之外  
+      也可以直接透過這個介面${{t/checkout-branch}}  
+      接下來就讓我們來嘗試看看吧
+
+    instruct-checkout-branch-1: |+2
+      .md
+      讓我們跟著下面的步驟，切換到「`branch-1`」看看吧  
+      請如下圖(二)所示，對著${{t/branch}}列表上的「branch-1」按下右鍵，展開選單  
+
+      ![illustration]({{images/instruct-open-branch-menu-for-checkout-branch-1}})  
+      <div class="img-title">圖(二)</div>  
+
+      展開選單後，請選擇紅框圈選的「Checkout 'branch-1'...(切換到 'branch-1'...)」  
+      就可以切換過去  
+
+      完成之後，請按下「執行」按鈕來確認有正確執行  
+
+    encourage-checkout-another: |+2
+      .md
+      恭喜，現在我們已經學會如何從${{t/branch}}列表上快速${{t/checkout-branch}}  
+      趁我們手感還在，再切換到「`branch-2`」看看吧  
+
+    intruct-checkout-branch-2: |+2
+      .md
+      請按照前面所學，切換到「branch-2」  
+      完成之後，請按下「執行」按鈕來確認有正確執行  
+
+    compare-checkout-revision-and-branch: |+2
+      .md
+      現在我們已經非常熟悉如何${{t/checkout-branch}}了  
+      嗯...「**切換**」這個詞好像之前我們已經用得很多了  
+      沒錯！我們剛剛學習切換的是「**${{t/branch}}**」  
+      而以前我們學習的，是切換「**${{t/revision}}**」  
+      
+      他們之間的差別只在於${{t/branch}}會否在建立${{t/revision}}時跟著移動  
+      因為我們大多數的時候都希望${{t/branch}}會跟著移動  
+
+    
+
 
 
 # repository assets

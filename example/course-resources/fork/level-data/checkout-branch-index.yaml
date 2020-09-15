@@ -137,7 +137,7 @@ asset_index:
       明確地顯示 master 來代表目前的${{t/branch}}  
 
       ![illustration]({{images/elaborate-current-branch-display}})  
-      <div class="img-title">圖(五)</div>        
+      <div class="img-title">圖(五)</div>  
 
       而當我們想要描述「 git 切換到某個${{t/branch}}之後的狀態」  
       我們會形容它是「位於某某${{t/branch}}」或「處在${{t/branch}}上」  
@@ -196,15 +196,6 @@ asset_index:
       ${{t/checkout-branch}}}到 B 之後，無論我們建立幾個新的${{t/revision}}  
       B 都會跟著指到最新的${{t/revision}}  
       而${{t/head}}維持指向 B  
-
-    compare-checkout-revision-and-branch: |+2
-      .md
-      嗯...「**切換**」這個詞好像之前我們已經用得很多了  
-      沒錯！我們剛剛學習切換的是「**${{t/branch}}**」  
-      而以前我們學習的，是切換「**${{t/revision}}**」  
-      
-      他們之間的差別只在於${{t/branch}}會否在建立${{t/revision}}時跟著移動  
-      因為我們大多數的時候都希望${{t/branch}}會跟著移動  
 
     summary: |+2
       .md

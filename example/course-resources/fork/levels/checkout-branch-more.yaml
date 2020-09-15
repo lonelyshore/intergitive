@@ -339,11 +339,60 @@
           referenceName: init
 
 
-  # intro and detached head
+  # intro and checkout on branch list
     - !loadOneReference
       repoSetupName: checkout-branches
       referenceName: init
 
     - !elaborate 
       descriptionId: "level-data/intro"
+    - !instruct 
+      descriptionId: "level-data/open-repo-and-count-branch-number"
+      needConfirm: false
+    - !verifyInput 
+      answer: "3"
+
+    - !elaborate 
+      descriptionId: "level-data/intro-branch-list"
+    - !instruct 
+      descriptionId: "level-data/instruct-checkout-branch-1"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ "checkout", "-f", "branch-1" ]
+    - !verifyInput 
+      referenceName: "checkout-branch-more-checkout-branch-1"
+
+    - !elaborate 
+      descriptionId: "level-data/encourage-checkout-another"
+    - !instruct 
+      descriptionId: "level-data/intruct-checkout-branch-2"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ "checkout", "-f", "branch-2" ]
+    - !verifyInput 
+      referenceName: "checkout-branch-more-checkout-branch-2"
+
+    - !elaborate 
+      descriptionId: "level-data/checkout-back-to-master"
+    - !instruct 
+      descriptionId: "level-data/intruct-checkout-master"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ "checkout", "-f", "master" ]
+    - !verifyInput 
+      referenceName: "checkout-branch-more-checkout-master"
+
+    - !elaborate 
+      descriptionId: "level-data/summary"
+
+    
       

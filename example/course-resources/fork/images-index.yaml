@@ -136,3 +136,7 @@ asset_index:
     compare-current-and-other-branch-mark: checkout-branch@compare-current-and-other-branch-mark.png
     elaborate-current-branch-display: checkout-branch@elaborate-current-branch-display.png
     elaborate-checkout-branch-meaning: checkout-branch@elaborate-checkout-branch-meaning.png
+
+# checkout-branch-more
+    itnro-branch-list: checkout-branch-more@itnro-branch-list.png
+    instruct-open-branch-menu-for-checkout-branch-1: checkout-branch-more@instruct-open-branch-menu-for-checkout-branch-1.png
