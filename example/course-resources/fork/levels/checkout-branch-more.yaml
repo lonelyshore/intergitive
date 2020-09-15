@@ -1,0 +1,349 @@
+!level
+  repoVcsSetups:
+    checkout-branches:
+      workingPath: checkout-branches
+      referenceStoreName: checkout-branches
+      checkpointStoreName: checkout-branches
+  steps:
+  # build repo
+    - !dev.devAction 
+      actions:
+      # init git
+        - !dev.act.git
+          repoSetupName: checkout-branches
+          arguments:
+            - init
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ config, "--local", user.name, someone]
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ config, "--local", user.email, someone@some.mail]
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ config, "--local", core.autocrlf, input]
+
+      # commit #1
+        - !act.writeFile &write1
+          sourceAssetIds:
+            - "$level-data/checkout-branch-more/file-1:v1"
+          destinationPaths:
+            - "checkout-branches/file.txt"
+        - !dev.act.git &stageAll
+          repoSetupName: checkout-branches
+          arguments: [ "add", "-A" ]
+        - !dev.act.git &commitDummy
+          repoSetupName: checkout-branches
+          arguments: [ "commit", "-m", "dummy commit" ]
+
+      # commit #2
+        - !act.writeFile &write2
+          sourceAssetIds:
+            - "$level-data/checkout-branch-more/file-1:v2"
+          destinationPaths:
+            - "checkout-branches/file.txt"
+        - *stageAll
+        - *commitDummy
+
+      # create 38 dummy commits (total 40 dummy commits)
+        #3
+        - *write1
+        - *stageAll
+        - *commitDummy
+        - *write2
+        - *stageAll
+        - *commitDummy
+
+        #5
+        - *write1
+        - *stageAll
+        - *commitDummy
+        - *write2
+        - *stageAll
+        - *commitDummy
+
+        #7
+        - *write1
+        - *stageAll
+        - *commitDummy
+        - *write2
+        - *stageAll
+        - *commitDummy
+
+        #9
+        - *write1
+        - *stageAll
+        - *commitDummy
+        - *write2
+        - *stageAll
+        - *commitDummy
+
+        #11
+        - *write1
+        - *stageAll
+        - *commitDummy
+        - *write2
+        - *stageAll
+        - *commitDummy
+
+        #13
+        - *write1
+        - *stageAll
+        - *commitDummy
+        - *write2
+        - *stageAll
+        - *commitDummy
+
+        #15
+        - *write1
+        - *stageAll
+        - *commitDummy
+        - *write2
+        - *stageAll
+        - *commitDummy
+
+        #17
+        - *write1
+        - *stageAll
+        - *commitDummy
+        - *write2
+        - *stageAll
+        - *commitDummy
+
+        #19
+        - *write1
+        - *stageAll
+        - *commitDummy
+        - *write2
+        - *stageAll
+        - *commitDummy
+
+        #21
+        - *write1
+        - *stageAll
+        - *commitDummy
+        - *write2
+        - *stageAll
+        - *commitDummy
+
+        #23
+        - *write1
+        - *stageAll
+        - *commitDummy
+        - *write2
+        - *stageAll
+        - *commitDummy
+
+        #25
+        - *write1
+        - *stageAll
+        - *commitDummy
+        - *write2
+        - *stageAll
+        - *commitDummy
+
+        #27
+        - *write1
+        - *stageAll
+        - *commitDummy
+        - *write2
+        - *stageAll
+        - *commitDummy
+
+        #29
+        - *write1
+        - *stageAll
+        - *commitDummy
+        - *write2
+        - *stageAll
+        - *commitDummy
+
+        #31
+        - *write1
+        - *stageAll
+        - *commitDummy
+        - *write2
+        - *stageAll
+        - *commitDummy
+
+        #33
+        - *write1
+        - *stageAll
+        - *commitDummy
+        - *write2
+        - *stageAll
+        - *commitDummy
+
+        #35
+        - *write1
+        - *stageAll
+        - *commitDummy
+        - *write2
+        - *stageAll
+        - *commitDummy
+
+        #37
+        - *write1
+        - *stageAll
+        - *commitDummy
+        - *write2
+        - *stageAll
+        - *commitDummy
+
+        #39
+        - *write1
+        - *stageAll
+        - *commitDummy
+        - *write2
+        - *stageAll
+        - *commitDummy
+
+      # create reference branches on main stream
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ "branch", "-f", "branch-1", "master~32" ]
+
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ "branch", "-f", "branch-2", "master~7" ] 
+
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ "branch", "-f", "branch-3", "master~22"]
+
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ "branch", "-f", "branch-4", "master~35"]
+
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ "branch", "-f", "branch-5", "master~12"]
+
+      # create three side branches
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ "checkout", "-fB", "branch-6", "master~27"]
+
+        - !act.writeFile &write3
+          sourceAssetIds:
+            - "$level-data/checkout-branch-more/file-1:v3"
+          destinationPaths:
+            - "checkout-branches/file.txt"
+        - *stageAll
+        - *commitDummy
+
+        - *write1
+        - *stageAll
+        - *commitDummy
+
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ "checkout", "-fB", "branch-7", "master~15"]
+
+        - !act.writeFile &write3
+          sourceAssetIds:
+            - "$level-data/checkout-branch-more/file-1:v3"
+          destinationPaths:
+            - "checkout-branches/file-1.txt"
+        - *stageAll
+        - *commitDummy
+
+        - *write1
+        - *stageAll
+        - *commitDummy
+
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ "checkout", "-fB", "branch-8", "master~39"]
+
+        - !act.writeFile &write3
+          sourceAssetIds:
+            - "$level-data/checkout-branch-more/file-1:v3"
+          destinationPaths:
+            - "checkout-branches/file-1.txt"
+        - *stageAll
+        - *commitDummy
+
+        - *write1
+        - *stageAll
+        - *commitDummy
+
+      # create 10 target commits back on master
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ "checkout", "-f", "master"]
+
+        - *write1
+        - *stageAll
+        - !dev.act.git
+          repoSetupName: checkout-branches
+          arguments: [ "commit", "-m", "1" ]
+
+        - *write2
+        - *stageAll
+        - !dev.act.git
+          repoSetupName: checkout-branches
+          arguments: [ "commit", "-m", "2" ]
+
+        - *write1
+        - *stageAll
+        - !dev.act.git
+          repoSetupName: checkout-branches
+          arguments: [ "commit", "-m", "3" ]
+
+        - *write2
+        - *stageAll
+        - !dev.act.git
+          repoSetupName: checkout-branches
+          arguments: [ "commit", "-m", "4" ]
+
+        - *write1
+        - *stageAll
+        - !dev.act.git
+          repoSetupName: checkout-branches
+          arguments: [ "commit", "-m", "5" ]
+
+        - *write2
+        - *stageAll
+        - !dev.act.git
+          repoSetupName: checkout-branches
+          arguments: [ "commit", "-m", "6" ]
+
+        - *write1
+        - *stageAll
+        - !dev.act.git
+          repoSetupName: checkout-branches
+          arguments: [ "commit", "-m", "7" ]
+
+        - *write2
+        - *stageAll
+        - !dev.act.git
+          repoSetupName: checkout-branches
+          arguments: [ "commit", "-m", "8" ]
+
+        - *write1
+        - *stageAll
+        - !dev.act.git
+          repoSetupName: checkout-branches
+          arguments: [ "commit", "-m", "9" ]
+
+        - *write2
+        - *stageAll
+        - !dev.act.git
+          repoSetupName: checkout-branches
+          arguments: [ "commit", "-m", "10" ]
+
+      # save reference to init
+        - !dev.act.saveReference 
+          repoSetupName: checkout-branches
+          referenceName: init
+
+
+  # intro and detached head
+    - !loadOneReference
+      repoSetupName: checkout-branches
+      referenceName: init
+
+    - !elaborate 
+      descriptionId: "level-data/intro"
+      

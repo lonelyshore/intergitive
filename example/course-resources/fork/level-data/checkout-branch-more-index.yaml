@@ -1,0 +1,10 @@
+asset_index:
+  infile:
+# course content
+
+
+# repository assets
+    file-1:v1: "file-1:v1"
+    file-1:v2: "file-1:v2"
+    file-1:v3: "file-1:v3"
+    
