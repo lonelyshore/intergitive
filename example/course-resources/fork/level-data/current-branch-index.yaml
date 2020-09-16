@@ -4,7 +4,7 @@ asset_index:
     intro: |+2
       .md
       在上一個章節中，我們學習了如何${{t/checkout-branch}}  
-      並且在結尾的時候，我們重提了以前曾經學過的另一個切換：${{t/checkout-revision}}  
+      並且在結尾的時候，我們重提了以前曾經學過的另一個切換：${{t/checkout-rev}}  
       在這個章節中我們將說明這兩個切換之間究竟有甚麼異同  
       進而更加了解${{t/checkout-branch}}所代表的意涵  
 
@@ -45,7 +45,7 @@ asset_index:
     compare-checkout-revision-and-branch: |+2
       .md
       現在，讓我們回想一下  
-      在以前學習${{t/checkout-revision}}的時候  
+      在以前學習${{t/checkout-rev}}的時候  
       我們說明這個操作的效果是挪動「${{t/head}}」到某個「${{t/revision}}」  
       現在，我們學習的${{t/checkout-branch}}  
       則是挪動「${{t/head}}」到某個「${{t/branch}}」  
@@ -100,9 +100,9 @@ asset_index:
       但是，既然有「位於某某分支上」，是否也有可能「**不位於『任何』分支上**」呢？  
 
       這當然是存在的！  
-      只要我們${{t/checkout-revision}}，其實就「**不位於任何分支上**」  
+      只要我們${{t/checkout-rev}}，其實就「**不位於任何分支上**」  
       也就是從這個教學很前面的章節開始，我們時常都處於這個狀態  
-      現在，讓我們再次${{t/checkout-revision}}來回顧一下吧  
+      現在，讓我們再次${{t/checkout-rev}}來回顧一下吧  
 
     checkout-master-revision: |+2
       .md
@@ -163,7 +163,7 @@ asset_index:
       並且達成讓${{t/branch}}可以跟著新${{t/revision}}一起成長的效果  
 
       另一方面  
-      我們也了解早先學習的${{t/checkout-revision}}其實會導致 git 進入「分離的${{t/head}}」這一狀態  
+      我們也了解早先學習的${{t/checkout-rev}}其實會導致 git 進入「分離的${{t/head}}」這一狀態  
       這個狀態中新建立的${{t/revision}}很容易會消失  
       因此，**推薦的作法是，盡可能地保持位在某個分支之上**  
 

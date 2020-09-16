@@ -106,7 +106,7 @@
           id: "fork-main-current-branch"
           nameKey: "levels/main.current-branch.name"
           configAssetId: "levels/current-branch"
-        - !level 
-          id: "fork-main-checkout-branch-more"
-          nameKey: "levels/main.checkout-branch-more.name"
-          configAssetId: "levels/checkout-branch-more"
+        # - !level 
+        #   id: "fork-main-checkout-branch-more"
+        #   nameKey: "levels/main.checkout-branch-more.name"
+        #   configAssetId: "levels/checkout-branch-more"

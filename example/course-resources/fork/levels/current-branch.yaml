@@ -9,34 +9,42 @@
 
   # intro current branch display
     - !elaborate 
-      descriptionId: "level-data/intro"
+      descriptionId: "level-data/current-branch/intro"
     - !elaborate 
-      descriptionId: "level-data/findout-current-branch"
+      descriptionId: "level-data/current-branch/findout-current-branch"
     - !illustrate  
-      descriptionId: "level-data/elaborate-current-branch"
+      descriptionId: "level-data/current-branch/elaborate-current-branch"
 
   # elaborate checkout branch
     - !elaborate 
-      descriptionId: "level-data/compare-checkout-revision-and-branch"
+      descriptionId: "level-data/current-branch/compare-checkout-revision-and-branch"
     - !elaborate 
-      descriptionId: "level-data/more-on-current-branch" 
+      descriptionId: "level-data/current-branch/more-on-current-branch" 
 
   # intro detached head
     - !elaborate 
-      descriptionId: "level-data/question-current-not-on-branch"
+      descriptionId: "level-data/current-branch/question-current-not-on-branch"
     - !instruct 
-      descriptionId: "level-data/checkout-master-revision"
+      descriptionId: "level-data/current-branch/checkout-master-revision"
       needConfirm: false
     - !dev.needAction 
       actions:
         - !dev.act.git 
-          repoSetupName: commits-advnaced
+          repoSetupName: commits-advanced
           arguments: [ "checkout", "-f", "master~0" ]
     - !verifyRepo 
       referenceName: "current-branch-checkout-master-revision"
 
     - !instruct 
-      descriptionId: "level-data/intro-detached-head"
+      descriptionId: "level-data/current-branch/question-current-not-on-branch-display"
       needConfirm: false
     - !verifyInput 
       answer: "1"
+
+    - !elaborate 
+      descriptionId: "level-data/current-branch/intro-detached-head"
+    - !elaborate 
+      descriptionId: "level-data/current-branch/importance-of-detached-head"
+
+    - !elaborate 
+      descriptionId: "level-data/current-branch/summary"
