@@ -1,0 +1,97 @@
+asset_index:
+  infile:
+# course content
+    intro: |+2
+      .md
+      從前一個章節中  
+      我們學習到了在${{t/branch}}上工作才是 git 的常態  
+      而為了盡可能避免進入分離的${{t/head}}  
+      在這一章節中，我們將會學習如何在切換到特定${{t/revision}}的同時，建立分支  
+      掌握這個技巧之後，就可以總是保持處在於某個分支之上  
+      那麼，就讓我們開始吧  
+
+    open-repo-using-gui: |+2
+      .md
+      首先，請操作${{t/gui}}開啟位於「`#{{checkout-branches}}`」的${{t/repo}}  
+      從這個章節開始的接下來幾個章節  
+      我們將專注在 git 的${{t/branch}}上，而非${{t/work-tree}}裡的檔案內容  
+      所以，我們將換用一個新的練習用${{t/repo}}  
+
+      開啟完成後，請按下「確認」繼續進行  
+
+    create-branch-and-checkout: |+2
+      .md
+      請操作${{t/gui}}  
+      如下圖(一)所示，在${{t/graph}}上找到${{t/commit-msg}}為「5」的${{t/revision}}  
+      然後按下右鍵展開選單  
+
+      ![illustration]({{images/intro-create-branch-1}})  
+      <div class="img-title">圖(一)</div>  
+
+      接著，如上圖所示  
+      在選單上選擇如紅框所圈選的「${{st/create-branch}}」  
+      完成後，就會開啟如下圖(二)所示的對話框  
+
+      ![illustration]({{images/intro-create-branch-2}})  
+      <div class="img-title">圖(二)</div>  
+
+      請如上圖所示，在紅框圈選範圍中，輸入「${{level-data/create-and-checkout-branch/branch-name-5}}」作為分支名  
+      然後，請注意要如上圖所示  
+      勾選如橘色方框所圈選的項目：「${{st/checkout-after-create-checkbox}}」  
+      如此一來，建立${{t/branch}}之後，就會立刻切換過去  
+      完成之後，請按下對話框上的「${{st/create-branch-modal-confirm}}」按鈕  
+
+      最後，請按下步驟區塊下方的「執行」按鈕來檢查是否順利成功  
+
+    remind-checkout-by-default: |+2
+      .md
+      恭喜！  
+      現在，我們學會建立${{t/branch}}的同時切換過去  
+      如此一來，我們就可以任意跳到任何的${{t/revision}}上  
+      還能同時確保總是位在某個${{t/branch}}之上  
+
+      因為這是一個極為常用的技巧  
+      在這個教學中，當我們提到需要建立${{t/branch}}時  
+      除非特別強調「不要切換過去」，否則預設的情況都是建立的同時要切換${{t/branch}}  
+
+      接下來，就讓我們再多練習一下吧  
+
+    instruct-create-another: |+2
+      .md
+      請按照剛才展示的步驟  
+      在${{t/commit-msg}}為「1」的${{t/revision}}上  
+      建立名為「${{level-data/create-and-checkout-branch/branch-name-1}}」的${{t/branch}}  
+
+      完成之後，請按下「執行」按鈕來確認是否順利完成  
+
+    instruct-create-yet-another: |+2
+      .md
+      請再次按照剛才展示的步驟  
+      在${{t/commit-msg}}為「1」的${{t/revision}}上  
+      建立名為「${{level-data/create-and-checkout-branch/branch-name-7}}」的${{t/branch}}  
+
+      這次的${{t/branch}}名比較長，但是我們還是可以順利建立的  
+      完成之後，請按下「執行」按鈕來檢查是否成功  
+
+    summary: |+2
+      .md
+      在這個章節中  
+      我們學習了建立${{t/branch}}的同時切換過去的技巧  
+      並且也透過反覆的練習  
+      了解到${{t/branch}}可以隨意的建立在想要的${{t/revision}}上  
+
+      漸漸的，${{t/repo}}中的${{t/branch}}也多了起來  
+      從${{t/graph}}上要找到想要的${{t/branch}}也變得更加麻煩  
+      在下個章節中，我們將會介紹${{t/gui}}上可以方便我們管理眾多${{t/branch}}的新介面  
+      敬請期待～
+
+
+# repository assets
+    file-1:v1: "file-1:v1"
+    file-1:v2: "file-1:v2"
+    file-1:v3: "file-1:v3"
+
+    branch-name-5: "new-branch"
+    branch-name-1: "1-for-all"
+    branch-name-7: "7ate9-this-is-why-six-is-afraid-of-seven"
+    

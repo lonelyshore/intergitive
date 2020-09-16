@@ -15,10 +15,6 @@ asset_index:
 
     open-repo-and-count-branch-number: |+2
       .md
-      從這個章節開始的接下來幾個章節  
-      我們將專注在 git 的${{t/branch}}上，而非${{t/worktree}}裡的檔案內容  
-      所以，我們將換用一個新的練習用${{t/repo}}  
-
       請使用${{t/gui}}開啟位於「`#{{checkout-branches}}`」的${{t/repo}}  
 
       開啟之後，請回答這個${{t/repo}}中，目前擁有多少個${{t/branch}}呢？  

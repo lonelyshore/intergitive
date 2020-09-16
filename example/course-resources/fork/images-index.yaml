@@ -139,6 +139,10 @@ asset_index:
     elaborate-current-branch-display: current-branch@elaborate-current-branch-display.png
     elaborate-checkout-branch-meaning: current-branch@elaborate-checkout-branch-meaning.png
 
+# create-and-checkout-branch
+    intro-create-branch-1: create-and-checkout-branch@intro-create-branch-1.png
+    intro-create-branch-2: create-and-checkout-branch@intro-create-branch-2.png
+
 # checkout-branch-more
     itnro-branch-list: checkout-branch-more@itnro-branch-list.png
     instruct-open-branch-menu-for-checkout-branch-1: checkout-branch-more@instruct-open-branch-menu-for-checkout-branch-1.png

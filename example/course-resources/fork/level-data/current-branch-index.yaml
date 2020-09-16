@@ -31,7 +31,7 @@ asset_index:
       .md
       嗯...所謂的「位於某某${{t/branch}}上」到底又是甚麼意思呢？  
       其實它是跟我們的一個老朋友：「**${{t/head-f}}**」有關  
-      請讓我們以下面的圖(六)來說明  
+      請讓我們以下面的圖(二)來說明  
 
       ![illustration]({{images/elaborate-checkout-branch-meaning}})  
       <div class="img-title">圖(二)</div>  

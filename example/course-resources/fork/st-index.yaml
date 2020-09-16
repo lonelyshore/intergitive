@@ -21,3 +21,4 @@ asset_index:
     create-branch: "Create New Branch...(建立新分支...)"
     create-branch-modal-confirm: "Create(建立)"
     checkout-branch-item: "Checkout...(切換...)"
+    checkout-after-create-checkbox: "Check out after create (建立之後切換)"
