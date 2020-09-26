@@ -122,7 +122,7 @@ function validateCourseConfig(courseName, course, assetLoader) {
 
             let checkCourseItemIdExists = (itemId, itemDescription) => {
                 if (!(itemId in ids)) {
-                    errors.push(`[Missing Course Item] ${id} of ${itemDescription} does not exists in current course ${courseName}`);
+                    errors.push(`[Missing Course Item] ${itemId} of ${itemDescription} does not exists in current course ${courseName}`);
                 }
             };
 
