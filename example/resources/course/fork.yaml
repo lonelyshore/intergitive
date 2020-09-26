@@ -3,7 +3,7 @@
   nameKey: "levels/main.course-name"
   children:
     - !sequential-section # chapter 1: basics
-      id: "fork-main-secion-intro"
+      id: "fork-main-section-intro"
       nameKey: "levels/main.section-intro.name"
       children:
         - !level
@@ -25,6 +25,7 @@
     - !sequential-section # chapter 2: creating commits
       id: "fork-main-section-create-commits"
       nameKey: "levels/main.section-create-commits.name"
+      prerequisiteIds: [ "fork-main-section-intro" ]
       children:
         - !level 
           id: "fork-main-commit-one-file"
@@ -57,6 +58,9 @@
     - !sequential-section # chapter 3: properties of commits
       id: "fork-main-section-elaborate-commits"
       nameKey: "levels/main.section-elaborate-commits.name"
+      prerequisiteIds: 
+        - "fork-main-section-intro"
+        - "fork-main-section-create-commits"
       children:
         - !level 
           id: "fork-main-commit-properties"
@@ -73,6 +77,10 @@
     - !sequential-section # chapter 4: advanced history browsing
       id: "fork-main-section-advaneced-history-browsing"
       nameKey: "levels/main.section-advanced-history-browsing"
+      prerequisiteIds: 
+        - "fork-main-section-intro"
+        - "fork-main-section-create-commits"
+        - "fork-main-section-elaborate-commits"
       children:
         - !level 
           id: "fork-main-checkout-file"
@@ -93,6 +101,11 @@
     - !sequential-section # chapter 5: create and checkout branches
       id: "fork-main-section-create-and-checkout-branches"
       nameKey: "levels/main.section-create-and-checkout-branches"
+      prerequisiteIds: 
+        - "fork-main-section-intro"
+        - "fork-main-section-create-commits"
+        - "fork-main-section-elaborate-commits"
+        - "fork-main-section-advaneced-history-browsing"
       children:
         - !level 
           id: "fork-main-create-branch"
