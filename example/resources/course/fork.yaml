@@ -123,7 +123,7 @@
           id: "fork-main-create-and-checkout-branch"
           nameKey: "levels/main.create-and-checkout-branch.name"
           configAssetId: "levels/create-and-checkout-branch"
-        # - !level 
-        #   id: "fork-main-checkout-branch-more"
-        #   nameKey: "levels/main.checkout-branch-more.name"
-        #   configAssetId: "levels/checkout-branch-more"
+        - !level 
+          id: "fork-main-branch-list"
+          nameKey: "levels/main.branch-list.name"
+          configAssetId: "levels/branch-list"
