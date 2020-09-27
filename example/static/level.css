@@ -80,16 +80,22 @@
     display: block;
     position: relative;
     padding: 0.5rem 0.5rem;
-    color: #0087ff;
-    
 }
 
-.menu-list .menu-list-entry:hover {
+.menu-list .menu-list-entry[progress=locked] {
+    color: #6F879C
+}
+
+.menu-list .menu-list-entry:not([progress=locked]) {
+    color: #0087ff;
+}
+
+.menu-list .menu-list-entry:not([progress=locked]):hover {
     color: #48aaff;
     cursor: pointer;
 }
 
-.menu-list .menu-list-entry:active {
+.menu-list .menu-list-entry:not([progress=locked]):active {
     color: #0076dd;
     cursor: pointer;
 }
@@ -110,20 +116,19 @@
     height: 0.5rem;
     width: 0.5rem;
     box-sizing: border-box;
+}
+
+.menu-list-entry[progress=unlocked]:after {
     border: 0.15em solid #0087ff;
     border-radius: 0.25rem;
 }
+
+.menu-list-entry[progress=locked]:after {
+    border: 0.15em solid #6F879C;
+    border-radius: 0.25rem;
+}
   
-.menu-list-entry[completed]:after {
-    content: " ";
-    float: left;
-    display: inline-block;
-    position: relative;
-    left: -0.5rem;
-    margin: 0.3rem 0rem;
-    height: 0.5rem;
-    width: 0.5rem;
-    box-sizing: border-box;
+.menu-list-entry[progress=completed]:after {
     border: 0.15em solid #0087ff;
     border-radius: 0.25rem;
     background-color: #0087ff;
