@@ -26,7 +26,7 @@
       # commit #1
         - !act.writeFile &write1
           sourceAssetIds:
-            - "$level-data/checkout-branch-more/file-1:v1"
+            - "$level-data/create-and-checkout-branch/file-1:v1"
           destinationPaths:
             - "checkout-branches/file.txt"
         - !dev.act.git &stageAll
@@ -39,7 +39,7 @@
       # commit #2
         - !act.writeFile &write2
           sourceAssetIds:
-            - "$level-data/checkout-branch-more/file-1:v2"
+            - "$level-data/create-and-checkout-branch/file-1:v2"
           destinationPaths:
             - "checkout-branches/file.txt"
         - *stageAll
@@ -226,7 +226,7 @@
 
         - !act.writeFile &write3
           sourceAssetIds:
-            - "$level-data/checkout-branch-more/file-1:v3"
+            - "$level-data/create-and-checkout-branch/file-1:v3"
           destinationPaths:
             - "checkout-branches/file.txt"
         - *stageAll
@@ -242,7 +242,7 @@
 
         - !act.writeFile &write3
           sourceAssetIds:
-            - "$level-data/checkout-branch-more/file-1:v3"
+            - "$level-data/create-and-checkout-branch/file-1:v3"
           destinationPaths:
             - "checkout-branches/file-1.txt"
         - *stageAll
@@ -258,7 +258,7 @@
 
         - !act.writeFile &write3
           sourceAssetIds:
-            - "$level-data/checkout-branch-more/file-1:v3"
+            - "$level-data/create-and-checkout-branch/file-1:v3"
           destinationPaths:
             - "checkout-branches/file-1.txt"
         - *stageAll

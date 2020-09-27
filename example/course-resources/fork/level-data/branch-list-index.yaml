@@ -3,13 +3,13 @@ asset_index:
 # course content
     intro: |+2
       .md
-      從前一個章節中  
-      我們學到了如何${{t/checkout-branch}}  
+      從前面的章節中  
+      我們學到了使用 git 的常態是建立許多${{t/branch}}並且在這些${{t/branch}}之間切換  
+      隨著我們使用 git 的時間越來越長  
+      我們很自然地會累積為數眾多的${{t/branch}}  
       
-      因為${{t/branch}}是 git 非常重要的功能  
-      除了在${{t/graph}}上操作
-      ${{gui}}還另外提供了另一個方便的「${{t/branch}}列表」的介面
-      以供使用者直接操作各個${{t/branch}}  
+      為了方便使用者操作各個${{t/branch}}  
+      ${{t/gui}}還另外提供了另一個方便的「${{t/branch}}列表」的介面  
 
       在這個章節中，我們將簡單介紹這個功能  
 
@@ -18,13 +18,13 @@ asset_index:
       請使用${{t/gui}}開啟位於「`#{{checkout-branches}}`」的${{t/repo}}  
 
       開啟之後，請回答這個${{t/repo}}中，目前擁有多少個${{t/branch}}呢？  
-      請不要忘記 master 也是一個${{t/branch}}喔
+      請不要忘記 master 也是一個${{t/branch}}喔  
 
-      1. 7
-      2. 8
-      3. 9
+      1. 10
+      2. 11
+      3. 12
 
-      請以選項編號(1/2/3)回答
+      請以選項編號(1/2/3)回答  
 
     intro-branch-list: |+2
       .md
@@ -36,7 +36,7 @@ asset_index:
       幸好，${{t/gui}}有一個${{t/branch}}列表的功能  
       請見下圖(一)中，紅框圈選的範圍，就是${{t/branch}}列表  
 
-      ![illustration]({{images/itnro-branch-list}})  
+      ![illustration]({{images/intro-branch-list}})  
       <div class="img-title">圖(一)</div>  
 
       這個列表上直白的條列出整個${{t/repo}}內的${{t/branch}}  
@@ -85,20 +85,5 @@ asset_index:
       在這個簡短的章節中  
       我們介紹了${{t/gui}}上面的「${{t/branch}}列表」這個介面  
       它清楚地列出目前${{t/repo}}中所有的${{t/branch}}  
-      也能讓我們方便快速的在幾個${{t/branch}}之間切換  
-
-
-
-    compare-checkout-revision-and-branch: |+2
-      .md
-      現在我們已經非常熟悉如何${{t/checkout-branch}}了  
-
-    
-
-
-
-# repository assets
-    file-1:v1: "file-1:v1"
-    file-1:v2: "file-1:v2"
-    file-1:v3: "file-1:v3"
-    
+      讓我們方便快速的在幾個${{t/branch}}之間切換  
+      有了這項利器之後，我們就可以回去繼續探尋應該如何妥善使用 git 的${{t/branch}}
