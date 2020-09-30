@@ -40,7 +40,7 @@ asset_index:
       <div class="img-title">圖(一)</div>  
 
       這個列表上直白的條列出整個${{t/repo}}內的${{t/branch}}  
-      除此之外，仔細看圖中橘框圈選的「master」上面  
+      除此之外，仔細看圖中橘框圈選的「${{level-data/create-and-checkout-branch/branch-name-7}}」上面  
       也有特殊的標記來標示出這是當前的${{t/branch}}  
 
       這個列表除了展示${{t/branch}}之外  
