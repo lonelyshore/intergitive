@@ -4,7 +4,7 @@
   "description": "An interactive git tutorial",
   "main": "main.js",
   "dependencies": {
-    "adm-zip": "^0.4.13",
+    "adm-zip": "^0.4.16",
     "fs-extra": "^8.0.0",
     "js-yaml": "^3.13.1",
     "marked": "^0.7.0",
