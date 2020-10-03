@@ -259,6 +259,10 @@ td.cell {
     text-align: center;
 }
 
+code {
+    background-color: #e3e3e3;
+}
+
 [blocked] {
     pointer-events: none;
     opacity: 0.4;

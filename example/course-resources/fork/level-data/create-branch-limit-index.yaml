@@ -16,7 +16,7 @@ asset_index:
       就好像申請某些網站服務的帳號一樣  
       最簡單的限制是一些符號是不能夠作為${{t/branch}}名字的  
       例如以下的符號都**不行出現在${{t/branch}}名稱中**：  
-      ` `(空白)、`~`、`^`、`:`、`?`、`*`、`[`、`\\`  
+      ` `(空白)、`~`、`^`、`:`、`?`、`*`、`[`、`\`  
 
       `.`(一個點)的規則比較特殊，請避免使用在${{t/branch}}名稱的開頭  
       或是避免連續兩個點(`..`)出現在${{t/branch}}名裡面  
@@ -25,7 +25,7 @@ asset_index:
       .md
       除了前面介紹不能使用的符號之外， git 還是准許某些符號被用在${{t/branch}}名稱中的  
       而其中，`/`(斜線)是特別重要的一個  
-      請注意，這裡說明的是方向為右上左下的斜線，而不是`\\`  
+      請注意，這裡說明的是方向為右上左下的斜線，而不是`\`  
 
       `/` 的規則跟 `.` 也很類似，請避免使用在開頭  
       但是，讓他變得特別重要的原因是他在一些 git 的 GUI 裡面有特殊的意義(包含${{t/gui}})  
@@ -88,7 +88,7 @@ asset_index:
     branch-along-side-with-another: |+2
       .md
       請按照之前所學  
-      在「master」所在的${{t/revision}}上  
+      在「`master`」所在的${{t/revision}}上  
       以「`${{level-data/create-branch-limit/racing-branch-name-1}}`」作為分支名，建立${{t/branch}}  
 
       完成之後，請按下「執行」按鈕進行確認  
@@ -114,7 +114,7 @@ asset_index:
 
     branch-another-again: |+2
       .md
-      請在「master」所在的${{t/revision}}上  
+      請在「`master`」所在的${{t/revision}}上  
       以「${{level-data/create-branch-limit/racing-branch-name-2}}」為名，建立分支  
       
       完成之後，請按下「執行」按鈕進行確認  
