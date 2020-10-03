@@ -1,0 +1,146 @@
+asset_index:
+  infile:
+# course content
+    intro: |+2
+      .md
+      在先前的章節中，我們學習到了如何建立${{t/branch}}  
+      但是我們其實沒有詳細深究建立${{t/branch}}的時候有沒有甚麼限制條件或規則必須遵守  
+      在這個章節中，我們將概略的介紹  
+      關於詳細的介紹，請參考[ git 官方的說明](https://mirrors.edge.kernel.org/pub/software/scm/git/docs/git-check-ref-format.html)  
+
+    symbol-rules: |+2
+      .md
+      分支的命名在大部分的時候都是可以非常的自由奔放的  
+      然而，在某些時候還是會有少許限制  
+
+      就好像申請某些網站服務的帳號一樣  
+      最簡單的限制是一些符號是不能夠作為${{t/branch}}名字的  
+      例如以下的符號都**不行出現在${{t/branch}}名稱中**：  
+      ` `(空白)、`~`、`^`、`:`、`?`、`*`、`[`、`\\`  
+
+      `.`(一個點)的規則比較特殊，請避免使用在${{t/branch}}名稱的開頭  
+      或是避免連續兩個點(`..`)出現在${{t/branch}}名裡面  
+
+    slash-rule: |+2
+      .md
+      除了前面介紹不能使用的符號之外， git 還是准許某些符號被用在${{t/branch}}名稱中的  
+      而其中，`/`(斜線)是特別重要的一個  
+      請注意，這裡說明的是方向為右上左下的斜線，而不是`\\`  
+
+      `/` 的規則跟 `.` 也很類似，請避免使用在開頭  
+      但是，讓他變得特別重要的原因是他在一些 git 的 GUI 裡面有特殊的意義(包含${{t/gui}})  
+
+      不如就讓我們實際實驗來體會一下吧  
+
+    create-slash-named-branch: |+2
+      .md
+      請使用${{t/gui}}開啟位於「`#{{checkout-branches}}`」的資料夾  
+      接著，請根據之前所學，在${{t/commit-msg}}為「9」的${{t/revision}}上  
+      建立名稱為「`${{level-data/create-branch-limit/slash-branch-name}}`」的${{t/branch}}，並且同時切換過去  
+
+      完成之後，請按下「執行」按鈕進行確認  
+
+    meaning-of-slash: |+2
+      .md
+      恭喜，現在我們順利地在${{t/branch}}的名稱中混入 `/`  
+      如果我們觀察${{t/gui}}的${{t/branch}}列表的介面  
+      可以發現如下圖(一)中，紅框所圈選的資料夾圖示  
+      並且寫著我們剛才建立的分支名稱中的一部分「this」  
+
+      ![illustration]({{images/elaborate-hierarchical-branch-1}})  
+      <div class="img-title">圖(一)</div>  
+
+      恩...「資料夾」的圖示，就表示著裡面還裝了別的東西吧？  
+      如果我們把這些資料夾都展開，就會出現如下圖(二)所示的情況  
+
+      ![illustration]({{images/elaborate-hierarchical-branch-2}})  
+      <div class="img-title">圖(二)</div>  
+
+      從上圖可以觀察到  
+      紅框選選的範圍中，是一連串的資料夾，最後對應到一個${{t/branch}}名稱  
+      我們建立的${{t/branch}}「${{level-data/create-branch-limit/slash-branch-name}}」的名字中  
+      剛剛好每一個以 `/` 分隔開的單字(`this`、`is`、`hierarchical`)，都剛好對應到一個資料夾的名字  
+      而最後一個單字(`branch`)，看起來則像是擺在這些資料夾最深處的檔案一樣  
+
+      也就是說，當${{t/branch}}的名字裡面出現 `/` 的時候  
+      ${{t/gui}}就會把這樣的名字當成類似檔案路徑的方式，呈現在分支列表裡面  
+
+    duplicated-branch-warning: |+2
+      .md
+      ${{t/branch}}的命名除了前面提到的殊符號的規則之外  
+      還有一個理所當然的限制：  
+      那就是已經存在的${{t/branch}}名稱是不能重複使用的  
+      當嘗試重複命名的時候，就會出現如下圖(三)的錯誤  
+
+      ![illustration]({{images/elaborate-duplicated-branch-name-warning}})  
+      <div class="img-title">圖(三)</div>  
+      
+    urge-branch-along-side-with-another: |+2
+      .md
+      現在，我們了解了各種建立${{t/branch}}的命名規則  
+      那麼，除了命名規則之外，是否建立${{t/branch}}的位置有甚麼規則呢？  
+
+      很幸運的是  
+      我們可以選定任何${{t/revision}}來建立${{t/branch}}  
+      即便是已經有${{t/branch}}存在於其上的${{t/revision}}也可以  
+      接下來讓我試試看吧  
+
+    branch-along-side-with-another: |+2
+      .md
+      請按照之前所學  
+      在「master」所在的${{t/revision}}上  
+      以「`${{level-data/create-branch-limit/racing-branch-name-1}}`」作為分支名，建立${{t/branch}}  
+
+      完成之後，請按下「執行」按鈕進行確認  
+      
+    notify-only-one-head: |+2
+      .md
+      現在，我們成功的在同一個${{t/revision}}上建立兩個${{t/branch}}  
+      如果這時候觀察${{t/gui}}的${{t/graph}}，應該會觀察到如下圖(四)所示的情況  
+
+      ![illustration]({{images/elaborate-multiple-branch-on-one-revision}})  
+      <div class="img-title">圖(四)</div>  
+
+      從上圖中的紅框圈選處裡  
+      我們可以看到在這個${{t/revision}}上有兩個代表${{t/branch}}的標記  
+      這表示同時有兩個${{t/branch}}指向這個${{t/revision}}  
+
+      再來值得注意的是  
+      只有我們剛剛建立的${{level-data/create-branch-limit/racing-branch-name-1}}上面帶有${{t/head}}的標記  
+      表示雖然多個${{t/branch}}可以並存於同一個${{t/revision}}上  
+      但是，**${{t/head}}永遠只會有一個**  
+
+      為了更加確認這個事實，讓我們在 master 上再多建立一個${{t/branch}}看看  
+
+    branch-another-again: |+2
+      .md
+      請在「master」所在的${{t/revision}}上  
+      以「${{level-data/create-branch-limit/racing-branch-name-2}}」為名，建立分支  
+      
+      完成之後，請按下「執行」按鈕進行確認  
+
+    emphasize-one-head: |+2
+      .md
+      為了強調其重要性  
+      我們再次在同一個${{t/revision}}上建立${{t/branch}}  
+      從${{t/gui}}上不難發現，${{t/head}}依然只指向我們最新建立的${{t/branch}}  
+
+    summary: |+2
+      .md
+      在這一章節中  
+      我們介紹了一些${{t/branch}}命名時需要遵守的規則  
+      並且，我們發現到我們可以在同一個${{t/revision}}上建立複數的${{t/branch}}  
+      
+      在我們一開始介紹${{t/branch}}的時候  
+      我們之所以建立${{t/branch}}，目的是為了避免${{t/graph}}上分歧的歷史消失不見  
+      如果是這樣的話，**為什麼 git 會需要容許同一個${{t/revision}}上有多個${{t/branch}}並存呢**？  
+      這樣做有甚麼好處嗎？  
+
+      在接下來的章節中，我們將介紹這種性質有甚麼好處  
+      敬請期待～
+
+#repo
+    slash-branch-name: "this/is/hierarchical/branch"
+    racing-branch-name-1: "turtle"
+    racing-branch-name-2: "rabbit"
+    

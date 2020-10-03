@@ -1,0 +1,68 @@
+!level
+  repoVcsSetups:
+    checkout-branches:
+      workingPath: checkout-branches
+      referenceStoreName: checkout-branches
+      checkpointStoreName: checkout-branches
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+    - !elaborate 
+      descriptionId: "level-data/create-branch-limit/intro"
+    - !elaborate
+      descriptionId: "level-data/create-branch-limit/symbol-rules"
+    - !elaborate 
+      descriptionId: "level-data/create-branch-limit/slash-rule"
+
+  # slash named branch
+    - !instruct 
+      descriptionId: "level-data/create-branch-limit/create-slash-named-branch"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !dev.act.git 
+            repoSetupName: checkout-branches
+            arguments: [ "checkout", "-fB", "$level-data/create-branch-limit/slash-branch-name", "master~1" ]
+    - !verifyRepo 
+      referenceName: "create-branch-limit-create-slash"
+    - !elaborate 
+      descriptionId: "level-data/create-branch-limit/meaning-of-slash"
+
+  # cannot created branch with duplicated name
+    - !elaborate 
+      descriptionId: "level-data/create-branch-limit/duplicated-branch-warning"
+
+  # can create multiple branches on the same revision
+    - !elaborate 
+      descriptionId: "level-data/create-branch-limit/urge-branch-along-side-with-another"
+    - !instruct 
+      descriptionId: "level-data/create-branch-limit/branch-along-side-with-another"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !dev.act.git 
+            repoSetupName: checkout-branches
+            arguments: [ "checkout", "-fB", "$level-data/create-branch-limit/racing-branch-name-1", "master"]
+    - !verifyRepo 
+      referenceName: "create-branch-limit-create-branch-along-side"
+    - !elaborate 
+      descriptionId: "level-data/create-branch-limit/notify-only-one-head"
+
+  # create another branch on the same revision again
+    - !instruct 
+      descriptionId: "level-data/create-branch-limit/branch-another-again"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !dev.act.git 
+            repoSetupName: checkout-branches
+            arguments: [ "checkout", "-fB", "$level-data/create-branch-limit/racing-branch-name-2", "master"]
+    - !verifyRepo 
+      referenceName: "create-branch-limit-create-another-branch-along-side"
+    - !elaborate 
+      descriptionId: "level-data/create-branch-limit/emphasize-one-head"
+    - !elaborate 
+      descriptionId: "level-data/create-branch-limit/summary"
+
+
+    

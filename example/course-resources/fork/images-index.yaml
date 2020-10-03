@@ -146,3 +146,9 @@ asset_index:
 # branch-list
     intro-branch-list: branch-list@intro-branch-list.png
     instruct-open-branch-menu-for-checkout-branch-1: branch-list@instruct-open-branch-menu-for-checkout-branch-1.png
+
+# create-branch-limit
+    elaborate-hierarchical-branch-1: create-branch-limit@elaborate-hierarchical-branch-1.png
+    elaborate-hierarchical-branch-2: create-branch-limit@elaborate-hierarchical-branch-2.png
+    elaborate-duplicated-branch-name-warning: create-branch-limit@elaborate-duplicated-branch-name-warning.png
+    elaborate-multiple-branch-on-one-revision: create-branch-limit@elaborate-multiple-branch-on-one-revision.png
