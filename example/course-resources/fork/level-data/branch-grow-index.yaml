@@ -1,0 +1,119 @@
+asset_index:
+  infile:
+# course content
+    intro: |+2
+      .md
+      在上回的最後，我們刻意製造了多個${{t/branch}}重合在同一個${{t/revision}}的情況  
+      如果這個時候建立${{t/revision}}，會發生甚麼事情呢？  
+      就讓我們來試試看吧  
+
+    check-head: |+2
+      .md
+      在開始之前，請先確認已經使用${{t/gui}}開啟位於「#{{checkout-branches}}」的資料夾  
+      開啟之後，請根據之前所學  
+      回答目前的${{t/head}}是指向下列哪一個${{t/branch}}呢？
+
+      請直接輸入該${{t/branch}}的名字以進行回答
+
+    prepare-for-commit: |+2
+      .md
+      我們確認了${{t/head}}目前指向「`${{level-data/create-branch-limit/racing-branch-name-2}}`」  
+      根據之前所學，如果這個時候我們建立新的${{t/revision}}  
+      應該會推動${{level-data/create-branch-limit/racing-branch-name-2}}移動到新的${{t/revision}}上  
+      就讓我們來實際操作一下確認看看吧  
+
+    add-file: |+2
+      .md
+      請在${{t/work-tree}}以「`${{level-data/branch-grow/empty-file-name}}`」為名(副檔名是 txt)  
+      建立一個完全空白的純文字檔案  
+
+      完成之後，請按下「執行」按鈕進行確認  
+
+    commit-for-branch-2: |+2
+      .md
+      現在，請以「`${{level-data/branch-grow/commit-message}}`」為${{t/commit-msg}}  
+      建立${{t/revision}}  
+
+      完成之後，請按下「執行」按鈕進行確認  
+
+    notify-branch-2-grow-independently: |+2
+      .md
+      我們剛剛成功的新增了${{t/revision}}  
+      現在讓我們觀察一下${{t/gui}}的${{t/graph}}，應該會得到如下圖(一)的情況  
+
+      ![illustration]({{images/elaborate-grow-branch-independently-1}})  
+      <div class="img-title">圖(一)</div>  
+
+      從上圖中，我們可以注意到以下兩點：
+      1. 經過剛才建立的${{t/revision}}，${{t/head}}指向的`${{level-data/create-branch-limit/racing-branch-name-2}}`跟隨${{t/revision}}往前進
+      2. 其它的${{t/branch}}都沒有跟著前進，即便原本跟`${{level-data/create-branch-limit/racing-branch-name-2}}`在同一個${{t/revision}}上的其它兩個${{t/branch}}－－`master`還有`${{level-data/create-branch-limit/racing-branch-name-1}}`－－都沒有  
+
+      也就是說，一個${{t/branch}}的成長  
+      是不會連帶影響其它${{t/branch}}的  
+      **所有的${{t/branch}}都是各自獨立成長**
+
+    value-of-branch: |+2
+      .md
+      事實上，可以獨立成長是${{t/branch}}存在的最主要價值  
+      透過${{t/branch}}的分別成長  
+      我們可以讓同一個目錄下的檔案，往兩個截然不同的方向發展  
+
+    can-branch-catch-up: |+2
+      .md
+      剛剛說到所有的${{t/branch}}都是獨立成長  
+      我們可以透過這個特性，來讓一份檔案的修改歷史產生分歧  
+
+      這時不禁令人好奇  
+      不同的${{t/branch}}一先一後各自以同樣的方式修改了同一個檔案並且建立了${{t/revision}}之後  
+      是否有可能就恰好重新會合呢？  
+      接下來就讓我來實驗看看吧  
+
+      我們的實驗設定如下：  
+      1. 有兩個${{t/branch}}原本都位在同一個${{t/revision}}上面  
+         這裡選擇「`$level-data/create-branch-limit/racing-branch-name-1`」還有「`$level-data/create-branch-limit/racing-branch-name-2`」  
+      2. 其中一個${{t/branch}}率先透過建立${{t/revision}}往前進(也就是剛剛`$level-data/create-branch-limit/racing-branch-name-2`往前進)  
+      3. 如果切換回到落後的一方，重新試圖建立一模一樣的${{t/revision}}，是否就可以成功追上領先的的${{t/branch}}呢？  
+
+    checkout-branch-1: |+2
+      .md
+      首先，讓我們切換回到進度落後的${{t/branch}}：「`$level-data/create-branch-limit/racing-branch-name-1`」  
+      切換完成後，請按下「執行」按鈕進行確認  
+
+    reproduce-commit: |+2
+      .md
+      接著，讓我們重製一次剛才的${{t/revision}}  
+      請仿照剛才的步驟，建立內容完全空白的`${{level-data/branch-grow/empty-file-name}}`  
+      然後以「`${{level-data/branch-grow/commit-message}}`」為${{t/commit-msg}}  
+      建立${{t/revision}}  
+
+      完成之後，請按下「執行」按鈕，進行確認
+
+    check-result: |+2
+      .md
+      完成${{t/revision}}的建立之後，讓我們來觀察一下${{t/graph}}  
+      看看落後的${{t/branch}}是否真的成功追上領先者吧  
+
+      開啟${{t/gui}}的${{t/graph}}介面，可以看到如下圖(二)的畫面  
+      ![illustration]({{images/elaborate-grow-branch-independently-2}})  
+      <div class="img-title">圖(二)</div>  
+
+      從上圖可以很明顯的看出來  
+      我們原本設想好會重新碰頭的兩個${{t/branch}}，最終還是分道揚鑣了  
+      透過試圖建立「一模一樣」的${{t/revision}}是沒有辦法讓${{t/branch}}重新會合的  
+
+    summary: |+2
+      .md
+      在這個章節中，我們透過實際的操作，觀察到了一些關於${{t/branch}}有趣的特性  
+      首先，${{t/branch}}的成長是互相獨立的  
+      當我們建立${{t/revision}}的時候，只有${{t/head}}所指向的${{t/branch}}會成長  
+      這表示不同的${{t/branch}}，會各自紀錄一個資料夾中的檔案變化歷史，不會互相干涉  
+
+      再來，我們不可能透過建立${{t/revision}}來讓兩個分道揚鑣的${{t/branch}}重新會合  
+      這樣的特性，也確保我們不會不小心讓兩個刻意想要分開的歷史，重新交會
+      
+
+#repo
+    empty-file-content: ""
+    empty-file-name: "空檔案"
+    empty-file-path: "checkout-branches/空檔案.txt"
+    commit-message: "..."

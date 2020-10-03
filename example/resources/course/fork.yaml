@@ -131,3 +131,8 @@
           id: "fork-main-create-branch-limit"
           nameKey: "levels/main.create-branch-limit.name"
           configAssetId: "levels/create-branch-limit"
+        - !level
+          id: "fork-main-branch-grow"
+          nameKey: "levels/main.branch-grow.name"
+          configAssetId: "levels/branch-grow"
+

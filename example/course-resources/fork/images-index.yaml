@@ -152,3 +152,7 @@ asset_index:
     elaborate-hierarchical-branch-2: create-branch-limit@elaborate-hierarchical-branch-2.png
     elaborate-duplicated-branch-name-warning: create-branch-limit@elaborate-duplicated-branch-name-warning.png
     elaborate-multiple-branch-on-one-revision: create-branch-limit@elaborate-multiple-branch-on-one-revision.png
+
+# branch-grow
+    elaborate-grow-branch-independently-1: branch-grow@elaborate-grow-branch-independently-1.png
+    elaborate-grow-branch-independently-2: branch-grow@elaborate-grow-branch-independently-2.png

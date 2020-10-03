@@ -41,6 +41,7 @@ asset_index:
     main.create-and-checkout-branch.name: "5-4 節：建立並同時切換分支"
     main.branch-list.name: "5-5 節：分支列表"
     main.create-branch-limit.name: "5-6 節：建立分支的限制"
+    main.branch-grow.name: "5-7 節：分支的獨立成長"
 
   ondisk:
   # level configs of section one: intro
@@ -76,4 +77,4 @@ asset_index:
     create-and-checkout-branch: "create-and-checkout-branch.yaml"
     branch-list: "branch-list.yaml"
     create-branch-limit: "create-branch-limit.yaml"
-    
+    branch-grow: "branch-grow.yaml"

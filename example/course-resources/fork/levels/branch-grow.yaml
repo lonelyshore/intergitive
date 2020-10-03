@@ -1,0 +1,85 @@
+!level
+  repoVcsSetups:
+    checkout-branches:
+      workingPath: checkout-branches
+      referenceStoreName: checkout-branches
+      checkpointStoreName: checkout-branches
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+    - !elaborate 
+      descriptionId: "level-data/branch-grow/intro"
+    - !instruct 
+      descriptionId: "level-data/branch-grow/check-head"
+      needConfirm: false
+    - !verifyInput 
+      answer: "$level-data/branch-grow/create-branch-limit/racing-branch-name-2"
+
+  # grow branch-2
+    - !elaborate 
+      descriptionId: "level-data/branch-grow/prepare-for-commit"
+    - !instruct 
+      descriptionId: "level-data/branch-grow/add-file"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !act.writeFile 
+            sourceAssetIds: ["$level-data/branch-grow/empty-file-content"]
+            destinationPaths: ["$level-data/branch-grow/empty-file-path"]
+    - !verifyRepo 
+      referenceName: "branch-grow-add-file-for-branch-2"
+
+    - !instruct 
+      descriptionId: "level-data/branch-grow/commit-for-branch-2"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !dev.act.git 
+            repoSetupName: checkout-branches
+            arguments: [ "stage", "-A" ]
+          - !dev.act.git 
+            repoSetupName: checkout-branches
+            arguments: [ "commit", "-m", "$level-data/branch-grow/commit-message" ]
+    - !verifyRepo 
+      referenceName: "branch-grow-commit-for-branch-2"
+
+    - !elaborate 
+      descriptionId: "level-data/branch-grow/notify-branch-2-grow-independently"
+    - !elaborate 
+      descriptionId: "level-data/branch-grow/value-of-branch"
+
+  # branch-1 chasing branch-2
+    - !elaborate 
+      descriptionId: "level-data/branch-grow/can-branch-catch-up"
+    - !instruct 
+      descriptionId: "level-data/branch-grow/checkout-branch-1"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !dev.act.git 
+            repoSetupName: checkout-branches
+            arguments: [ "checkout", "-f" , "$level-data/create-branch-limit/racing-branch-name-1"]
+    - !verifyRepo 
+      referenceName: "branch-grow-checkout-branch-1"
+
+    - !instruct 
+      descriptionId: "level-data/branch-grow/reproduce-commit"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !dev.act.git 
+            repoSetupName: checkout-branches
+            arguments: [ "cherry-pick", "$level-data/create-branch-limit/racing-branch-name-2"]
+    - !verifyRepo 
+      referenceName: "branch-grow-branch-1-try-catch-up"
+    - !elaborate 
+      descriptionId: "level-data/branch-grow/check-result"
+
+    - !elaborate 
+      descriptionId: "level-data/branch-grow/summary"
+      
+
+    
+      
+
+      
