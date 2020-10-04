@@ -13,7 +13,7 @@
       descriptionId: "level-data/branch-grow/check-head"
       needConfirm: false
     - !verifyInput 
-      answer: "$level-data/branch-grow/create-branch-limit/racing-branch-name-2"
+      answer: "${{level-data/create-branch-limit/racing-branch-name-2}}"
 
   # grow branch-2
     - !elaborate 

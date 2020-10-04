@@ -9,7 +9,7 @@ asset_index:
 
     check-head: |+2
       .md
-      在開始之前，請先確認已經使用${{t/gui}}開啟位於「#{{checkout-branches}}」的資料夾  
+      在開始之前，請先確認已經使用${{t/gui}}開啟位於「`#{{checkout-branches}}`」的資料夾  
       開啟之後，請根據之前所學  
       回答目前的${{t/head}}是指向下列哪一個${{t/branch}}呢？
 
@@ -39,7 +39,7 @@ asset_index:
     notify-branch-2-grow-independently: |+2
       .md
       我們剛剛成功的新增了${{t/revision}}  
-      現在讓我們觀察一下${{t/gui}}的${{t/graph}}，應該會得到如下圖(一)的情況  
+      現在讓我們觀察一下${{t/gui}}的${{t/graph}}變化，應該會得到如下圖(一)的情況  
 
       ![illustration]({{images/elaborate-grow-branch-independently-1}})  
       <div class="img-title">圖(一)</div>  
@@ -70,13 +70,13 @@ asset_index:
 
       我們的實驗設定如下：  
       1. 有兩個${{t/branch}}原本都位在同一個${{t/revision}}上面  
-         這裡選擇「`$level-data/create-branch-limit/racing-branch-name-1`」還有「`$level-data/create-branch-limit/racing-branch-name-2`」  
+         這裡選擇「`${{level-data/create-branch-limit/racing-branch-name-1}}`」還有「`${{level-data/create-branch-limit/racing-branch-name-2}}`」  
       2. 其中一個${{t/branch}}率先透過建立${{t/revision}}往前進(也就是剛剛`$level-data/create-branch-limit/racing-branch-name-2`往前進)  
       3. 如果切換回到落後的一方，重新試圖建立一模一樣的${{t/revision}}，是否就可以成功追上領先的的${{t/branch}}呢？  
 
     checkout-branch-1: |+2
       .md
-      首先，讓我們切換回到進度落後的${{t/branch}}：「`$level-data/create-branch-limit/racing-branch-name-1`」  
+      首先，讓我們切換回到進度落後的${{t/branch}}：「`${{level-data/create-branch-limit/racing-branch-name-1}}`」  
       切換完成後，請按下「執行」按鈕進行確認  
 
     reproduce-commit: |+2
