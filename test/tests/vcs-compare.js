@@ -332,7 +332,8 @@ function createTests(storageType) {
                     let names = [ 
                         "clean", 
                         "dirtyAdd", "dirtyRemove", "dirtyModify", "dirtyMixed",
-                        "dirtyAddStage", "dirtyRemoveStage", "dirtyModifyStage", "dirtyMixedStage"
+                        "dirtyAddStage", "dirtyRemoveStage", "dirtyModifyStage", "dirtyMixedStage",
+                        "cherry-pick", "reset-branch"
                     ];
     
                     for (let i = 0; i < names.length; i++) {

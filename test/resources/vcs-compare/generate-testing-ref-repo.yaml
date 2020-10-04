@@ -8,170 +8,187 @@ repoSetups:
 stages:
   - name: clean
     save:
-      - local  
+      - local
     actions: []
   - name: dirtyAdd
     save:
-      - local  
+      - local
     reset: true
     actions:
-    - !act.writeFile
-      sourceAssetIds:
-        - file/dirtyAdd
-      destinationPaths:
-        - repo/folder/some_new
+      - !act.writeFile
+        sourceAssetIds:
+          - file/dirtyAdd
+        destinationPaths:
+          - repo/folder/some_new
   - name: dirtyRemove
     save:
-      - local  
+      - local
     reset: true
     actions:
-    - !act.removeFile
-      targetPaths:
-        - repo/first_file
+      - !act.removeFile
+        targetPaths:
+          - repo/first_file
   - name: dirtyModify
     save:
-      - local  
+      - local
     reset: true
     actions:
-    - !act.writeFile
-      sourceAssetIds:
-        - file/dirtyModify
-      destinationPaths:
-        - repo/folder/forth
+      - !act.writeFile
+        sourceAssetIds:
+          - file/dirtyModify
+        destinationPaths:
+          - repo/folder/forth
   - name: dirtyMixed
     save:
-      - local  
+      - local
     reset: true
     replay:
-    - dirtyAdd
-    - dirtyRemove
-    - dirtyModify
+      - dirtyAdd
+      - dirtyRemove
+      - dirtyModify
     actions: []
   - name: dirtyAddStage
     save:
-      - local  
+      - local
     reset: true
     replay:
-    - dirtyAdd    
+      - dirtyAdd
     actions:
-    - !act.stageAll
-      repoSetupName: local
+      - !act.stageAll
+        repoSetupName: local
   - name: dirtyRemoveStage
     save:
-      - local  
+      - local
     reset: true
     replay:
-    - dirtyRemove    
+      - dirtyRemove
     actions:
-    - !act.stageAll
-      repoSetupName: local      
+      - !act.stageAll
+        repoSetupName: local
   - name: dirtyModifyStage
     save:
-      - local  
+      - local
     reset: true
     replay:
-    - dirtyModify    
+      - dirtyModify
     actions:
-    - !act.stageAll
-      repoSetupName: local
+      - !act.stageAll
+        repoSetupName: local
   - name: dirtyMixedStage
     save:
-      - local  
+      - local
     reset: true
     replay:
-    - dirtyAdd
-    - dirtyRemove
-    - dirtyModify    
+      - dirtyAdd
+      - dirtyRemove
+      - dirtyModify
     actions:
-    - !act.stageAll
-      repoSetupName: local      
+      - !act.stageAll
+        repoSetupName: local
   - name: merge
     save:
-      - local  
+      - local
     reset: true
     actions:
-    - !dev.act.merge
-      repoSetupName: local
-      withBranch: "second-branch"
+      - !dev.act.merge
+        repoSetupName: local
+        withBranch: "second-branch"
   - name: conflictAA
     save:
-      - local  
+      - local
     reset: true
     actions:
-    - !dev.act.merge
-      repoSetupName: local
-      withBranch: "conflict-AA"
+      - !dev.act.merge
+        repoSetupName: local
+        withBranch: "conflict-AA"
   - name: conflictMM
     save:
-      - local  
+      - local
     reset: true
     actions:
-    - !dev.act.merge
-      repoSetupName: local
-      withBranch: "conflict-MM"
+      - !dev.act.merge
+        repoSetupName: local
+        withBranch: "conflict-MM"
   - name: conflictMR
     save:
-      - local  
+      - local
     reset: true
     actions:
-    - !dev.act.merge
-      repoSetupName: local
-      withBranch: "conflict-MR"
+      - !dev.act.merge
+        repoSetupName: local
+        withBranch: "conflict-MR"
   - name: conflictMixed
     save:
-      - local  
-    reset: true  
+      - local
+    reset: true
     actions:
-    - !dev.act.merge
-      repoSetupName: local
-      withBranch: "conflict-mixed"
+      - !dev.act.merge
+        repoSetupName: local
+        withBranch: "conflict-mixed"
   - name: conflictEdit
     save:
-      - local  
+      - local
     reset: true
     replay:
-    - conflictMixed    
+      - conflictMixed
     actions:
-    - !act.writeFile
-      sourceAssetIds:
-        - file/resolveConflictAA
-        - file/resolveConflictMM
-        - file/resolveConflictMR
-      destinationPaths:
-        - repo/folder/fifth
-        - repo/first_file
-        - repo/second_file
+      - !act.writeFile
+        sourceAssetIds:
+          - file/resolveConflictAA
+          - file/resolveConflictMM
+          - file/resolveConflictMR
+        destinationPaths:
+          - repo/folder/fifth
+          - repo/first_file
+          - repo/second_file
   - name: conflictResolveStage
     save:
-      - local  
+      - local
     reset: true
     replay:
-    - conflictMixed
-    - conflictEdit    
+      - conflictMixed
+      - conflictEdit
     actions:
-    - !act.stageAll
-      repoSetupName: local
+      - !act.stageAll
+        repoSetupName: local
   - name: conflictResolve
     save:
-      - local  
+      - local
     reset: true
     replay:
-    - conflictMixed
-    - conflictEdit
-    - conflictResolveStage    
+      - conflictMixed
+      - conflictEdit
+      - conflictResolveStage
     actions:
-    - !dev.act.continueMerge
-      repoSetupName: local
+      - !dev.act.continueMerge
+        repoSetupName: local
   - name: detached
     save:
-      - local  
+      - local
     reset: true
     actions:
-    - !dev.act.cleanCheckout
-      repoSetupName: local
-      commitish: "end-of-base"
-      
-
-        
+      - !dev.act.cleanCheckout
+        repoSetupName: local
+        commitish: "end-of-base"
+  # https://trello.com/c/KJmxJnW8/107-bug-of-verify-repo
+  - name: cherry-pick 
+    save:
+      - local
+    reset: true
+    actions:
+      - !dev.act.git 
+        repoSetupName: local
+        arguments: [ "checkout", "-fB", "picking-or-rebasing", "master~1" ]
+      - !dev.act.git 
+        repoSetupName: local
+        arguments: [ "cherry-pick", "master" ]
+  - name: reset-branch
+    save:
+        - local
+    reset: true
+    actions:
+      - !dev.act.git 
+        repoSetupName: local
+        arguments: [ "checkout", "-fB", "picking-or-rebasing", "master" ]
 
 
