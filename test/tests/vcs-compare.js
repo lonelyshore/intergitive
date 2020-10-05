@@ -318,9 +318,19 @@ function createTests(storageType) {
                 });
     
                 it("New Commit", function() {
-                    return repo.reset(["--mixed", "HEAD^"])
+                    // checkout second-branch,
+                    // reset the branch and re-commit again,
+                    // then checkout master
+                    //
+                    // We avoid operating master because doing the same to master 
+                    // will leads to a Y-form diverse.
+                    // This is because there is a tag on master, reset and re-commit
+                    // will diverse the history.
+                    return repo.checkout("second-branch")
+                    .then(() => repo.reset(["--mixed", "HEAD^"]))
                     .then(() => repo.add(["-A"]))
-                    .then(() => repo.commit(["Add fifth"]))
+                    .then(() => repo.commit(["remove"]))
+                    .then(() => repo.checkout("master"))
                     .then(() => vcsManager.equivalent("clean"))
                     .should.eventually.equal(true, "Creating a commit with same files and message should be equivalent")
                 })
