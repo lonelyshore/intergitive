@@ -67,6 +67,8 @@
       needConfirm: false
     - !dev.needAction 
       actions:
+          - !dev.act.idle 
+            seconds: 1
           - !dev.act.git 
             repoSetupName: checkout-branches
             arguments: [ "cherry-pick", "$level-data/create-branch-limit/racing-branch-name-2"]
