@@ -5,6 +5,7 @@ const zip = require('../lib/simple-archive');
 const path = require('path');
 const fs = require('fs-extra');
 const vcs = require('../lib/repo-vcs');
+const utility = require('../lib/utility');
 const ActionExecutor = require("../lib/action-executor").ActionExecutor;
 const REPO_TYPE = require('../lib/config-level').REPO_TYPE;
 
@@ -143,6 +144,10 @@ class DevActionExecutor extends ActionExecutor {
                 });
             }
         });
+    }
+
+    executeIdle(seconds) {
+        return utility.wait(seconds * 1000);
     }
 
     getRepoSetupNames() {

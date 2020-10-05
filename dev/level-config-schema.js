@@ -202,6 +202,25 @@ let loadRepoReferenceArchiveActionType = new yaml.Type(
     }
 )
 
+let idleActionType = new yaml.Type(
+    dummyActionConfigDict.idle.tag,
+    {
+        kind: 'mapping',
+
+        resolve: function(data) {
+            return data !== null
+                && 'seconds' in data
+                && !isNaN(data.seconds);
+        },
+
+        construct: function(data) {
+            return new actionConfig.IdleAction(data.seconds);
+        },
+
+        instanceOf: actionConfig.IdleAction,
+    }
+);
+
 let schema = yaml.Schema.create(upstream.LEVEL_CONFIG_SCHEMA, [
     unstageActionType,
     unstageAllActionType,
@@ -211,6 +230,7 @@ let schema = yaml.Schema.create(upstream.LEVEL_CONFIG_SCHEMA, [
     gitCommandActionType,
     saveRepoReferenceActionType,
     loadRepoReferenceArchiveActionType,
+    idleActionType,
 ]);
 
 module.exports.LEVEL_CONFIG_SCHEMA = schema;

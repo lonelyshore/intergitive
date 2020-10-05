@@ -341,6 +341,20 @@
                 "assetId"
             ],
             "additionalProperties": false
+        },
+        "devIdleReference": {
+            "type": "object",
+            "title": "[Dev][Action] Idle",
+            "default": "idle the executor for <seconds> seconds",
+            "properties": {
+                "seconds": {
+                    "type":"number"
+                }
+            },
+            "required": [
+                "seconds"
+            ],
+            "additionalProperties": false
         }
     },
     "$schema": "http://json-schema.org/draft-07/schema#",
@@ -371,7 +385,8 @@
             { "$ref": "#/definitions/devCleanCheckout" },
             { "$ref": "#/definitions/devGitCommand" },
             { "$ref": "#/definitions/devSaveRepoReference" },
-            { "$ref": "#/definitions/devLoadRepoReferenceArchive" }
+            { "$ref": "#/definitions/devLoadRepoReferenceArchive" },
+            { "$ref": "#/definitions/devIdleReference" }
         ]
     }
 }

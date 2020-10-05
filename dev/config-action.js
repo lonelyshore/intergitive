@@ -112,6 +112,18 @@ class LoadRepoReferenceArchiveAction extends upstream.Action {
     }
 }
 
+class IdleAction extends upstream.Action {
+    constructor(seconds) {
+        super();
+        this.klass = 'IdleAction';
+        this.seconds = seconds;
+    }
+
+    executeBy(actionExecutor) {
+        return actionExecutor.executeIdle(this.seconds);
+    }
+}
+
 module.exports = Object.assign({}, upstream);
 module.exports.UnstageAction = UnstageAction;
 module.exports.UnstageAllAction = UnstageAllAction;
@@ -121,3 +133,4 @@ module.exports.CleanCheckoutAction = CleanCheckoutAction;
 module.exports.GitCommandAction = GitCommandAction;
 module.exports.SaveRepoReferenceAction = SaveRepoReferenceAction;
 module.exports.LoadRepoReferenceArchiveAction = LoadRepoReferenceArchiveAction;
+module.exports.IdleAction = IdleAction;
