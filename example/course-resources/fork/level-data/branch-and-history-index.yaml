@@ -1,0 +1,11 @@
+asset_index:
+  infile:
+# course content
+    intro: |+2
+      .md
+
+    summary: |+2
+      .md
+      
+
+#repo

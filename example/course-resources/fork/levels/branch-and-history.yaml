@@ -1,0 +1,11 @@
+!level
+  repoVcsSetups:
+    checkout-branches:
+      workingPath: checkout-branches
+      referenceStoreName: checkout-branches
+      checkpointStoreName: checkout-branches
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+    - !elaborate 
+      descriptionId: "level-data/intro"

@@ -135,4 +135,7 @@
           id: "fork-main-branch-grow"
           nameKey: "levels/main.branch-grow.name"
           configAssetId: "levels/branch-grow"
-
+        - !level
+          id: "fork-main-branch-and-history"
+          nameKey: "levels/main.branch-and-history.name"
+          configAssetId: "levels/branch-and-history"
