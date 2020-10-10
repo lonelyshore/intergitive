@@ -91,7 +91,57 @@ asset_index:
     file-1:v2: "file-1:v2"
     file-1:v3: "file-1:v3"
 
+    file-2:v1: |+2
+      /------\ 漢堡皮
+      ++ ++ ++ 酸黃瓜
+      ######## 漢堡肉
+      \------/ 漢堡皮
+
+    file-3:alt-1: |+2
+      /------\ 漢堡皮
+      ++ ++ ++ 酸黃瓜
+      ######## 漢堡肉
+      ^^^^^^^^ 培根
+      \------/ 漢堡皮
+
+    file-2:alt-2:v1: |+2
+      /------\ 漢堡皮
+      ~~~~~~~~ 生菜
+      ++ ++ ++ 酸黃瓜
+      ######## 漢堡肉
+      \------/ 漢堡皮
+    file-2:alt-2:v2: |+2
+      /------\ 漢堡皮
+      ******** 黃芥末醬
+      ~~~~~~~~ 生菜
+      ++ ++ ++ 酸黃瓜
+      ######## 漢堡肉
+      \------/ 漢堡皮
+
+    file-2:alt-3: |+2
+      /------\ 漢堡皮
+      ++ ++ ++ 酸黃瓜
+      ===  === 番茄
+      ######## 漢堡肉
+      \------/ 漢堡皮
+
+
+
+    file-2-name: "漢堡.txt"
+    file-2-path: "checkout-branches/漢堡.txt"
+    file-2-commit-hamburger: "加入漢堡"
+    file-2-commit-add-letuce: "加上生菜"
+    file-2-commit-add-mustard: "加上黃芥末醬"
+    file-2-commit-add-tomato: "加上番茄"
+    file-2-commit-add-becon: "加上培根"
+
     branch-name-5: "new-branch"
     branch-name-1: "1-for-all"
     branch-name-7: "7ate9-this-is-why-six-is-afraid-of-seven"
+    branch-name-hamburger: "hamburger"
+    branch-name-hamburger-alt-1: "hamburger+becon"
+    branch-name-hamburger-alt-2: "hamburger+letuce"
+    branch-name-hamburger-alt-3: "hamburger+tomato"
+    
+    
     

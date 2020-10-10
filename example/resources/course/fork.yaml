@@ -123,6 +123,10 @@
           id: "fork-main-create-and-checkout-branch"
           nameKey: "levels/main.create-and-checkout-branch.name"
           configAssetId: "levels/create-and-checkout-branch"
+        - !level
+          id: "fork-main-branch-for-diversity"
+          nameKey: "levels/main.branch-for-diversity.name"
+          configAssetId: "levels/branch-for-diversity"
         - !level 
           id: "fork-main-branch-list"
           nameKey: "levels/main.branch-list.name"
@@ -135,7 +139,4 @@
           id: "fork-main-branch-grow"
           nameKey: "levels/main.branch-grow.name"
           configAssetId: "levels/branch-grow"
-        - !level
-          id: "fork-main-branch-and-history"
-          nameKey: "levels/main.branch-and-history.name"
-          configAssetId: "levels/branch-and-history"
+

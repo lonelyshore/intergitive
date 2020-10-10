@@ -268,6 +268,20 @@
         - *stageAll
         - *commitDummy
 
+      # create hamburger
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ "checkout", "-fB", "$level-data/create-and-checkout-branch/branch-name-hamburger", "master" ]
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/create-and-checkout-branch/file-2:v1"
+          destinationPaths:
+            - "$level-data/create-and-checkout-branch/file-2-path"
+        - *stageAll 
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ "commit", "-m", "$level-data/create-and-checkout-branch/file-2-commit-hamburger" ]
+
       # create 10 target commits back on master
         - !dev.act.git 
           repoSetupName: checkout-branches
