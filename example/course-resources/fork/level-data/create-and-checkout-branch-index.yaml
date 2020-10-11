@@ -97,7 +97,7 @@ asset_index:
       ######## 漢堡肉
       \------/ 漢堡皮
 
-    file-3:alt-1: |+2
+    file-2:alt-1: |+2
       /------\ 漢堡皮
       ++ ++ ++ 酸黃瓜
       ######## 漢堡肉
@@ -130,10 +130,10 @@ asset_index:
     file-2-name: "漢堡.txt"
     file-2-path: "checkout-branches/漢堡.txt"
     file-2-commit-hamburger: "加入漢堡"
-    file-2-commit-add-letuce: "加上生菜"
-    file-2-commit-add-mustard: "加上黃芥末醬"
-    file-2-commit-add-tomato: "加上番茄"
-    file-2-commit-add-becon: "加上培根"
+    file-2-commit-alt-1: "加上培根"
+    file-2-commit-alt-2:v1: "加上生菜"
+    file-2-commit-alt-2:v2: "加上黃芥末醬"
+    file-2-commit-alt-3: "加上番茄"
 
     branch-name-5: "new-branch"
     branch-name-1: "1-for-all"

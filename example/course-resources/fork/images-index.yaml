@@ -143,6 +143,9 @@ asset_index:
     intro-create-branch-1: create-and-checkout-branch@intro-create-branch-1.png
     intro-create-branch-2: create-and-checkout-branch@intro-create-branch-2.png
 
+# branch-for-variant
+    intro-history-has-two-variant-branches: branch-for-variant@intro-history-has-two-variant-branches.png
+
 # branch-list
     intro-branch-list: branch-list@intro-branch-list.png
     instruct-open-branch-menu-for-checkout-branch-1: branch-list@instruct-open-branch-menu-for-checkout-branch-1.png

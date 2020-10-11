@@ -124,9 +124,9 @@
           nameKey: "levels/main.create-and-checkout-branch.name"
           configAssetId: "levels/create-and-checkout-branch"
         - !level
-          id: "fork-main-branch-for-diversity"
-          nameKey: "levels/main.branch-for-diversity.name"
-          configAssetId: "levels/branch-for-diversity"
+          id: "fork-main-branch-for-variant"
+          nameKey: "levels/main.branch-for-variant.name"
+          configAssetId: "levels/branch-for-variant"
         - !level 
           id: "fork-main-branch-list"
           nameKey: "levels/main.branch-list.name"

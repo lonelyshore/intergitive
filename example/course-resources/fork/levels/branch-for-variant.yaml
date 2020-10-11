@@ -1,0 +1,156 @@
+!level
+  repoVcsSetups:
+    checkout-branches:
+      workingPath: checkout-branches
+      referenceStoreName: checkout-branches
+      checkpointStoreName: checkout-branches
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+  # intro
+    - !elaborate 
+      descriptionId: "level-data/branch-for-variant/intro"
+    - !elaborate 
+      descriptionId: "level-data/branch-for-variant/elaborate-what-is-variant"
+    - !instruct 
+      descriptionId: "level-data/branch-for-variant/open-repo"
+      needConfirm: false
+    - !verifyInput 
+      answer: "3"
+
+  # create variant 1
+    - !instruct 
+      descriptionId: "level-data/branch-for-variant/create-and-checkout-branch-1"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ "checkout", "-fB", "$level-data/create-and-checkout-branch/branch-name-hamburger-alt-1", "$level-data/create-and-checkout-branch/branch-name-hamburger" ]
+    - !verifyRepo 
+      referenceName: "branch-for-variant-create-alt-branch-1"
+
+    - !instruct 
+      descriptionId: "level-data/branch-for-variant/modify-alt-1"
+    - !dev.needAction 
+      actions:
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/create-and-checkout-branch/file-2:alt-1"
+          destinationPaths:
+            - "$level-data/create-and-checkout-branch/file-2-path"
+        - !dev.act.git &stageUpdate
+          repoSetupName: checkout-branches
+          arguments: [ "add", "-u" ]
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ "commit", "-m", "$level-data/create-and-checkout-branch/file-2-commit-alt-1" ]
+        - !dev.act.idle &idle
+          seconds: 1
+    - !verifyRepo 
+      referenceName: "branch-for-variant-commit-alt-1"
+
+    - !elaborate 
+      descriptionId: "level-data/branch-for-variant/elaborate-alt-1"
+    - !elaborate 
+      descriptionId: "level-data/branch-for-variant/prompt-for-alt-2"
+
+  # create variant 2
+    - !instruct 
+      descriptionId: "level-data/branch-for-variant/create-and-checkout-branch-2"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ "checkout", "-fB", "$level-data/create-and-checkout-branch/branch-name-hamburger-alt-2", "$level-data/create-and-checkout-branch/branch-name-hamburger" ]
+    - !verifyRepo 
+      referenceName: "branch-for-variant-create-alt-branch-2"
+
+    - !instruct 
+      descriptionId: "level-data/branch-for-variant/modify-alt-2"
+    - !dev.needAction 
+      actions:
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/create-and-checkout-branch/file-2:alt-2:v1"
+          destinationPaths:
+            - "$level-data/create-and-checkout-branch/file-2-path"
+        - *stageUpdate
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ "commit", "-m", "$level-data/create-and-checkout-branch/file-2-commit-alt-2:v1" ]
+        - *idle
+    - !verifyRepo 
+      referenceName: "branch-for-variant-commit-alt-2-v1"
+
+    - !elaborate 
+      descriptionId: "level-data/branch-for-variant/elaborate-alt-2"
+    - !elaborate 
+      descriptionId: "level-data/branch-for-variant/prompt-for-alt-3"
+
+  # create variant 3
+    - !instruct 
+      descriptionId: "level-data/branch-for-variant/create-and-checkout-branch-3"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ "checkout", "-fB", "$level-data/create-and-checkout-branch/branch-name-hamburger-alt-3", "$level-data/create-and-checkout-branch/branch-name-hamburger" ]
+    - !verifyRepo 
+      referenceName: "branch-for-variant-create-alt-branch-3"
+
+    - !instruct 
+      descriptionId: "level-data/branch-for-variant/modify-alt-3"
+    - !dev.needAction 
+      actions:
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/create-and-checkout-branch/file-2:alt-3"
+          destinationPaths:
+            - "$level-data/create-and-checkout-branch/file-2-path"
+        - *stageUpdate
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ "commit", "-m", "$level-data/create-and-checkout-branch/file-2-commit-alt-3" ]
+        - *idle
+    - !verifyRepo 
+      referenceName: "branch-for-variant-commit-alt-3"
+
+    - !elaborate 
+      descriptionId: "level-data/branch-for-variant/elaborate-alt-3"
+    - !elaborate 
+      descriptionId: "level-data/branch-for-variant/prompt-for-alt-2-again"
+
+  # continue on variant 2
+    - !instruct 
+      descriptionId: "level-data/branch-for-variant/checkout-branch-2"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ "checkout", "-f", "$level-data/create-and-checkout-branch/branch-name-hamburger-alt-2" ]
+    - !verifyRepo 
+      referenceName: "branch-for-variant-checkout-alt-branch-2"
+
+    - !instruct 
+      descriptionId: "level-data/branch-for-variant/modify-alt-2-again"
+    - !dev.needAction 
+      actions:
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/create-and-checkout-branch/file-2:alt-2:v2"
+          destinationPaths:
+            - "$level-data/create-and-checkout-branch/file-2-path"
+        - *stageUpdate
+        - !dev.act.git 
+          repoSetupName: checkout-branches
+          arguments: [ "commit", "-m", "$level-data/create-and-checkout-branch/file-2-commit-alt-2:v2" ]
+        - *idle
+    - !verifyRepo 
+      referenceName: "branch-for-variant-commit-alt-2-v2"
+
+    - !elaborate 
+      descriptionId: "level-data/branch-for-variant/elaborate-alt-2-again"
