@@ -39,6 +39,9 @@ if (process.env.COURSE_CONFIG_PATH) {
     );
 }
 
+// loads config from package.json
+let skipLevelUntil = process.env.SKIP_UNTIL || null;
+
 describe('Prepare to Validate Course Setting', function() {
 
     it('generate validations', function() {
@@ -54,7 +57,7 @@ describe('Prepare to Validate Course Setting', function() {
             validateCourseConfig(courseName, validatedCourse, loaderPair.getCourseLoader(courseName));
         })
         .then(() => {
-            return gatherValidatableLevelList(validatedCourse, loaderPair.getCourseLoader(courseName));
+            return gatherValidatableLevelList(validatedCourse, loaderPair.getCourseLoader(courseName), skipLevelUntil);
         })
         .then(validatedLevels => {
 
@@ -200,8 +203,9 @@ function validateCourseConfig(courseName, course, assetLoader) {
  * 
  * @param {courseConfig.Course} course 
  * @param {AssetLoader} assetLoader 
+ * @param {string} skipUntil
  */
-function gatherValidatableLevelList(course, assetLoader) {
+function gatherValidatableLevelList(course, assetLoader, skipUntil) {
     
     let flatCourseItems = configCourse.flattenCourseTree(course);
 
@@ -214,7 +218,17 @@ function gatherValidatableLevelList(course, assetLoader) {
         course => false
     );
 
-    return flatCourseItems.filter(item => item.accept(validLevelFilter));
+    let canTake = skipUntil === null;
+
+    let notSkippedFunc = (item) => {
+        if (!canTake) {
+            canTake = item.id === skipUntil; // try toggle canTake when it still cannot
+        }
+
+        return canTake;
+    };
+
+    return flatCourseItems.filter(item => notSkippedFunc(item) && item.accept(validLevelFilter));
 }
 
 /**

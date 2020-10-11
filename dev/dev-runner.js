@@ -267,6 +267,9 @@ const run = function(courseName, fileSystemBaseFolder, repoStoreSubPath, loaderP
         assetLoader: loaderPair.getCourseLoader(courseName)
     };
 
+    // loads config from package.json
+    let skipLevelUntil = process.env.SKIP_UNTIL || null;
+
     let course;
     
     return loaderPair.loadCourse(courseName)
@@ -274,7 +277,15 @@ const run = function(courseName, fileSystemBaseFolder, repoStoreSubPath, loaderP
         course = result;
     })
     .then(() => {
-        return courseConfig.flattenCourseTree(course);
+        let isSkipping = skipLevelUntil !== null;
+        let isSkippedCb = (item) => {
+            if (isSkipping) {
+                isSkipping = item.id !== skipLevelUntil;
+            }
+            return isSkipping;
+        };
+        return courseConfig.flattenCourseTree(course)
+        .filter(item => isSkippedCb(item));
     })
     .then(flatCourseItems => {
         let bakeLevelTasks = Promise.resolve();
