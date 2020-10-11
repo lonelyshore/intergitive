@@ -32,6 +32,7 @@
 
     - !instruct 
       descriptionId: "level-data/branch-for-variant/modify-alt-1"
+      needConfirm: false
     - !dev.needAction 
       actions:
         - !act.writeFile 
@@ -69,6 +70,7 @@
 
     - !instruct 
       descriptionId: "level-data/branch-for-variant/modify-alt-2"
+      needConfirm: false
     - !dev.needAction 
       actions:
         - !act.writeFile 
@@ -103,6 +105,7 @@
 
     - !instruct 
       descriptionId: "level-data/branch-for-variant/modify-alt-3"
+      needConfirm: false
     - !dev.needAction 
       actions:
         - !act.writeFile 
@@ -137,6 +140,7 @@
 
     - !instruct 
       descriptionId: "level-data/branch-for-variant/modify-alt-2-again"
+      needConfirm: false
     - !dev.needAction 
       actions:
         - !act.writeFile 
@@ -154,3 +158,6 @@
 
     - !elaborate 
       descriptionId: "level-data/branch-for-variant/elaborate-alt-2-again"
+
+    - !elaborate 
+      descriptionId: "level-data/branch-for-variant/summary"

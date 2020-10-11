@@ -55,7 +55,7 @@ asset_index:
       3. 鳳梨  
       4. 漢堡肉
 
-      請以數字選項(1/2/3)作答
+      請以數字選項(1/2/3/4)作答
 
     create-and-checkout-branch-1: |+2
       .md
@@ -63,8 +63,8 @@ asset_index:
       不如我們為它加一點料，順便(?)學習如何使用${{t/branch}}來創造分裂的檔案歷史  
 
       請操作${{t/gui}}  
-      在「`${{level-data@branch-name-hamburger}}`」這個${{t/branch}}的位置上  
-      建立名為「`${{level-data@branch-name-hamburger-alt-1}}`」的${{t/branch}}，並且切換過去  
+      在「`${{level-data/create-and-checkout-branch/branch-name-hamburger}}`」這個${{t/branch}}的位置上  
+      建立名為「`${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-1}}`」的${{t/branch}}，並且切換過去  
 
       完成之後，請按下「執行」按鈕確認結果  
 
@@ -74,17 +74,18 @@ asset_index:
       或許你已經猜到我們我們想要加入甚麼食材了  
 
       沒錯！就是更多的肉，讓我們把培根給加進去吧！  
-      請在「`######## 漢堡肉`」和「`\------/ 漢堡皮`」兩層之間  
+      請開啟「`${{level-data/create-and-checkout-branch/file-2-name}}`」  
+      然後在「`######## 漢堡肉`」和「`\------/ 漢堡皮`」兩層之間  
       一字不差的加入「`^^^^^^^^ 培根`」(建議直接複製貼上到檔案中)  
 
       存檔之後  
-      請使用「`${{level-data@file-2-commit-alt-1}}`」作為${{t/commit-msg}}，建立${{t/revision}}  
+      請使用「`${{level-data/create-and-checkout-branch/file-2-commit-alt-1}}`」作為${{t/commit-msg}}，建立${{t/revision}}  
 
       完成之後，請按下「執行」按鈕確認結果  
 
     elaborate-alt-1: |+2
       .md
-      恭喜，我們在「`${{level-data@file-2-name}}`」中加入培根了  
+      恭喜，我們在「`${{level-data/create-and-checkout-branch/file-2-name}}`」中加入培根了  
       如果回去觀察${{t/graph}}  
       我們會發現現在這個檔案的歷史裡面存有兩版  
       第一版是原來的漢堡  
@@ -104,8 +105,8 @@ asset_index:
     create-and-checkout-branch-2: |+2
       .md
       我們想要基於原味漢堡進行改良  
-      請在「`${{level-data@branch-name-hamburger}}`」這個${{t/branch}}的位置上  
-      建立名為「`${{level-data@branch-name-hamburger-alt-2}}`」的${{t/branch}}，並且切換過去  
+      請在「`${{level-data/create-and-checkout-branch/branch-name-hamburger}}`」這個${{t/branch}}的位置上  
+      建立名為「`${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-2}}`」的${{t/branch}}，並且切換過去  
 
       完成之後，請按下「執行」按鈕確認結果  
 
@@ -119,7 +120,7 @@ asset_index:
       一字不差的加入「`~~~~~~~~ 生菜`」(建議直接複製貼上到檔案中)  
 
       存檔之後  
-      請使用「`${{level-data@file-2-commit-alt-2:v1}}`」作為${{t/commit-msg}}，建立${{t/revision}}  
+      請使用「`${{level-data/create-and-checkout-branch/file-2-commit-alt-2:v1}}`」作為${{t/commit-msg}}，建立${{t/revision}}  
 
       完成之後，請按下「執行」按鈕確認結果  
 
@@ -150,8 +151,8 @@ asset_index:
     create-and-checkout-branch-3: |+2
       .md
       我們還是想要基於原味漢堡進行改良  
-      請在「`${{level-data@branch-name-hamburger}}`」這個${{t/branch}}的位置上  
-      建立名為「`${{level-data@branch-name-hamburger-alt-3}}`」的${{t/branch}}，並且切換過去  
+      請在「`${{level-data/create-and-checkout-branch/branch-name-hamburger}}`」這個${{t/branch}}的位置上  
+      建立名為「`${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-3}}`」的${{t/branch}}，並且切換過去  
 
       完成之後，請按下「執行」按鈕確認結果  
 
@@ -162,10 +163,10 @@ asset_index:
 
       沒錯！漢堡裡豈能沒有番茄呢？  
       請在「`++ ++ ++ 酸黃瓜`」和「`######## 漢堡肉`」兩層之間  
-      一字不差的加入「`===  === 番茄`」(建議直接複製貼上到檔案中)  
+      一字不差的加入「`:==::==: 番茄`」(建議直接複製貼上到檔案中)  
 
       存檔之後  
-      請使用「`${{level-data@file-2-commit-alt-3}}`」作為${{t/commit-msg}}，建立${{t/revision}}  
+      請使用「`${{level-data/create-and-checkout-branch/file-2-commit-alt-3}}`」作為${{t/commit-msg}}，建立${{t/revision}}  
 
       完成之後，請按下「執行」按鈕確認結果  
 
@@ -190,7 +191,7 @@ asset_index:
     checkout-branch-2: |+2
       .md
       為了要繼續鑽研生菜漢堡  
-      我們需要先${{t/checkout-branch}}到「`${{level-data@branch-name-hamburger-alt-2}}`」才可以  
+      我們需要先${{t/checkout-branch}}到「`${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-2}}`」才可以  
       請操作${{t/gui}}${{t/checkout-branch}}  
 
       完成之後，請按下「執行」按鈕確認結果  
@@ -202,13 +203,16 @@ asset_index:
       請在「`/------\ 漢堡皮`」和「`~~~~~~~~ 生菜`」兩層之間  
       一字不差的加入「`******** 黃芥末醬`」(建議直接複製貼上到檔案中)  
 
+      存檔之後  
+      請使用「`${{level-data/create-and-checkout-branch/file-2-commit-alt-2:v2}}`」作為${{t/commit-msg}}，建立${{t/revision}}  
+
       完成之後，請按下「執行」按鈕確認結果  
 
     elaborate-alt-2-again: |+2
       .md
       恭喜，現在我們的生菜漢堡應該足夠有味道了  
       同時，我們也了解了${{t/branch}}的開發是隨時可以接續進行的  
-      例如我們現在想要在培根漢堡加上花生醬，只要切到「`${{level-data@branch-name-hamburger-alt-1}}`」然後繼續修改培根漢堡就可以了  
+      例如我們現在想要在培根漢堡加上花生醬，只要切到「`${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-1}}`」然後繼續修改培根漢堡就可以了  
 
     summary: |+2
       .md
@@ -216,3 +220,9 @@ asset_index:
       我們學習到了${{t/branch}}主要的用途  
       是用來維護多種不同修改方向的檔案同時存在  
       以及方便我們在不同的版本切換，接續先前的修改  
+      因此我們可以放心大膽的隨時去修改檔案，專心在我們想要完成的內容產出  
+      
+      在接下來的章節中  
+      我們將繼續介紹${{t/branch}}的一些特性  
+      讓我們使用上可以更加上手  
+      

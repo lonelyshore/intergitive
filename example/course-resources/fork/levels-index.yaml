@@ -39,7 +39,7 @@ asset_index:
     main.checkout-branch.name: "5-2 節：切換工作中版本到分支上並在分支上提交"
     main.current-branch.name: "5-3 節：當前的分支與分離的工作版本"
     main.create-and-checkout-branch.name: "5-4 節：建立並同時切換分支"
-    main.branch-for-variant.name: "5-5 節：分支代表從當前版本往回追溯的版本歷史"
+    main.branch-for-variant.name: "5-5 節：分支用來分頭進展"
     main.branch-list.name: "5-6 節：分支列表"
     main.create-branch-limit.name: "5-7 節：建立分支的限制"
     main.branch-grow.name: "5-8 節：分支的獨立成長"
