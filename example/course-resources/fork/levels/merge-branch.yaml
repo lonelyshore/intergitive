@@ -29,7 +29,7 @@
       # commit #1
         - !act.writeFile &write1
           sourceAssetIds:
-            - "$level-data@file-1:v1"
+            - "$level-data/create-and-checkout-branch/file-1:v1"
           destinationPaths:
             - "merge-branches/file.txt"
         - !dev.act.git &stageAll
@@ -42,7 +42,7 @@
       # commit #2
         - !act.writeFile &write2
           sourceAssetIds:
-            - "$level-data@file-1:v2"
+            - "$level-data/create-and-checkout-branch/file-1:v2"
           destinationPaths:
             - "merge-branches/file.txt"
         - *stageAll
@@ -65,140 +65,159 @@
         - *stageAll
         - *commitDummy
 
+      # branch for checking is ancestor
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "checkout", "-fB", "$level-data/merge-branch/branch-name-ancestor", "master~2" ]
+
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "checkout", "-fB", "$level-data/merge-branch/branch-name-not-ancestor", "master~2" ]
+        - !act.writeFile 
+          sourceAssetIds: [ "$level-data/create-and-checkout-branch/file-1:v3" ]
+          destinationPaths: [ "merge-branches/file.txt" ]
+        - *stageAll
+        - *commitDummy
+
+        - !dev.act.idle &idle
+          seconds: 1
+
       # develop various versions of hamburger
         # no-burger
         - !dev.act.git 
           repoSetupName: merge-branches
-          arguments: [ "branch", "$level-data/branch-name-no-hamburger" ]
+          arguments: [ "checkout", "-fB", "$level-data/merge-branch/branch-name-no-hamburger", "master" ]
 
         # original
         - !dev.act.git 
           repoSetupName: merge-branches
-          arguments: [ "checkout", "-fB", "$level-data@branch-name-hamburger", "master" ]
+          arguments: [ "checkout", "-fB", "$level-data/create-and-checkout-branch/branch-name-hamburger", "master" ]
         - !act.writeFile 
           sourceAssetIds:
-              - "$level-data@file-2:v1"
+              - "$level-data/create-and-checkout-branch/file-2:v1"
           destinationPaths:
-              - "$level-data/file-2-path"
+              - "$level-data/merge-branch/file-2-path"
         - *stageAll 
         - !dev.act.git 
           repoSetupName: merge-branches
-          arguments: [ "commit", "-m", "$level-data@file-2-commit-hamburger" ]
+          arguments: [ "commit", "-m", "$level-data/create-and-checkout-branch/file-2-commit-hamburger" ]
+        - *idle
 
         # becon
         - !dev.act.git 
           repoSetupName: merge-branches
-          arguments: [ "checkout", "-fB", "$level-data@branch-name-hamburger-alt-1", "$level-data@branch-name-hamburger" ]
+          arguments: [ "checkout", "-fB", "$level-data/create-and-checkout-branch/branch-name-hamburger-alt-1", "$level-data/create-and-checkout-branch/branch-name-hamburger" ]
         - !act.writeFile 
-          sourceAssetIds: [ "$level-data@file-2:alt-1" ]
-          destinationPaths: [ "$level-data/file-2-path" ]
+          sourceAssetIds: [ "$level-data/create-and-checkout-branch/file-2:alt-1" ]
+          destinationPaths: [ "$level-data/merge-branch/file-2-path" ]
         - *stageAll
         - !dev.act.git 
           repoSetupName: merge-branches
-          arguments: [ "commit", "-m", "$level-data@file-2-commit-alt-1" ]
+          arguments: [ "commit", "-m", "$level-data/create-and-checkout-branch/file-2-commit-alt-1" ]
+        - *idle
 
         # letuce
         - !dev.act.git 
           repoSetupName: merge-branches
-          arguments: [ "checkout", "-fB", "$level-data@branch-name-hamburger-alt-1", "$level-data@branch-name-hamburger" ]
+          arguments: [ "checkout", "-fB", "$level-data/create-and-checkout-branch/branch-name-hamburger-alt-2", "$level-data/create-and-checkout-branch/branch-name-hamburger" ]
         - !act.writeFile 
-          sourceAssetIds: [ "$level-data@file-2:alt-2:v1" ]
-          destinationPaths: [ "$level-data/file-2-path" ]
+          sourceAssetIds: [ "$level-data/create-and-checkout-branch/file-2:alt-2:v1" ]
+          destinationPaths: [ "$level-data/merge-branch/file-2-path" ]
         - *stageAll
         - !dev.act.git 
           repoSetupName: merge-branches
-          arguments: [ "commit", "-m", "$level-data@file-2-commit-alt-2:v1" ]
+          arguments: [ "commit", "-m", "$level-data/create-and-checkout-branch/file-2-commit-alt-2:v1" ]
 
         - !act.writeFile 
-          sourceAssetIds: [ "$level-data@file-2:alt-2:v2" ]
-          destinationPaths: [ "$level-data/file-2-path" ]
+          sourceAssetIds: [ "$level-data/create-and-checkout-branch/file-2:alt-2:v2" ]
+          destinationPaths: [ "$level-data/merge-branch/file-2-path" ]
         - *stageAll
         - !dev.act.git 
           repoSetupName: merge-branches
-          arguments: [ "commit", "-m", "$level-data@file-2-commit-alt-2:v2" ]
+          arguments: [ "commit", "-m", "$level-data/create-and-checkout-branch/file-2-commit-alt-2:v2" ]
+        - *idle
 
         # tomato
         - !dev.act.git 
           repoSetupName: merge-branches
-          arguments: [ "checkout", "-fB", "$level-data@branch-name-hamburger-alt-3", "$level-data@branch-name-hamburger" ]
+          arguments: [ "checkout", "-fB", "$level-data/create-and-checkout-branch/branch-name-hamburger-alt-3", "$level-data/create-and-checkout-branch/branch-name-hamburger" ]
         - !act.writeFile 
-          sourceAssetIds: [ "$level-data@file-2:alt-3" ]
-          destinationPaths: [ "$level-data/file-2-path" ]
+          sourceAssetIds: [ "$level-data/create-and-checkout-branch/file-2:alt-3" ]
+          destinationPaths: [ "$level-data/merge-branch/file-2-path" ]
         - *stageAll
         - !dev.act.git 
           repoSetupName: merge-branches
-          arguments: [ "commit", "-m", "$level-data@file-2-commit-alt-3" ]
+          arguments: [ "commit", "-m", "$level-data/create-and-checkout-branch/file-2-commit-alt-3" ]
+        - *idle
         
         # pineapple
         - !dev.act.git 
           repoSetupName: merge-branches
-          arguments: [ "checkout", "-fB", "$level-data@branch-name-hamburger-del-1", "$level-data@branch-name-hamburger" ]
+          arguments: [ "checkout", "-fB", "$level-data/create-and-checkout-branch/branch-name-hamburger-del-1", "$level-data/create-and-checkout-branch/branch-name-hamburger" ]
         - !act.writeFile 
-          sourceAssetIds: [ "$level-data@file-2:del-1" ]
-          destinationPaths: [ "$level-data/file-2-path" ]
+          sourceAssetIds: [ "$level-data/create-and-checkout-branch/file-2:del-1" ]
+          destinationPaths: [ "$level-data/merge-branch/file-2-path" ]
         - *stageAll
         - !dev.act.git 
           repoSetupName: merge-branches
-          arguments: [ "commit", "-m", "$level-data@file-2-commit-del-1" ]
+          arguments: [ "commit", "-m", "$level-data/create-and-checkout-branch/file-2-commit-del-1" ]
+        - *idle
 
         # giant
         - !dev.act.git 
           repoSetupName: merge-branches
-          arguments: [ "checkout", "-fB", "$level-data@branch-name-hamburger-del-2", "$level-data@branch-name-hamburger" ]
+          arguments: [ "checkout", "-fB", "$level-data/create-and-checkout-branch/branch-name-hamburger-del-2", "$level-data/create-and-checkout-branch/branch-name-hamburger" ]
         - !act.writeFile 
-          sourceAssetIds: [ "$level-data@file-2:del-2:v1" ]
-          destinationPaths: [ "$level-data/file-2-path" ]
+          sourceAssetIds: [ "$level-data/create-and-checkout-branch/file-2:del-2:v1" ]
+          destinationPaths: [ "$level-data/merge-branch/file-2-path" ]
         - *stageAll
         - !dev.act.git 
           repoSetupName: merge-branches
-          arguments: [ "commit", "-m", "$level-data@file-2-commit-del-2:v1" ]
+          arguments: [ "commit", "-m", "$level-data/create-and-checkout-branch/file-2-commit-del-2:v1" ]
 
         - !act.writeFile 
-          sourceAssetIds: [ "$level-data@file-2:del-2:v2" ]
-          destinationPaths: [ "$level-data/file-2-path" ]
+          sourceAssetIds: [ "$level-data/create-and-checkout-branch/file-2:del-2:v2" ]
+          destinationPaths: [ "$level-data/merge-branch/file-2-path" ]
         - *stageAll
         - !dev.act.git 
           repoSetupName: merge-branches
-          arguments: [ "commit", "-m", "$level-data@file-2-commit-del-2:v2" ]
+          arguments: [ "commit", "-m", "$level-data/create-and-checkout-branch/file-2-commit-del-2:v2" ]
 
         - !act.writeFile 
-          sourceAssetIds: [ "$level-data@file-2:del-2:v3" ]
-          destinationPaths: [ "$level-data/file-2-path" ]
+          sourceAssetIds: [ "$level-data/create-and-checkout-branch/file-2:del-2:v3" ]
+          destinationPaths: [ "$level-data/merge-branch/file-2-path" ]
         - *stageAll
         - !dev.act.git 
           repoSetupName: merge-branches
-          arguments: [ "commit", "-m", "$level-data@file-2-commit-del-2:v3" ]
+          arguments: [ "commit", "-m", "$level-data/create-and-checkout-branch/file-2-commit-del-2:v3" ]
+        - *idle
 
         # double definition
         - !dev.act.git 
           repoSetupName: merge-branches
-          arguments: [ "checkout", "-fB", "$level-data@branch-name-hamburger-del-3:v1", "$level-data@branch-name-hamburger" ]
+          arguments: [ "checkout", "-fB", "$level-data/create-and-checkout-branch/branch-name-hamburger-del-3:v1", "$level-data/create-and-checkout-branch/branch-name-hamburger" ]
         - !act.writeFile 
-          sourceAssetIds: [ "$level-data@file-2:del-3" ]
-          destinationPaths: [ "$level-data/file-2-path" ]
+          sourceAssetIds: [ "$level-data/create-and-checkout-branch/file-2:del-3" ]
+          destinationPaths: [ "$level-data/merge-branch/file-2-path" ]
         - *stageAll
         - !dev.act.git 
           repoSetupName: merge-branches
-          arguments: [ "commit", "-m", "$level-data@file-2-commit-del-3" ]
+          arguments: [ "commit", "-m", "$level-data/create-and-checkout-branch/file-2-commit-del-3" ]
 
         - !dev.act.git 
           repoSetupName: merge-branches
-          arguments: [ "branch", "$level-data@branch-name-hamburger-del-3:v2"]
+          arguments: [ "branch", "$level-data/create-and-checkout-branch/branch-name-hamburger-del-3:v2"]
 
-      # branch for checking is ancestor
+      # final touches and save reference to init
         - !dev.act.git 
           repoSetupName: merge-branches
-          arguments: [ "checkout", "-fB", "$level-data/branch-name-ancestor", "master~2" ]
-
+          arguments: [ "checkout", "-f", "hamburger" ]
         - !dev.act.git 
           repoSetupName: merge-branches
-          arguments: [ "checkout", "-fB", "$level-data/branch-name-not-ancestor", "master~2" ]
-        - !act.writeFile 
-          sourceAssetIds: [ "$level-data@file-1:v3" ]
-          destinationPaths: [ "$merge-branches/file.txt" ]
-        - *stageAll
-        - *commitDummy
-
+          arguments: [ "branch", "-D", "master" ]
+        - !dev.act.saveReference 
+          repoSetupName: merge-branches
+          referenceName: init
         
 
 
