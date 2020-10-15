@@ -269,6 +269,11 @@ const run = function(courseName, fileSystemBaseFolder, repoStoreSubPath, loaderP
 
     // loads config from package.json
     let skipLevelUntil = process.env.SKIP_UNTIL || null;
+    console.log(
+        skipLevelUntil === null ?
+        "* Will bake all levels" :
+        `* Skipping until "${skipLevelUntil}". Please be sure it is level.Id`
+    );
 
     let course;
     
@@ -285,7 +290,7 @@ const run = function(courseName, fileSystemBaseFolder, repoStoreSubPath, loaderP
             return isSkipping;
         };
         return courseConfig.flattenCourseTree(course)
-        .filter(item => isSkippedCb(item));
+        .filter(item => !isSkippedCb(item));
     })
     .then(flatCourseItems => {
         let bakeLevelTasks = Promise.resolve();
