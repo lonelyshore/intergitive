@@ -139,4 +139,18 @@
           id: "fork-main-branch-grow"
           nameKey: "levels/main.branch-grow.name"
           configAssetId: "levels/branch-grow"
+    - !sequential-section # chapter 6: merge and delete branches
+      id: "fork-main-section-merge-and-delete-branches"
+      nameKey: "levels/main.section-merge-and-delete-branches"
+      prerequisiteIds: 
+        - "fork-main-section-intro"
+        - "fork-main-section-create-commits"
+        - "fork-main-section-elaborate-commits"
+        - "fork-main-section-advaneced-history-browsing"
+        - "fork-main-section-create-and-checkout-branches"
+      children:
+        - !level 
+          id: "fork-main-merge-branch"
+          nameKey: "levels/main.merge-branch.name"
+          configAssetId: "levels/merge-branch"
 

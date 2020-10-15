@@ -1,0 +1,12 @@
+asset_index:
+  infile:
+# course content
+    intro: |+2
+ 
+# repo
+    branch-name-no-hamburger: "no-hamburger"
+    file-2-name: "漢堡.txt"
+    file-2-path: "merge-branches/漢堡.txt"
+
+    branch-name-ancestor: "is-ancestor-1"
+    branch-name-not-ancestor: "is-ancestor-2"

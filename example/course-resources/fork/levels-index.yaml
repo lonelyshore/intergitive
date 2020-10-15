@@ -7,6 +7,7 @@ asset_index:
     main.section-elaborate-commits.name: "第三章：保存的版本的性質"
     main.section-advanced-history-browsing: "第四章：進階瀏覽版本歷史與回溯版本"
     main.section-create-and-checkout-branches: "第五章：建立與切換分支－－創建分歧"
+    main.section-merge-and-delete-branches: "第六章：合併與刪除分支－－刪減分歧"
 
   # level names of section one
     main.intro-install.name: "1-1 節：安裝"
@@ -43,7 +44,9 @@ asset_index:
     main.branch-list.name: "5-6 節：分支列表"
     main.create-branch-limit.name: "5-7 節：建立分支的限制"
     main.branch-grow.name: "5-8 節：分支的獨立成長"
-    
+
+  # level names of section six
+    main.merge-branch.name: "6-1 節：合併分支以融合變更"
 
   ondisk:
   # level configs of section one: intro
@@ -81,4 +84,7 @@ asset_index:
     branch-list: "branch-list.yaml"
     create-branch-limit: "create-branch-limit.yaml"
     branch-grow: "branch-grow.yaml"
+
+  # level configs of section six: merge and delete branches
+    merge-branch: "merge-branch.yaml"
     

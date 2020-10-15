@@ -1,0 +1,204 @@
+!level
+  repoVcsSetups:
+    merge-branches:
+      workingPath: merge-branches
+      referenceStoreName: merge-branches
+      checkpointStoreName: merge-branches
+  steps:
+  # renew repo
+    - !dev.devAction 
+      actions:
+      # init git
+        - !dev.act.git
+          repoSetupName: merge-branches
+          arguments:
+            - init
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ config, "--local", user.name, someone]
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ config, "--local", user.email, someone@some.mail]
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ config, "--local", core.autocrlf, input]
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ config, "--local", gc.auto, "0" ]
+      
+      # commit #1
+        - !act.writeFile &write1
+          sourceAssetIds:
+            - "$level-data@file-1:v1"
+          destinationPaths:
+            - "merge-branches/file.txt"
+        - !dev.act.git &stageAll
+          repoSetupName: merge-branches
+          arguments: [ "add", "-A" ]
+        - !dev.act.git &commitDummy
+          repoSetupName: merge-branches
+          arguments: [ "commit", "-m", "dummy commit" ]
+
+      # commit #2
+        - !act.writeFile &write2
+          sourceAssetIds:
+            - "$level-data@file-1:v2"
+          destinationPaths:
+            - "merge-branches/file.txt"
+        - *stageAll
+        - *commitDummy
+      
+      # add dummy commits up to six
+        #3
+        - *write1
+        - *stageAll
+        - *commitDummy
+        - *write2
+        - *stageAll
+        - *commitDummy
+
+        #5
+        - *write1
+        - *stageAll
+        - *commitDummy
+        - *write2
+        - *stageAll
+        - *commitDummy
+
+      # develop various versions of hamburger
+        # no-burger
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "branch", "$level-data/branch-name-no-hamburger" ]
+
+        # original
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "checkout", "-fB", "$level-data@branch-name-hamburger", "master" ]
+        - !act.writeFile 
+          sourceAssetIds:
+              - "$level-data@file-2:v1"
+          destinationPaths:
+              - "$level-data/file-2-path"
+        - *stageAll 
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "commit", "-m", "$level-data@file-2-commit-hamburger" ]
+
+        # becon
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "checkout", "-fB", "$level-data@branch-name-hamburger-alt-1", "$level-data@branch-name-hamburger" ]
+        - !act.writeFile 
+          sourceAssetIds: [ "$level-data@file-2:alt-1" ]
+          destinationPaths: [ "$level-data/file-2-path" ]
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "commit", "-m", "$level-data@file-2-commit-alt-1" ]
+
+        # letuce
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "checkout", "-fB", "$level-data@branch-name-hamburger-alt-1", "$level-data@branch-name-hamburger" ]
+        - !act.writeFile 
+          sourceAssetIds: [ "$level-data@file-2:alt-2:v1" ]
+          destinationPaths: [ "$level-data/file-2-path" ]
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "commit", "-m", "$level-data@file-2-commit-alt-2:v1" ]
+
+        - !act.writeFile 
+          sourceAssetIds: [ "$level-data@file-2:alt-2:v2" ]
+          destinationPaths: [ "$level-data/file-2-path" ]
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "commit", "-m", "$level-data@file-2-commit-alt-2:v2" ]
+
+        # tomato
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "checkout", "-fB", "$level-data@branch-name-hamburger-alt-3", "$level-data@branch-name-hamburger" ]
+        - !act.writeFile 
+          sourceAssetIds: [ "$level-data@file-2:alt-3" ]
+          destinationPaths: [ "$level-data/file-2-path" ]
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "commit", "-m", "$level-data@file-2-commit-alt-3" ]
+        
+        # pineapple
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "checkout", "-fB", "$level-data@branch-name-hamburger-del-1", "$level-data@branch-name-hamburger" ]
+        - !act.writeFile 
+          sourceAssetIds: [ "$level-data@file-2:del-1" ]
+          destinationPaths: [ "$level-data/file-2-path" ]
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "commit", "-m", "$level-data@file-2-commit-del-1" ]
+
+        # giant
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "checkout", "-fB", "$level-data@branch-name-hamburger-del-2", "$level-data@branch-name-hamburger" ]
+        - !act.writeFile 
+          sourceAssetIds: [ "$level-data@file-2:del-2:v1" ]
+          destinationPaths: [ "$level-data/file-2-path" ]
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "commit", "-m", "$level-data@file-2-commit-del-2:v1" ]
+
+        - !act.writeFile 
+          sourceAssetIds: [ "$level-data@file-2:del-2:v2" ]
+          destinationPaths: [ "$level-data/file-2-path" ]
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "commit", "-m", "$level-data@file-2-commit-del-2:v2" ]
+
+        - !act.writeFile 
+          sourceAssetIds: [ "$level-data@file-2:del-2:v3" ]
+          destinationPaths: [ "$level-data/file-2-path" ]
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "commit", "-m", "$level-data@file-2-commit-del-2:v3" ]
+
+        # double definition
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "checkout", "-fB", "$level-data@branch-name-hamburger-del-3:v1", "$level-data@branch-name-hamburger" ]
+        - !act.writeFile 
+          sourceAssetIds: [ "$level-data@file-2:del-3" ]
+          destinationPaths: [ "$level-data/file-2-path" ]
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "commit", "-m", "$level-data@file-2-commit-del-3" ]
+
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "branch", "$level-data@branch-name-hamburger-del-3:v2"]
+
+      # branch for checking is ancestor
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "checkout", "-fB", "$level-data/branch-name-ancestor", "master~2" ]
+
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "checkout", "-fB", "$level-data/branch-name-not-ancestor", "master~2" ]
+        - !act.writeFile 
+          sourceAssetIds: [ "$level-data@file-1:v3" ]
+          destinationPaths: [ "$merge-branches/file.txt" ]
+        - *stageAll
+        - *commitDummy
+
+        
+
+
