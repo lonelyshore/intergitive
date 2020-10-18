@@ -272,9 +272,16 @@ asset_index:
       而是融合兩者精髓的全新培根－萵苣漢堡(簡稱 BL 漢堡)  
       也就是說，我們僅只是透過操作 git ，就創造了「漢堡」這個檔案的一個新版本  
 
-      而這一切不得不歸功於剛才新介紹的操作：「**${{t/merge-f}}**」  
+      這個新漢堡的誕生，不得不歸功於剛才新介紹的操作：「**${{t/merge-f}}**」  
       顧名思義，「${{t/merge}}」的功用就在於融合兩個${{t/branch}}上的檔案  
-      它又是如何做到的呢？就讓我們更加深入的了解一下吧  
+
+      當我們想要「${{t/merge}}」的時候，大多時候會牽涉到兩個${{t/branch}}  
+      例如我們想要${{t/merge}}「A」和「B」兩個${{t/branch}}  
+      我們可以說我們要讓「 A ${{t/merge}} B」，或反過來說就是「把 B 合進 A」(merge B into A)  
+      這表示我們會先${{t/checkout-branch}}到「A」  
+      然後把「B」給合併到「A」之中  
+      
+      而實際上它又產生哪些影響呢？就讓我們更加深入的了解一下吧  
 
     illustrate-merge: |+2
       .md
@@ -287,23 +294,27 @@ asset_index:
       右側則是發生後的${{t/graph}}  
       可以看到，${{t/merge}}的效果  
       是在${{t/graph}}上面創造一個新的${{t/revision}}(上圖右側紅框圈選處)  
+      將合併的兩方(上圖左側橘框圈選處)給統合起來  
+
       也就是說  
       我們操作「${{t/merge}}」之後，git 就自動產生了一個新的${{t/revision}}
       這樣的${{t/revision}}有一個特別的名字－－「**${{t/merge-commit-f}}**」  
 
       「${{t/merge-commit}}」之所以特別到會有自己的名字，是因為以下兩點：  
-      1. 它是 git 自動產生的，(通常)不用我們花費任何力氣，潮爽der  
+      1. 它是 git 自動產生的，(通常)不用我們花費任何力氣  
       2. 從上圖可以注意到，紅框圈選的「${{t/merge-commit}}」連線往它下方的兩個${{t/revision}}(上圖橘框圈選處)，形成一個類似「Λ」的形狀  
          與之相對，一般的${{t/revision}}，往下方(較舊版本)的連線，只會有一條  
 
       其中，第二點可以用來作為辨認${{t/merge-commit}}的基準  
       只要當我們在${{t/graph}}上看到「Λ」，就表示這裡有一個${{t/merge-commit}}  
+      順帶一提，這也代表${{t/merge-commit}}擁有兩個${{t/parent-commit}}  
 
     where-is-head: |+2
       .md
       在 git 的操作中，隨時確認自己目前的${{t/head}}身在何方是最重要的  
-      因此，請操作${{t/gui}}  
-      觀察並且回答目前的${{t/head}}是下列何者呢？  
+      在${{t/merge}}發生之後，${{t/head}}會有甚麼改變呢？  
+      讓我們操作${{t/gui}}  
+      觀察並且回答目前的${{t/head}}是下列何者吧  
 
       1. ${{level-data/branch-name-merging}}
       2. hamburg
@@ -311,11 +322,94 @@ asset_index:
 
       請以數字選項(1/2/3)作答  
 
-    explain-head-stays: |+2
+    explain-head-unchanged: |+2
       .md
-      是的，根據上面的觀察我們不難發現  
-      「${{t/merge}}」的前後，我們的「${{head}}」都保持不變  
+      根據上面的觀察我們不難發現  
+      「${{t/merge}}」的前後，我們的「${{t/head}}」指向的${{t/branch}}保持不變  
       都是「`${{level-data/branch-name-merging}}`」  
+      也就是說，在「A ${{merge}} B」的過程中  
+      「${{t/head}}」會保持指向「A」  
+
+      根據我們之前所學  
+      我們知道「${{t/head}}」指向的「${{t/branch}}」會跟著新生成的${{t/revision}}走  
+      所以不意外的，「`${{level-data/branch-name-merging}}`」在${{t/merge}}之後  
+      會指向新生成的「`${{t/merge-commit}}`」  
+
+      說到這裡，那「被合併」的${{t/branch}}下場又如何呢？  
+      不如讓我們來再繼續${{t/merge}}，然後觀察看看吧  
+
+    observe-merged-branch-location: |+2
+      .md
+      讓我們繼續以「`${{level-data/branch-name-merging}}`」為基底，融合其它的漢堡類型吧  
+      目前我們的 BLT 漢堡，還剩下番茄這個要素了  
+      所以，我們的目標理所當然的就是「`${{level-data@branch-name-hamburger-alt-3}}`」  
+
+      在繼續進行之前，別忘了我們的目標是要觀察「被合併」${{t/branch}}的位置會如何移動  
+      所以就先讓我們觀察一下${{t/graph}}上的「`${{level-data@branch-name-hamburger-alt-3}}`」  
+      請問它目前所指向的${{t/revision}}的${{t/commit-msg}}內容為下列何者呢？  
+
+      1. 番茄紅了，醫生的臉就綠了  
+      2. 一天一蘋果，醫生遠離我  
+      3. ${{level-data@file-2-commit-alt-3}}  
+
+      請以數字選項(1/2/3)作答  
+
+    instruct-merge-again: |+2
+      .md
+      現在，請按照剛才所教的「${{t/merge}}」操作  
+      先切換到「`${{level-data/branch-name-merging}}`」  
+      然後把「`${{level-data@branch-name-hamburger-alt-3}}`」給${{t/merge}}進來  
+
+      完成之後，請按下「執行」按鈕，進行確認  
+
+    observe-merged-branch-location-again: |+2
+      .md
+      現在，我們完成了${{t/merge}}操作  
+      讓我們再次觀察${{t/graph}}上的「`${{level-data@branch-name-hamburger-alt-3}}`」  
+      請問它目前所指向的${{t/revision}}的${{t/commit-msg}}內容為下列何者呢？  
+
+      1. Merge branch '${{level-data@branch-name-hamburger-alt-2}}' into ${{level-data/branch-name-merging}}  
+      2. Merge branch '${{level-data@branch-name-hamburger-alt-3}}' into ${{level-data/branch-name-merging}}  
+      3. ${{level-data@file-2-commit-alt-3}}  
+
+      請以數字選項(1/2/3)作答  
+
+    reassure-merged-branch-unmoved: |+2
+      .md
+      觀察上面${{t/merge}}前後我們對被合併${{t/branch}}的位置回答  
+      我們不難發現，被合併的${{t/branch}}(A ${{t/merge}} B 中的「B」方)  
+      **它的位置不會改變**  
+      與之相對，合併主動方  
+      則會移動到新產生的${{t/merge-commit}}上  
+      可以說主動的一方把${{t/merge}}的成果給拿走了  
+
+    merge-process: |+2
+      .md
+      統整一下目前所知的情報  
+      假設我們想要進行「A ${{t/merge}} B」  
+      整個事情發生的過程，大致上可以用下面的圖示展示：  
+
+      ![illustration]({{images/illustrate-merge-branch-process}})  
+      <div class="img-title">圖(五)</div>  
+
+      在上圖中呈現了三個步驟：  
+      1. 切換到想要${{t/merge}}的兩個分支中的一個，在這裡是「A」  
+         而另一個想要${{t/merge}}的分支則是「B」  
+      2. 開始${{t/merge}}。 git 自動融合「A」和「B」當前的內容  
+         產生「${{t/merge-commit}}」
+      3. 「A」的位置被移動到新產生的「${{t/merge-commit}}」  
+         也就是說，「A」指向的檔案內容變成${{t/merge}}後的結果  
+
+    summary: |+2
+      .md
+      在這個章節中  
+      我們介紹了如何把散落在不同${{t/branch}}上面的修改給融合起來  
+      能夠做到這件事情的操作，叫做「**${{t/merge}}**」  
+
+      除此之外，我們還詳述了${{t/merge}}的特徵，以及帶來的效果，他們包含：  
+      1. 它會結合兩個${{t/revision}}上的內容，自動產生一個新的${{t/revision}}，又叫做「${{t/merge-commit}}」  
+      2. 「${{t/merge-commit}}」的特色是有兩個網下的連線，也就是說，它有兩個${{t/parent-commit}}  
+      3. ${{t/merge}}的主動方會更新位置到${{t/merge-commit}}上，被動方則不會變動  
 
     merge-combine-file-tree: |+2
       .md
@@ -330,12 +424,6 @@ asset_index:
 
       除了融合檔案外，它還會產生一些額外的效果不得不注意  
       就讓我們來仔細觀察一下吧  
-
-
-
-
-
-    
 
 
 # repo

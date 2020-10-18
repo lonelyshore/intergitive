@@ -299,7 +299,35 @@
     - !verifyInput 
       answer: "1"
     - !elaborate 
-      descriptionId: "$level-data@explain-head-stays"
+      descriptionId: "$level-data@explain-head-unchanged"
+  
+  # merge again and observe location of merged branch
+    - !instruct 
+      descriptionId: "$level-data@observe-merged-branch-location"
+      needConfirm: false
+    - !verifyInput 
+      answer: "3"
+    - !instruct 
+      descriptionId: "$level-data@instruct-merge-again"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !dev.act.git 
+            repoSetupName: merge-branches
+            arguments: [ "merge", "$level-data#branch-name-hamburger-alt-3"]
+    - !verifyRepo 
+      repoSetupName: merge-branch-merge-with-alt-3
+
+    - !instruct 
+      descriptionId: "$level-data@observe-merged-branch-location-again"
+      needConfirm: false
+    - !verifyInput 
+      answer: "3"
+    - !elaborate 
+      descriptionId: "$level-data@reassure-merged-branch-unmoved"
+
+    - !illustrate 
+      descriptionId: "$level-data@merge-process"
 
     - !elaborate 
-      descriptionId: "$level-data@merge-combine-file-tree"
+      descriptionId: "$level-data@summary"

@@ -53,3 +53,4 @@ asset_index:
     merge-f: "合併(merge)"
     merge-commit: "合併版本"  
     merge-commit-f: "合併版本(merge commit)"
+    parent-commit: "父母變更版本"
