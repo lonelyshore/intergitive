@@ -159,3 +159,8 @@ asset_index:
 # branch-grow
     elaborate-grow-branch-independently-1: branch-grow@elaborate-grow-branch-independently-1.png
     elaborate-grow-branch-independently-2: branch-grow@elaborate-grow-branch-independently-2.png
+
+# merge-branch
+    recall-view-file-tree: merge-branch@recall-view-file-tree.png
+    intro-merge-branch-1: merge-branch@intro-merge-branch-1.png
+    intro-merge-branch-2: merge-branch@intro-merge-branch-2.png 

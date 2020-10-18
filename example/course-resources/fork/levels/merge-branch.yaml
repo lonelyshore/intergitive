@@ -103,6 +103,22 @@
           arguments: [ "commit", "-m", "$level-data/create-and-checkout-branch/file-2-commit-hamburger" ]
         - *idle
 
+        # add frech fries as side dish
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "checkout", "-fB", "$level-data#branch-name-sidedish-alt-1", "$level-data#branch-name-hamburger"]
+        - !act.writeFile 
+          sourceAssetIds:
+              - "$level-data#file-3:alt-1"
+          destinationPaths:
+              - "$level-data@file-3-path"
+        - *stageAll
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "commit", "-m", "$level-data#file-3-commit" ]
+        - *idle
+
+
         # becon
         - !dev.act.git 
           repoSetupName: merge-branches
@@ -220,4 +236,70 @@
           referenceName: init
         
 
+    - !elaborate 
+      descriptionId: "$level-data@intro"
+    - !instruct  
+      descriptionId: "$level-data@open-repo"
 
+  # instruct to merge a branch
+    - !elaborate 
+      descriptionId: "$level-data@recall-various-branches"
+    - !instruct 
+      descriptionId: "$level-data@create-merging-branch"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: merging-branches
+          arguments: [ "checkout", "-fB", "$level-data@branch-name-merging", "$level-data/create-and-checkout-branch/branch-name-hamburger-alt-1"]
+    - !verifyRepo 
+      referenceName: merge-branch-create-merging-branch
+
+    - !instruct 
+      descriptionId: "$level-data@confirm-current-content"
+      needConfirm: false
+    - !verifyInput 
+      answer: "2"
+
+    - !instruct 
+      descriptionId: "$level-data@confirm-another-content"
+      needConfirm: false
+    - !verifyInput 
+      answer: "1"
+
+
+    - !instruct 
+      descriptionId: "$level-data@instruct-merge-branch-1"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: merging-branches
+          arguments: [ "merge", "$level-data#branch-name-hamburger-alt-2" ]
+    - !verifyRepo 
+      referenceName: merge-branch-merge-with-alt-2
+
+  # explain effect of merge
+    - !instruct 
+      descriptionId: "$level-data@confirm-merged-content-1"
+      needConfirm: false
+    - !verifyInput 
+      answer: "3"
+
+    - !elaborate 
+      descriptionId: "$level-data@demonstrate-content-merged"
+    - !elaborate 
+      descriptionId: "$level-data@introduce-merge"
+    - !illustrate  
+      descriptionId: "$level-data@illustrate-merge"
+
+    - !instruct 
+      descriptionId: "$level-data@where-is-head"
+      needConfirm: false
+    - !verifyInput 
+      answer: "1"
+    - !elaborate 
+      descriptionId: "$level-data@explain-head-stays"
+
+    - !elaborate 
+      descriptionId: "$level-data@merge-combine-file-tree"

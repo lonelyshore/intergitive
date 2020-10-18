@@ -152,6 +152,8 @@ asset_index:
       /------\ 麵包
       ######## 肉
       \------/ 麵包
+    file-3:alt-1: |+2
+      |||||||| 炸薯條
     file-2-name: "漢堡.txt"
     file-2-path: "checkout-branches/漢堡.txt"
     file-2-commit-hamburger: "加入漢堡"
@@ -164,6 +166,7 @@ asset_index:
     file-2-commit-del-2:v2: "加上芝麻"
     file-2-commit-del-2:v3: "加上起司"
     file-2-commit-del-3: "反璞歸真"
+    file-3-commit: "炸薯條"
 
     branch-name-5: "new-branch"
     branch-name-1: "1-for-all"
@@ -176,6 +179,7 @@ asset_index:
     branch-name-hamburger-del-2: "giant-hamburger"
     branch-name-hamburger-del-3:v1: "simple-hamburger"
     branch-name-hamburger-del-3:v2: "sandwich"
+    branch-name-sidedish-alt-1: "side-dish-fries"
     
     
     

@@ -2,11 +2,349 @@ asset_index:
   infile:
 # course content
     intro: |+2
- 
+      .md
+      話說天下大勢，合久必分分久必合  
+
+      我們在上個章節中，建立了各種各樣各形各色的${{t/branch}}  
+      而我們曾經強調過  
+      ${{t/branch}}的主要功用之一  
+      是讓我們可以簡單的嘗試修改一個檔案為多種不同版本  
+      如果這些分散在不同${{t/branch}}的修改可以融合回一個版本中集其大成  
+      那該有多好呢？  
+
+      沒問題， git 的核心功能之一  
+      就是在分頭開發之後又可以把不同${{t/branch}}的結果合而為一  
+      這種操作，叫做${{t/branch}}的${{t/merge}}  
+
+      就讓我們繼續以之前提到的作漢堡的例子來操作  
+      學習如何把百家爭鳴的狀態給融合吧~  
+
+    open-repo: |+2
+      .md
+      從這個章節開始，我們將改用新的資料夾來練習操作 git  
+      首先，請使用${{t/gui}}開啟位於「`#{{merge-branches}}`」的 git ${{t/repo}}  
+      開啟之後，請按下「確認」繼續進行  
+
+    recall-various-branches: |+2
+      .md
+      在前面的章節中  
+      我們曾經使用資料夾中的${{level-data/file-2-name}}來製作不同版本的漢堡  
+      從${{level-data@branch-name-hamburger}}出發  
+      發展出了三種版本：  
+      1. ${{level-data@branch-name-hamburger-alt-1}}：培根漢堡  
+      2. ${{level-data@branch-name-hamburger-alt-2}}：萵苣漢堡  
+      3. ${{level-data@branch-name-hamburger-alt-3}}：番茄漢堡  
+
+      擅長漢堡的朋友大概已經注意到  
+      這三種版本如果融合在一起  
+      其實就是經典的 BLT 漢堡  
+
+      沒錯，接下來我們的目標就是要製作出 BLT 漢堡！  
+      就讓我們開始吧~
+
+    create-merging-branch: |+2
+      .md
+      為了投機取巧  
+      我們決定從培根漢堡開始製作 BLT 漢堡  
+      因此，請在「`${{level-data@branch-name-hamburger-alt-1}}`」的${{t/revision}}上  
+      建立名為「`${{level-data/branch-name-merging}}`」的${{t/branch}}，並且切換過去  
+
+      完成之後，請按下「執行」按鈕進行確認  
+
+    confirm-current-content: |+2
+      .md
+      在開始我們的漢堡融合之前  
+      先讓我們確認一下目前手上的漢堡到底有些甚麼料吧  
+
+      請開啟位於「`#{{merge-branches}}`」的「`${{level-data/file-name-2}}`」  
+      並回答它的檔案內容是下列何者：  
+
+      <table class="distribute">
+        <tbody>
+          <tr>
+            <td class="cell">
+              /------\ 漢堡皮<br>
+              ^^^^^^^^ 培根<br>
+              \------/ 漢堡皮<br>
+            </td>
+            <td class="cell">
+              /------\ 漢堡皮<br>
+              ++ ++ ++ 酸黃瓜<br>
+              ######## 漢堡肉<br>
+              ^^^^^^^^ 培根<br>
+              \------/ 漢堡皮<br>
+            </td>
+            <td class="cell">
+              ^^^^^^^^ 培根<br>
+              ######## 漢堡肉<br>
+              ^^^^^^^^ 培根<br>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center;font-weight: bold;">1</td>
+            <td style="text-align: center;font-weight: bold;">2</td>
+            <td style="text-align: center;font-weight: bold;">3</td>
+          </tr>
+        </tbody>
+      </table>
+
+      請以數字選項(1/2/3)作答  
+
+    another-current-content: |+2
+      .md
+      確認完培根漢堡的內容物後  
+      讓我們來確認一下融合目標的內容吧  
+
+      按照 BLT 漢堡的字母排序  
+      我們第一個目標是萵苣漢堡  
+      就讓我們來偷看一下在「`${{level-data@branch-name-hamburger-alt-2}}`」這個分支上的「`${{level-data/file-name-2}}`」的內容如何吧  
+
+      為了偷看別的${{t/branch}}的檔案內容  
+      我們可以回想前面章節曾經學過的，在${{t/gui}}上操作${{t/file-tree-gui}}介面  
+      請仿照下圖(一)操作  
+
+      ![illustration]({{images/recall-view-file-tree}})  
+      <div class="img-title">圖(一)</div>  
+
+      先從${{t/graph}}上圖紅框圈選處所示，選擇目標的${{t/revision}}  
+      然後如上圖橘框圈選處所示，開啟${{t/file-tree-gui}}介面  
+
+      請檢視「`${{level-data/file-name-2}}`」的內容  
+      並回答它的看起來像是下列何者：  
+
+      <table class="distribute">
+        <tbody>
+          <tr>
+            <td class="cell">
+              /------\ 漢堡皮<br>
+              ******** 黃芥末醬<br>
+              ~~~~~~~~ 生菜<br>
+              ++ ++ ++ 酸黃瓜<br>
+              ######## 漢堡肉<br>
+              \------/ 漢堡皮<br>
+            </td>
+            <td class="cell">
+              ~~~~~~~~ 生菜<br>
+              ~~~~~~~~ 生菜<br>
+              ~~~~~~~~ 生菜<br>
+              ~~~~~~~~ 生菜<br>
+            </td>
+            <td class="cell">
+              /------\ 漢堡皮<br>
+              ######## 漢堡肉<br>
+              ######## 漢堡肉<br>
+              ######## 漢堡肉<br>
+              ######## 漢堡肉<br>
+              \------/ 漢堡皮<br>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center;font-weight: bold;">1</td>
+            <td style="text-align: center;font-weight: bold;">2</td>
+            <td style="text-align: center;font-weight: bold;">3</td>
+          </tr>
+        </tbody>
+      </table>
+
+      請以數字選項(1/2/3)作答 
+
+    instruct-merge-branch-1: |+2
+      .md
+      正所謂知己知彼百戰百勝  
+      現在，我們已經充分了解融合的漢堡兩方的內容物了  
+      現在我們已經準備好來進行融合！  
+
+      請按照圖(一)來操作${{t/gui}}  
+
+      ![illustration]({{images/intro-merge-branch-1}})  
+      <div class="img-title">圖(一)</div>  
+
+      首先，如圖中紅框圈選範圍所示  
+      請在${{t/graph}}上面找到「`${{level-data@branch-name-hamburger-alt-2}}`」所在的${{t/revision}}  
+      然後對準它按下滑鼠右鍵，開啟右鍵選單  
+
+      選單開啟後  
+      因為我們想要對「`${{level-data@branch-name-hamburger-alt-2}}`」操作  
+      所以請在選單中找到如上圖橘框圈選的「`${{level-data@branch-name-hamburger-alt-2}}}`」這個選項  
+      請繼續從這個選項展開子選單，然後按照下圖(二)的指引來繼續操作  
+      
+      ![illustration]({{images/intro-merge-branch-2}})  
+      <div class="img-title">圖(二)</div>   
+
+      展開${{t/branch}}子選單之後  
+      請在選單上面選擇如上圖紅框圈選所示的「`${{st/merge-into-item-prefix}}'${{level-data/branch-name-merging}}'...`」  
+      這個項目的意思是「(${{t/merge}}到${{level-data/branch-name-merging}})」  
+      選擇這個項目後，會再出現如下圖(三)的確認對話框  
+
+      ![illustration]({{images/intro-merge-branch-3}})  
+      <div class="img-title">圖(三)</div>   
+
+      這個對話框的用途是確認要使用哪種${{t/merge}}方式  
+      通常預設的就是最常用的  
+      我們不需要修改任何內容，直接按下如上圖紅框圈選的「`${{merge-modal-confirm}}`」就可以了  
+
+      操作完成之後，應該就成功地把萵苣漢堡融合進來了  
+      請按下「執行」按鈕檢查是否正確  
+
+    confirm-merged-content-1: |+2
+      .md
+      根據前面的操作，我們認為我們把萵苣漢堡給融合進培根漢堡之中  
+      但是融合的結果會是甚麼樣子呢？  
+      就讓我們來實際打開資料夾中的「`${{level-data/file-2-name}}`」來看看吧  
+
+      請回答目前檔案內容是下列何者：  
+
+      <table class="distribute">
+        <tbody>
+          <tr>
+            <td class="cell">
+              ^^^^^^^^ 培根<br>
+              ~~~~~~~~ 生菜<br>
+              ^^^^^^^^ 培根<br>
+            </td>
+            <td class="cell">
+              #~#~#~#~ 培生菜根<br>
+            </td>
+            <td class="cell">
+              /------\ 漢堡皮<br>
+              ******** 黃芥末醬<br>
+              ~~~~~~~~ 生菜<br>
+              ++ ++ ++ 酸黃瓜<br>
+              ######## 漢堡肉<br>
+              ^^^^^^^^ 培根<br>
+              \------/ 漢堡皮<br>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center;font-weight: bold;">1</td>
+            <td style="text-align: center;font-weight: bold;">2</td>
+            <td style="text-align: center;font-weight: bold;">3</td>
+          </tr>
+        </tbody>
+      </table>
+
+      請以數字選項(1/2/3)作答  
+
+    demonstrate-content-merged: |+2
+      .md
+      從我們前面的問答可以看到  
+      在融合之前，我們的兩個漢堡長這樣：  
+
+      ```
+      培根：
+      /------\ 漢堡皮
+      ~~~~~~~~ 生菜
+      ++ ++ ++ 酸黃瓜
+      ######## 漢堡肉
+      \------/ 漢堡皮
+
+      生菜：
+      /------\ 漢堡皮
+      ******** 黃芥末醬
+      ~~~~~~~~ 生菜
+      ++ ++ ++ 酸黃瓜
+      ######## 漢堡肉
+      \------/ 漢堡皮
+      ```
+
+      融合之後，長這樣：  
+
+      ```
+      /------\ 漢堡皮
+      ******** 黃芥末醬
+      ~~~~~~~~ 生菜
+      ++ ++ ++ 酸黃瓜
+      ######## 漢堡肉
+      ^^^^^^^^ 培根
+      \------/ 漢堡皮
+      ```  
+
+      很明顯的  
+      相比於培根漢堡  
+      我們現在還多出了「黃芥末醬」還有「生菜」這兩層  
+      而相比於萵苣漢堡  
+      我們則多出了「培根」  
+
+    introduce-merge: |+2
+      .md
+      仔細一想會發現，事情其實非常神奇  
+      現在我們手中的漢堡，既不是培根漢堡，也不是萵苣漢堡  
+      而是融合兩者精髓的全新培根－萵苣漢堡(簡稱 BL 漢堡)  
+      也就是說，我們僅只是透過操作 git ，就創造了「漢堡」這個檔案的一個新版本  
+
+      而這一切不得不歸功於剛才新介紹的操作：「**${{t/merge-f}}**」  
+      顧名思義，「${{t/merge}}」的功用就在於融合兩個${{t/branch}}上的檔案  
+      它又是如何做到的呢？就讓我們更加深入的了解一下吧  
+
+    illustrate-merge: |+2
+      .md
+      當「`${{t/merge}}`」發生的時候，我們可以從${{t/graph}}上觀察到如下圖的變化  
+
+      ![illustration]({{images/illustrate-merged-graph}})  
+      <div class="img-title">圖(四)</div>  
+
+      上圖左側是${{t/merge}}發生前的${{t/graph}}  
+      右側則是發生後的${{t/graph}}  
+      可以看到，${{t/merge}}的效果  
+      是在${{t/graph}}上面創造一個新的${{t/revision}}(上圖右側紅框圈選處)  
+      也就是說  
+      我們操作「${{t/merge}}」之後，git 就自動產生了一個新的${{t/revision}}
+      這樣的${{t/revision}}有一個特別的名字－－「**${{t/merge-commit-f}}**」  
+
+      「${{t/merge-commit}}」之所以特別到會有自己的名字，是因為以下兩點：  
+      1. 它是 git 自動產生的，(通常)不用我們花費任何力氣，潮爽der  
+      2. 從上圖可以注意到，紅框圈選的「${{t/merge-commit}}」連線往它下方的兩個${{t/revision}}(上圖橘框圈選處)，形成一個類似「Λ」的形狀  
+         與之相對，一般的${{t/revision}}，往下方(較舊版本)的連線，只會有一條  
+
+      其中，第二點可以用來作為辨認${{t/merge-commit}}的基準  
+      只要當我們在${{t/graph}}上看到「Λ」，就表示這裡有一個${{t/merge-commit}}  
+
+    where-is-head: |+2
+      .md
+      在 git 的操作中，隨時確認自己目前的${{t/head}}身在何方是最重要的  
+      因此，請操作${{t/gui}}  
+      觀察並且回答目前的${{t/head}}是下列何者呢？  
+
+      1. ${{level-data/branch-name-merging}}
+      2. hamburg
+      2. frankfurt
+
+      請以數字選項(1/2/3)作答  
+
+    explain-head-stays: |+2
+      .md
+      是的，根據上面的觀察我們不難發現  
+      「${{t/merge}}」的前後，我們的「${{head}}」都保持不變  
+      都是「`${{level-data/branch-name-merging}}`」  
+
+    merge-combine-file-tree: |+2
+      .md
+      從前面的練習中
+      事實上，這表示「${{t/merge}}」不只融合了檔案  
+      它其實融合了兩個「`${{t/file-tree}}`」  
+      在前面的章節我們曾經提過  
+      git 裡面每一個${{t/revision}}，都保存了當時的整個資料夾目錄的內容，也就是「${{t/file-tree}}」  
+      
+      
+
+
+      除了融合檔案外，它還會產生一些額外的效果不得不注意  
+      就讓我們來仔細觀察一下吧  
+
+
+
+
+
+    
+
+
 # repo
     branch-name-no-hamburger: "no-hamburger"
     file-2-name: "漢堡.txt"
     file-2-path: "merge-branches/漢堡.txt"
+    file-3-name: "配餐.txt"
+    file-3-path: "merge-branches/配餐.txt"
 
     branch-name-ancestor: "is-ancestor-1"
     branch-name-not-ancestor: "is-ancestor-2"
+    branch-name-merging: "BLT-burger"

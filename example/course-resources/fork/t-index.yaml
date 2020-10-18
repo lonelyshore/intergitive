@@ -49,3 +49,7 @@ asset_index:
     commit-msg: "變更訊息"
     branch: "分支"
     branch-f: "分支(branch)"
+    merge: "合併"
+    merge-f: "合併(merge)"
+    merge-commit: "合併版本"  
+    merge-commit-f: "合併版本(merge commit)"
