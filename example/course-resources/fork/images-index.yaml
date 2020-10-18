@@ -164,5 +164,6 @@ asset_index:
     recall-view-file-tree: merge-branch@recall-view-file-tree.png
     intro-merge-branch-1: merge-branch@intro-merge-branch-1.png
     intro-merge-branch-2: merge-branch@intro-merge-branch-2.png 
+    intro-merge-branch-3: merge-branch@intro-merge-branch-3.png
     illustrate-merged-graph: merge-branch@illustrate-merged-graph.png
     illustrate-merge-branch-process: merge-branch@illustrate-merge-branch-process.png

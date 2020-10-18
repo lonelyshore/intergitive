@@ -106,16 +106,16 @@
         # add frech fries as side dish
         - !dev.act.git 
           repoSetupName: merge-branches
-          arguments: [ "checkout", "-fB", "$level-data#branch-name-sidedish-alt-1", "$level-data#branch-name-hamburger"]
+          arguments: [ "checkout", "-fB", "$level-data/create-and-checkout-branch/branch-name-sidedish-alt-1", "$level-data/create-and-checkout-branch/branch-name-hamburger"]
         - !act.writeFile 
           sourceAssetIds:
-              - "$level-data#file-3:alt-1"
+              - "$level-data/create-and-checkout-branch/file-3:alt-1"
           destinationPaths:
-              - "$level-data@file-3-path"
+              - "$level-data/merge-branch/file-3-path"
         - *stageAll
         - !dev.act.git 
           repoSetupName: merge-branches
-          arguments: [ "commit", "-m", "$level-data#file-3-commit" ]
+          arguments: [ "commit", "-m", "$level-data/create-and-checkout-branch/file-3-commit" ]
         - *idle
 
 
@@ -237,97 +237,97 @@
         
 
     - !elaborate 
-      descriptionId: "$level-data@intro"
+      descriptionId: "level-data/merge-branch/intro"
     - !instruct  
-      descriptionId: "$level-data@open-repo"
+      descriptionId: "level-data/merge-branch/open-repo"
 
   # instruct to merge a branch
     - !elaborate 
-      descriptionId: "$level-data@recall-various-branches"
+      descriptionId: "level-data/merge-branch/recall-various-branches"
     - !instruct 
-      descriptionId: "$level-data@create-merging-branch"
+      descriptionId: "level-data/merge-branch/create-merging-branch"
       needConfirm: false
     - !dev.needAction 
       actions:
         - !dev.act.git 
-          repoSetupName: merging-branches
-          arguments: [ "checkout", "-fB", "$level-data@branch-name-merging", "$level-data/create-and-checkout-branch/branch-name-hamburger-alt-1"]
+          repoSetupName: merge-branches
+          arguments: [ "checkout", "-fB", "$level-data/merge-branch/branch-name-merging", "$level-data/create-and-checkout-branch/branch-name-hamburger-alt-1"]
     - !verifyRepo 
       referenceName: merge-branch-create-merging-branch
 
     - !instruct 
-      descriptionId: "$level-data@confirm-current-content"
+      descriptionId: "level-data/merge-branch/confirm-current-content"
       needConfirm: false
     - !verifyInput 
       answer: "2"
 
     - !instruct 
-      descriptionId: "$level-data@confirm-another-content"
+      descriptionId: "level-data/merge-branch/confirm-another-content"
       needConfirm: false
     - !verifyInput 
       answer: "1"
 
 
     - !instruct 
-      descriptionId: "$level-data@instruct-merge-branch-1"
+      descriptionId: "level-data/merge-branch/instruct-merge-branch-1"
       needConfirm: false
     - !dev.needAction 
       actions:
         - !dev.act.git 
           repoSetupName: merging-branches
-          arguments: [ "merge", "$level-data#branch-name-hamburger-alt-2" ]
+          arguments: [ "merge", "$level-data/create-and-checkout-branch/branch-name-hamburger-alt-2" ]
     - !verifyRepo 
       referenceName: merge-branch-merge-with-alt-2
 
   # explain effect of merge
     - !instruct 
-      descriptionId: "$level-data@confirm-merged-content-1"
+      descriptionId: "level-data/merge-branch/confirm-merged-content-1"
       needConfirm: false
     - !verifyInput 
       answer: "3"
 
     - !elaborate 
-      descriptionId: "$level-data@demonstrate-content-merged"
+      descriptionId: "level-data/merge-branch/demonstrate-content-merged"
     - !elaborate 
-      descriptionId: "$level-data@introduce-merge"
+      descriptionId: "level-data/merge-branch/introduce-merge"
     - !illustrate  
-      descriptionId: "$level-data@illustrate-merge"
+      descriptionId: "level-data/merge-branch/illustrate-merge"
 
     - !instruct 
-      descriptionId: "$level-data@where-is-head"
+      descriptionId: "level-data/merge-branch/where-is-head"
       needConfirm: false
     - !verifyInput 
       answer: "1"
     - !elaborate 
-      descriptionId: "$level-data@explain-head-unchanged"
+      descriptionId: "level-data/merge-branch/explain-head-unchanged"
   
   # merge again and observe location of merged branch
     - !instruct 
-      descriptionId: "$level-data@observe-merged-branch-location"
+      descriptionId: "level-data/merge-branch/observe-merged-branch-location"
       needConfirm: false
     - !verifyInput 
       answer: "3"
     - !instruct 
-      descriptionId: "$level-data@instruct-merge-again"
+      descriptionId: "level-data/merge-branch/instruct-merge-again"
       needConfirm: false
     - !dev.needAction 
       actions:
           - !dev.act.git 
             repoSetupName: merge-branches
-            arguments: [ "merge", "$level-data#branch-name-hamburger-alt-3"]
+            arguments: [ "merge", "$level-data/create-and-checkout-branch/branch-name-hamburger-alt-3"]
     - !verifyRepo 
-      repoSetupName: merge-branch-merge-with-alt-3
+      referenceName: merge-branch-merge-with-alt-3
 
     - !instruct 
-      descriptionId: "$level-data@observe-merged-branch-location-again"
+      descriptionId: "level-data/merge-branch/observe-merged-branch-location-again"
       needConfirm: false
     - !verifyInput 
       answer: "3"
     - !elaborate 
-      descriptionId: "$level-data@reassure-merged-branch-unmoved"
+      descriptionId: "level-data/merge-branch/reassure-merged-branch-unmoved"
 
     - !illustrate 
-      descriptionId: "$level-data@merge-process"
+      descriptionId: "level-data/merge-branch/merge-process"
 
     - !elaborate 
-      descriptionId: "$level-data@summary"
+      descriptionId: "level-data/merge-branch/summary"

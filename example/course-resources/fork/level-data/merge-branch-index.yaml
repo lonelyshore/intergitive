@@ -28,12 +28,12 @@ asset_index:
     recall-various-branches: |+2
       .md
       在前面的章節中  
-      我們曾經使用資料夾中的${{level-data/file-2-name}}來製作不同版本的漢堡  
-      從${{level-data@branch-name-hamburger}}出發  
+      我們曾經使用資料夾中的${{level-data/merge-branch/file-2-name}}來製作不同版本的漢堡  
+      從${{level-data/create-and-checkout-branch/branch-name-hamburger}}出發  
       發展出了三種版本：  
-      1. ${{level-data@branch-name-hamburger-alt-1}}：培根漢堡  
-      2. ${{level-data@branch-name-hamburger-alt-2}}：萵苣漢堡  
-      3. ${{level-data@branch-name-hamburger-alt-3}}：番茄漢堡  
+      1. ${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-1}}：培根漢堡  
+      2. ${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-2}}：萵苣漢堡  
+      3. ${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-3}}：番茄漢堡  
 
       擅長漢堡的朋友大概已經注意到  
       這三種版本如果融合在一起  
@@ -46,8 +46,8 @@ asset_index:
       .md
       為了投機取巧  
       我們決定從培根漢堡開始製作 BLT 漢堡  
-      因此，請在「`${{level-data@branch-name-hamburger-alt-1}}`」的${{t/revision}}上  
-      建立名為「`${{level-data/branch-name-merging}}`」的${{t/branch}}，並且切換過去  
+      因此，請在「`${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-1}}`」的${{t/revision}}上  
+      建立名為「`${{level-data/merge-branch/branch-name-merging}}`」的${{t/branch}}，並且切換過去  
 
       完成之後，請按下「執行」按鈕進行確認  
 
@@ -56,7 +56,7 @@ asset_index:
       在開始我們的漢堡融合之前  
       先讓我們確認一下目前手上的漢堡到底有些甚麼料吧  
 
-      請開啟位於「`#{{merge-branches}}`」的「`${{level-data/file-name-2}}`」  
+      請開啟位於「`#{{merge-branches}}`」的「`${{level-data/merge-branch/file-2-name}}`」  
       並回答它的檔案內容是下列何者：  
 
       <table class="distribute">
@@ -90,14 +90,14 @@ asset_index:
 
       請以數字選項(1/2/3)作答  
 
-    another-current-content: |+2
+    confirm-another-content: |+2
       .md
       確認完培根漢堡的內容物後  
       讓我們來確認一下融合目標的內容吧  
 
       按照 BLT 漢堡的字母排序  
       我們第一個目標是萵苣漢堡  
-      就讓我們來偷看一下在「`${{level-data@branch-name-hamburger-alt-2}}`」這個分支上的「`${{level-data/file-name-2}}`」的內容如何吧  
+      就讓我們來偷看一下在「`${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-2}}`」這個分支上的「`${{level-data/merge-branch/file-2-name}}`」的內容如何吧  
 
       為了偷看別的${{t/branch}}的檔案內容  
       我們可以回想前面章節曾經學過的，在${{t/gui}}上操作${{t/file-tree-gui}}介面  
@@ -109,7 +109,7 @@ asset_index:
       先從${{t/graph}}上圖紅框圈選處所示，選擇目標的${{t/revision}}  
       然後如上圖橘框圈選處所示，開啟${{t/file-tree-gui}}介面  
 
-      請檢視「`${{level-data/file-name-2}}`」的內容  
+      請檢視「`${{level-data/merge-branch/file-2-name}}`」的內容  
       並回答它的看起來像是下列何者：  
 
       <table class="distribute">
@@ -157,31 +157,31 @@ asset_index:
       請按照圖(一)來操作${{t/gui}}  
 
       ![illustration]({{images/intro-merge-branch-1}})  
-      <div class="img-title">圖(一)</div>  
+      <div class="img-title">圖(二)</div>  
 
       首先，如圖中紅框圈選範圍所示  
-      請在${{t/graph}}上面找到「`${{level-data@branch-name-hamburger-alt-2}}`」所在的${{t/revision}}  
+      請在${{t/graph}}上面找到「`${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-2}}`」所在的${{t/revision}}  
       然後對準它按下滑鼠右鍵，開啟右鍵選單  
 
       選單開啟後  
-      因為我們想要對「`${{level-data@branch-name-hamburger-alt-2}}`」操作  
-      所以請在選單中找到如上圖橘框圈選的「`${{level-data@branch-name-hamburger-alt-2}}}`」這個選項  
-      請繼續從這個選項展開子選單，然後按照下圖(二)的指引來繼續操作  
+      因為我們想要對「`${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-2}}`」操作  
+      所以請在選單中找到如上圖橘框圈選的「`${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-2}}}`」這個選項  
+      請繼續從這個選項展開子選單，然後按照下圖(三)的指引來繼續操作  
       
       ![illustration]({{images/intro-merge-branch-2}})  
-      <div class="img-title">圖(二)</div>   
+      <div class="img-title">圖(三)</div>   
 
       展開${{t/branch}}子選單之後  
-      請在選單上面選擇如上圖紅框圈選所示的「`${{st/merge-into-item-prefix}}'${{level-data/branch-name-merging}}'...`」  
-      這個項目的意思是「(${{t/merge}}到${{level-data/branch-name-merging}})」  
-      選擇這個項目後，會再出現如下圖(三)的確認對話框  
+      請在選單上面選擇如上圖紅框圈選所示的「`${{st/merge-into-item-prefix}}'${{level-data/merge-branch/branch-name-merging}}'...`」  
+      這個項目的意思是「(${{t/merge}}到${{level-data/merge-branch/branch-name-merging}})」  
+      選擇這個項目後，會再出現如下圖(四)的確認對話框  
 
       ![illustration]({{images/intro-merge-branch-3}})  
-      <div class="img-title">圖(三)</div>   
+      <div class="img-title">圖(四)</div>   
 
       這個對話框的用途是確認要使用哪種${{t/merge}}方式  
       通常預設的就是最常用的  
-      我們不需要修改任何內容，直接按下如上圖紅框圈選的「`${{merge-modal-confirm}}`」就可以了  
+      我們不需要修改任何內容，直接按下如上圖紅框圈選的「`${{st/merge-modal-confirm}}`」就可以了  
 
       操作完成之後，應該就成功地把萵苣漢堡融合進來了  
       請按下「執行」按鈕檢查是否正確  
@@ -190,7 +190,7 @@ asset_index:
       .md
       根據前面的操作，我們認為我們把萵苣漢堡給融合進培根漢堡之中  
       但是融合的結果會是甚麼樣子呢？  
-      就讓我們來實際打開資料夾中的「`${{level-data/file-2-name}}`」來看看吧  
+      就讓我們來實際打開資料夾中的「`${{level-data/merge-branch/file-2-name}}`」來看看吧  
 
       請回答目前檔案內容是下列何者：  
 
@@ -288,7 +288,7 @@ asset_index:
       當「`${{t/merge}}`」發生的時候，我們可以從${{t/graph}}上觀察到如下圖的變化  
 
       ![illustration]({{images/illustrate-merged-graph}})  
-      <div class="img-title">圖(四)</div>  
+      <div class="img-title">圖(五)</div>  
 
       上圖左側是${{t/merge}}發生前的${{t/graph}}  
       右側則是發生後的${{t/graph}}  
@@ -316,7 +316,7 @@ asset_index:
       讓我們操作${{t/gui}}  
       觀察並且回答目前的${{t/head}}是下列何者吧  
 
-      1. ${{level-data/branch-name-merging}}
+      1. ${{level-data/merge-branch/branch-name-merging}}
       2. hamburg
       2. frankfurt
 
@@ -326,13 +326,13 @@ asset_index:
       .md
       根據上面的觀察我們不難發現  
       「${{t/merge}}」的前後，我們的「${{t/head}}」指向的${{t/branch}}保持不變  
-      都是「`${{level-data/branch-name-merging}}`」  
-      也就是說，在「A ${{merge}} B」的過程中  
+      都是「`${{level-data/merge-branch/branch-name-merging}}`」  
+      也就是說，在「A ${{t/merge}} B」的過程中  
       「${{t/head}}」會保持指向「A」  
 
       根據我們之前所學  
       我們知道「${{t/head}}」指向的「${{t/branch}}」會跟著新生成的${{t/revision}}走  
-      所以不意外的，「`${{level-data/branch-name-merging}}`」在${{t/merge}}之後  
+      所以不意外的，「`${{level-data/merge-branch/branch-name-merging}}`」在${{t/merge}}之後  
       會指向新生成的「`${{t/merge-commit}}`」  
 
       說到這裡，那「被合併」的${{t/branch}}下場又如何呢？  
@@ -340,37 +340,37 @@ asset_index:
 
     observe-merged-branch-location: |+2
       .md
-      讓我們繼續以「`${{level-data/branch-name-merging}}`」為基底，融合其它的漢堡類型吧  
+      讓我們繼續以「`${{level-data/merge-branch/branch-name-merging}}`」為基底，融合其它的漢堡類型吧  
       目前我們的 BLT 漢堡，還剩下番茄這個要素了  
-      所以，我們的目標理所當然的就是「`${{level-data@branch-name-hamburger-alt-3}}`」  
+      所以，我們的目標理所當然的就是「`${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-3}}`」  
 
       在繼續進行之前，別忘了我們的目標是要觀察「被合併」${{t/branch}}的位置會如何移動  
-      所以就先讓我們觀察一下${{t/graph}}上的「`${{level-data@branch-name-hamburger-alt-3}}`」  
+      所以就先讓我們觀察一下${{t/graph}}上的「`${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-3}}`」  
       請問它目前所指向的${{t/revision}}的${{t/commit-msg}}內容為下列何者呢？  
 
       1. 番茄紅了，醫生的臉就綠了  
       2. 一天一蘋果，醫生遠離我  
-      3. ${{level-data@file-2-commit-alt-3}}  
+      3. ${{level-data/create-and-checkout-branch/file-2-commit-alt-3}}  
 
       請以數字選項(1/2/3)作答  
 
     instruct-merge-again: |+2
       .md
       現在，請按照剛才所教的「${{t/merge}}」操作  
-      先切換到「`${{level-data/branch-name-merging}}`」  
-      然後把「`${{level-data@branch-name-hamburger-alt-3}}`」給${{t/merge}}進來  
+      先切換到「`${{level-data/merge-branch/branch-name-merging}}`」  
+      然後把「`${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-3}}`」給${{t/merge}}進來  
 
       完成之後，請按下「執行」按鈕，進行確認  
 
     observe-merged-branch-location-again: |+2
       .md
       現在，我們完成了${{t/merge}}操作  
-      讓我們再次觀察${{t/graph}}上的「`${{level-data@branch-name-hamburger-alt-3}}`」  
+      讓我們再次觀察${{t/graph}}上的「`${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-3}}`」  
       請問它目前所指向的${{t/revision}}的${{t/commit-msg}}內容為下列何者呢？  
 
-      1. Merge branch '${{level-data@branch-name-hamburger-alt-2}}' into ${{level-data/branch-name-merging}}  
-      2. Merge branch '${{level-data@branch-name-hamburger-alt-3}}' into ${{level-data/branch-name-merging}}  
-      3. ${{level-data@file-2-commit-alt-3}}  
+      1. Merge branch '${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-2}}' into ${{level-data/merge-branch/branch-name-merging}}  
+      2. Merge branch '${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-3}}' into ${{level-data/merge-branch/branch-name-merging}}  
+      3. ${{level-data/create-and-checkout-branch/file-2-commit-alt-3}}  
 
       請以數字選項(1/2/3)作答  
 
@@ -390,7 +390,7 @@ asset_index:
       整個事情發生的過程，大致上可以用下面的圖示展示：  
 
       ![illustration]({{images/illustrate-merge-branch-process}})  
-      <div class="img-title">圖(五)</div>  
+      <div class="img-title">圖(六)</div>  
 
       在上圖中呈現了三個步驟：  
       1. 切換到想要${{t/merge}}的兩個分支中的一個，在這裡是「A」  
