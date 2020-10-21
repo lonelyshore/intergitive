@@ -29,11 +29,11 @@ asset_index:
       .md
       在前面的章節中  
       我們曾經使用資料夾中的${{level-data/merge-branch/file-2-name}}來製作不同版本的漢堡  
-      從${{level-data/create-and-checkout-branch/branch-name-hamburger}}出發  
+      從${{level-data/merge-branch/branch-name-hamburger}}出發  
       發展出了三種版本：  
-      1. ${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-1}}：培根漢堡  
-      2. ${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-2}}：萵苣漢堡  
-      3. ${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-3}}：番茄漢堡  
+      1. ${{level-data/merge-branch/branch-name-hamburger-alt-1}}：培根漢堡  
+      2. ${{level-data/merge-branch/branch-name-hamburger-alt-2}}：萵苣漢堡  
+      3. ${{level-data/merge-branch/branch-name-hamburger-alt-3}}：番茄漢堡  
 
       擅長漢堡的朋友大概已經注意到  
       這三種版本如果融合在一起  
@@ -46,7 +46,7 @@ asset_index:
       .md
       為了投機取巧  
       我們決定從培根漢堡開始製作 BLT 漢堡  
-      因此，請在「`${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-1}}`」的${{t/revision}}上  
+      因此，請在「`${{level-data/merge-branch/branch-name-hamburger-alt-1}}`」的${{t/revision}}上  
       建立名為「`${{level-data/merge-branch/branch-name-merging}}`」的${{t/branch}}，並且切換過去  
 
       完成之後，請按下「執行」按鈕進行確認  
@@ -59,34 +59,58 @@ asset_index:
       請開啟位於「`#{{merge-branches}}`」的「`${{level-data/merge-branch/file-2-name}}`」  
       並回答它的檔案內容是下列何者：  
 
-      <table class="distribute">
-        <tbody>
-          <tr>
-            <td class="cell">
-              /------\ 漢堡皮<br>
-              ^^^^^^^^ 培根<br>
-              \------/ 漢堡皮<br>
-            </td>
-            <td class="cell">
-              /------\ 漢堡皮<br>
-              ++ ++ ++ 酸黃瓜<br>
-              ######## 漢堡肉<br>
-              ^^^^^^^^ 培根<br>
-              \------/ 漢堡皮<br>
-            </td>
-            <td class="cell">
-              ^^^^^^^^ 培根<br>
-              ######## 漢堡肉<br>
-              ^^^^^^^^ 培根<br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: center;font-weight: bold;">1</td>
-            <td style="text-align: center;font-weight: bold;">2</td>
-            <td style="text-align: center;font-weight: bold;">3</td>
-          </tr>
-        </tbody>
-      </table>
+      <div style="display: flex;justify-content: space-evenly;">
+        <table>
+          <tbody>
+            <tr>
+              <td style="text-align: center;font-weight: bold;">
+                1
+              </td>
+            </tr>
+            <tr>
+              <td style="text-aligh: left;font-family: monospace;">
+                /------\ 漢堡皮<br>
+                ^^^^^^^^ 培根<br>
+                \------/ 漢堡皮<br>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table>
+          <tbody>
+            <tr>
+              <td style="text-align: center;font-weight: bold;">
+                2
+              </td>
+            </tr>
+            <tr>
+              <td style="text-aligh: left;font-family: monospace;">
+                /------\ 漢堡皮<br>
+                ++ ++ ++ 酸黃瓜<br>
+                ######## 漢堡肉<br>
+                ^^^^^^^^ 培根<br>
+                \------/ 漢堡皮<br>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table>
+          <tbody>
+            <tr>
+              <td style="text-align: center;font-weight: bold;">
+                3
+              </td>
+            </tr>
+            <tr>
+              <td style="text-aligh: left;font-family: monospace;">
+                ^^^^^^^^ 培根<br>
+                ######## 漢堡肉<br>
+                ^^^^^^^^ 培根<br>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       請以數字選項(1/2/3)作答  
 
@@ -97,7 +121,7 @@ asset_index:
 
       按照 BLT 漢堡的字母排序  
       我們第一個目標是萵苣漢堡  
-      就讓我們來偷看一下在「`${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-2}}`」這個分支上的「`${{level-data/merge-branch/file-2-name}}`」的內容如何吧  
+      就讓我們來偷看一下在「`${{level-data/merge-branch/branch-name-hamburger-alt-2}}`」這個分支上的「`${{level-data/merge-branch/file-2-name}}`」的內容如何吧  
 
       為了偷看別的${{t/branch}}的檔案內容  
       我們可以回想前面章節曾經學過的，在${{t/gui}}上操作${{t/file-tree-gui}}介面  
@@ -112,39 +136,63 @@ asset_index:
       請檢視「`${{level-data/merge-branch/file-2-name}}`」的內容  
       並回答它的看起來像是下列何者：  
 
-      <table class="distribute">
-        <tbody>
-          <tr>
-            <td class="cell">
-              /------\ 漢堡皮<br>
-              ******** 黃芥末醬<br>
-              ~~~~~~~~ 生菜<br>
-              ++ ++ ++ 酸黃瓜<br>
-              ######## 漢堡肉<br>
-              \------/ 漢堡皮<br>
-            </td>
-            <td class="cell">
-              ~~~~~~~~ 生菜<br>
-              ~~~~~~~~ 生菜<br>
-              ~~~~~~~~ 生菜<br>
-              ~~~~~~~~ 生菜<br>
-            </td>
-            <td class="cell">
-              /------\ 漢堡皮<br>
-              ######## 漢堡肉<br>
-              ######## 漢堡肉<br>
-              ######## 漢堡肉<br>
-              ######## 漢堡肉<br>
-              \------/ 漢堡皮<br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: center;font-weight: bold;">1</td>
-            <td style="text-align: center;font-weight: bold;">2</td>
-            <td style="text-align: center;font-weight: bold;">3</td>
-          </tr>
-        </tbody>
-      </table>
+      <div style="display: flex;justify-content: space-evenly;">
+        <table>
+          <tbody>
+            <tr>
+              <td style="text-align: center;font-weight: bold;">
+                1
+              </td>
+            </tr>
+            <tr>
+              <td style="text-aligh: left;font-family: monospace;">
+                /------\ 漢堡皮<br>
+                ******** 黃芥末醬<br>
+                ~~~~~~~~ 生菜<br>
+                ++ ++ ++ 酸黃瓜<br>
+                ######## 漢堡肉<br>
+                \------/ 漢堡皮<br>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table>
+          <tbody>
+            <tr>
+              <td style="text-align: center;font-weight: bold;">
+                2
+              </td>
+            </tr>
+            <tr>
+              <td style="text-aligh: left;font-family: monospace;">
+                ~~~~~~~~ 生菜<br>
+                ~~~~~~~~ 生菜<br>
+                ~~~~~~~~ 生菜<br>
+                ~~~~~~~~ 生菜<br>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table>
+          <tbody>
+            <tr>
+              <td style="text-align: center;font-weight: bold;">
+                3
+              </td>
+            </tr>
+            <tr>
+              <td style="text-aligh: left;font-family: monospace;">
+                /------\ 漢堡皮<br>
+                ######## 漢堡肉<br>
+                ######## 漢堡肉<br>
+                ######## 漢堡肉<br>
+                ######## 漢堡肉<br>
+                \------/ 漢堡皮<br>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       請以數字選項(1/2/3)作答 
 
@@ -154,18 +202,18 @@ asset_index:
       現在，我們已經充分了解融合的漢堡兩方的內容物了  
       現在我們已經準備好來進行融合！  
 
-      請按照圖(一)來操作${{t/gui}}  
+      請按照圖(二)來操作${{t/gui}}  
 
       ![illustration]({{images/intro-merge-branch-1}})  
       <div class="img-title">圖(二)</div>  
 
       首先，如圖中紅框圈選範圍所示  
-      請在${{t/graph}}上面找到「`${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-2}}`」所在的${{t/revision}}  
+      請在${{t/graph}}上面找到「`${{level-data/merge-branch/branch-name-hamburger-alt-2}}`」所在的${{t/revision}}  
       然後對準它按下滑鼠右鍵，開啟右鍵選單  
 
       選單開啟後  
-      因為我們想要對「`${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-2}}`」操作  
-      所以請在選單中找到如上圖橘框圈選的「`${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-2}}}`」這個選項  
+      因為我們想要對「`${{level-data/merge-branch/branch-name-hamburger-alt-2}}`」操作  
+      所以請在選單中找到如上圖橘框圈選的「`${{level-data/merge-branch/branch-name-hamburger-alt-2}}}`」這個選項  
       請繼續從這個選項展開子選單，然後按照下圖(三)的指引來繼續操作  
       
       ![illustration]({{images/intro-merge-branch-2}})  
@@ -194,34 +242,58 @@ asset_index:
 
       請回答目前檔案內容是下列何者：  
 
-      <table class="distribute">
-        <tbody>
-          <tr>
-            <td class="cell">
-              ^^^^^^^^ 培根<br>
-              ~~~~~~~~ 生菜<br>
-              ^^^^^^^^ 培根<br>
-            </td>
-            <td class="cell">
-              #~#~#~#~ 培生菜根<br>
-            </td>
-            <td class="cell">
-              /------\ 漢堡皮<br>
-              ******** 黃芥末醬<br>
-              ~~~~~~~~ 生菜<br>
-              ++ ++ ++ 酸黃瓜<br>
-              ######## 漢堡肉<br>
-              ^^^^^^^^ 培根<br>
-              \------/ 漢堡皮<br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: center;font-weight: bold;">1</td>
-            <td style="text-align: center;font-weight: bold;">2</td>
-            <td style="text-align: center;font-weight: bold;">3</td>
-          </tr>
-        </tbody>
-      </table>
+      <div style="display: flex;justify-content: space-evenly;">
+        <table>
+          <tbody>
+            <tr>
+              <td style="text-align: center;font-weight: bold;">
+                1
+              </td>
+            </tr>
+            <tr>
+              <td style="text-aligh: left;font-family: monospace;">
+                ^^^^^^^^ 培根<br>
+                ~~~~~~~~ 生菜<br>
+                ^^^^^^^^ 培根<br>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table>
+          <tbody>
+            <tr>
+              <td style="text-align: center;font-weight: bold;">
+                2
+              </td>
+            </tr>
+            <tr>
+              <td style="text-aligh: left;font-family: monospace;">
+                #~#~#~#~ 培生菜根<br>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table>
+          <tbody>
+            <tr>
+              <td style="text-align: center;font-weight: bold;">
+                3
+              </td>
+            </tr>
+            <tr>
+              <td style="text-aligh: left;font-family: monospace;">
+                /------\ 漢堡皮<br>
+                ******** 黃芥末醬<br>
+                ~~~~~~~~ 生菜<br>
+                ++ ++ ++ 酸黃瓜<br>
+                ######## 漢堡肉<br>
+                ^^^^^^^^ 培根<br>
+                \------/ 漢堡皮<br>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       請以數字選項(1/2/3)作答  
 
@@ -272,7 +344,7 @@ asset_index:
       而是融合兩者精髓的全新培根－萵苣漢堡(簡稱 BL 漢堡)  
       也就是說，我們僅只是透過操作 git ，就創造了「漢堡」這個檔案的一個新版本  
 
-      這個新漢堡的誕生，不得不歸功於剛才新介紹的操作：「**${{t/merge-f}}**」  
+      這個新漢堡的誕生，不得不歸功於剛才新介紹的操作：「**${{t/merge-f}}**」<br>
       顧名思義，「${{t/merge}}」的功用就在於融合兩個${{t/branch}}上的檔案  
 
       當我們想要「${{t/merge}}」的時候，大多時候會牽涉到兩個${{t/branch}}  
@@ -292,8 +364,8 @@ asset_index:
 
       上圖左側是${{t/merge}}發生前的${{t/graph}}  
       右側則是發生後的${{t/graph}}  
-      可以看到，${{t/merge}}的效果  
-      是在${{t/graph}}上面創造一個新的${{t/revision}}(上圖右側紅框圈選處)  
+
+      可以看到，${{t/merge}}的效果，是在${{t/graph}}上面創造一個新的${{t/revision}}(上圖右側紅框圈選處)  
       將合併的兩方(上圖左側橘框圈選處)給統合起來  
 
       也就是說  
@@ -342,15 +414,15 @@ asset_index:
       .md
       讓我們繼續以「`${{level-data/merge-branch/branch-name-merging}}`」為基底，融合其它的漢堡類型吧  
       目前我們的 BLT 漢堡，還剩下番茄這個要素了  
-      所以，我們的目標理所當然的就是「`${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-3}}`」  
+      所以，我們的目標理所當然的就是「`${{level-data/merge-branch/branch-name-hamburger-alt-3}}`」  
 
       在繼續進行之前，別忘了我們的目標是要觀察「被合併」${{t/branch}}的位置會如何移動  
-      所以就先讓我們觀察一下${{t/graph}}上的「`${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-3}}`」  
+      所以就先讓我們觀察一下${{t/graph}}上的「`${{level-data/merge-branch/branch-name-hamburger-alt-3}}`」  
       請問它目前所指向的${{t/revision}}的${{t/commit-msg}}內容為下列何者呢？  
 
       1. 番茄紅了，醫生的臉就綠了  
       2. 一天一蘋果，醫生遠離我  
-      3. ${{level-data/create-and-checkout-branch/file-2-commit-alt-3}}  
+      3. ${{level-data/merge-branch/file-2-commit-alt-3}}  
 
       請以數字選項(1/2/3)作答  
 
@@ -358,19 +430,19 @@ asset_index:
       .md
       現在，請按照剛才所教的「${{t/merge}}」操作  
       先切換到「`${{level-data/merge-branch/branch-name-merging}}`」  
-      然後把「`${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-3}}`」給${{t/merge}}進來  
+      然後把「`${{level-data/merge-branch/branch-name-hamburger-alt-3}}`」給${{t/merge}}進來  
 
       完成之後，請按下「執行」按鈕，進行確認  
 
     observe-merged-branch-location-again: |+2
       .md
       現在，我們完成了${{t/merge}}操作  
-      讓我們再次觀察${{t/graph}}上的「`${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-3}}`」  
+      讓我們再次觀察${{t/graph}}上的「`${{level-data/merge-branch/branch-name-hamburger-alt-3}}`」  
       請問它目前所指向的${{t/revision}}的${{t/commit-msg}}內容為下列何者呢？  
 
-      1. Merge branch '${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-2}}' into ${{level-data/merge-branch/branch-name-merging}}  
-      2. Merge branch '${{level-data/create-and-checkout-branch/branch-name-hamburger-alt-3}}' into ${{level-data/merge-branch/branch-name-merging}}  
-      3. ${{level-data/create-and-checkout-branch/file-2-commit-alt-3}}  
+      1. Merge branch '${{level-data/merge-branch/branch-name-hamburger-alt-2}}' into ${{level-data/merge-branch/branch-name-merging}}  
+      2. Merge branch '${{level-data/merge-branch/branch-name-hamburger-alt-3}}' into ${{level-data/merge-branch/branch-name-merging}}  
+      3. ${{level-data/merge-branch/file-2-commit-alt-3}}  
 
       請以數字選項(1/2/3)作答  
 
@@ -427,12 +499,101 @@ asset_index:
 
 
 # repo
-    branch-name-no-hamburger: "no-hamburger"
     file-2-name: "漢堡.txt"
     file-2-path: "merge-branches/漢堡.txt"
     file-3-name: "配餐.txt"
     file-3-path: "merge-branches/配餐.txt"
 
+    file-1:v1: "file-1:v1"
+    file-1:v2: "file-1:v2"
+    file-1:v3: "file-1:v3"
+
+    
+    file-2:v1: |+2
+      /------\ 漢堡皮
+      ++ ++ ++ 酸黃瓜
+      ######## 漢堡肉
+      \------/ 漢堡皮
+    file-2:alt-1: |+2
+      /------\ 漢堡皮
+      ++ ++ ++ 酸黃瓜
+      ######## 漢堡肉
+      ^^^^^^^^ 培根
+      \------/ 漢堡皮
+    file-2:alt-2:v1: |+2
+      /------\ 漢堡皮
+      ~~~~~~~~ 生菜
+      ++ ++ ++ 酸黃瓜
+      ######## 漢堡肉
+      \------/ 漢堡皮
+    file-2:alt-2:v2: |+2
+      /------\ 漢堡皮
+      ******** 黃芥末醬
+      ~~~~~~~~ 生菜
+      ++ ++ ++ 酸黃瓜
+      ######## 漢堡肉
+      \------/ 漢堡皮
+    file-2:alt-3: |+2
+      /------\ 漢堡皮
+      ++ ++ ++ 酸黃瓜
+      :==::==: 番茄
+      ######## 漢堡肉
+      \------/ 漢堡皮
+    file-2:del-1: |+2
+      /------\ 漢堡皮
+      ++ ++ ++ 酸黃瓜
+      ???????? 鳳梨
+      ######## 漢堡肉
+      \------/ 漢堡皮
+    file-2:del-2:v1: |+2
+      /------\ 漢堡皮
+      ++ ++ ++ 酸黃瓜
+      ######## 漢堡肉
+      @@@@@@@@ 第二層漢堡肉
+      \------/ 漢堡皮
+    file-2:del-2:v2: |+2
+      ........ 芝麻
+      /------\ 漢堡皮
+      ++ ++ ++ 酸黃瓜
+      ######## 漢堡肉
+      @@@@@@@@ 第二層漢堡肉
+      \------/ 漢堡皮
+    file-2:del-2:v3: |+2
+      ........ 芝麻
+      /------\ 漢堡皮
+      ++ ++ ++ 酸黃瓜
+      ======== 起司
+      ######## 漢堡肉
+      @@@@@@@@ 第二層漢堡肉
+      \------/ 漢堡皮
+    file-2:del-3: |+2
+      /------\ 麵包
+      ######## 肉
+      \------/ 麵包
+    file-3:alt-1: |+2
+      |||||||| 炸薯條
+    file-2-commit-hamburger: "加入漢堡"
+    file-2-commit-alt-1: "加上培根"
+    file-2-commit-alt-2:v1: "加上生菜"
+    file-2-commit-alt-2:v2: "加上黃芥末醬"
+    file-2-commit-alt-3: "加上番茄"
+    file-2-commit-del-1: "加上鳳梨"
+    file-2-commit-del-2:v1: "加上第二層漢堡肉"
+    file-2-commit-del-2:v2: "加上芝麻"
+    file-2-commit-del-2:v3: "加上起司"
+    file-2-commit-del-3: "反璞歸真"
+    file-3-commit: "炸薯條"
+
+    branch-name-hamburger: "hamburger"
+    branch-name-hamburger-alt-1: "hamburger+becon"
+    branch-name-hamburger-alt-2: "hamburger+letuce"
+    branch-name-hamburger-alt-3: "hamburger+tomato"
+    branch-name-hamburger-del-1: "hamburger+pineapple"
+    branch-name-hamburger-del-2: "giant-hamburger"
+    branch-name-hamburger-del-3:v1: "simple-hamburger"
+    branch-name-hamburger-del-3:v2: "sandwich"
+    branch-name-sidedish-alt-1: "side-dish-fries"
+    branch-name-no-hamburger: "no-hamburger"
     branch-name-ancestor: "is-ancestor-1"
     branch-name-not-ancestor: "is-ancestor-2"
     branch-name-merging: "BLT-burger"

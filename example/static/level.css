@@ -261,6 +261,7 @@ td.cell {
 
 code {
     background-color: #e3e3e3;
+    font-family: monospace;
 }
 
 [blocked] {
