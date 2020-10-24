@@ -1,0 +1,61 @@
+asset_index:
+  infile:
+# course content
+    intro: |+2
+      .md
+      在前一個章節中  
+      我們學習了如何「${{t/merge}}」兩個${{t/branch}}  
+      其實我們不只融合了單一一份檔案在兩個${{t/branch}}上的內容  
+      我們融合了兩邊的完整「`${{t/file-tree}}`」  
+
+      甚麼是「${{t/file-tree}}」呢？  
+      在前面的章節我們曾經提過  
+      git 裡面每一個${{t/revision}}，都保存了當時的整個資料夾目錄的內容，也就是「${{t/file-tree}}」  
+      簡單的說，就是資料夾的所有內容  
+
+      在前面的例子中  
+      我們在兩個分支上恰好都是修改同一個檔案  
+      而事實上，${{t/merge}}的威力可是強大到可以把兩個資料夾的內容融合的  
+      在這裡，就讓我們簡單的實際練習一下吧  
+
+    observe-target: |+2
+      .md
+      在開始之前，請先使用${{t/gui}}開啟位於「`${{merge-branches}}`」的資料夾  
+
+      在前面的例子中  
+      我們使用的是「${{level-data@file-2-name}}」這個檔案  
+      不過，漢堡吃多了有點膩  
+      不如讓我們來看看有沒有辦法增加配餐吧  
+
+      因此，我們將要拿來練習的是以下兩個${{t/branch}}  
+      1. ${{level-data@branch-name-merging}}  
+      2. ${{level-data@branch-name-sidedish-alt-1}}  
+
+      為什麼會是「`${{level-data@branch-name-sidedish-alt-1}}`」這個分支呢？  
+
+      不如直接看一下這個${{t/branch}}的${{t/file-tree}}，或許就知道了  
+      這個${{t/branch}}上，除了「file.txt」、「${{level-data@file-2-name}}」  
+      還有下列哪一個檔案呢？  
+
+      1. 飲料  
+      2. ${{level-data@file-3-name}}  
+      3. 醬料  
+
+    explain-filetree-difference: |+2
+      .md
+      不難發現，「`${{level-data@branch-name-sidedish-alt-1}}`」上面
+      比起「`${{level-data@branch-name-merging}}`」的${{t/file-tree}}  
+      還多出「level-data@file-3-name」  
+
+      看來我們可以期待合併完之後多出配餐可以享用  
+      那麼，就讓我們按照前面章節所學  
+      將「`${{level-data@branch-name-sidedish-alt-1}}`」給合併進入「`${{level-data@branch-name-merging}}`」  
+
+    confirm-merged-content: |+2
+      .md
+      現在我們已經合併兩個${{t/branch}}了  
+
+
+
+      
+

@@ -54,3 +54,5 @@ asset_index:
     merge-commit: "合併版本"  
     merge-commit-f: "合併版本(merge commit)"
     parent-commit: "父母變更版本"
+    fastforward: "快進"
+    fastforward-f: "快進(fastforward)"

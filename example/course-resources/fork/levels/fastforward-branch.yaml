@@ -1,0 +1,77 @@
+!level
+  repoVcsSetups:
+    merge-branches:
+      workingPath: merge-branches
+      referenceStoreName: merge-branches
+      checkpointStoreName: merge-branches
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+  # instruct to fastforward a branch
+    - !elaborate 
+      descriptionId: "level-data/fastforward-branch/intro"
+    - !instruct 
+      descriptionId: "level-data/fastforward-branch/checkout-merging-1"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !dev.act.git 
+            repoSetupName: merge-branches
+            arguments: [ "checkout", "-f", "$level-data/merge-branch/branch-name-hamburger-alt-3" ]
+    - !verifyRepo 
+      referenceName: fastforward-branch-checkout-merging-1
+
+    - !instruct 
+      descriptionId: "level-data/fastforward-branch/merge-target-1"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !dev.act.git 
+            repoSetupName: merge-branches
+            arguments: [ "merge", "--ff", "$level-data/merge-branch/branch-name-merging" ]
+    - !verifyRepo 
+      referenceName: fastforward-branch-merge-1
+
+    - !instruct 
+      descriptionId: "level-data/fastforward-branch/confirm-merging-1-fastforwarded"
+      needConfirm: false
+    - !verifyInput 
+      answer: "3"
+
+  # explain fastforward
+    - !illustrate 
+      descriptionId: "level-data/fastforward-branch/explain-fastforward"
+    - !illustrate 
+      descriptionId: "level-data/fastforward-branch/explain-cannot-fastforward"
+
+  # merge non diverged branches
+    - !elaborate 
+      descriptionId: "level-data/fastforward-branch/prompt-merge-non-diverged"
+    - !instruct 
+      descriptionId: "level-data/fastforward-branch/checkout-branch-behind"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !dev.act.git 
+            repoSetupName: merge-branches
+            arguments: [ "checkout", "-f", "$level-data/merge-branch/branch-name-no-hamburger" ]
+    - !verifyRepo 
+      referenceName: fastforward-branch-checkout-branch-behind
+
+    - !instruct 
+      descriptionId: "level-data/fastforward-branch/merge-target-2"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !dev.act.git 
+            repoSetupName: merge-branches
+            arguments: [ "merge", "--ff", "$level-data/merge-branch/branch-name-merging" ]  
+    - !verifyRepo 
+      referenceName: fastforward-branch-behind-branch-merge-target
+
+    - !elaborate 
+      descriptionId: "level-data/fastforward-branch/behind-merge-target-result"
+    - !instruct 
+      descriptionId: "level-data/fastforward-branch/summary"
+
+    

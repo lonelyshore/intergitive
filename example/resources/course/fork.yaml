@@ -153,4 +153,9 @@
           id: "fork-main-merge-branch"
           nameKey: "levels/main.merge-branch.name"
           configAssetId: "levels/merge-branch"
+        - !level 
+          id: "fork-main-fastforward-branch"
+          nameKey: "levels/main.fastforward-branch.name"
+          configAssetId: "levels/fastforward-branch"
+
 

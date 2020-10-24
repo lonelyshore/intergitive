@@ -1,0 +1,37 @@
+!level
+  repoVcsSetups:
+    merge-branches:
+      workingPath: merge-branches
+      referenceStoreName: merge-branches
+      checkpointStoreName: merge-branches
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+    - !elaborate 
+      descriptionId: "level-data/intro"
+    - !instruct  
+      descriptionId: "level-data/observe-target"
+      needConfirm: false
+    - !verifyInput 
+      answer: "2"
+
+    - !instruct 
+      descriptionId: "level-data/merge-other"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "merge", "$level-data/branch-name-sidedish-alt-1" ]
+    - !verifyRepo 
+      referenceName: merge-filetree-merge-other
+
+  # explain effect of merge
+    - !instruct 
+      descriptionId: "level-data/confirm-merged-content"
+      needConfirm: false
+    - !verifyInput 
+      answer: "3"
+
+    - !elaborate 
+      descriptionId: "level-data/merge-branch/summary"

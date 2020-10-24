@@ -167,3 +167,8 @@ asset_index:
     intro-merge-branch-3: merge-branch@intro-merge-branch-3.png
     illustrate-merged-graph: merge-branch@illustrate-merged-graph.png
     illustrate-merge-branch-process: merge-branch@illustrate-merge-branch-process.png
+
+# fastforward-branch
+    ensure-merge-with-ff: fastforward-branch@ensure-merge-with-ff.png
+    illustrate-condition-of-ff: fastforward-branch@illustrate-condition-of-ff.png
+    illustrate-condition-of-no-ff: fastforward-branch@illustrate-condition-of-no-ff.png

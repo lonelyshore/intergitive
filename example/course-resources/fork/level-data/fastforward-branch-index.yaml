@@ -1,0 +1,149 @@
+asset_index:
+  infile:
+# course content
+    intro: |+2
+      .md
+      在前面的章節中  
+      我們看到了${{t/merge}}作用在兩個${{t/branch}}上時  
+      它會讓主動的分支前進到融合後的版本上  
+      但是被動的一方，卻會被遺留在原本的版本上  
+
+      我們有辦法讓被動的一方，也得到融合後的結果嗎？  
+      其實答案非常簡單－－  
+      只要反過來，兩個分支合併的主被動關係顛倒過來就可以了  
+      在這個章節中，就讓我們來試試看吧  
+
+    checkout-merging-1: |+2
+      .md
+      首先，請使用${{t/gui}}開啟位於「`#{{merge-branches}}`」的 git ${{t/repo}}  
+
+
+      開啟之後，讓我們從之前用來組出 BLT 漢堡的來源之一下手吧  
+      請切換到「${{level-data/merge-branch/branch-name-hamburger-alt-3}}」  
+
+      完成之後，請按下「執行」按鈕，確認是否正確
+
+    merge-target-1: |+2
+      .md
+      在前面的章節中  
+      我們曾經讓「`${{level-data/merge-branch/branch-name-merging}}`」去合併「`${{level-data/merge-branch/branch-name-hamburger-alt-3}}`」  
+      以此來講它上面獨有的修改給融合進來  
+
+      如果還有印象的話  
+      應該會記得，我們當時特定確認過  
+      「`${{level-data/merge-branch/branch-name-hamburger-alt-3}}`」在合併前後所指向的${{t/revision}}都是同一個  
+      也就是說，這個分支並沒有受惠於合併帶來的效果  
+
+      現在，就讓我們試著反過來  
+      讓我們用「`${{level-data/merge-branch/branch-name-hamburger-alt-3}}`」來合併「`${{level-data/merge-branch/branch-name-merging}}`」  
+      來看看會發生甚麼事情吧  
+
+      請注意在出現如下圖(一)的合併對話框時  
+      要確保紅框圈選範圍內的選項，是設定為「Default」  
+
+      完成之後，請按下「執行」按鈕，確認執行正確  
+
+      ![illustration]({{images/ensure-merge-with-ff}})  
+      <div class="img-title">圖(一)</div>  
+
+    confirm-merging-1-fastforwarded: |+2
+      .md
+      恭喜，現在我們已經順利的完成合併  
+      那麼，就讓我們來觀察一下「`${{level-data/merge-branch/branch-name-hamburger-alt-3}}`」現在的狀態吧  
+
+      猶記得它在合併前應該是位於${{t/commit-msg}}為「${{level-data/merge-branch/file-2-commit-alt-3}}」的${{t/revision}}上  
+      那麼，請問下列何者描述**不符合**現況呢？  
+
+      1. 「`${{level-data/merge-branch/branch-name-hamburger-alt-3}}`」前進到跟「`${{level-data/merge-branch/branch-name-merging}}`」同一個位置上  
+      2. 目前的${{t/work-tree}}的「${{level-data/merge-branch/file-2-name}}」中，同時擁有培根(B)、生菜(L)、番茄(T)等三層  
+         表示目前${{t/branch}}也順利得到 BLT 漢堡的內容  
+      3. ${{t/head}}的${{t/commit-msg}}是${{level-data/merge-branch/file-2-commit-alt-3}}  
+
+    explain-fastforward: |+2
+      .md
+      從剛才的觀察和問答中  
+      我們不難發現到，我們的「`${{level-data/merge-branch/branch-name-hamburger-alt-3}}`」快速的前進到了它的合併對象身上  
+      
+      其實這是${{t/merge}}的一種特例  
+      叫做「${{t/fastforward-f}}」  
+      顧名思義，當它發生的時候，${{t/branch}}會快速前進  
+
+      那麼，它甚麼時候會發生呢？  
+      且讓我們以下圖為例來說明  
+
+      ![illustration]({{images/illustrate-condition-of-ff}})  
+      <div class="img-title">圖(二)</div>  
+
+      如果我們去考量${{t/merge}}的目標  
+      其實是為了讓「合併方的分支」能夠取得「被合併分支」所指向的${{t/revision}}  
+      如上圖所示，當前者和後者兩個${{t/branch}}其實在${{t/graph}}上是前後聯繫的(能夠找到連通的路線)  
+      git 會判斷單純的移動「合併方的分支」到「被合併分支」所在的${{t/revision}}上就能達到效果  
+      於是發動「${{t/fastforward}}」，把前者丟到後者所在的位置上  
+
+    explain-cannot-fastforward: |+2
+      .md
+      與前面的圖(二)相反的  
+      如果合併的兩方${{t/branch}}在${{t/graph}}並不是前後聯繫的，如下圖所示  
+      那麼 git 就只好產生${{t/merge-commit}}來整合兩邊  
+    
+      ![illustration]({{images/illustrate-condition-of-no-ff}})  
+      <div class="img-title">圖(三)</div>  
+
+    prompt-merge-non-diverged: |+2
+      .md
+      現在，我們大致了解了「${{t/fastforward}}」的觸發規則了  
+      通常我們會觸發它的情境，大致上是以下兩種情況  
+      1. 「A 合併 B」之後，想要讓 B 也「${{t/fastforward}}」到合併的結果  
+      2. D 是繼承 C 之後繼續開發的${{t/branch}}，開發一段之後， C 想要追上 D 的進度  
+
+      1. 的情境在剛剛我們就已經透過合併「`${{level-data/merge-branch/branch-name-hamburger-alt-3}}`」和「`${{level-data/merge-branch/branch-name-merging}}`」實踐過了  
+      現在就讓我們來實踐一下情境 2. 吧  
+
+      如果現在觀察${{t/gui}}的${{t/graph}}  
+      會注意到歷史上有一個名為「`${{level-data/merge-branch/branch-name-no-hamburger}}`」的${{t/branch}}  
+      顧名思義它上面沒有「${{level-data/merge-branch/file-2-name}}」這個檔案  
+      但是從它之後就開始了各種關於這個檔案的修改演進  
+      可以說所有「hamburger」系列的${{t/branch}}都是它的徒子徒孫  
+      而這也包含了「`${{level-data/merge-branch/branch-name-merging}}`」
+
+      這裡「`${{level-data/merge-branch/branch-name-no-hamburger}}`」還有「`${{level-data/merge-branch/branch-name-merging}}`」就分別對應到上述情境 2. 中的 C 還有 D  
+      也就是說，後者基於前者的版本，加入了修改(增加「${{level-data/merge-branch/file-2-name}}」)  
+      現在，讓我們試著讓前者追上後者吧  
+
+    checkout-branch-behind: |+2
+      .md
+      為了要推動「`${{level-data/merge-branch/branch-name-no-hamburger}}`」前進  
+      先讓我們${{t/checkout-branch}}到它上面吧  
+
+      完成之後，請按下「執行」按鈕進行確認  
+
+    merge-target-2: |+2
+      .md
+      現在，讓我們再一次的操作${{t/gui}}  
+      讓「`${{level-data/merge-branch/branch-name-no-hamburger}}`」去${{t/merge}}「`${{level-data/merge-branch/branch-name-merging}}`」吧  
+
+      完成之後，請按下「執行」按鈕進行確認  
+
+    behind-merge-target-result: |+2
+      .md
+      恭喜，我們成功的完成合併   
+      現在「`${{level-data/merge-branch/branch-name-no-hamburger}}`」應該已經快速前進到「`${{level-data/merge-branch/branch-name-merging}}`」的位置  
+      未來當需要快速推進一個${{t/branch}}的時候，可以考慮使用這個簡單的小技巧  
+
+    summary: |+2
+      .md
+      在這個章節中  
+      我們學習到了一種新型態的${{t/merge}}${{t/branch}}方法－－「${{t/fastforward}}」  
+      當主動合併方和被合併方在${{t/graph}}上是在同一條線上呈現一先一後的關係  
+      就會觸發${{t/fastforward}}  
+
+      雖然${{t/fastforward}}聽起來是一個和${{t/merge}}不太一樣的操作  
+      但其實本質上，他們的效果是一致的：  
+      經過這個操作後，主動合併的${{t/branch}}會前進到一個${{t/revision}}上  
+      這個${{t/revision}}的內容，是融合兩個${{t/branch}}的結果  
+
+      
+
+      
+    
+      
