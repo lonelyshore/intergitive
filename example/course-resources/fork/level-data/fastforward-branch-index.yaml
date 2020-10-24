@@ -69,25 +69,30 @@ asset_index:
       顧名思義，當它發生的時候，${{t/branch}}會快速前進  
 
       那麼，它甚麼時候會發生呢？  
-      且讓我們以下圖為例來說明  
+      且讓我們假設想要操作「A ${{t/merge}} B」  
+      然後以下圖為例來說明(為了簡化圖中要素，圖片省略了${{t/head}})  
 
       ![illustration]({{images/illustrate-condition-of-ff}})  
       <div class="img-title">圖(二)</div>  
 
       如果我們去考量${{t/merge}}的目標  
-      其實是為了讓「合併方的分支」能夠取得「被合併分支」所指向的${{t/revision}}  
-      如上圖所示，當前者和後者兩個${{t/branch}}其實在${{t/graph}}上是前後聯繫的(能夠找到連通的路線)  
-      git 會判斷單純的移動「合併方的分支」到「被合併分支」所在的${{t/revision}}上就能達到效果  
+      其實是為了讓「合併方的分支」(A)能夠取得「被合併分支」(B)所指向的${{t/revision}}  
+      如上圖所示，當前者和後者兩個${{t/branch}}其實在${{t/graph}}上是前後聯繫的  
+      (能夠找到連通的路線，如圖中的紅色連線)  
+      git 會判斷單純的移動「合併方的分支」(A)到「被合併分支」(B)所在的${{t/revision}}上就能達到效果  
       於是發動「${{t/fastforward}}」，把前者丟到後者所在的位置上  
 
     explain-cannot-fastforward: |+2
       .md
       與前面的圖(二)相反的  
-      如果合併的兩方${{t/branch}}在${{t/graph}}並不是前後聯繫的，如下圖所示  
+      如果合併的「A」、「B」兩方${{t/branch}}在${{t/graph}}並不是前後聯繫的，如下圖所示  
+      (同樣省略${{t/head}})
       那麼 git 就只好產生${{t/merge-commit}}來整合兩邊  
     
       ![illustration]({{images/illustrate-condition-of-no-ff}})  
       <div class="img-title">圖(三)</div>  
+
+      事實上，這就是前面章節學過的，一般的${{t/merge}}  
 
     prompt-merge-non-diverged: |+2
       .md
@@ -101,6 +106,7 @@ asset_index:
 
       如果現在觀察${{t/gui}}的${{t/graph}}  
       會注意到歷史上有一個名為「`${{level-data/merge-branch/branch-name-no-hamburger}}`」的${{t/branch}}  
+      
       顧名思義它上面沒有「${{level-data/merge-branch/file-2-name}}」這個檔案  
       但是從它之後就開始了各種關於這個檔案的修改演進  
       可以說所有「hamburger」系列的${{t/branch}}都是它的徒子徒孫  
