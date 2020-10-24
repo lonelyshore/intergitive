@@ -1,0 +1,60 @@
+!level
+repoVcsSetups:
+  merge-branches:
+    workingPath: merge-branches
+    referenceStoreName: merge-branches
+    checkpointStoreName: merge-branches
+steps:
+  - !loadLastLevelFinalSnapshot {}
+
+  # instruct to fastforward a branch
+  - !elaborate
+    descriptionId: "level-data/delete-merged/intro"
+  - !instruct
+    descriptionId: "level-data/delete-merged/delete-branch-1"
+    needConfirm: false
+  - !dev.needAction
+    actions:
+      - !dev.act.git
+        repoSetupName: merge-branches
+        arguments: ["branch", "-d", "$level-data/merge-branch/branch-name-hamburger-alt-1"]
+  - !verifyRepo
+    referenceName: delete-merged-delete-1
+
+  - !elaborate
+    descriptionId: "level-data/delete-merged/delete-merged-claim"
+  
+  # show case that deleting merged branch does not eliminate any commit
+  - !instruct 
+    descriptionId: "level-data/delete-merged/observe-commits-of-branch-about-deleted"
+    needConfirm: false
+  - !verifyInput 
+    answer: "1"
+  - !instruct 
+    descriptionId: "level-data/delete-merged/delete-branch-2"
+    needConfirm: false
+  - !dev.needAction 
+    actions:
+      - !dev.act.git
+        repoSetupName: merge-branches
+        arguments: ["branch", "-d", "$level-data/merge-branch/branch-name-hamburger-alt-2"]
+  - !verifyRepo 
+    referenceName: delete-merged-delete-2
+
+  - !elaborate
+    descriptionId: "level-data/delete-merged/confirm-commits-remain"
+
+  # practice delete branch again
+  - !instruct 
+    descriptionId: "level-data/delete-merged/delete-branch-3"
+    needConfirm: false
+  - !dev.needAction 
+    actions:
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: ["branch", "-d", "$level-data/merge-branch/branch-name-hamburger-alt-3"]
+  - !verifyRepo 
+    referenceName: delete-merged-delete-3
+
+  - !elaborate 
+    descriptionId: "level-data/delete-merged/summary"

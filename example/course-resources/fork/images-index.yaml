@@ -172,3 +172,7 @@ asset_index:
     ensure-merge-with-ff: fastforward-branch@ensure-merge-with-ff.png
     illustrate-condition-of-ff: fastforward-branch@illustrate-condition-of-ff.png
     illustrate-condition-of-no-ff: fastforward-branch@illustrate-condition-of-no-ff.png
+
+# delete-merged
+    intro-delete-branch-1: delete-merged@intro-delete-branch-1.png
+    intro-delete-branch-2: delete-merged@intro-delete-branch-2.png

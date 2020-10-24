@@ -25,3 +25,5 @@ asset_index:
     checkout-after-create-checkbox: "Check out after create (建立之後切換)"
     merge-into-item-prefix: "Merge into "
     merge-modal-confirm: "Merge(合併)"
+    delete-branch-item: "Delete...(刪除...)"
+    delete-modal-confirm: "Delete(刪除)"

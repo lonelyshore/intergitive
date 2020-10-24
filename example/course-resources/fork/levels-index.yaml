@@ -48,6 +48,7 @@ asset_index:
   # level names of section six
     main.merge-branch.name: "6-1 節：合併分支以融合變更"
     main.fastforward-branch.name: "6-2 節：合併領先的分支以更新分支狀態"
+    main.delete-merged.name: "6-3 節：刪除已合併的分支"
 
   ondisk:
   # level configs of section one: intro
@@ -89,3 +90,4 @@ asset_index:
   # level configs of section six: merge and delete branches
     merge-branch: "merge-branch.yaml"
     fastforward-branch: "fastforward-branch.yaml"
+    delete-merged: "delete-merged.yaml"

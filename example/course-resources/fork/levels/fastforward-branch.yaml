@@ -71,7 +71,7 @@
 
     - !elaborate 
       descriptionId: "level-data/fastforward-branch/behind-merge-target-result"
-    - !instruct 
+    - !elaborate 
       descriptionId: "level-data/fastforward-branch/summary"
 
     

@@ -157,5 +157,9 @@
           id: "fork-main-fastforward-branch"
           nameKey: "levels/main.fastforward-branch.name"
           configAssetId: "levels/fastforward-branch"
+        - !level 
+          id: "fork-main-delete-merged"
+          nameKey: "levels/main.delete-merged.name"
+          configAssetId: "levels/delete-merged"
 
 

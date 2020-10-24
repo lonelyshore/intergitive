@@ -1,0 +1,124 @@
+asset_index:
+  infile:
+# course content
+    intro: |+2
+      .md
+      在日常使用 git 的過程中  
+      無可避免的會產生越來越多的${{t/branch}}  
+
+      正如前面學習到的  
+      我們經常會建立${{t/branch}}，然後在上面獨立工作一段時間  
+      衍生出一個「Y」型的分岔
+      等到我們的修改成熟後，又會把這個${{t/branch}}${{t/merge}}回到主幹中  
+      而大多情況下，我們接下來就不再需要這個被${{t/merge}}到主幹的${{t/branch}}  
+
+      這樣的循環不斷重複之後  
+      我們會發現到 git 裡面堆積了越來越多用不到的${{t/branch}}  
+      這種時候，就可以來大刀闊斧的將用不到的${{t/branch}}給刪除了~  
+      
+      接下來，就讓我們學習如何刪除${{t/branch}}吧！  
+
+    delete-branch-1: |+2
+      .md
+      就讓我們從 BLT 漢堡的來源${{t/branch}}下手吧  
+      請先使用${{t/gui}}開啟位於「`#{{merge-branches}}`」的${{t/repo}}  
+
+      開啟之後，請依序按照下列圖示操作，刪除「`${{level-data/merge-branch/branch-name-hamburger-alt-1}}`」  
+
+      ![illustration]({{images/intro-delete-branch-1}})  
+      <div class="img-title">圖(一)</div>  
+
+      首先，請如上圖所示  
+      在${{t/graph}}上找到「`${{level-data/merge-branch/branch-name-hamburger-alt-1}}`」  
+      按下右鍵展開選單  
+
+      在選單上，找到如上圖紅框圈選範圍所示的，和目標${{t/branch}}同名的選項  
+      繼續展開子選單  
+
+      然後，在子選單上  
+      選擇如上圖橘框圈選的「${{st/delete-branch-item}}」  
+
+      按下去之後，會再跳出如下圖所示的確認對話框  
+
+      ![illustration]({{images/intro-delete-branch-2}})  
+      <div class="img-title">圖(二)</div>  
+
+      在這裡，我們直接按照圖中所示  
+      選擇紅框圈選的「${{st/delete-modal-confirm}}」  
+
+      這樣，就完成刪除了  
+      請按下「執行」按鈕，確認是否成功  
+
+    delete-merged-claim: |+2
+      .md
+      恭喜，現在我們已經學會如何刪除${{t/branch}}了  
+      請注意，當我們刪除的是已經被合併到其它${{t/branch}}的${{t/branch}}時  
+      刪除${{t/branch}}不會造成任何${{t/revision}}消失  
+      所以可以安心進行  
+
+      不過，只是用說的好像不是很容易理解  
+      沒關係，就讓我們來實際實驗一下  
+
+    observe-commits-of-branch-about-deleted: |+2
+      .md
+      接下來，我們要把「`${{level-data/merge-branch/branch-name-hamburger-alt-2}}`」也給刪除掉  
+      因為我們很清楚知道，這個${{t/branch}}也已經合併到了「`${{level-data/merge-branch/branch-name-merging}}`」中了  
+
+      但是這一次我們在動手之前  
+      先來觀察一下這個${{t/branch}}跟那些${{t/revision}}有關吧  
+
+      請觀察${{t/gui}}的${{t/graph}}  
+      並且回答「`${{level-data/merge-branch/branch-name-hamburger-alt-2}}`」比起「`${{level-data/merge-branch/branch-name-hamburger}}`」來說  
+      多出哪幾個${{t/revision}}呢？  
+      請從以下列出的${{t/commit-msg}}選擇正確答案  
+
+      1. 「${{level-data/merge-branch/file-2-commit-alt-2:v1}}」、「${{level-data/merge-branch/file-2-commit-alt-2:v2}}」  
+      2. 「香蕉」、「芭樂」、「西瓜」
+      3. 「E」、「=」、「mc^2」  
+
+      請以數字選項(1/2/3)來回答  
+
+    delete-branch-2: |+2
+      .md
+      我們已經記住了「`${{level-data/merge-branch/branch-name-hamburger-alt-2}}`」目前身上背了兩個${{t/revision}}：  
+      「${{level-data/merge-branch/file-2-commit-alt-2:v1}}」還有「${{level-data/merge-branch/file-2-commit-alt-2:v2}}」  
+      那麼，接下來就請把這個${{t/branch}}給刪除吧  
+
+      完成後，請按下「執行」按鈕，確認是否成功  
+
+    confirm-commits-remain: |+2
+      .md
+      恭喜，我們又成功把一個已經合併過的${{t/branch}}給刪除了  
+      現在可以回頭去看${{t/graph}}  
+      看看剛才我們記錄下來了，「`${{level-data/merge-branch/branch-name-hamburger-alt-2}}`」的${{t/revision}}是否依然存在？  
+      他們分別是「${{level-data/merge-branch/file-2-commit-alt-2:v1}}」還有「${{level-data/merge-branch/file-2-commit-alt-2:v2}}」  
+
+      如果一切正常運轉  
+      這兩個${{t/revision}}應該依然存在於${{t/graph}}上面  
+      這是因為我們在先前的章節中，曾經把「`${{level-data/merge-branch/branch-name-hamburger-alt-2}}`」給合併進「`${{level-data/merge-branch/branch-name-merging}}`」  
+      使得這些${{t/revision}}也成為「`${{level-data/merge-branch/branch-name-merging}}`」不可或缺的一部分  
+      
+    delete-branch-3: |+2
+      .md
+      最後，再讓我們來練習一次刪除${{t/branch}}吧  
+      當初構成 BLT 漢堡所用到的${{t/branch}}現在只剩下「`${{level-data/merge-branch/branch-name-hamburger-alt-3}}`」了  
+      我們當然也沒有要留下它的理由，就讓我們把它給刪除吧  
+
+      完成後，請按下「執行」按鈕，確認是否成功  
+
+    summary: |+2
+      .md
+      在這個章節中  
+      我們練習了如何刪除掉已經合併過的${{t/branch}}  
+      並且也學習到刪除這種${{t/branch}}，是不會讓任何${{t/revision}}從${{t/graph}}上消失的  
+
+      那麼，反過來說  
+      是否我們有可能刻意讓${{t/revision}}在刪除${{t/branch}}之後也一起消失呢？  
+      事實上是有可能的  
+      這就留到我們接下來的章節吧  
+
+      
+
+      
+    
+      
