@@ -161,5 +161,10 @@
           id: "fork-main-delete-merged"
           nameKey: "levels/main.delete-merged.name"
           configAssetId: "levels/delete-merged"
+        - !level 
+          id: "fork-main-delete-unmerged"
+          nameKey: "levels/main.delete-unmerged.name"
+          configAssetId: "levels/delete-unmerged"
+
 
 

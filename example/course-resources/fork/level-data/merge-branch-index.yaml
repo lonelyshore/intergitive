@@ -581,7 +581,7 @@ asset_index:
     file-2-commit-del-2:v1: "加上第二層漢堡肉"
     file-2-commit-del-2:v2: "加上芝麻"
     file-2-commit-del-2:v3: "加上起司"
-    file-2-commit-del-3: "反璞歸真"
+    file-2-commit-del-3: "返璞歸真"
     file-3-commit: "炸薯條"
 
     branch-name-hamburger: "hamburger"

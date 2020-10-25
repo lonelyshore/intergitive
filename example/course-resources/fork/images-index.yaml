@@ -176,3 +176,6 @@ asset_index:
 # delete-merged
     intro-delete-branch-1: delete-merged@intro-delete-branch-1.png
     intro-delete-branch-2: delete-merged@intro-delete-branch-2.png
+
+# delete-unmerged
+    intro-delete-unmerged-modal: delete-unmerged@intro-delete-unmerged-modal.png

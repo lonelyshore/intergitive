@@ -1,0 +1,223 @@
+asset_index:
+  infile:
+# course content
+    intro: |+2
+      .md
+      在前面的章節中  
+      我們學習了如何刪除${{t/branch}}  
+      也知道了刪除被合併的${{t/branch}}不會造成任何${{t/revision}}消失  
+      反過來說，刪除沒有被合併的${{t/branch}}  
+      就有可能造成${{t/revision}}直接消失了  
+
+      那麼，就讓我們立刻開始試試看吧  
+
+    confirm-deleting-content: |+2
+      .md
+      首先，請使用${{t/gui}}開啟位於「`#{{merge-branches}}`」的${{t/repo}}  
+
+      開啟之後，觀察一下${{t/graph}}  
+      我們會注意到上面有一個${{t/branch}}，叫做「`${{level-data/merge-branch/branch-name-hamburger-del-1}}`」  
+      感覺有點可疑，讓我們看一下它的${{t/file-tree}}上的「`${{level-data/merge-branch/file-2-name}}`」  
+      看看這個${{t/branch}}上的漢堡被加了甚麼料吧  
+
+      1. 水梨
+      2. 鳳梨
+      3. 西洋梨  
+
+      請使用數字選項(1/2/3)回答  
+
+    delete-1: |+2
+      .md
+      甚麼!?  
+      觀察${{t/file-tree}}之後，我們才發現  
+      這個${{t/repo}}之中居然存在把鳳梨加入漢堡中的事情  
+      要是汙染到了其它${{t/branch}}可不行  
+
+      就讓我們盡快地把它給從${{t/repo}}裡面抹去吧  
+      請依照前面所學到的操作，刪除「`${{level-data/merge-branch/branch-name-hamburger-del-1}}`」  
+      步驟大致上是：
+
+      1. 在${{t/repo}}上找到「`${{level-data/merge-branch/branch-name-hamburger-del-1}}`」  
+      2. 用右鍵展開選單  
+      3. 在選單上再一次選擇「${{level-data/merge-branch/branch-name-hamburger-del-1}}」，展開子選單
+      4. 在子選單上選擇「${{st/delete-branch-item}}」，跳出刪除對話框  
+      5. 在刪除對話框上選擇「${{st/delete-modal-confirm}}」  
+
+      在操作的最後  
+      當我們在刪除對話框選擇「${{st/delete-modal-confirm}}」之後  
+      還會再跳出如下圖所示的確認對話框  
+
+      ![illustration]({{images/intro-delete-unmerged-modal}})  
+      <div class="img-title">圖(一)</div>  
+
+      這個對話框的意思，大致上是：
+      「目前要刪除的${{t/branch}}還沒有合併到目前的${{t/branch}}(${{t/head}}所指向的${{t/branch}})，  
+        請問你是否真的想要刪除它？」  
+
+      會有這樣的確認對話框  
+      是因為繼續刪除下去之後  
+      被刪除的${{t/branch}}上所獨有的${{t/revision}}真的就會上消失  
+      是一種危險的操作，所以要再三確認  
+
+      但因為我們真的想要把含了鳳梨的漢堡給消滅  
+      所以這裡當然要毫不猶豫地選擇上面圖示中，紅框圈選的「${{st/delete-modal-confirm}}」  
+      (如果不想刪除，請選擇橘框圈選的「Stop(停止...)」)
+
+      完成之後，請按下「執行」按鈕，確認成功  
+
+    mechanism-of-delete: |+2
+      .md
+      現在，如果我們去觀察${{t/graph}}  
+      應該就會發現我們想要剷除的鳳梨漢堡確實已經從歷史上消失  
+
+      這時讓我們回想一下  
+      早在我們剛開始介紹${{t/branch}}的時候  
+      使用它的目的，就是讓被${{t/branch}}標記的${{t/revision}}不會消失  
+      反過來說，當這個標記(${{t/branch}})被刪除的時候  
+      ${{t/revision}}會跟著一起消失也是非常合理的  
+
+      因此我們要如何判斷刪除一個分支會不會造成${{t/revision}}消失呢？  
+      只要看這個${{t/revision}}本身，或它的徒子徒孫(在${{t/graph}}中往上連結的${{t/revision}}們)是否存在任何一個${{t/branch}}  
+      只要還存在一個${{t/branch}}，它就不會消失  
+
+      根據這個準則  
+      只要我們刪除位在頂端的${{t/branch}}，必定會讓${{t/revision}}消失  
+
+    confition-of-non-deleted-commits: |+2
+      .md
+      讓我們繼續推展上面說的準則  
+      假設我們刪除一個不在頂端的${{t/branch}}，會造成${{t/revision}}消失嗎？  
+
+      答案是不會的  
+      因為不在頂端的${{t/branch}}  
+      在它上面必定還有別的${{t/branch}}撐住場面  
+      所以隨意刪除不在頂端的${{t/branch}}也不會導致${{t/commit}}不見  
+
+      但不論如何  
+      就像我們剛才操作刪除的過程中看到的  
+      如果刪除分支的時候會造成${{t/revision}}消失  
+      ${{t/gui}}會跳出對話框特別提醒我們  
+      所以，如果很確定一個${{t/branch}}不會用到的話  
+      就勇敢的直接刪除吧  
+      ${{t/gui}}會提供安全網的  
+
+    prompt-delete-another: |+2
+      .md
+      趁著我們手感還在  
+      就讓我們再來驗證一次刪除位於頂端的${{t/branch}}會捨棄變更  
+      這一次，我們的目標是「`${{level-data/merge-branch/branch-name-hamburger-del-2}}`」  
+
+      如果觀察${{t/graph}}  
+      會注意到這個${{t/branch}}比起「`${{level-data/merge-branch/branch-name-hamburger}}`」還要多出三個${{t/revision}}  
+      它們分別是「${{level-data/merge-branch/file-2-commit-del-2:v1}}」、「${{level-data/merge-branch/file-2-commit-del-2:v2}}」還有「${{level-data/merge-branch/file-2-commit-del-2:v3}}」
+      我們預期刪除掉它之後，這些${{t/revision}}也會一起消失  
+
+    delete-2: |+2
+      .md
+      請操作${{t/gui}}  
+      刪除「`${{level-data/merge-branch/branch-name-hamburger-del-2}}`」  
+
+      完成之後，請按下「執行」按鈕，確認成功  
+
+    prompt-checking-deleted-2: |+2
+      .md
+      恭喜，我們又成功把一個${{t/branch}}給刪除了  
+      現在重新回去看${{t/graph}}的話  
+      應該會注意到剛才提到的三個${{t/revision}}已經消失了  
+
+    prompt-delete-commit-with-multiple-branches: |+2
+      .md
+      現在，我們已經非常精通刪除${{t/branch}}這門技藝了  
+      所以，理所當然地要來挑戰更加複雜的情況嘍  
+
+      前面有提到  
+      刪除${{t/branch}}時會造成${{t/revision}}連帶消失的主要原因  
+      是在於刪除之後，${{t/revision}}沒有繼續被任何${{t/branch}}標註到  
+
+      所以，如果想要刪除的${{t/branch}}所處的${{t/revision}}上有複數個${{t/branch}}  
+      情況又會如何呢？  
+
+    find-multi-tagged-branch: |+2
+      .md
+      如果我們開啟${{t/gui}}並且在${{t/graph}}上仔細尋找  
+      應該不難(尤其在我們大量減少${{t/branch}}數量之後)發現有一個${{t/branch}}叫做「`${{level-data/merge-branch/branch-name-hamburger-del-3:v1}}`」  
+      而它所處的${{t/revision}}上，還同時有另一個${{t/branch}}  
+      請問它的名字是甚麼呢？  
+
+      請在下方的欄位輸入答案  
+
+    prompt-delete-multi-tagged: |+2
+      .md
+      我們現在發現  
+      在這個${{t/repo}}中居然存在這樣一個奇怪的版本的「${{level-data/merge-branch/file-2-name}}」  
+      在這個檔案中，漢堡被描述成「麵包－肉－麵包」這樣極簡的形式  
+      而且它同時被用「`${{level-data/merge-branch/branch-name-hamburger-del-3:v1}}`」、「`${{level-data/merge-branch/branch-name-hamburger-del-3:v2}}`」兩個${{t/branch}}給標記  
+      表示這樣的東西，既是「簡單的漢堡」又是「三明治」  
+
+      甚麼！？  
+      把漢堡和三明治混為一談？這簡直是邪門歪道  
+      我們一定要把這個存在給抹消才行  
+      
+    delete-3: |+2
+      .md
+      首先，就從「`${{level-data/merge-branch/branch-name-hamburger-del-3:v2}}`」下手吧  
+      把這個${{t/branch}}給刪除掉  
+      這樣就不會被別人發現原來漢堡也是三明治的一種了！  
+
+      完成之後，請按下「執行」按鈕，確認成功  
+
+    confirm-result-of-delete-3: |+2
+      .md
+      刪除完成之後  
+      在讓我們觀察一次${{t/graph}}  
+      請問「`${{level-data/merge-branch/branch-name-hamburger-del-3:v2}}`」這個${{t/branch}}是否還在呢？  
+      而記有「麵包－肉－麵包」這樣內容的「${{level-data/merge-branch/file-2-name}}」又是否還在呢？  
+
+      1. ${{t/branch}}在，檔案也還在。剛剛做白工了 
+      2. ${{t/branch}}在，檔案不在。那現在${{t/branch}}到底指到哪裡去了？？
+      3. ${{t/branch}}不在，檔案不在。我們徹底消滅異端邪說了！  
+      4. ${{t/branch}}不在，檔案在。現在沒有人可以說漢堡是三明治了，但是極簡風漢堡依然存在  
+
+      請使用數字選項(1/2/3/4)回答  
+
+    explain-why-commit-not-eliminated: |+2
+      .md
+      從上面的問答，我們發現了雖然我們把${{level-data/merge-branch/branch-name-hamburger-del-3:v2}}給刪除了  
+      但是極簡風的漢堡${{t/revision}}本身還留著  
+      原因其實是因為這個${{t/commit}}原本同時有兩個${{t/branch}}存在  
+      我們把其中一個刪除了，但是剩下的一個依然存在  
+      這會讓這個${{t/revision}}也保持不消失  
+
+      那麼，就讓我們把剩下的另一個也刪除吧  
+
+    delete-4: |+2
+      .md
+      請刪除名為「`${{level-data/merge-branch/branch-name-hamburger-del-3:v1}}`」的${{t/branch}}  
+
+      完成之後，請按下「執行」按鈕，確認成功  
+
+    confirm-commit-removed: |+2
+      .md
+      恭喜，我們把剩下的${{t/branch}}「`${{level-data/merge-branch/branch-name-hamburger-del-3:v1}}`」也刪除了  
+      現在，請確認${{t/commit-msg}}為「${{level-data/merge-branch/file-2-commit-del-3}}」的${{t/revision}}是否已經一同被刪除？  
+
+      請直接輸入回答(是/否)
+
+    commit-removed-answer: "是"
+
+    summary: |+2
+      .md
+      在這個章節中  
+      我們練習了如何刪除掉沒有被合併的${{t/branch}}  
+      並且學習到了一個${{t/revision}}以及他的徒子徒孫都沒有任何${{t/branch}}指向它們時  
+      它們就會消失  
+      而我們可以利用這個性質  
+      把不想要的${{t/commit}}從${{t/repo}}中抹去  
+
+
+
+      
+
+      
+    
+      

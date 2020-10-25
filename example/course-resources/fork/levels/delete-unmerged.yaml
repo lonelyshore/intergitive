@@ -1,0 +1,101 @@
+!level
+repoVcsSetups:
+  merge-branches:
+    workingPath: merge-branches
+    referenceStoreName: merge-branches
+    checkpointStoreName: merge-branches
+steps:
+  - !loadLastLevelFinalSnapshot {}
+
+  # instruct to fastforward a branch
+  - !elaborate
+    descriptionId: "level-data/delete-unmerged/intro"
+  - !instruct 
+    descriptionId: "level-data/delete-unmerged/confirm-deleting-content"
+    needConfirm: false
+  - !verifyInput 
+    answer: "2"
+
+  - !instruct 
+    descriptionId: "level-data/delete-unmerged/delete-1"
+    needConfirm: false
+  - !dev.needAction 
+    actions:
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "branch", "-D", "$level-data/merge-branch/branch-name-hamburger-del-1"]
+  - !verifyRepo 
+    referenceName: delete-unmerged-delete-1
+
+  - !elaborate 
+    descriptionId: "level-data/delete-unmerged/mechanism-of-delete"
+  - !elaborate 
+    descriptionId: "level-data/delete-unmerged/confition-of-non-deleted-commits"
+
+  # re-assure that deleting unmerged branch also eliminates commits
+  - !elaborate 
+    descriptionId: "level-data/delete-unmerged/prompt-delete-another"
+  - !instruct 
+    descriptionId: "level-data/delete-unmerged/delete-2"
+    needConfirm: false
+  - !dev.needAction 
+    actions:
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "branch", "-D", "$level-data/merge-branch/branch-name-hamburger-del-2"]
+  - !verifyRepo 
+    referenceName: delete-unmerged-delete-2
+
+  - !elaborate 
+    descriptionId: "level-data/delete-unmerged/prompt-checking-deleted-2"
+
+  # remove commit tagged by multiple branches
+  - !elaborate 
+    descriptionId: "level-data/delete-unmerged/prompt-delete-commit-with-multiple-branches"
+  - !instruct 
+    descriptionId: "level-data/delete-unmerged/find-multi-tagged-branch"
+    needConfirm: false
+  - !verifyInput 
+    answer: "$level-data/merge-branch/branch-name-hamburger-del-3:v2"
+
+  - !elaborate  
+    descriptionId: "level-data/delete-unmerged/prompt-delete-multi-tagged"
+  - !instruct 
+    descriptionId: "level-data/delete-unmerged/delete-3"
+    needConfirm: false
+  - !dev.needAction 
+    actions:
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "branch", "-D", "$level-data/merge-branch/branch-name-hamburger-del-3:v2"]
+  - !verifyRepo 
+    referenceName: delete-unmerged-delete-3
+
+  - !instruct 
+    descriptionId: "level-data/delete-unmerged/confirm-result-of-delete-3"
+    needConfirm: false
+  - !verifyInput 
+    answer: "4"
+
+  - !elaborate 
+    descriptionId: "level-data/delete-unmerged/explain-why-commit-not-eliminated"
+
+  - !instruct 
+    descriptionId: "level-data/delete-unmerged/delete-4"
+    needConfirm: false
+  - !dev.needAction 
+    actions:
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "branch", "-D", "$level-data/merge-branch/branch-name-hamburger-del-3:v1"]
+  - !verifyRepo 
+    referenceName: delete-unmerged-delete-4
+
+  - !instruct 
+    descriptionId: "level-data/delete-unmerged/confirm-commit-removed"
+    needConfirm: false
+  - !verifyInput 
+    answer: "$level-data/delete-unmerged/commit-removed-answer"
+
+  - !elaborate 
+    descriptionId: "level-data/delete-unmerged/summary"
