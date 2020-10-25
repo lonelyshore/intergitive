@@ -56,7 +56,7 @@ steps:
     descriptionId: "level-data/delete-unmerged/find-multi-tagged-branch"
     needConfirm: false
   - !verifyInput 
-    answer: "$level-data/merge-branch/branch-name-hamburger-del-3:v2"
+    answer: "${{level-data/merge-branch/branch-name-hamburger-del-3:v2}}"
 
   - !elaborate  
     descriptionId: "level-data/delete-unmerged/prompt-delete-multi-tagged"
@@ -95,7 +95,7 @@ steps:
     descriptionId: "level-data/delete-unmerged/confirm-commit-removed"
     needConfirm: false
   - !verifyInput 
-    answer: "$level-data/delete-unmerged/commit-removed-answer"
+    answer: "${{level-data/delete-unmerged/commit-removed-answer}}"
 
   - !elaborate 
     descriptionId: "level-data/delete-unmerged/summary"

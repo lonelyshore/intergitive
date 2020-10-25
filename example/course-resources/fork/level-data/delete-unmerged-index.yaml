@@ -50,7 +50,7 @@ asset_index:
       ![illustration]({{images/intro-delete-unmerged-modal}})  
       <div class="img-title">圖(一)</div>  
 
-      這個對話框的意思，大致上是：
+      這個對話框的意思，大致上是：  
       「目前要刪除的${{t/branch}}還沒有合併到目前的${{t/branch}}(${{t/head}}所指向的${{t/branch}})，  
         請問你是否真的想要刪除它？」  
 
@@ -97,6 +97,7 @@ asset_index:
       就像我們剛才操作刪除的過程中看到的  
       如果刪除分支的時候會造成${{t/revision}}消失  
       ${{t/gui}}會跳出對話框特別提醒我們  
+
       所以，如果很確定一個${{t/branch}}不會用到的話  
       就勇敢的直接刪除吧  
       ${{t/gui}}會提供安全網的  
@@ -140,7 +141,7 @@ asset_index:
     find-multi-tagged-branch: |+2
       .md
       如果我們開啟${{t/gui}}並且在${{t/graph}}上仔細尋找  
-      應該不難(尤其在我們大量減少${{t/branch}}數量之後)發現有一個${{t/branch}}叫做「`${{level-data/merge-branch/branch-name-hamburger-del-3:v1}}`」  
+      應該不難發現有一個${{t/branch}}叫做「`${{level-data/merge-branch/branch-name-hamburger-del-3:v1}}`」(尤其在我們大量減少${{t/branch}}數量之後)  
       而它所處的${{t/revision}}上，還同時有另一個${{t/branch}}  
       請問它的名字是甚麼呢？  
 
@@ -149,10 +150,13 @@ asset_index:
     prompt-delete-multi-tagged: |+2
       .md
       我們現在發現  
-      在這個${{t/repo}}中居然存在這樣一個奇怪的版本的「${{level-data/merge-branch/file-2-name}}」  
-      在這個檔案中，漢堡被描述成「麵包－肉－麵包」這樣極簡的形式  
-      而且它同時被用「`${{level-data/merge-branch/branch-name-hamburger-del-3:v1}}`」、「`${{level-data/merge-branch/branch-name-hamburger-del-3:v2}}`」兩個${{t/branch}}給標記  
+      在這個${{t/repo}}中有一個${{t/commit}}  
+      同時被用「`${{level-data/merge-branch/branch-name-hamburger-del-3:v1}}`」、「`${{level-data/merge-branch/branch-name-hamburger-del-3:v2}}`」兩個${{t/branch}}給標記  
       表示這樣的東西，既是「簡單的漢堡」又是「三明治」  
+
+      而且在這個${{t/commit}}上還存在這樣一個奇怪的版本的「${{level-data/merge-branch/file-2-name}}」  
+      在這個檔案中，漢堡被描述成「麵包－肉－麵包」這樣極簡的形式  
+      看起來還真的會開始覺得漢堡跟三明治也沒甚麼不同啊
 
       甚麼！？  
       把漢堡和三明治混為一談？這簡直是邪門歪道  
@@ -169,7 +173,7 @@ asset_index:
     confirm-result-of-delete-3: |+2
       .md
       刪除完成之後  
-      在讓我們觀察一次${{t/graph}}  
+      再讓我們觀察一次${{t/graph}}  
       請問「`${{level-data/merge-branch/branch-name-hamburger-del-3:v2}}`」這個${{t/branch}}是否還在呢？  
       而記有「麵包－肉－麵包」這樣內容的「${{level-data/merge-branch/file-2-name}}」又是否還在呢？  
 
