@@ -1,0 +1,138 @@
+asset_index:
+  infile:
+# course content
+    intro: |+2
+      .md
+      目前為止，關於${{t/branch}}的各種操作技巧我們都大致體驗過了  
+      現在，是時候來挑戰一些比較具有難度的組合技了  
+
+      有些時候，我們會想要把${{t/branch}}的位置搬家，重新開始  
+      雖然${{t/gui}}沒有內建的功能直接完成  
+      但我們可以透過組合技簡單達到這個效果  
+
+    brief-move-branch: |+2
+      .md
+      稍微思考一下我們的目標  
+      是希望把一個${{t/branch}}從一個${{t/revision}}搬到另一個${{t/revision}}上  
+
+      其實這個目標很容易可以達到  
+      只要我們把這件事情拆成兩步來看：
+      1. 把${{t/branch}}從舊的${{t/revision}}上刪除
+      2. 在新的${{t/revision}}上重新建立同名的${{t/revision}}  
+
+      沒錯！沒有甚麼高深的技巧 
+      只是很單純的結合兩個我們早就已經非常熟悉的操作就可以了  
+      那麼，就讓我們立刻來嘗試看看吧！  
+
+    delete-branch-1: |+2 
+      .md
+      請先使用${{t/gui}}，開啟位於「`#{{merge-branches}}`」的資料夾  
+
+      我們接下來，將會嘗試搬移「`${{level-data/merge-branch/branch-name-hamburger}}`」  
+      將它挪到跟「`${{level-data/merge-branch/branch-name-merging}}`」一樣的位置上  
+      ~~表示 BLT 漢堡才是標準漢堡的新定義~~  
+
+      那麼，根據剛才所說的方法  
+      就先讓我們把「`${{level-data/merge-branch/branch-name-hamburger}}`」給刪除吧  
+      步驟大致上如下：  
+      1. 在${{t/graph}}上面找到「`${{level-data/merge-branch/branch-name-hamburger}}`」  
+      2. 對準它的${{t/revision}}，展開右鍵選單  
+      3. 在選單上找到「`${{level-data/merge-branch/branch-name-hamburger}}`」同名選項，展開子選單  
+      4. 從子選單上選擇「${{st/delete-branch-item}}」，出現刪除對話框  
+      5. 在刪除對話框上選擇「${{st/delete-modal-confirm}}」，確認刪除  
+
+      完成之後，請按下「執行」按鈕，確認成功  
+
+    create-branch-1: |+2
+      .md
+      很好，現在我們已經完成一半了  
+      接下來就是要在「`${{level-data/merge-branch/branch-name-merging}}`」的位置上  
+      重新建立「`${{level-data/merge-branch/branch-name-hamburger}}`」  
+      建立${{t/branch}}的步驟大致如下：  
+
+      1. 在${{t/graph}}上找到想要建立的位置，在這裡是「`${{level-data/merge-branch/branch-name-merging}}`」所在的${{t/revision}}  
+      2. 對準${{t/revision}}，展開右鍵選單  
+      3. 在選單上選擇「${{st/create-branch}}」這個選項，叫出建立${{t/branch}}對話框  
+      4. 在對話框中填入想要的${{t/branch}}名稱，「`${{level-data/merge-branch/branch-name-hamburger}}`」  
+      5. 在這裡，我們**不希望**切換到新建立的${{t/branch}}  
+         所以如下圖紅框圈選範圍所示，對話框上的「${{st/checkout-after-create-checkbox}}」這個核選方塊**不要選**  
+        ![illustration]({{images/assure-create-branch-modal-not-checkout}})  
+        <div class="img-title">圖(一)</div>  
+      6. 在對話框上按下「${{st/create-branch-modal-confirm}}」按鈕，確認建立  
+
+      完成之後，請按下「執行」按鈕，確認成功  
+
+    confirm-branch-moved-and-encourage-move-another: |+2
+      .md
+      恭喜，現在我們應該可以看到「`${{level-data/merge-branch/branch-name-hamburger}}`」已經被更新到和「`${{level-data/merge-branch/branch-name-merging}}`」同一個位置上了  
+      不過，同樣的位置現在已經開始擁擠了起來  
+      不如讓我們把「`${{level-data/merge-branch/branch-name-no-hamburger}}`」給移走吧  
+      既然要移，就移遠一點，移到最下面的${{t/commit}}吧
+
+    try-delete-branch-2: |+2
+      .md
+      請根據前面描述的操作  
+      嘗試把「`${{level-data/merge-branch/branch-name-no-hamburger}}`」給刪除  
+
+      嗯？為什麼要說嘗試呢？  
+      因為實際上是沒有辦法做到的  
+      原因出在目前${{t/head}}所在的${{t/branch}}  
+      請問目前的${{t/head}}所在的${{t/branch}}名為何呢？  
+
+      1. ${{level-data/merge-branch/branch-name-no-hamburger}}
+      1. ${{level-data/merge-branch/branch-name-merging}}
+      1. ${{level-data/merge-branch/branch-name-hamburger}}  
+
+      請以數字選項(1/2/3)作答  
+
+    explain-current-branch-unremovable: |+2
+      .md
+      根據上面的問答  
+      我們可以知道，${{t/head}}所指向的${{t/branch}}是暫時不能刪除的  
+      這是因為 git 通常會盡可能保持我們的${{t/head}}指向一個${{t/branch}}  
+      如果我們把目前指向的${{t/branch}}刪除了，那就沒得指了  
+
+      恩...上面我們說了「暫時」不能刪除  
+      就表示其實可以繞過去這個限制  
+      方法也很簡單，就是切換${{t/head}}到別的${{t/branch}}就可以了  
+      所以，就讓我們朝這個方向努力吧~  
+
+    checkout-another-branch: |+2
+      .md
+      現在，讓我們來切換到「`${{level-data/merge-branch/branch-name-merging}}`」這個老朋友上吧  
+      讓我們複習一下大致的步驟：  
+
+      1. 在${{t/graph}}上找到目標的${{t/branch}}(這裡是「`${{level-data/merge-branch/branch-name-merging}}`」)  
+      2. 對準目標${{t/branch}}所在的${{t/commit}}，開啟右鍵選單  
+      3. 在選單上找到以目標${{t/branch}}為名的選項，展開子選單  
+      4. 在子選單上選擇「`${{st/checkout-branch-item}}`」這個選項  
+      5. 完成切換  
+
+      完成之後，請按下「執行」按鈕，確認成功  
+
+    move-branch-2: |+2
+      .md
+      現在，${{t/head}}已經不再指向「`${{level-data/merge-branch/branch-name-no-hamburger}}}`」了  
+      所以就讓我們一鼓作氣  
+      把這個${{t/branch}}給先移除  
+      然後再在最下面的${{t/revision}}給重新建立吧  
+
+      完成之後，請按下「執行」按鈕，確認成功  
+
+    summary: |+2
+      .md
+      在這個章節中  
+      我們透過搬移${{t/branch}}的組合技  
+      重新複習了幾個主要的${{t/branch}}操作：  
+      「建立」、「切換」還有「刪除」  
+
+      而與此同時，我們對於${{t/branch}}的專題介紹也將告一段落  
+      接下來即將進入新的篇章，敬請期待  
+
+
+
+      
+
+      
+    
+      

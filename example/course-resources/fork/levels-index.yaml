@@ -50,6 +50,7 @@ asset_index:
     main.fastforward-branch.name: "6-2 節：合併領先的分支以更新分支狀態"
     main.delete-merged.name: "6-3 節：刪除已合併的分支"
     main.delete-unmerged.name: "6-4 節：刪除未合併的分支以捨棄不想要的變更"
+    main.move-branch.name: "6-5 節：組合技－－搬移分支"
 
   ondisk:
   # level configs of section one: intro
@@ -93,3 +94,4 @@ asset_index:
     fastforward-branch: "fastforward-branch.yaml"
     delete-merged: "delete-merged.yaml"
     delete-unmerged: "delete-unmerged.yaml"
+    move-branch: "move-branch.yaml"

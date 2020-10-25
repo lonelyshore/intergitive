@@ -1,0 +1,82 @@
+!level
+repoVcsSetups:
+  merge-branches:
+    workingPath: merge-branches
+    referenceStoreName: merge-branches
+    checkpointStoreName: merge-branches
+steps:
+  - !dev.devAction # ensure that current branch is on $branch-name-no-hamburger
+    actions:
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "chekcout", "-f", "$level-data/merge-branch/branch-name-no-hamburger" ]
+        - !dev.act.saveReference 
+          repoSetupName: merge-branches
+          referenceName: move-branch-checkout-no-hamburger
+  - !loadReference 
+    referenceName: move-branch-checkout-no-hamburger
+
+  # instruct to move a branch
+  - !elaborate
+    descriptionId: "level-data/move-branch/intro"
+  - !elaborate 
+    descriptionId: "level-data/move-branch/brief-move-branch"
+  - !instruct 
+    descriptionId: "level-data/move-branch/delete-branch-1"
+    needConfirm: false
+  - !dev.needAction 
+    actions:
+      - !dev.act.git 
+        repoSetupName: merge-branches
+        arguments: [ "branch", "-d", "$level-data/merge-branch/branch-name-hamburger"]  
+  - !verifyRepo 
+    referenceName: move-branch-delete-branch-1
+
+  - !instruct 
+    descriptionId: "level-data/move-branch/create-branch-1"
+    needConfirm: false
+  - !dev.needAction 
+    actions:
+      - !dev.act.git 
+        repoSetupName: merge-branches
+        arguments: [ "branch", "-f", "$level-data/merge-branch/branch-name-hamburger", "$level-data/merge-branch/branch-name-merging"]
+  - !verifyRepo 
+    referenceName: move-branch-create-branch-1
+
+  # move current branch
+  - !elaborate 
+    descriptionId: "level-data/move-branch/confirm-branch-moved-and-encourage-move-another"  
+  - !instruct 
+    descriptionId: "level-data/move-branch/try-delete-branch-2"
+    needConfirm: false
+  - !verifyInput 
+    answer: "${{level-data/merge-branch/branch-name-no-hamburger}}"
+
+  - !elaborate 
+    descriptionId: "level-data/move-branch/explain-current-branch-unremovable"
+  - !instruct 
+    descriptionId: "level-data/move-branch/checkout-another-branch"
+    needConfirm: false
+  - !dev.needAction 
+    actions:
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "checkout", "-f", "$level-data/merge-branch/branch-name-merging"]
+  - !verifyRepo 
+    referenceName: move-branch-checkout-another-branch
+
+  - !instruct 
+    descriptionId: "level-data/move-branch/move-branch-2"
+  - !dev.needAction 
+    actions:
+      - !dev.act.git 
+        repoSetupName: merge-branches
+        arguments: [ "branch", "-d", "$level-data/merge-branch/branch-name-no-hamburger"] 
+      - !dev.act.git 
+        repoSetupName: merge-branches
+        arguments: [ "branch", "-f", "$level-data/merge-branch/branch-name-no-hamburger", "first"]
+  - !verifyRepo 
+    referenceName: move-branch-create-branch-1 
+    
+  - !elaborate 
+    descriptionId: "level-data/move-branch/summary"

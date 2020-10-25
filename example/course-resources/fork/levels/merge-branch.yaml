@@ -38,6 +38,9 @@
         - !dev.act.git &commitDummy
           repoSetupName: merge-branches
           arguments: [ "commit", "-m", "dummy commit" ]
+        - !dev.act.git 
+          repoSetupName: merge-branches
+          arguments: [ "tag", "first" ]
 
       # commit #2
         - !act.writeFile &write2

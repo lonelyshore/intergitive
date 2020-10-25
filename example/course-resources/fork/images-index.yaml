@@ -179,3 +179,6 @@ asset_index:
 
 # delete-unmerged
     intro-delete-unmerged-modal: delete-unmerged@intro-delete-unmerged-modal.png
+
+# move-branch
+    assure-create-branch-modal-not-checkout: move-branch@assure-create-branch-modal-not-checkout.png

@@ -7,7 +7,7 @@ repoVcsSetups:
 steps:
   - !loadLastLevelFinalSnapshot {}
 
-  # instruct to fastforward a branch
+  # instruct to delete a unmerged branch
   - !elaborate
     descriptionId: "level-data/delete-unmerged/intro"
   - !instruct 
