@@ -7,9 +7,12 @@ repoVcsSetups:
 steps:
   - !dev.devAction # ensure that current branch is on $branch-name-no-hamburger
     actions:
+        - !act.loadReference 
+          repoSetupName: merge-branches
+          referenceName: delete-unmerged-final
         - !dev.act.git 
           repoSetupName: merge-branches
-          arguments: [ "chekcout", "-f", "$level-data/merge-branch/branch-name-no-hamburger" ]
+          arguments: [ "checkout", "-f", "$level-data/merge-branch/branch-name-no-hamburger" ]
         - !dev.act.saveReference 
           repoSetupName: merge-branches
           referenceName: move-branch-checkout-no-hamburger
@@ -50,7 +53,7 @@ steps:
     descriptionId: "level-data/move-branch/try-delete-branch-2"
     needConfirm: false
   - !verifyInput 
-    answer: "${{level-data/merge-branch/branch-name-no-hamburger}}"
+    answer: "1"
 
   - !elaborate 
     descriptionId: "level-data/move-branch/explain-current-branch-unremovable"
@@ -67,6 +70,7 @@ steps:
 
   - !instruct 
     descriptionId: "level-data/move-branch/move-branch-2"
+    needConfirm: false
   - !dev.needAction 
     actions:
       - !dev.act.git 
@@ -76,7 +80,7 @@ steps:
         repoSetupName: merge-branches
         arguments: [ "branch", "-f", "$level-data/merge-branch/branch-name-no-hamburger", "first"]
   - !verifyRepo 
-    referenceName: move-branch-create-branch-1 
+    referenceName: move-branch-branch-2
     
   - !elaborate 
     descriptionId: "level-data/move-branch/summary"

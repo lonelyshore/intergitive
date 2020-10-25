@@ -99,3 +99,9 @@ steps:
 
   - !elaborate 
     descriptionId: "level-data/delete-unmerged/summary"
+
+  - !dev.devAction 
+    actions:
+        - !dev.act.saveReference 
+          repoSetupName: merge-branches
+          referenceName: delete-unmerged-final
