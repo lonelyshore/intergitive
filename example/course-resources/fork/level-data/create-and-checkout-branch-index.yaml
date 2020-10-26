@@ -67,7 +67,7 @@ asset_index:
     instruct-create-yet-another: |+2
       .md
       請再次按照剛才展示的步驟  
-      在${{t/commit-msg}}為「1」的${{t/revision}}上  
+      在${{t/commit-msg}}為「7」的${{t/revision}}上  
       建立名為「${{level-data/create-and-checkout-branch/branch-name-7}}」的${{t/branch}}  
 
       這次的${{t/branch}}名比較長，但是我們還是可以順利建立的  
@@ -80,11 +80,10 @@ asset_index:
       並且也透過反覆的練習  
       了解到${{t/branch}}可以隨意的建立在想要的${{t/revision}}上  
 
-      漸漸的，${{t/repo}}中的${{t/branch}}也多了起來  
-      從${{t/graph}}上要找到想要的${{t/branch}}也變得更加麻煩  
-      在下個章節中，我們將會介紹${{t/gui}}上可以方便我們管理眾多${{t/branch}}的新介面  
-      敬請期待～
-
+      那麼，學習了這麼多使用分支的技巧  
+      實際上我們為什麼需要分支呢？  
+      分支最常被用來達成甚麼目標呢？  
+      就讓我們在接下來的章節來探討~  
 
 # repository assets
     file-1:v1: "file-1:v1"

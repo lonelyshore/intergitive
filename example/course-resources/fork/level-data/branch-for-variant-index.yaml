@@ -4,7 +4,7 @@ asset_index:
     intro: |+2
       .md
       在前面的章節中  
-      我們簡單介紹了幾個${{t/branch}}的基礎操作
+      我們簡單介紹了幾個${{t/branch}}的基礎操作  
       包含了如何建立以及切換它們  
       但是，我們究竟為何需要使用${{t/branch}}呢？  
 
@@ -42,10 +42,18 @@ asset_index:
       那麼事不宜遲  
       讓我們透過實際操作來學習看看吧  
 
-    open-repo: |+2
+    open-repo-and-checkout: |+2
       .md
       請使用${{t/gui}}開啟位於「`#{{checkout-branches}}`」的資料夾  
-      在接下來的步驟中，我們將會專注於修改名為「`${{level-data/create-and-checkout-branch/file-2-name}}`」的檔案  
+      並且切換到名為「`${{level-data/create-and-checkout-branch/branch-name-hamburger}}`」的${{t/branch}}上  
+
+      完成之後，請按下「執行」按鈕確認  
+
+    confirm-file-content: |+2
+      .md
+      我們現在切換到的${{t/branch}}上  
+      有一個名為「`${{level-data/create-and-checkout-branch/file-2-name}}`」的檔案  
+      在接下來的步驟中，我們將會專注於修改這個檔案 
 
       這個檔案顧名思義，描述了一個漢堡的構成  
       請問下列哪一個食材並「**沒有**」出現在這個檔案的描述中？  

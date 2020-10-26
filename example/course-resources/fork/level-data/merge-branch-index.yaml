@@ -369,7 +369,7 @@ asset_index:
       將合併的兩方(上圖左側橘框圈選處)給統合起來  
 
       也就是說  
-      我們操作「${{t/merge}}」之後，git 就自動產生了一個新的${{t/revision}}
+      我們操作「${{t/merge}}」之後，git 就自動產生了一個新的${{t/revision}}  
       這樣的${{t/revision}}有一個特別的名字－－「**${{t/merge-commit-f}}**」  
 
       「${{t/merge-commit}}」之所以特別到會有自己的名字，是因為以下兩點：  

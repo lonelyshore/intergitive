@@ -13,7 +13,17 @@
     - !elaborate 
       descriptionId: "level-data/branch-for-variant/elaborate-what-is-variant"
     - !instruct 
-      descriptionId: "level-data/branch-for-variant/open-repo"
+      descriptionId: "level-data/branch-for-variant/open-repo-and-checkout"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !dev.act.git 
+            repoSetupName: checkout-branches
+            arguments: [ "checkout", "-f", "$level-data/create-and-checkout-branch/branch-name-hamburger"]
+    - !verifyRepo 
+      referenceName: branch-for-variant-checkout-initial
+    - !instruct 
+      descriptionId: "level-data/branch-for-variant/confirm-file-content"
       needConfirm: false
     - !verifyInput 
       answer: "3"

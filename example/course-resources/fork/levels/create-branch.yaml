@@ -41,7 +41,7 @@
       referenceName: "diversed-branch-1"
 
   # verify branch holds commit, diversed history is preserved
-    - !illustrate 
+    - !instruct  
       descriptionId: "level-data/create-branch/urge-verify-effect-of-branch"
       needConfirm: false
     - !dev.needAction 

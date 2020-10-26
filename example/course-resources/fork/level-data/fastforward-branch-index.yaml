@@ -78,7 +78,7 @@ asset_index:
       如果我們去考量${{t/merge}}的目標  
       其實是為了讓「合併方的分支」(A)能夠取得「被合併分支」(B)所指向的${{t/revision}}  
       如上圖所示，當前者和後者兩個${{t/branch}}其實在${{t/graph}}上是前後聯繫的  
-      (能夠找到連通的路線，如圖中的紅色連線)  
+      (能夠找到連通的路線，如圖中左側的紅色連線)  
       git 會判斷單純的移動「合併方的分支」(A)到「被合併分支」(B)所在的${{t/revision}}上就能達到效果  
       於是發動「${{t/fastforward}}」，把前者丟到後者所在的位置上  
 
@@ -101,7 +101,7 @@ asset_index:
       1. 「A 合併 B」之後，想要讓 B 也「${{t/fastforward}}」到合併的結果  
       2. D 是繼承 C 之後繼續開發的${{t/branch}}，開發一段之後， C 想要追上 D 的進度  
 
-      1. 的情境在剛剛我們就已經透過合併「`${{level-data/merge-branch/branch-name-hamburger-alt-3}}`」和「`${{level-data/merge-branch/branch-name-merging}}`」實踐過了  
+      其中 1. 的情境在剛剛我們就已經透過合併「`${{level-data/merge-branch/branch-name-hamburger-alt-3}}`」和「`${{level-data/merge-branch/branch-name-merging}}`」實踐過了  
       現在就讓我們來實踐一下情境 2. 吧  
 
       如果現在觀察${{t/gui}}的${{t/graph}}  
