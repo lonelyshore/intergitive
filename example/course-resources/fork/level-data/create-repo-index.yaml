@@ -1,6 +1,9 @@
 asset_index:
   infile:
 # course content
+    play-actions: |+2
+      初始化教學用資料夾
+
     intro: |+2
       .md
       目前為止，經過了前面的學習後  

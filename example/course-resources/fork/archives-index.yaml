@@ -4,3 +4,5 @@ asset_index:
     commits-advanced: commits-advanced.zip
     checkout-branches: checkout-branches.zip
     merge-branches: merge-branches.zip
+    create-repo-empty: create-repo-empty.zip
+    create-repo-midpoint: create-repo-midpoint.zip
