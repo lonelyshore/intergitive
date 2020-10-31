@@ -169,6 +169,21 @@
           id: "fork-main-move-branch"
           nameKey: "levels/main.move-branch.name"
           configAssetId: "levels/move-branch"
+    - !sequential-section # chapter 7: share repository
+      id: "fork-main-section-share-repository"
+      nameKey: "levels/main.section-share-repository"
+      prerequisiteIds: 
+        - "fork-main-section-intro"
+        - "fork-main-section-create-commits"
+        - "fork-main-section-elaborate-commits"
+        - "fork-main-section-advaneced-history-browsing"
+        - "fork-main-section-create-and-checkout-branches"
+        - "fork-main-section-merge-and-delete-branches"
+      children:
+        - !level
+          id: "fork-main-create-repo"
+          nameKey: "levels/main.create-repo.name"
+          configAssetId: "levels/create-repo"
 
 
 

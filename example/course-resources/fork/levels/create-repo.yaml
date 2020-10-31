@@ -1,0 +1,73 @@
+!level
+  repoVcsSetups:
+    create-repo-empty:
+      workingPath: create-repo-empty
+      referenceStoreName: create-repo-empty
+      checkpointStoreName: create-repo-empty
+    create-repo-midpoint:
+      workingPath: create-repo-midpoint
+      referenceStoreName: create-repo-midpoint
+      checkpointStoreName: create-repo-midpoint
+
+  steps:
+  # prepare a folder WITHOUT git installed
+    - !dev.devAction 
+      actions:
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/create-repo/file-1"
+            - "$level-data/create-repo/file-2"
+            - "$level-data/create-repo/file-3"
+          destinationPaths:
+            - "$level-data/create-repo/file-1-path"
+            - "$level-data/create-repo/file-2-path"
+            - "$level-data/create-repo/file-3-path"
+        - !dev.act.saveReference 
+          repoSetupName: create-repo-midpoint
+          referenceName: init
+        - !dev.act.saveReference 
+          repoSetupName: create-repo-empty
+          referenceName: init
+
+    - !loadReference 
+      referenceName: init
+  # intro
+    - !elaborate 
+      descriptionId: "level-data/create-repo/intro"
+    - !instruct 
+      descriptionId: "level-data/create-repo/confirm-empty-folder-not-managed-by-git"
+      needConfirm: false
+    - !verifyInput 
+      answer: "2"
+
+    - !instruct 
+      descriptionId: "level-data/create-repo/create-repo-for-empty"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: create-repo-empty
+          arguments: [ "init" ]
+    - !verifyOneRepo
+      repoSetupName: create-repo-empty
+      referenceName: create-repo-init-git
+
+    - !elaborate 
+      descriptionId: "level-data/create-repo/hint-existence-of-git-folder"
+
+    - !elaborate 
+      descriptionId: "level-data/create-repo/prompt-init-git-for-non-empty"
+    - !instruct 
+      descriptionId: "level-data/create-repo/create-repo-for-midpoint"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: create-repo-midpoint
+          arguments: [ "init" ]
+    - !verifyOneRepo
+      repoSetupName: create-repo-midpoint
+      referenceName: create-repo-init-git
+
+    - !elaborate 
+      descriptionId: "level-data/create-repo/summary"

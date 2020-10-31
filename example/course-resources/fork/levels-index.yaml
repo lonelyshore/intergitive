@@ -8,6 +8,7 @@ asset_index:
     main.section-advanced-history-browsing: "第四章：進階瀏覽版本歷史與回溯版本"
     main.section-create-and-checkout-branches: "第五章：建立與切換分支－－創建分歧"
     main.section-merge-and-delete-branches: "第六章：合併與刪除分支－－刪減分歧"
+    main.section-share-repository: "第七章：多人共享版本歷史"
 
   # level names of section one
     main.intro-install.name: "1-1 節：安裝"
@@ -52,6 +53,9 @@ asset_index:
     main.delete-unmerged.name: "6-4 節：刪除未合併的分支以捨棄不想要的變更"
     main.move-branch.name: "6-5 節：組合技－－搬移分支"
 
+  # level names of section seven
+    main.create-repo.name: "7-1 節：建立倉庫"
+
   ondisk:
   # level configs of section one: intro
     intro-install: "intro-install.yaml"
@@ -95,3 +99,6 @@ asset_index:
     delete-merged: "delete-merged.yaml"
     delete-unmerged: "delete-unmerged.yaml"
     move-branch: "move-branch.yaml"
+
+  # level configs of section seven: share repository
+    create-repo: "create-repo.yaml"

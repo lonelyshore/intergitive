@@ -1,0 +1,110 @@
+asset_index:
+  infile:
+# course content
+    intro: |+2
+      .md
+      目前為止，經過了前面的學習後  
+      我們已經能夠非常熟練地使用 git 來管控我們資料夾的版本變化  
+      但是，並不是 git 安裝完成，後所有資料夾就都自動地被納入 git 的管理  
+      事實上，git 能夠管理的，只有擁有 git 倉庫的資料夾  
+      在這個章節中，就讓我們來學習看看要如何建立 git 倉庫吧  
+
+    confirm-empty-folder-not-managed-by-git: |+2
+      .md
+      在這個章節中  
+      先讓我們嘗試處理看看位於「`#{{create-repo-empty}}`」的資料夾  
+      這個資料夾目前的內容是全空的，如果有興趣，可以使用檔案管理員開啟確認  
+
+      對於這樣全空的資料夾，請試著使用${{t/gui}}開啟看看  
+      請問嘗試開啟後會出現何種結果呢？  
+
+      1. 順利開啟了，可以直接使用${{t/gui}}管理這個資料夾的歷史  
+      2. 無法開啟，跳出如下圖的對話框  
+        ![illustration]({{images/try-open-empty-folder}})  
+        <div class="img-title">圖(一)</div>  
+
+      請使用數字選項(1/2)回答
+
+    create-repo-for-empty: |+2
+      .md
+      現在我們發現了${{t/gui}}無法順利開啟全空的資料夾  
+      如果嘗試開啟，就會跳出如圖(一)的對話框  
+      他的大致意思是：  
+      「  
+      這個資料夾並沒有被 git 控管  
+      它並不是一個 git 倉庫  
+      」  
+      
+      在這裡，我們可以選擇按下圖(一)中紅框圈選的「Initialize git repository here(在這個資料夾建立 git 倉庫)」  
+      這樣就可以直接原地建立 git 倉庫  
+      或是選擇圖(一)中橘框圈選的「Close(關閉)」之後  
+      按照下列的步驟自行建立倉庫  
+      其結果會是一樣的  
+
+      如果選擇了「Close」的話
+      請如下圖所示，在${{t/gui}}左上角的工具列展開「File」選單  
+      並且選擇如紅框圈選的「Init New Repository...(建立新倉庫...)」  
+
+      ![illustration]({{images/create-repo-empty-1}})  
+      <div class="img-title">圖(二)</div>  
+
+      選擇前述的選項之後  
+      就會跳出如下圖(三)的選擇視窗，用來選擇要建立倉庫的資料夾  
+
+      ![illustration]({{images/create-repo-empty-2}})  
+      <div class="img-title">圖(三)</div>  
+
+      請在這裡選擇位於「`#{{create-repo-empty}}`」的資料夾  
+      並且按下如上圖紅框圈選的確定按鈕，完成選擇  
+      選擇成功後，git 就會在選定的位置建立倉庫  
+
+      完成建立倉庫之後，請按下「執行」按鈕，確認結果  
+
+    hint-existence-of-git-folder: |+2
+      .md
+      恭喜，現在我們已經成功把一個空的資料夾納入 git 管控  
+      現在開始，我們可以在這個資料夾中，實行前面所學的各種 git 把戲  
+
+      順帶一提，所謂建立「git ${{t/repo}}」  
+      其實真的是在目標資料夾裡面增加一個叫做「.git」的資料夾  
+      來讓 git 可以偷偷存放各種它需要的東西，例如${{t/revision}}、${{t/branch}}名單、過往的${{t/file-tree}}等  
+      
+      因此，「.git」資料夾要小心保護好  
+      如果這個資料夾損壞了，可能會損失慘重！  
+
+    prompt-init-git-for-non-empty: |+2
+      .md
+      現在我們學會了如何把空白資料夾納入 git 管控  
+      那麼問題來了，在聽聞 git 的存在之前  
+      我們的電腦上可能就已經有好幾個使用中的資料夾  
+      他們都存有寶貴的檔案，我們也想要把他們納入 git 管理  
+      我們有可能把一個已經充滿很多檔案的資料夾，也納入 git 管控嗎？  
+
+      答案是可以的  
+      就讓我們來試試看吧～
+
+    create-repo-for-midpoint: |+2
+      請按照前面的操作指引  
+      在「#{{create-repo-midpoint}}」建立 git ${{t/repo}}，將其納管  
+
+      完成之後，請按下「執行」按鈕，確認結果  
+
+    summary: |+2
+      .md
+      在這個章節中  
+      我們學習到了如何建立 git ${{t/repo}}，將資料夾納入 git 管理中  
+      也間接地知道了，其實 git 把資料夾的歷史都存放在了「.git」資料夾中  
+      也就是說，所謂資料夾的歷史，也是另外一群電腦上的檔案  
+      既然如此，我們把這個資料夾複製到別台電腦上的話，是不是就能把歷史複製過去了呢？  
+      如果可以，這樣做又有甚麼好處呢？  
+      就讓我們在接下來的章節中一一解謎吧  
+
+# repo assets
+    file-1-path: "create-repo-midpoint/1.txt"
+    file-2-path: "create-repo-midpoint/2.txt"
+    file-3-path: "create-repo-midpoint/3.txt"
+
+    file-1: "1"
+    file-2: "2"
+    file-3: "3"
+      

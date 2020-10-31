@@ -182,3 +182,8 @@ asset_index:
 
 # move-branch
     assure-create-branch-modal-not-checkout: move-branch@assure-create-branch-modal-not-checkout.png
+
+# create-repo
+    try-open-empty-folder: create-repo@try-open-empty-folder.png
+    create-repo-empty-1: create-repo@create-repo-empty-1.png
+    create-repo-empty-2: create-repo@create-repo-empty-2.png
