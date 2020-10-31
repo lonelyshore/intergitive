@@ -3,6 +3,7 @@
 /test/playground/
 /.module_cache/
 /example/repoStore/
+/example/execution/
 /out
 **/archives/init-repo-store
 .~lock.*
