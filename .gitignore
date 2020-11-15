@@ -1,3 +1,4 @@
+/bake/
 /node_modules/
 /playground/
 /test/playground/
@@ -7,3 +8,4 @@
 /out
 **/archives/init-repo-store
 .~lock.*
+
