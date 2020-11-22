@@ -55,6 +55,7 @@ asset_index:
 
   # level names of section seven
     main.create-repo.name: "7-1 節：建立倉庫"
+    main.clone-repo.name: "7-2 節：複製倉庫"
 
   ondisk:
   # level configs of section one: intro
@@ -102,3 +103,4 @@ asset_index:
 
   # level configs of section seven: share repository
     create-repo: "create-repo.yaml"
+    clone-repo: "clone-repo.yaml"

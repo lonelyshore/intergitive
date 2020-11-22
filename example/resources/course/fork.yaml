@@ -184,6 +184,10 @@
           id: "fork-main-create-repo"
           nameKey: "levels/main.create-repo.name"
           configAssetId: "levels/create-repo"
+        - !level
+          id: "fork-main-clone-repo"
+          nameKey: "levels/main.clone-repo.name"
+          configAssetId: "levels/clone-repo"
 
 
 

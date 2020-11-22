@@ -1,0 +1,9 @@
+asset_index:
+  infile:
+    intro: |+2
+      .md
+      some
+
+# repo assets
+    file-1:v1: "1"
+    file-1:v2: "2"

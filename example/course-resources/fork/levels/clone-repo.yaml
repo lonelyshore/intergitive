@@ -1,0 +1,117 @@
+!level
+  repoVcsSetups:
+    share-history: !repoVcs 
+      workingPath: share-history
+      referenceStoreName: share-history
+      checkpointStoreName: share-history
+    share-history-remote: !repoVcs 
+      workingPath: share-history-remote
+      referenceStoreName: share-history-remote
+      checkpointStoreName: share-history-remote
+      repoType: remote
+    share-history-another: !repoVcs 
+      workingPath: share-history-another
+      referenceStoreName: share-history-another
+      checkpointStoreName: share-history-another
+
+  steps:
+  # build repo
+    - !dev.devAction 
+      actions:
+      # init remote
+        - !dev.act.git 
+          repoSetupName: share-history-remote
+          arguments: [ "init", "--bare"]
+      # init another local
+        - !dev.act.git
+          repoSetupName: share-history-another
+          arguments:
+            - init
+        - !dev.act.git 
+          repoSetupName: share-history-another
+          arguments: [ config, "--local", user.name, other]
+        - !dev.act.git 
+          repoSetupName: share-history-another
+          arguments: [ config, "--local", user.email, other@some.mail]
+        - !dev.act.git 
+          repoSetupName: share-history-another
+          arguments: [ config, "--local", core.autocrlf, input]
+      # link another to remote
+        - !act.setRemote
+          localSetupName: share-history-another
+          remoteSetupName: share-history-remote
+          remoteNickName: origin
+      
+      # fill up history
+      # commit #1
+        - !act.writeFile &write1
+          sourceAssetIds:
+            - "$level-data/clone-repo/file-1:v1"
+          destinationPaths:
+            - "share-history-another/file.txt"
+        - !dev.act.git &stageAll
+          repoSetupName: share-history-another
+          arguments: [ "add", "-A" ]
+        - !dev.act.git &commitDummy
+          repoSetupName: share-history-another
+          arguments: [ "commit", "-m", "dummy commit" ]
+
+      # commit #2
+        - !act.writeFile &write2
+          sourceAssetIds:
+            - "$level-data/clone-repo/file-1:v2"
+          destinationPaths:
+            - "share-history-another/file.txt"
+        - *stageAll
+        - *commitDummy
+
+      # commit #3 & #4
+        - *write1
+        - *stageAll
+        - *commitDummy
+        - *write2
+        - *stageAll
+        - *commitDummy
+
+      # push
+        - !dev.act.git 
+          repoSetupName: share-history-another
+          arguments: [ "push", "origin", "master" ]
+
+      # save references
+        - !dev.act.saveReference 
+          repoSetupName: share-history-another
+          referenceName: init
+        - !dev.act.saveReference 
+          repoSetupName: share-history-remote
+          referenceName: init
+
+    - !loadOneReference 
+      repoSetupName: share-history-another
+      referenceName: init
+    - !loadOneReference 
+      repoSetupName: share-history-remote
+      referenceName: init
+
+  # intro
+    - !elaborate 
+      descriptionId: "level-data/clone-repo/intro"
+
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: share-history
+          arguments: [ "init" ]
+        - !act.setRemote 
+          localSetupName: share-history
+          remoteSetupName: share-history-remote
+          remoteNickName: origin
+        - !dev.act.git 
+          repoSetupName: share-history
+          arguments: [ "fetch", "--all" ]
+        - !dev.act.git 
+          repoSetupName: share-history
+          arguments: [ "checkout", "-fB", "master", "origin/master" ]
+    - !verifyRepo 
+      referenceName: "clone-repo-clone"
+          
