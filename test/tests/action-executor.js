@@ -27,8 +27,62 @@ const { writeFile } = require('fs');
 chai.use(chaiAsPromised);
 chai.should();
 
+function ParseRefs(refs) {
+    let lines = refs.split('\n');
 
-describe('Action Executor #core', function() {
+    let locals = {};
+    let remotes = {};
+    let misc = {};
+
+    lines.forEach(line => {
+        let tokens = line.split(' ');
+
+        if (tokens.length === 2) {
+            let refPath = tokens[1].slice(5);
+            if (refPath.startsWith('heads/')) {
+                locals[refPath.slice(6)] = tokens[0];
+            }
+            else if (refPath.startsWith('remotes/')) {
+                let remotePath = refPath.slice(8);
+                let slashIndex = remotePath.indexOf('/');
+
+                let remoteName = remotePath.slice(0, slashIndex);
+                if (!(remoteName in remotes)) {
+                    remotes[remoteName] = {};
+                }
+
+                remotes[remoteName][remotePath.slice(slashIndex + 1)] = tokens[0];
+            }
+            else {
+                misc[refPath] = tokens[0];
+            }
+        }
+    });
+
+    return {
+        locals: locals,
+        remotes: remotes,
+        misc: misc
+    };
+}
+
+function assertRemoteUpdated(localRefs, remoteRefs, remoteName, matchedRefs) {
+
+    chai.expect(localRefs.remotes).to.have.property(remoteName);
+
+    let locals = localRefs.locals;
+    let localRemotes = localRefs.remotes[remoteName];
+    let remotes = remoteRefs.locals;
+
+    matchedRefs.forEach(matchedRef => {
+        chai.expect(localRemotes).to.have.property(matchedRef);
+        chai.expect(localRemotes[matchedRef]).to.equal(locals[matchedRef], `expect local remote cache [${matchedRef}] match with local[${matchedRef}]`);
+        chai.expect(remotes).to.have.property(matchedRef);
+        chai.expect(remotes[matchedRef]).to.equal(locals[matchedRef], `expect remote[${matchedRef}] match with local:remote[${matchedRef}]`);
+    });
+}
+
+describe.only('Action Executor #core', function() {
 
     let actionExecutor;
     const testRepoSetupName = 'test-repo';
@@ -961,60 +1015,7 @@ describe('Action Executor #core', function() {
     
                 let remoteNickName = 'kerker';
 
-                function ParseRefs(refs) {
-                    let lines = refs.split('\n');
-                
-                    let locals = {};
-                    let remotes = {};
-                    let misc = {};
-                
-                    lines.forEach(line => {
-                        let tokens = line.split(' ');
-                
-                        if (tokens.length === 2) {
-                            let refPath = tokens[1].slice(5);
-                            if (refPath.startsWith('heads/')) {
-                                locals[refPath.slice(6)] = tokens[0];
-                            }
-                            else if (refPath.startsWith('remotes/')) {
-                                let remotePath = refPath.slice(8);
-                                let slashIndex = remotePath.indexOf('/');
-                
-                                let remoteName = remotePath.slice(0, slashIndex);
-                                if (!(remoteName in remotes)) {
-                                    remotes[remoteName] = {};
-                                }
-                
-                                remotes[remoteName][remotePath.slice(slashIndex + 1)] = tokens[0];
-                            }
-                            else {
-                                misc[refPath] = tokens[0];
-                            }
-                        }
-                    });
-                
-                    return {
-                        locals: locals,
-                        remotes: remotes,
-                        misc: misc
-                    };
-                }
 
-                function assertRemoteUpdated(localRefs, remoteRefs, remoteName, matchedRefs) {
-
-                    chai.expect(localRefs.remotes).to.have.property(remoteName);
-
-                    let locals = localRefs.locals;
-                    let localRemotes = localRefs.remotes[remoteName];
-                    let remotes = remoteRefs.locals;
-
-                    matchedRefs.forEach(matchedRef => {
-                        chai.expect(localRemotes).to.have.property(matchedRef);
-                        chai.expect(localRemotes[matchedRef]).to.equal(locals[matchedRef], `expect local remote cache [${matchedRef}] match with local[${matchedRef}]`);
-                        chai.expect(remotes).to.have.property(matchedRef);
-                        chai.expect(remotes[matchedRef]).to.equal(locals[matchedRef], `expect remote[${matchedRef}] match with local:remote[${matchedRef}]`);
-                    });
-                }
 
                 function moveBranchForward(branchName, fileName) {
                     return repo.checkout(['-f', branchName])
@@ -1943,3 +1944,6 @@ describe('Action Executor #core', function() {
 
     })
 });
+
+module.exports.ParseRefs = ParseRefs;
+module.exports.assertRemoteUpdated = assertRemoteUpdated;
