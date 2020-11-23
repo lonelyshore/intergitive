@@ -17,6 +17,7 @@ const getRepo = Symbol("getRepo");
 class DevActionExecutor extends ActionExecutor {
     constructor(fileSystemBaseFolder, repoStoreSubPath, assetLoader, repoSetups, repoStorageType) {
         super(fileSystemBaseFolder, repoStoreSubPath, assetLoader, repoSetups, repoStorageType);
+        this.git = simpleGit();
     }
 
     executeStaging(repoSetupName, pathSpecs) {
@@ -148,6 +149,27 @@ class DevActionExecutor extends ActionExecutor {
 
     executeIdle(seconds) {
         return utility.wait(seconds * 1000);
+    }
+
+    executeCloneRepo(sourceRepoSetupName, destinationRepoSetupName) {
+        let sourceRepoPath = this.getRepoFullPaths(sourceRepoSetupName).fullWorkingPath;
+        let destinationRepoPath = this.getRepoFullPaths(destinationRepoSetupName).fullWorkingPath;
+
+        if (sourceRepoPath && destinationRepoPath) {
+            return this.git.clone(sourceRepoPath, destinationRepoPath);
+        }
+        else {
+            let error = '';
+            if (!sourceRepoPath) {
+                error += `Failed to find working directory for ${sourceRepoPath}\n`;
+            }
+            
+            if (!destinationRepoPath) {
+                error += `Failed to find working directory for ${destinationRepoPath}\n`;
+            }
+
+            return Promise.reject(error);
+        }
     }
 
     getRepoSetupNames() {

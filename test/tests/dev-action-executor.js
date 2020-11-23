@@ -11,9 +11,12 @@ const AssetLoader = require("../../lib/asset-loader").AssetLoader;
 const ActionExecutor = require("../../dev/action-executor").DevActionExecutor;
 const RepoVcsSetup = require("../../lib/config-level").RepoVcsSetup;
 const actionTypes = require("../../dev/config-action");
+const parseRefs = require('./action-executor').parseRefs;
+const assertRemoteUpdated = require('./action-executor').assertRemoteUpdated;
 
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
+const { util } = require("chai");
 
 chai.use(chaiAsPromised);
 chai.should();
@@ -28,7 +31,7 @@ describe("Dev Action Executor", function() {
     const testRepoSetupName = "test-repo";
     const repoParentPath = path.join(utils.PLAYGROUND_PATH, "repo");
     const repoArchiveName = "action-executor";
-    const repoPath = path.join(repoParentPath, repoArchiveName);    
+    const repoPath = path.join(repoParentPath, repoArchiveName);
 
     before(function() {
         let assetLoader = new AssetLoader(path.join(utils.RESOURCES_PATH, "action-executor/resources"));
@@ -47,7 +50,7 @@ describe("Dev Action Executor", function() {
             assetLoader,
             repoSetups
         );
-    })
+    });
 
     describe("File Operations", function() {
             
@@ -533,6 +536,121 @@ describe("Dev Action Executor", function() {
                     return assertCleanAt(targetSha);
                 });
             })
-        })
+        });
+
+        describe('Clone', function() {
+
+            let actionExecutorExt;
+            const testRemoteRepoSetupName = 'test-remote-repo';
+            const remoteWorkingPath = path.join(repoParentPath, testRemoteRepoSetupName);
+            const destinationRepoSetupName = 'test-destination';
+            const destinationWorkingPath = path.join(repoParentPath, destinationRepoSetupName);
+
+            const remoteNickName = 'origin';
+            let remoteRepo;
+
+            before('initialize action executor', function() {
+                let assetLoader = new AssetLoader(path.join(utils.RESOURCES_PATH, "action-executor/resources"));
+
+                let repoSetup = {
+                    [testRepoSetupName]: new RepoVcsSetup(
+                        path.relative(utils.PLAYGROUND_PATH, repoPath),
+                        '',
+                        ''
+                    ),
+                    [testRemoteRepoSetupName]: new RepoVcsSetup(
+                        path.relative(utils.PLAYGROUND_PATH, remoteWorkingPath),
+                        '',
+                        ''
+                    ),
+                    [destinationRepoSetupName]: new RepoVcsSetup(
+                        path.relative(utils.PLAYGROUND_PATH, destinationWorkingPath),
+                        '',
+                        ''
+                    )
+                };
+
+                actionExecutorExt = new ActionExecutor(
+                    utils.PLAYGROUND_PATH,
+                    undefined,
+                    assetLoader,
+                    repoSetup
+                );
+            });
+
+            beforeEach('setup remote', function() {
+                return fs.emptyDir(remoteWorkingPath)
+                .then(() => {
+                    remoteRepo = simpleGitCtor(remoteWorkingPath)
+                })
+                .then(() => {
+                    return remoteRepo.raw(['init', '--bare']);
+                })
+                .then(() => {
+                    return repo.addRemote(
+                        'origin',
+                        remoteWorkingPath
+                    );
+                })
+                .then(() => {
+                    return repo.raw(['push', '--all', 'origin']);
+                });
+            });
+
+            afterEach('clean repos', function() {
+                return fs.remove(remoteWorkingPath)
+                .then(() => fs.remove(destinationWorkingPath));
+            })
+
+            it.only('clone into empty', function() {
+
+                let targetRef = 'master'
+
+                let action = new actionTypes.CloneRepoAction(
+                    testRemoteRepoSetupName,
+                    destinationRepoSetupName
+                );
+
+                let destinationRepo;
+
+                return action.executeBy(actionExecutorExt)
+                .then(() => {
+                    destinationRepo = simpleGitCtor(destinationWorkingPath);
+                })
+                .then(() => {
+                    let localRefs;
+                    let remoteRefs;
+                    let localBranches;
+
+                    return Promise.resolve()
+                    .then(() => {
+                        return  destinationRepo.raw(['show-ref', '-d'])
+                        .then(result => {
+                            localRefs = parseRefs(result);
+                        });
+                    })
+                    .then(() => {
+                        return remoteRepo.raw(['show-ref', '-d'])
+                        .then(result => {
+                            remoteRefs = parseRefs(result);
+                        });
+                    })
+                    .then(() => {
+                        return destinationRepo.branchLocal()
+                        .then(result => {
+                            localBranches = Object.keys(result.branches);
+                        });
+                    })
+                    .then(() => {
+                        assertRemoteUpdated(
+                            localRefs,
+                            remoteRefs,
+                            remoteNickName,
+                            localBranches
+                        );
+                    });
+                });
+            });
+        });
     });
 });

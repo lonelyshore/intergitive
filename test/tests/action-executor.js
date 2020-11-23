@@ -27,7 +27,7 @@ const { writeFile } = require('fs');
 chai.use(chaiAsPromised);
 chai.should();
 
-function ParseRefs(refs) {
+function parseRefs(refs) {
     let lines = refs.split('\n');
 
     let locals = {};
@@ -82,7 +82,7 @@ function assertRemoteUpdated(localRefs, remoteRefs, remoteName, matchedRefs) {
     });
 }
 
-describe.only('Action Executor #core', function() {
+describe('Action Executor #core', function() {
 
     let actionExecutor;
     const testRepoSetupName = 'test-repo';
@@ -1059,7 +1059,7 @@ describe.only('Action Executor #core', function() {
 
                     return repo.raw(['show-ref', '-d'])
                     .then(result => {
-                        localRepoRefsBefore = ParseRefs(result);
+                        localRepoRefsBefore = parseRefs(result);
                     })
                     .then(() => {
                         chai.expect(localRepoRefsBefore.remotes).to.be.empty;
@@ -1074,8 +1074,8 @@ describe.only('Action Executor #core', function() {
                         ]);
                     })
                     .then(results => {
-                        localRepoRefsAfter = ParseRefs(results[0]);
-                        remoteRepoRefsAfter = ParseRefs(results[1]);
+                        localRepoRefsAfter = parseRefs(results[0]);
+                        remoteRepoRefsAfter = parseRefs(results[1]);
                     })
                     .then(() => {
                         assertRemoteUpdated(
@@ -1124,13 +1124,13 @@ describe.only('Action Executor #core', function() {
 
                         return repo.raw(['show-ref', '-d'])
                         .then(result => {
-                            localRefFirstPush = ParseRefs(result);
+                            localRefFirstPush = parseRefs(result);
                         })
                         .then(() => {
                             return remoteRepo.raw(['show-ref', '-d'])
                         })
                         .then(result => {
-                            remoteRefs = ParseRefs(result);
+                            remoteRefs = parseRefs(result);
                         })
                         .then(() => {
                             assertRemoteUpdated(
@@ -1155,13 +1155,13 @@ describe.only('Action Executor #core', function() {
 
                         return repo.raw(['show-ref', '-d'])
                         .then(result => {
-                            localRefSecondPush = ParseRefs(result);
+                            localRefSecondPush = parseRefs(result);
                         })
                         .then(() => {
                             return remoteRepo.raw(['show-ref', '-d'])
                         })
                         .then(result => {
-                            remoteRefs = ParseRefs(result);
+                            remoteRefs = parseRefs(result);
                         })
                         .then(() => {
                             assertRemoteUpdated(
@@ -1203,13 +1203,13 @@ describe.only('Action Executor #core', function() {
 
                         return repo.raw(['show-ref', '-d'])
                         .then(result => {
-                            localRefFirstPush = ParseRefs(result);
+                            localRefFirstPush = parseRefs(result);
                         })
                         .then(() => {
                             return remoteRepo.raw(['show-ref', '-d'])
                         })
                         .then(result => {
-                            remoteRefs = ParseRefs(result);
+                            remoteRefs = parseRefs(result);
                         })
                         .then(() => {
                             assertRemoteUpdated(
@@ -1234,13 +1234,13 @@ describe.only('Action Executor #core', function() {
 
                         return repo.raw(['show-ref', '-d'])
                         .then(result => {
-                            localRefSecondPush = ParseRefs(result);
+                            localRefSecondPush = parseRefs(result);
                         })
                         .then(() => {
                             return remoteRepo.raw(['show-ref', '-d'])
                         })
                         .then(result => {
-                            remoteRefs = ParseRefs(result);
+                            remoteRefs = parseRefs(result);
                         })
                         .then(() => {
                             assertRemoteUpdated(
@@ -1298,8 +1298,8 @@ describe.only('Action Executor #core', function() {
                             remoteRepo.raw(['show-ref', '-d'])
                         ])
                         .then(results => {
-                            let localRefs = ParseRefs(results[0]);
-                            let remoteRefs = ParseRefs(results[1]);
+                            let localRefs = parseRefs(results[0]);
+                            let remoteRefs = parseRefs(results[1]);
     
                             assertRemoteUpdated(
                                 localRefs,
@@ -1318,8 +1318,8 @@ describe.only('Action Executor #core', function() {
                             remoteRepo.raw(['show-ref', '-d'])
                         ])
                         .then(results => {
-                            let localRefs = ParseRefs(results[0]);
-                            let remoteRefs = ParseRefs(results[1]);
+                            let localRefs = parseRefs(results[0]);
+                            let remoteRefs = parseRefs(results[1]);
 
                             chai.expect(remoteRefs.locals)
                             .to.not.have.property(targetRef);
@@ -1371,7 +1371,7 @@ describe.only('Action Executor #core', function() {
                     .then(() => {
                         return repo.raw(['show-ref', '-d'])
                         .then(result => {
-                            localRefFirstPush = ParseRefs(result);
+                            localRefFirstPush = parseRefs(result);
                         })
                     })
                     .then(() => {
@@ -1388,12 +1388,12 @@ describe.only('Action Executor #core', function() {
 
                         return repo.raw(['show-ref', '-d'])
                         .then(result => {
-                            localRefSecondPush = ParseRefs(result);
+                            localRefSecondPush = parseRefs(result);
                         })
                         .then(() => {
                             return remoteRepo.raw(['show-ref', '-d'])
                             .then(result => {
-                                remoteRefs = ParseRefs(result);
+                                remoteRefs = parseRefs(result);
                             })
                         })
                         .then(() => {
@@ -1462,7 +1462,7 @@ describe.only('Action Executor #core', function() {
                     .then(() => {
                         return repo.raw(['show-ref', '-d'])
                         .then(result => {
-                            localRefFirstPush = ParseRefs(result);
+                            localRefFirstPush = parseRefs(result);
                         })
                     })
                     .then(() => {
@@ -1490,13 +1490,13 @@ describe.only('Action Executor #core', function() {
 
                         return repo.raw(['show-ref', '-d'])
                         .then(result => {
-                            localRefSecondPush = ParseRefs(result);
+                            localRefSecondPush = parseRefs(result);
                         })
                         .then(() => {
                             return remoteRepo.raw(['show-ref', '-d']);
                         })
                         .then(result => {
-                            remoteRefs = ParseRefs(result);
+                            remoteRefs = parseRefs(result);
                         })
                         .then(() => {
                             assertRemoteUpdated(
@@ -1945,5 +1945,5 @@ describe.only('Action Executor #core', function() {
     })
 });
 
-module.exports.ParseRefs = ParseRefs;
+module.exports.parseRefs = parseRefs;
 module.exports.assertRemoteUpdated = assertRemoteUpdated;

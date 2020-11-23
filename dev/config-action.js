@@ -124,6 +124,22 @@ class IdleAction extends upstream.Action {
     }
 }
 
+class CloneRepoAction extends upstream.Action {
+    constructor(sourceRepoSetupName, destinationRepoSetupName) {
+        super();
+        this.klass = 'CloneRepoAction';
+        this.sourceRepoSetupName = sourceRepoSetupName;
+        this.destinationRepoSetupName = destinationRepoSetupName;
+    }
+
+    executeBy(actionExecutor) {
+        return actionExecutor.executeCloneRepo(
+            this.sourceRepoSetupName,
+            this.destinationRepoSetupName
+        );
+    }
+}
+
 module.exports = Object.assign({}, upstream);
 module.exports.UnstageAction = UnstageAction;
 module.exports.UnstageAllAction = UnstageAllAction;
@@ -134,3 +150,4 @@ module.exports.GitCommandAction = GitCommandAction;
 module.exports.SaveRepoReferenceAction = SaveRepoReferenceAction;
 module.exports.LoadRepoReferenceArchiveAction = LoadRepoReferenceArchiveAction;
 module.exports.IdleAction = IdleAction;
+module.exports.CloneRepoAction = CloneRepoAction;
