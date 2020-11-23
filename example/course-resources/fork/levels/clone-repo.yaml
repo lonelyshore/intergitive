@@ -99,19 +99,13 @@
 
     - !dev.needAction 
       actions:
-        - !dev.act.git 
-          repoSetupName: share-history
-          arguments: [ "init" ]
+        - !dev.act.cloneRepo 
+          sourceRepoSetupName: share-history-remote
+          destinationRepoSetupName: share-history
         - !act.setRemote 
           localSetupName: share-history
           remoteSetupName: share-history-remote
-          remoteNickName: origin
-        - !dev.act.git 
-          repoSetupName: share-history
-          arguments: [ "fetch", "--all" ]
-        - !dev.act.git 
-          repoSetupName: share-history
-          arguments: [ "checkout", "-fB", "master", "origin/master" ]
+          remoteNickName: origin          
     - !verifyRepo 
       referenceName: "clone-repo-clone"
           

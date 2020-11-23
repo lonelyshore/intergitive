@@ -12,6 +12,14 @@
         "type": "string",
         "description": "Alias name of a repo defined in [repoVcs] block of the yaml"
     },
+    "sourceRepoSetupName": {
+        "type": "string",
+        "description": "Alias name of a repo defined in [repoVcs] block of the yaml"
+    },
+    "destinationRepoSetupName": {
+        "type": "string",
+        "description": "Alias name of a repo defined in [repoVcs] block of the yaml"
+    },
     "remoteNickName": {
         "type": "string",
         "description": "arbitrary nick name of the remote"

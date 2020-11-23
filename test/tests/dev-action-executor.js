@@ -602,7 +602,7 @@ describe("Dev Action Executor", function() {
                 .then(() => fs.remove(destinationWorkingPath));
             })
 
-            it.only('clone into empty', function() {
+            it('clone into empty', function() {
 
                 let targetRef = 'master'
 

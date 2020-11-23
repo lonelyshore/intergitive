@@ -202,6 +202,30 @@ let loadRepoReferenceArchiveActionType = new yaml.Type(
     }
 )
 
+let cloneRepoActionType = new yaml.Type(
+    dummyActionConfigDict.cloneRepo.tag,
+    {
+        kind: 'mapping',
+
+        resolve: function(data) {
+            return data !== null
+                && 'sourceRepoSetupName' in data
+                && isString(data.sourceRepoSetupName)
+                && 'destinationRepoSetupName' in data
+                && isString(data.destinationRepoSetupName);
+        },
+
+        construct: function(data) {
+            return new actionConfig.CloneRepoAction(
+                data.sourceRepoSetupName,
+                data.destinationRepoSetupName
+            );
+        },
+
+        instanceOf: actionConfig.CloneRepoAction
+    }
+);
+
 let idleActionType = new yaml.Type(
     dummyActionConfigDict.idle.tag,
     {
@@ -230,6 +254,7 @@ let schema = yaml.Schema.create(upstream.LEVEL_CONFIG_SCHEMA, [
     gitCommandActionType,
     saveRepoReferenceActionType,
     loadRepoReferenceArchiveActionType,
+    cloneRepoActionType,
     idleActionType,
 ]);
 

@@ -342,6 +342,24 @@
             ],
             "additionalProperties": false
         },
+        "devCloneRepo": {
+            "type": "object",
+            "title": "[Dev][Action] Clone Repo",
+            "default": "Clone repo at working directory of <sourceRepoSetupName> into working directory of <destinationRepoSetupName>",
+            "properties": {
+                "sourceRepoSetupName": {
+                    "$ref": "config-commons.json/sourceRepoSetupName"
+                },
+                "destinationRepoSetupName": {
+                    "$ref": "config-commons.json/destinationRepoSetupName"
+                }
+            },
+            "required": [
+                "sourceRepoSetupName",
+                "destinationRepoSetupName"
+            ],
+            "additionalProperties": false
+        },
         "devIdleReference": {
             "type": "object",
             "title": "[Dev][Action] Idle",
@@ -386,6 +404,7 @@
             { "$ref": "#/definitions/devGitCommand" },
             { "$ref": "#/definitions/devSaveRepoReference" },
             { "$ref": "#/definitions/devLoadRepoReferenceArchive" },
+            { "$ref": "#/definitions/devCloneRepo"},
             { "$ref": "#/definitions/devIdleReference" }
         ]
     }
