@@ -23,7 +23,7 @@
     "mocha": "^6.1.4",
     "nested-error-stacks": "^2.1.0",
     "seedrandom": "^3.0.1",
-    "simple-git": "^1.124.0"
+    "simple-git": "^2.23.0"
   },
   "scripts": {
     "==== Node ====": "",
