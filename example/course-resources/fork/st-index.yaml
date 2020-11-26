@@ -27,3 +27,5 @@ asset_index:
     merge-modal-confirm: "Merge(合併)"
     delete-branch-item: "Delete...(刪除...)"
     delete-modal-confirm: "Delete(刪除)"
+    tool-bar-file: "File(檔案)"
+    clone-item: "Clone...(複製...)"

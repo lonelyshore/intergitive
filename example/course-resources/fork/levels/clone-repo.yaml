@@ -96,6 +96,14 @@
   # intro
     - !elaborate 
       descriptionId: "level-data/clone-repo/intro"
+    - !illustrate 
+      descriptionId: "level-data/clone-repo/concept"
+    - !elaborate 
+      descriptionId: "level-data/clone-repo/intro-how-to-practice"
+
+    - !instruct 
+      descriptionId: "level-data/clone-repo/clone-repo"
+      needConfirm: false
 
     - !dev.needAction 
       actions:

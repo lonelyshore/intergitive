@@ -2,7 +2,88 @@ asset_index:
   infile:
     intro: |+2
       .md
-      some
+      從前面的章節中  
+      我們學習到了所有 git 所管理的版本歷史  
+      都被保存在名為「.git」的資料夾裡  
+      
+      直覺地想，只要把 .git 資料夾從一台電腦搬移到另一台上面  
+      我們就可以把整個版本歷史都搬遷過去  
+      其實這個看似樸素的想法，恰恰造就了 git 的另一個主要功能：**與他人共享版本歷史，以及共同開發**  
+      甚至 git 直接就有內建把 .git 資料夾在電腦之間轉移的功能  
+      在這個章節中，就讓我們學習如何使用這個功能吧  
+
+    concept: |+2
+      .md
+      說到跨電腦分享資料的功能  
+      一般人最熟悉的作法應該就是雲端硬碟  
+      而 git 其實也有很類似的作法  
+
+      如下圖所示，是 git 常用的分享資料作法的大致運作模式  
+
+      ![illustration]({{images/cloud-drive-concept}})  
+      <div class="img-title">圖(一)</div>  
+      
+      從上圖中可以看到  
+      構成版本歷史分享功能，需要兩種角色  
+      他們分別是位於圖片上半部的「${{t/remote-repo-f}}」  
+      與之相對的，是位於圖片下半部受到 git 管理的「${{t/local-repo}}」，例如這個圖片裡，就有 A、B 兩個${{t/repo}}  
+      這兩個資料夾可以位在不同的電腦上，也可以位在同一台電腦的不同位置上，沒有限制  
+
+      「${{t/remote-repo}}」可以類比為雲端硬碟服務  
+      而「${{t/local-repo}}」則可以類比為雲端硬碟服務中，被設定好要備份到雲端的本地資料夾  
+
+      因此，通常在 git 中，圖片裡的上下兩半兩種角色的互動模式是這樣的：  
+      - 使用者在各自的電腦修改檔案。例如在下半部的 A 資料夾(${{t/local-repo}})中修改了一些檔案，並且建立${{t/revision}}  
+      - 在特定的時間點，使用者把新的修改從 A 資料夾傳到上半部中的「${{t/remote-repo}}」  
+        就好像備份到雲端一樣  
+      - 然後，另一個位在下半部的 B 資料夾(另一個${{t/local-repo}})就可以從「${{t/remote-repo}}」取得 A 資料夾新增的${{t/revision}}  
+        就好像從雲端取回檔案一樣  
+
+    intro-how-to-practice: |+2
+      .md
+      在大致了解 git 如何共享版本歷史後，就讓我們來實際執行看看吧  
+      在緊接而來的幾個章節中，我們將大致學習以下幾個基本操作：  
+      - 從${{t/remote-repo}}複製一個${{t/repo}}到本地  
+      - 在另一個${{t/repo}}更新版本歷史後，從${{t/remote-repo}}取得最新的狀態  
+      - 在${{t/local-repo}}加入新的版本歷史後，上傳${{t/remote-repo}}以讓其他${{t/repo}}可以取得這些修改  
+
+      在繼續進行之前，必須要額外說明的是接下來的練習，其實不會涉及網路的操作  
+      雖然通常我們想要達成的是透過網路，在不同電腦之間共享版本歷史  
+      但是實際上如上面的圖例說明，git 的共享機制也容許同一台電腦上不同資料夾之間共享歷史  
+
+      在這個教學中  
+      我們將會在這台電腦上，同時維護數個 git ${{t/repo}}，用以模擬跨電腦的版本歷史共享  
+      在進行教學的時候，完全不會需要存取網路，請不用擔心流量問題  
+    
+    clone-repo: |+2
+      .md
+      首先，就讓我們從基礎開始  
+      如果想要透過「${{t/remote-repo}}」，就必須設定好「${{t/local-repo}}」與「${{t/remote-repo}}」的對應關係  
+      而最簡單的一種方式，就是把心目中的「${{t/remote-repo}}」整份複製到指定的位置上  
+      這個操作，叫做「${{t/clone-repo-f}}」  
+
+      請按照下列圖示，依序操作，來將位於「`#{{share-history-remote}}`」複製到「`#{{share-history}}`」  
+
+      ![illustration]({{images/clone-operate-1}})  
+      <div class="img-title">圖(二)</div>  
+
+      首先，如上圖所示  
+      開啟${{t/gui}}之後，在工具列上找到如紅框所圈選的「${{st/tool-bar-file}}」項目  
+      按下這個項目後，可以展開檔案操作的選單  
+      請再如上圖所示，在選單上找到如橘框所圈選的「${{st/clone-item}}」  
+      按下之後，就會跳出如下圖的對話框  
+
+      ![illustration]({{images/clone-operate-2}})  
+      <div class="img-title">圖(三)</div>  
+
+      這個對話框上列出了${{t/clone-repo}}所需要的參數  
+      就讓我們逐一填上：  
+      - `Repository Url`：這裡需要填上「${{t/remote-repo}}」的位置。這裡請填入「`#{{share-history-remote}}`」  
+      - `Parent Folder`：這裡需要填上「${{t/local-repo}}」所在的資料夾，但是不包含資料夾本身的名字。這裡請填入「`^{{share-history}}`」
+      - `Name`：這裡需要填上想像中「${{t/local-repo}}」的名字。請填入「`share-history`」  
+
+      填寫完畢後，請按下如上圖紅框圈選的「${{st/clone-modal-clone-button}}」
+
 
 # repo assets
     file-1:v1: "1"

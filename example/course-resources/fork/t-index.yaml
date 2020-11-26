@@ -24,6 +24,7 @@ asset_index:
     work-tree-alt: 工作目錄
     work-tree: 工作樹
     local-repo-f: 本地倉庫(local repository)
+    local-repo: 本地倉庫
     repo-f: 倉庫(repository)
     repo: 倉庫
     revision: 變更版本
@@ -56,3 +57,7 @@ asset_index:
     parent-commit: "父母變更版本"
     fastforward: "快進"
     fastforward-f: "快進(fastforward)"
+    remote-repo: "遠端倉庫"
+    remote-repo-f: "遠端倉庫(remote repository)"
+    clone-repo: "複製倉庫"
+    clone-repo-f: "複製倉庫(clone repository)"
