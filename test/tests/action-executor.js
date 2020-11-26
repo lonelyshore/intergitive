@@ -1523,7 +1523,7 @@ describe('Action Executor #core', function() {
             })
         })
 
-        describe('Meta', function() {
+        describe.only('Meta', function() {
             it('set user name & email', function() {
 
                 const userName = 'some_random_user_name';
@@ -1537,7 +1537,14 @@ describe('Action Executor #core', function() {
 
                 return action.executeBy(actionExecutor)
                 .then(() => {
-                    assert.fail();
+                    return repo.listConfig()
+                })
+                .then(result => {
+                    let configs = result.all;
+                    return Promise.all(
+                        configs['user.name'].should.equal(userName),
+                        configs['user.email'].should.equal(userEmail)
+                    )
                 });
             })
         })
