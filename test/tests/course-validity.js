@@ -662,6 +662,7 @@ function validateLevels(course, levelConfigAndNames, loaderPair, courseName) {
                                     return replacement.match(
                                         pushErrorWhenNotContainAsset,
                                         pushErrorWhenNotContainAsset,
+                                        pushErrorWhenNotContainRepoSetup,
                                         pushErrorWhenNotContainRepoSetup
                                     );
                                 });
