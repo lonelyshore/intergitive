@@ -348,10 +348,10 @@
             "default": "Clone repo at working directory of <sourceRepoSetupName> into working directory of <destinationRepoSetupName>",
             "properties": {
                 "sourceRepoSetupName": {
-                    "$ref": "config-commons.json/sourceRepoSetupName"
+                    "$ref": "config-commons.json#/sourceRepoSetupName"
                 },
                 "destinationRepoSetupName": {
-                    "$ref": "config-commons.json/destinationRepoSetupName"
+                    "$ref": "config-commons.json#/destinationRepoSetupName"
                 }
             },
             "required": [

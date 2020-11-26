@@ -23,6 +23,7 @@ const chaiAsPromised = require('chai-as-promised');
 const { util } = require('chai');
 const { promises } = require('dns');
 const { writeFile } = require('fs');
+const { assert } = require('console');
 
 chai.use(chaiAsPromised);
 chai.should();
@@ -1522,7 +1523,24 @@ describe('Action Executor #core', function() {
             })
         })
 
+        describe('Meta', function() {
+            it('set user name & email', function() {
 
+                const userName = 'some_random_user_name';
+                const userEmail = 'some-random-email@email.com';
+
+                let action = new actionTypes.SetUserAction(
+                    testRepoSetupName,
+                    userName,
+                    userEmail
+                );
+
+                return action.executeBy(actionExecutor)
+                .then(() => {
+                    assert.fail();
+                });
+            })
+        })
     });
 
     describe('Repository Operations', function() {
