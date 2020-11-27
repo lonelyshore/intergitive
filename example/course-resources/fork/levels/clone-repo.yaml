@@ -89,6 +89,7 @@
     - !loadOneReference 
       repoSetupName: share-history-another
       referenceName: init
+      appendCheckpoint: false
     - !loadOneReference 
       repoSetupName: share-history-remote
       referenceName: init
@@ -116,26 +117,20 @@
           remoteNickName: origin          
     - !verifyRepo 
       referenceName: "clone-repo-clone"
+      appendCheckpoint: false
 
     - !playActions 
       descriptionId: "level-data/create-repo/play-actions"
       actions:
-        - !act.writeFile 
-          sourceAssetIds:
-            - "$level-data/create-repo/file-1"
-            - "$level-data/create-repo/file-2"
-            - "$level-data/create-repo/file-3"
-            - "$level-data/create-repo/file-1"
-          destinationPaths:
-            - "$level-data/create-repo/file-1-path"
-            - "$level-data/create-repo/file-2-path"
-            - "$level-data/create-repo/file-3-path"
-            - "create-repo-empty/1"
-        - !act.removeFile 
-          targetPaths:
-            - "create-repo-empty/1" 
+        - !act.setUser 
+          repoSetupName: share-history
+          userName: someone
+          userEmail: some@email.com
 
     - !elaborate 
-      descriptionId: "level-data$intro-cloned-repo"
+      descriptionId: "level-data/clone-repo/intro-cloned-repo"
+
+    - !elaborate 
+      descriptionId: "level-data/clone-repo/summary"
     
           

@@ -29,3 +29,4 @@ asset_index:
     delete-modal-confirm: "Delete(刪除)"
     tool-bar-file: "File(檔案)"
     clone-item: "Clone...(複製...)"
+    clone-modal-clone-button: "Clone(複製)"

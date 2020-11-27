@@ -39,13 +39,17 @@ asset_index:
       - 然後，另一個位在下半部的 B 資料夾(另一個${{t/local-repo}})就可以從「${{t/remote-repo}}」取得 A 資料夾新增的${{t/revision}}  
         就好像從雲端取回檔案一樣  
 
+      需要注意，這個機制有以下幾個特點：  
+      - 各個「${{t/local-repo}}」之間不會互相直接溝通。所有修改都是上傳到「${{t/remote-repo}}」，然後各個「${{t/local-repo}}」再自行下載  
+      - 通常架構中是一個「${{t/remote-repo}}」對應到多個「${{t/local-repo}}」。就好像同一個雲端硬碟(遠端)，可以從好幾台電腦(本地)上存取資料  
+
     intro-how-to-practice: |+2
       .md
       在大致了解 git 如何共享版本歷史後，就讓我們來實際執行看看吧  
       在緊接而來的幾個章節中，我們將大致學習以下幾個基本操作：  
       - 從${{t/remote-repo}}複製一個${{t/repo}}到本地  
-      - 在另一個${{t/repo}}更新版本歷史後，從${{t/remote-repo}}取得最新的狀態  
       - 在${{t/local-repo}}加入新的版本歷史後，上傳${{t/remote-repo}}以讓其他${{t/repo}}可以取得這些修改  
+      - 在另一個${{t/repo}}更新版本歷史後，從${{t/remote-repo}}取得最新的狀態  
 
       在繼續進行之前，必須要額外說明的是接下來的練習，其實不會涉及網路的操作  
       雖然通常我們想要達成的是透過網路，在不同電腦之間共享版本歷史  
@@ -78,12 +82,59 @@ asset_index:
 
       這個對話框上列出了${{t/clone-repo}}所需要的參數  
       就讓我們逐一填上：  
-      - `Repository Url`：這裡需要填上「${{t/remote-repo}}」的位置。這裡請填入「`#{{share-history-remote}}`」  
-      - `Parent Folder`：這裡需要填上「${{t/local-repo}}」所在的資料夾，但是不包含資料夾本身的名字。這裡請填入「`^{{share-history}}`」
-      - `Name`：這裡需要填上想像中「${{t/local-repo}}」的名字。請填入「`share-history`」  
+      - `Repository Url`：這裡需要填上「${{t/remote-repo}}」的位置  
+        這裡請填入「`#{{share-history-remote}}`」  
+      - `Parent Folder`：這裡需要填上「${{t/local-repo}}」所在的資料夾，但是不包含資料夾本身的名字  
+        這裡請填入「`^{{share-history}}`」
+      - `Name`：這裡需要填上想像中「${{t/local-repo}}」的名字  
+        請填入「`share-history`」  
 
-      填寫完畢後，請按下如上圖紅框圈選的「${{st/clone-modal-clone-button}}」
+      填寫完畢後，請按下如上圖紅框圈選的「${{st/clone-modal-clone-button}}」  
+      按下之後，就會複製${{t/remote-repo}}  
 
+      完成之後，請按下這裡的「執行」按鈕，確認結果
+
+    set-username: "設定教學用${{t/repo}}使用者姓名"
+
+    intro-cloned-repo: |+2
+      .md
+      恭喜，現在我們已經成功複製${{t/repo}}  
+      這表示我們已經準備好，可以透過網路共享`share-history`這個資料夾裡面的版本歷史  
+      除此之外，為了方便，這個操作已經直接把目前存放在遠端的版本歷史給下載下來  
+
+      我們可以使用${{t/gui}}開啟位於「`#{{share-history}}`」的${{t/repo}}  
+      如果觀察${{t/graph}}，可以得到如下圖的情況  
+
+      ![illustration]({{images/cloned-repo-graph}})  
+      <div class="img-title">圖(四)</div>  
+
+      從上圖中，我們可以看到一如既往有代表 master 這個${{t/branch}}的位置的標記  
+      但是同樣的${{t/revision}}上，還有如紅框圈選的標記  
+      標示出一個叫做「origin/master」的${{t/branch}}的位置  
+      仔細一看，這個名字有點似曾相似不是嗎？  
+
+      沒錯，「origin/master」跟「master」其實是有關連的  
+      凡是`origin/`開頭的${{t/branch}}，其實指的是「**${{t/remote-repo}}**中的${{t/branch}}位置」  
+      嗯？這又是甚麼意思呢？  
+      沒有關係，我們可以先不用深究「origin/master」到底是甚麼意思  
+      在目前這個階段，只要知道，他是和「master」不同的${{t/branch}}就可以了
+
+    summary: |+2
+      .md
+      在這個章節中  
+      我們簡介了一個常見的，透過網路共享 git 版本歷史的機制  
+      在這個機制中，擁有兩個角色：  
+      - 「${{t/local-repo}}」：用來新增並累積版本歷史，是我們通常直接工作的地方
+      - 「${{t/remote-repo}}」：用來保存從各個「${{t/local-repo}}」上傳的版本歷史；<br>
+        「${{t/local-repo}}」也可以從「${{t/remote-repo}}」取得其它「${{t/local-repo}}」的版本歷史  
+
+      因此，這個機制要運作，我們需要建立這兩者之間的關聯性  
+      最簡單的方法，就是使用「${{t/clone-repo}}」  
+      這個操作會幫我們把指定的${{t/remote-repo}}的版本歷史下載到指定的位置上，以此建立一個${{t/local-repo}}  
+
+      最後，我們發現經過前述操作之後，多出了一種以`origin/`開頭的${{t/branch}}  
+      在緊接而來的章節，我們將詳細介紹這種前所未見的${{t/branch}}有甚麼特殊之處  
+      以及我們可以如何透過它們來達成備份/共用版本歷史的目標  
 
 # repo assets
     file-1:v1: "1"
