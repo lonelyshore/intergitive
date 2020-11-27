@@ -188,6 +188,10 @@
           id: "fork-main-clone-repo"
           nameKey: "levels/main.clone-repo.name"
           configAssetId: "levels/clone-repo"
+        - !level
+          id: "fork-main-push-branch"
+          nameKey: "levels/main.push-branch.name"
+          configAssetId: "levels/push-branch"
 
 
 

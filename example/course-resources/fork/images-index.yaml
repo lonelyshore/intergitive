@@ -192,3 +192,9 @@ asset_index:
     clone-operate-1: clone-repo@clone-operate-1.png
     clone-operate-2: clone-repo@clone-operate-2.png
     cloned-repo-graph: clone-repo@cloned-repo-graph.png
+
+# push-branch
+    local-branch-leads-remote-branch: push-branch@local-branch-leads-remote-branch.png
+    click-push-button: push-branch@click-push-button.png
+    push-remote-modal: push-branch@push-remote-modal.png
+    graph-after-pushed: push-branch@graph-after-pushed.png

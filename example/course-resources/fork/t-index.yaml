@@ -61,3 +61,6 @@ asset_index:
     remote-repo-f: "遠端倉庫(remote repository)"
     clone-repo: "複製倉庫"
     clone-repo-f: "複製倉庫(clone repository)"
+    push-f: "推送(push)"
+    push-branch-f: "推送分支(push branch)"
+    push: "推送"
