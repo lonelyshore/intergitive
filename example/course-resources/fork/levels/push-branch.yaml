@@ -16,7 +16,7 @@
 
   steps:
     - !loadLastLevelFinalSnapshot {}
-    
+
     - !elaborate 
       descriptionId: "level-data/push-branch/intro"
 
@@ -33,7 +33,7 @@
       descriptionId: "level-data/push-branch/modify-file-action"
       actions:
         - !act.writeFile 
-          sourceAssetIds: ["$level-data/push-branch/file-1:v2"]
+          sourceAssetIds: ["$level-data/push-branch/file-1:v1"]
           destinationPaths: ["share-history/file.txt"]
 
     - !instruct 
@@ -79,11 +79,12 @@
       descriptionId: "level-data/push-branch/modify-file-action"
       actions:
         - !act.writeFile 
-          sourceAssetIds: ["$level-data/push-branch/file-1:v1"]
+          sourceAssetIds: ["$level-data/push-branch/file-1:v2"]
           destinationPaths: ["share-history/file.txt"]
 
     - !instruct 
       descriptionId: "level-data/push-branch/commit-2"
+      needConfirm: false
     - !dev.needAction 
       actions:
         - !dev.act.git 
@@ -92,8 +93,8 @@
         - !dev.act.git 
           repoSetupName: share-history
           arguments: [ "commit", "-m", "$level-data/push-branch/commit-message-2" ]
-    - !checkpoint 
-      checkpointName: push-branch-commit-2
+    - !verifyRepo  
+      referenceName: push-branch-commit-2
     
     - !instruct 
       descriptionId: "level-data/push-branch/modify-file-3"
@@ -101,7 +102,7 @@
       descriptionId: "level-data/push-branch/modify-file-action"
       actions:
         - !act.writeFile 
-          sourceAssetIds: ["$level-data/push-branch/file-1:v2"]
+          sourceAssetIds: ["$level-data/push-branch/file-1:v1"]
           destinationPaths: ["share-history/file.txt"]
 
     - !instruct 
@@ -120,6 +121,15 @@
 
     - !instruct 
       descriptionId: "level-data/push-branch/push-2-and-3"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !act.push 
+          localSetupName: share-history
+          remoteNickName: origin
+          refspecs: '+refs/heads/master:refs/heads/master'
+    - !verifyRepo 
+      referenceName: "push-branch-push-2-and-3"
 
     - !elaborate 
       descriptionId: "level-data/push-branch/summary"

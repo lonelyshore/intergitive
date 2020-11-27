@@ -33,7 +33,7 @@ asset_index:
       緊接著，就讓我們來製作一個新的${{t/revision}}吧  
       請在下一個步驟，按下「執行按鈕」，藉此修改練習用${{t/repo}}中的檔案  
 
-    modify-file-action: "修改練習用${{t/repo}}的檔案"
+    modify-file-action: "修改練習用倉庫的檔案"
 
     commit-1: |+2
       .md
