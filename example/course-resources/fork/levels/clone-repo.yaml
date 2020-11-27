@@ -120,7 +120,7 @@
       appendCheckpoint: false
 
     - !playActions 
-      descriptionId: "level-data/create-repo/play-actions"
+      descriptionId: "level-data/clone-repo/set-username"
       actions:
         - !act.setUser 
           repoSetupName: share-history

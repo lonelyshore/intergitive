@@ -94,7 +94,7 @@ asset_index:
 
       完成之後，請按下這裡的「執行」按鈕，確認結果
 
-    set-username: "設定教學用${{t/repo}}使用者姓名"
+    set-username: "設定教學用倉庫使用者姓名"
 
     intro-cloned-repo: |+2
       .md
