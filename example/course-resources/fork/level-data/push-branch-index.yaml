@@ -1,0 +1,151 @@
+asset_index:
+  infile:
+    intro: |+2
+      .md
+      在上一回中  
+      我們介紹了 git 常見的共享版本歷史的方法非常類似於雲端硬碟  
+      當${{t/local-repo}}增加了新的版本歷史之後，我們需要手動的備份到${{t/remote-repo}}才可以  
+
+      這個備份的動作，在 git 裡面叫做「${{t/push-f}}」  
+      因為通常我們備份的對象，是特定的一個${{t/branch}}以及他所涉及的${{t/revision}}  
+      所以這個操作有時候也叫做「${{t/push-branch-f}}」  
+
+      在這個章節中，就讓我們來學習如何操作${{t/push}}來把本地的變更保存到遠端吧  
+      我們將會大致用以下的步驟來進行操作：  
+      1. 製造一個新的${{t/revision}}到${{t/local-repo}}。表示本地產生了變更，領先遠端  
+      2. ${{t/push}}剛才製作的${{t/revision}}  
+
+    open-repo-confirm-current-branch: |+2
+      .md
+      在繼續進行之前  
+      請使用${{t/gui}}開啟位於「`#{{share-history}}`」的練習用${{t/repo}}  
+
+      開啟之後，請回想之前所學  
+      操作${{t/gui}}來觀察一下目前的${{t/branch}}是誰  
+      並請在下面的文字輸入框中輸入目前的${{t/branch}}名稱  
+
+    modify-file: |+2
+      .md
+      從前面的問答，我們可以肯定目前的${{t/branch}}是位於「`master`」上面  
+      也就是說，接下來新建立的${{t/revision}}將會推動 `master` 前進  
+      請先暫時記住這個事實，我們等一下會回過頭來看  
+
+      緊接著，就讓我們來製作一個新的${{t/revision}}吧  
+      請在下一個步驟，按下「執行按鈕」，藉此修改練習用${{t/repo}}中的檔案  
+
+    modify-file-action: "修改練習用${{t/repo}}的檔案"
+
+    commit-1: |+2
+      .md
+      完成檔案修改後，就讓我們來建立${{t/revision}}吧  
+      請以「${{level-data/push-branch/commit-message-1}}」作為${{t/commit-msg}}  
+      建立${{t/revision}}  
+
+      完成之後，請按下「執行」按鈕，檢查是否成功建立
+
+    remote-branch-is-different: |+2
+      .md
+      現在，我們已經建立了一個${{t/revision}}  
+      如果我們觀察${{t/graph}}，會得到如下圖的結果  
+
+      ![illustration]({{images/local-branch-leads-remote-branch}})  
+      <div class="img-title">圖(一)</div>  
+
+      從上圖中，我們可以注意到 `master` 位於「${{level-data/push-branch/commit-message-1}}」這個${{t/revision}}上(紅框圈選所示)  
+      而跟它有類似名字的 `origin/master`，則落後了一個${{t/revision}}(橘框圈選所示)  
+      
+      關於這一點，我們一點也不會感到意外  
+      因為我們以前就有學習過了  
+      當我們新增${{t/revision}}的時候，只有目前所處的${{t/branch}}會跟著前進  
+
+      而有趣的地方正在於這裡  
+      `origin/master` 代表的，其實是「位於『遠端』的 `master`」所在的位置  
+      我們增加變更到 `master` 之後，`origin/master` 沒有前進  
+      其實暗示了${{t/remote-repo}}的狀態目前是「落後」本地的  
+
+      接下來，就讓我們透過${{t/push}}來更新遠端吧  
+
+    push-1: |+2
+      .md
+      請按照下圖所示，在${{t/gui}}上找到如紅框所圈選的「Push(推送)」按鈕  
+
+      ![illustration]({{images/click-push-button}})  
+      <div class="img-title">圖(二)</div>  
+
+      按下按鈕後，會跳出如下圖所示的對話框  
+
+      ![illustration]({{images/push-remote-modal}})  
+      <div class="img-title">圖(三)</div>  
+
+      雖然這個對話框有一些選項和設定可以調整  
+      但是目前我們直接使用預設的設定就足夠了  
+      請直接按下紅框所圈選的「Push(推送)」按鈕，執行推送  
+
+      完成之後，請按下「執行」按鈕，檢查是否成功  
+
+    confirm-pushed: |+2
+      .md
+      恭喜，現在我們完成了首次的${{t/push}}  
+      我們要如何觀察到推送後所造成的變化呢？  
+      就讓我們來再看一次目前${{t/graph}}的狀態吧  
+      它目前應該會像是如下圖所示的狀態一樣  
+
+      ![illustration]({{images/graph-after-pushed}})  
+      <div class="img-title">圖(四)</div>  
+
+      從上圖紅框所圈選的範圍中，我們可以看到  
+      代表「遠端的 `master`」的狀態的 `origin/master`  
+      在我們${{t/push}}之後，它的位置也更新到和 `master` 一樣了  
+      表示遠端已經收到了這個更新  
+
+    add-multiple-commits: |+2
+      .md
+      我們已經知道如何${{t/push}}「一個」${{t/revision}}到遠端去了  
+      但是毫不令人意外的  
+      其實我們隨時都可以${{t/push}}任意數量的${{t/revision}}  
+
+      就讓我們先模仿的作法，製造兩個${{t/revision}}之後，再次推送吧  
+
+    modify-file-2: |+2
+      .md
+      請在下一個步驟，按下「執行按鈕」，藉此修改練習用${{t/repo}}中的檔案  
+
+    commit-2: |+2
+      .md
+      請以目前被修改的檔案，用「${{level-data/push-branch/commit-message-2}}」作為${{t/commit-msg}}  
+      建立${{t/revision}}  
+
+    modify-file-3: |+2
+      .md
+      恭喜，我們還差一個${{t/revision}}需要建立  
+      請繼續在下一個步驟，按下「執行按鈕」，藉此修改練習用${{t/repo}}中的檔案  
+
+    commit-3: |+2
+      .md
+      請以目前被修改的檔案，用「${{level-data/push-branch/commit-message-3}}」作為${{t/commit-msg}}  
+      建立${{t/revision}}  
+
+      完成之後，請按下「執行」按鈕，確認成功
+
+    push-2-and-3: |+2
+      .md
+      現在，我們已經建立了兩個${{t/revision}}  
+      請再一次按照前面描述的步驟，${{t/push}} `master` 到遠端吧  
+
+    summary: |+2
+      .md
+      在這個章節中  
+      我們介紹了 `origin/` 開頭的${{t/branch}}，其實代表了遠端的${{t/branch}}當前的狀態  
+      再來，我們也介紹了可以透過「${{t/push}}」來把本地新增加的${{t/revision}}更新到遠端  
+      同時，也更新 `origin/` ${{t/branch}}的位置  
+
+      現在，我們知道如何更新遠端了，那麼要怎麼從遠端取得新版本呢？  
+      就讓我們在下一個章節中一探究竟吧  
+    
+
+# repo assets
+    commit-message-1: "新增修改 - 1"
+    commit-message-2: "新增修改 - 2"
+    commit-message-3: "新增修改 - 3"
+    file-1:v1: "1"
+    file-1:v2: "2"

@@ -1,0 +1,129 @@
+!level
+  repoVcsSetups:
+    share-history: !repoVcs 
+      workingPath: share-history
+      referenceStoreName: share-history
+      checkpointStoreName: share-history
+    share-history-remote: !repoVcs 
+      workingPath: share-history-remote
+      referenceStoreName: share-history-remote
+      checkpointStoreName: share-history-remote
+      repoType: remote
+    share-history-another: !repoVcs 
+      workingPath: share-history-another
+      referenceStoreName: share-history-another
+      checkpointStoreName: share-history-another
+
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+    
+    - !elaborate 
+      descriptionId: "level-data/push-branch/intro"
+
+  # modify file and commit
+    - !instruct  
+      descriptionId: "level-data/push-branch/open-repo-confirm-current-branch"
+      needConfirm: false
+    - !verifyInput 
+      answer: master
+
+    - !instruct 
+      descriptionId: "level-data/push-branch/modify-file"
+    - !execute 
+      descriptionId: "level-data/push-branch/modify-file-action"
+      actions:
+        - !act.writeFile 
+          sourceAssetIds: ["$level-data/push-branch/file-1:v2"]
+          destinationPaths: ["share-history/file.txt"]
+
+    - !instruct 
+      descriptionId: "level-data/push-branch/commit-1"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: share-history
+          arguments: [ "add", "-u" ]
+        - !dev.act.git 
+          repoSetupName: share-history
+          arguments: [ "commit", "-m", "$level-data/push-branch/commit-message-1" ]
+    - !verifyRepo 
+      referenceName: "push-branch-commit-1"
+
+    - !elaborate 
+      descriptionId: "level-data/push-branch/remote-branch-is-different"
+
+  # push to remote
+    - !instruct 
+      descriptionId: "level-data/push-branch/push-1"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !act.push 
+          localSetupName: share-history
+          remoteNickName: origin
+          refspecs: '+refs/heads/master:refs/heads/master'
+    - !verifyRepo 
+      referenceName: "push-branch-push-1"
+
+    - !elaborate 
+      descriptionId: "level-data/push-branch/confirm-pushed"
+  
+  # push multiple commits
+    - !instruct 
+      descriptionId: "level-data/push-branch/add-multiple-commits"
+      needConfirm: false
+    - !instruct 
+      descriptionId: "level-data/push-branch/modify-file-2"
+    - !execute 
+      descriptionId: "level-data/push-branch/modify-file-action"
+      actions:
+        - !act.writeFile 
+          sourceAssetIds: ["$level-data/push-branch/file-1:v1"]
+          destinationPaths: ["share-history/file.txt"]
+
+    - !instruct 
+      descriptionId: "level-data/push-branch/commit-2"
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: share-history
+          arguments: [ "add", "-u" ]
+        - !dev.act.git 
+          repoSetupName: share-history
+          arguments: [ "commit", "-m", "$level-data/push-branch/commit-message-2" ]
+    - !checkpoint 
+      checkpointName: push-branch-commit-2
+    
+    - !instruct 
+      descriptionId: "level-data/push-branch/modify-file-3"
+    - !execute 
+      descriptionId: "level-data/push-branch/modify-file-action"
+      actions:
+        - !act.writeFile 
+          sourceAssetIds: ["$level-data/push-branch/file-1:v2"]
+          destinationPaths: ["share-history/file.txt"]
+
+    - !instruct 
+      descriptionId: "level-data/push-branch/commit-3"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: share-history
+          arguments: [ "add", "-u" ]
+        - !dev.act.git 
+          repoSetupName: share-history
+          arguments: [ "commit", "-m", "$level-data/push-branch/commit-message-3" ]
+    - !verifyRepo  
+      referenceName: push-branch-commit-3
+
+    - !instruct 
+      descriptionId: "level-data/push-branch/push-2-and-3"
+
+    - !elaborate 
+      descriptionId: "level-data/push-branch/summary"
+        
+
+    
+          
