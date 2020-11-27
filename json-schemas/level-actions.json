@@ -177,6 +177,30 @@
             ],
             "additionalProperties": false           
         },
+        "setUser": {
+            "type": "object",
+            "title": "[Action] Set User Name and Email",
+            "description": "Set <userName> and <userEmail> for <repoSetupName>",
+            "properties": {
+                "repoSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                },
+                "userName": {
+                    "type": "string",
+                    "description": "user name used by git"
+                },
+                "userEmail": {
+                    "type": "string",
+                    "description": "user email used by git"
+                },
+            },
+            "required": [
+                "repoSetupName",
+                "userName",
+                "userEmail"
+            ],
+            "additionalProperties": false           
+        },
         "loadReference": {
             "type": "object",
             "title": "[Action] Load Reference",
@@ -388,6 +412,7 @@
             { "$ref": "#/definitions/setRemote" },
             { "$ref": "#/definitions/push" },
             { "$ref": "#/definitions/pushAll" },
+            { "$ref": "#/definitions/setUser" },
             { "$ref": "#/definitions/loadReference" }
         ]
     },

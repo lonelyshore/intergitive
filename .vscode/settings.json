@@ -24,6 +24,7 @@
         "!act.setRemote mapping",
         "!act.push mapping",
         "!act.pushAll mapping",
+        "!act.setUser mapping",
         "!act.loadReference mapping",
 
         "!dev.act.unstage mapping",

@@ -37,6 +37,9 @@
   - name: file-delete-icon
     source: Openclipart
     url: https://publicdomainvectors.org/en/free-clipart/Grayscale-delete-file-icon-vector-clip-art/19860.html
+  - name: cloud.svg
+    source: Openclipart
+    url: https://publicdomainvectors.org/en/free-clipart/White-cloud/45361.html
 
 - path: example/course-resources/fork/level-data/assets/sound
   - name: bird.mp3
