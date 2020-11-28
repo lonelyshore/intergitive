@@ -149,6 +149,40 @@ describe("Worktree Diff #core", function() {
                     }
                 }
             });
+
+            describe('Insensitive to number of EOL and space', function() {
+                let referenceLines = [];
+                for (let i = 0; i < 10; i++) {
+                    referenceLines.push(`line-${i}`);
+                }
+
+                let articles = {};
+                articles['all single eol'] = referenceLines.join('\n');
+
+                articles['all single space'] = referenceLines.join(' ');
+
+                articles['all two eols'] = referenceLines.join('\r\n\r\n');
+
+                articles['mixed space and eols'] = referenceLines.join('\r\n \n  ');
+
+                let keys = Object.keys(articles);
+
+                for (let i = 0; i < keys.length; i++) {
+                    for (let j = i + 1; j < keys.length; j++) {
+                        let sourceName = keys[i];
+                        let refName = keys[j];
+                        let sourceArticle = articles[sourceName];
+                        let refArticle = articles[refName];
+
+                        let testCase = `source: ${sourceName}; ref: ${refName}`;
+                        it (testCase, function() {
+                            return initPath(sourceArticle, refArticle)
+                            .then(() => assertEqual(testCase));
+                        })
+
+                    }
+                }
+            })
         })
 
         describe("Different", function() {
@@ -161,30 +195,32 @@ describe("Worktree Diff #core", function() {
             contents.push(empty);
             contentNames.push('empty');
 
-            contents.push(emptyLines);
-            contentNames.push('empty lines');
-
             contents.push(singleLine);
             contentNames.push('single line');
 
-            eolFuncs.forEach((sourceEol, sourceEolIndex) => {
-                eolFuncs.forEach((refEol, refEolIndex) => {
-                    contents.forEach((sourceContent, sourceIndex) => {
-                        contents.forEach((refContent, refIndex) => {
-                            if (sourceIndex !== refIndex) {
-                                let sourceContentConverted = sourceEol(sourceContent);
-                                let refContentConverted = refEol(refContent);
-                                let testCase = `source: ${contentNames[sourceIndex]}, source eol: ${sourceEolIndex}, ref: ${contentNames[refIndex]}, ref eol: ${refEolIndex}`;
+            for (let sourceEolIndex = 0; sourceEolIndex < eolFuncs.length; sourceEolIndex++) {
+                let sourceEol = eolFuncs[sourceEolIndex];
 
-                                it(testCase, function() {
-                                    return initPath(sourceContentConverted, refContentConverted)
-                                    .then(() => assertInequal(testCase));
-                                })
-                            }
-                        })
-                    })
-                })
-            })
+                for (let refEolIndex = sourceEolIndex + 1; refEolIndex < eolFuncs.length; refEolIndex++) {
+                    let refEol = eolFuncs[refEolIndex];
+
+                    for (let sourceIndex = 0; sourceIndex < contents.length; sourceIndex++) {
+                        let sourceContent = contents[sourceIndex];
+                        
+                        for (let refIndex = sourceIndex + 1; refIndex < contents.length; refIndex++) {
+                            let refContent = contents[refIndex];
+                            let sourceContentConverted = sourceEol(sourceContent);
+                            let refContentConverted = refEol(refContent);
+                            let testCase = `source: ${contentNames[sourceIndex]}, source eol: ${sourceEolIndex}, ref: ${contentNames[refIndex]}, ref eol: ${refEolIndex}`;
+
+                            it(testCase, function() {
+                                return initPath(sourceContentConverted, refContentConverted)
+                                .then(() => assertInequal(testCase));
+                            })
+                        }
+                    }
+                }
+            }
         })
     })
 })
