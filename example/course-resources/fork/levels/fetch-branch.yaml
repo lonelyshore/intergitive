@@ -1,0 +1,120 @@
+!level
+  repoVcsSetups:
+    share-history: !repoVcs 
+      workingPath: share-history
+      referenceStoreName: share-history
+      checkpointStoreName: share-history
+    share-history-remote: !repoVcs 
+      workingPath: share-history-remote
+      referenceStoreName: share-history-remote
+      checkpointStoreName: share-history-remote
+      repoType: remote
+    share-history-another: !repoVcs 
+      workingPath: share-history-another
+      referenceStoreName: share-history-another
+      checkpointStoreName: share-history-another
+
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+  # intro & update remote
+    - !elaborate 
+      descriptionId: "level-data/fetch-branch/intro"
+
+    - !instruct  
+      descriptionId: "level-data/fetch-branch/open-repo"
+      needConfirm: false
+    - !verifyInput 
+      answer: "1"
+
+    - !instruct  
+      descriptionId: "level-data/fetch-branch/update-remote"
+    - !dev.devAction 
+      actions:
+          - !dev.act.git 
+            repoSetupName: share-history-another
+            arguments: [ "fetch", "--all" ]
+          - !dev.act.git 
+            repoSetupName: share-history-another
+            arguments: [ "merge", "--ff-only" ]
+          - !act.writeFile 
+            sourceAssetIds: [ "$level-data/fetch-branch/file-1:v3"]
+            destinationPaths: [ "share-history-another/file.txt" ]
+          - !dev.act.git 
+            repoSetupName: share-history-another
+            arguments: [ "add", "-u" ]
+          - !dev.act.git 
+            repoSetupName: share-history-another
+            arguments: [ "commit", "-m", "$level-data/fetch-branch/commit-message-1" ]
+          - !dev.act.git 
+            repoSetupName: share-history-another
+            arguments: [ "push", "origin", "master" ]
+          - !dev.act.saveReference 
+            repoSetupName: share-history-another
+            referenceName: fetch-branch-another-push-1
+          - !dev.act.saveReference 
+            repoSetupName: share-history-remote
+            referenceName: fetch-branch-another-push-1
+    - !playActions 
+      descriptionId: "level-data/fetch-branch/update-remote-action"
+      actions:
+          - !act.loadReference  
+            repoSetupName: share-history-another
+            referenceName: fetch-branch-another-push-1
+          - !act.loadReference 
+            repoSetupName: share-history-remote
+            referenceName: fetch-branch-another-push-1
+
+  # confirm local repo is not updated
+    - !instruct  
+      descriptionId: "level-data/fetch-branch/config-graph-not-updated"
+      needConfirm: false
+    - !verifyInput 
+      answer: "3"
+
+  # fetch remote
+    - !elaborate 
+      descriptionId: "level-data/fetch-branch/prompt-fetch-remote"
+    - !instruct  
+      descriptionId: "level-data/fetch-branch/fetch"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !dev.act.git 
+            repoSetupName: share-history
+            arguments: [ "fetch", "--all" ]
+    - !verifyRepo  
+      referenceName: fetch-branch-fetch-1
+
+  # confirm remote fetched
+    - !instruct 
+      descriptionId: "level-data/fetch-branch/cofirm-graph-updated"
+      needConfirm: false
+    - !verifyInput 
+      answer: "1"
+
+  # merge to update local branch
+    - !elaborate 
+      descriptionId: "level-data/fetch-branch/effect-of-fetch"
+    - !instruct  
+      descriptionId: "level-data/fetch-branch/merge-remote-branch"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !dev.act.git 
+            repoSetupName: share-history
+            arguments: [ "merge", "--ff-only" ]
+    - !verifyRepo 
+      referenceName: fetch-branch-merge-1
+
+    - !elaborate 
+      descriptionId: "level-data/fetch-branch/confirm-merged"
+
+    - !elaborate 
+      descriptionId: "level-data/fetch-branch/summary"
+    
+
+
+
+
+            

@@ -198,3 +198,9 @@ asset_index:
     click-push-button: push-branch@click-push-button.png
     push-remote-modal: push-branch@push-remote-modal.png
     graph-after-pushed: push-branch@graph-after-pushed.png
+
+# fetch-branch
+    fetch-branch-1: fetch-branch@fetch-branch-1.png
+    fetch-branch-2: fetch-branch@fetch-branch-2.png
+    recall-merge-1: fetch-branch@recall-merge-1.png
+    recall-merge-2: fetch-branch@recall-merge-2.png

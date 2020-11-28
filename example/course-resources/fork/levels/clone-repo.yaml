@@ -76,7 +76,7 @@
       # push
         - !dev.act.git 
           repoSetupName: share-history-another
-          arguments: [ "push", "origin", "master" ]
+          arguments: [ "push", "-u", "origin", "master" ]
 
       # save references
         - !dev.act.saveReference 

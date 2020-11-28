@@ -192,6 +192,10 @@
           id: "fork-main-push-branch"
           nameKey: "levels/main.push-branch.name"
           configAssetId: "levels/push-branch"
+        - !level
+          id: "fork-main-fetch-branch"
+          nameKey: "levels/main.fetch-branch.name"
+          configAssetId: "levels/fetch-branch"
 
 
 

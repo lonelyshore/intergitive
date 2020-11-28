@@ -1,0 +1,153 @@
+asset_index:
+  infile:
+    intro: |+2
+      .md
+      在前面的章節中，我們學習了如何在本地新增${{t/revision}}並${{t/push}}到遠端保存起來  
+      在這個章節中，我們將反過來  
+      學習如何在遠端有了新的${{t/revision}}時，將他們下載回來使用  
+      這個操作，就叫做「${{t/fetch-f}}」
+
+      為了模擬遠端產生新${{t/revision}}的情況，我們將大致上以下列的步驟進行操作；  
+      1. 從另一個${{t/local-repo}}建立新的${{t/revision}}，並且${{t/push}}到${{t/remote-repo}}  
+      2. 從${{t/remote-repo}}${{t/fetch}}最新進度  
+
+    open-repo: |+2
+      .md
+      在我們開始之前  
+      請先使用${{t/gui}}開啟位於「`#{{share-history}}`」的${{t/repo}}  
+
+      開啟之後，請觀察一下${{t/graph}}  
+      請問目前 `master` 還有 `origin/master` 兩個${{t/branch}}是否在同一個${{t/revision}}上呢？  
+      1. 是  
+      2. 否  
+
+      請以數字選項(1/2)作答  
+
+    update-remote: |+2
+      .md
+      在確定了 `master` 還有 `origin/master` 目前在同一個位置後  
+      接下來，就讓我們來模擬一下${{t/remote-repo}}更新的情況  
+
+      請按下下一個區塊的「執行」按鈕，來模擬有另一個${{t/repo}}${{t/push}}更新到遠端  
+
+    update-remote-action: |+2
+      .md
+      更新${{t/remote-repo}}
+
+    config-graph-not-updated: |+2
+      .md
+      經過剛才的步驟，我們已經更新${{t/remote-repo}}的進度了  
+      現在，請使用${{t/gui}}開啟位於「`#{{share-history}}`」的練習用${{t/repo}}  
+
+      請觀察${{t/repo}}，並且回答目前代表${{t/remote-repo}}進度的 **`origin/master`** 領先 **`master`** 幾個${{t/revision}}呢？  
+      1. 1 個
+      2. 3 個
+      3. 沒有領先  
+
+      請以數字選項(1/2/3)作答  
+
+    prompt-fetch-remote: |+2
+      .md
+      恭喜回答正確  
+      我們發現到，從 `share-history` 這個${{t/repo}}來觀察的話  
+      會覺得${{t/remote-repo}}完全沒有更新  
+
+      但是，並不是這個教學程式在惡整玩家  
+      經過剛才的操作，${{t/remote-repo}}確實已經更新得比 `share-history` 還要領先  
+      但是 git 跟雲端備份程式很不一樣的地方是  
+      當遠端的資料變化時，**它不會主動更新，而要仰賴使用者手動更新**  
+      也就是一開始我們提到的「${{t/fetch}}」<br>
+
+      那麼，接下來就讓我們來看要怎樣手動更新吧  
+
+    fetch: |+2
+      .md
+      首先，請如下圖所示  
+      在${{t/gui}}的工具列上，找到紅框圈起的「Fetch(${{t/fetch}})」按鈕  
+
+      ![illustration]({{images/fetch-branch-1}})  
+      <div class="img-title">圖(一)</div>  
+
+      按下之後，會出現如下圖所示的對話框  
+
+      ![illustration]({{images/fetch-branch-2}})  
+      <div class="img-title">圖(二)</div>  
+
+      在這個對話框中，我們可以設定一些「${{t/fetch}}」需要的參數  
+      但是在大多數的情況中，預設的參數就已經足夠，在這裡也不例外  
+      就讓我們直接按下上圖中紅框所圈選的「Fetch(${{t/fetch}})」按鈕，完成操作吧  
+
+      完成之後，請按下「執行」按鈕，確認操作是否成功  
+
+    cofirm-graph-updated: |+2
+      .md
+      現在，讓我們來觀察一下${{t/fetch}}所帶來的效果吧  
+
+      請觀察${{t/graph}}，並且再一次回答代表${{t/remote-repo}}進度的 **`origin/master`** 領先 **`master`** 幾個${{t/revision}}呢？  
+
+      1. 1 個
+      2. 3 個
+      3. 沒有領先
+
+      請以數字選項(1/2/3)作答  
+
+    effect-of-fetch: |+2
+      .md
+      現在，我們知道了使用${{t/fetch}}就可以手動更新${{t/local-repo}}中的 `origin/` 開頭的${{t/branch}}  
+      但是，這跟我們想要的東西還是有一步之遙  
+
+      因為目前我們工作的${{t/branch}}是 `master`  
+      而且 `origin/master` 的更新，代表遠端的 `master` 被更新  
+      我們真正想要的，其實是 **`master`** 可以更新到跟遠端一樣的進度  
+      
+      幸好， `origin/master` 是一個代表遠端進度的「${{t/branch}}」  
+      從很久之前，我們就學習過了  
+      如果一個${{t/branch}}想要取得另一個${{t/branch}}上獨有的進展  
+      可以透過「${{t/merge}}」另一個${{t/branch}}來達成  
+
+      因此，就讓我們來將 `origin/master` ${{t/merge}}到 `master` 之中吧  
+
+    merge-remote-branch: |+2
+      .md
+      請回想之前所學，將 `origin/master` ${{t/merge}}到 `master`  
+      請先確認目前工作中的${{t/branch}}是 `master`  
+
+      然後，如下圖所示操作  
+      在 `origin/master` 所在的${{t/revision}}上按下右鍵，展開選單  
+
+      ![illustration]({{images/recall-merge-1}})  
+      <div class="img-title">圖(三)</div>  
+
+      展開選單後，在上面選擇如紅框圈選的「origin/master」，展開子選單  
+      緊接著，在子選單上選擇如橘框圈選的「Merge into master(${{t/merge}}到 `master`)」  
+      選擇之後，就會跳出如下圖所示的對話框  
+
+      ![illustration]({{images/recall-merge-2}})  
+      <div class="img-title">圖(四)</div>  
+
+      在對話框上，直接選擇「Merge(${{t/merge}})」按鈕，確認操作  
+
+      操作完成後，請按下「執行」按鈕，確認操作成功  
+
+    confirm-merged: |+2
+      .md
+      合併完成之後  
+      我們如果再次觀察${{t/graph}}，就會注意到 `master` 也更新到 `origin/master` 的位置上  
+      表示${{t/local-repo}}已經成功取得${{t/remote-repo}}的進度  
+
+    summary: |+2
+      .md
+      在這個章節中，我們學習到了如何透過${{t/fetch}}來取得${{t/remote-repo}}的更新  
+      現在，我們有能力可以做到${{t/local-repo}}和${{t/remote-repo}}的雙向溝通了  
+      因此，我們已經可以像是使用雲端硬碟一樣  
+      在不同的電腦上新增資料，透過雲端來同步所有電腦的進度  
+
+      正如雲端硬碟的服務可以給一個人多個電腦使用，也可以給多個人共同使用一樣  
+      git 共享版本歷史的功能，可以直接拿來給一個團隊的人一起使用  
+      大家可以在上面共同開發，然後分享各自的開發進度  
+
+      就讓我們在下一個章節，模擬一下多人開發的簡單流程吧  
+
+# repo assets
+    commit-message-1: "來自遠方的修改 - 1"
+    file-1:v3: "3"
