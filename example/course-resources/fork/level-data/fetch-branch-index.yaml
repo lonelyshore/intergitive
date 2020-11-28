@@ -30,9 +30,7 @@ asset_index:
 
       請按下下一個區塊的「執行」按鈕，來模擬有另一個${{t/repo}}${{t/push}}更新到遠端  
 
-    update-remote-action: |+2
-      .md
-      更新${{t/remote-repo}}
+    update-remote-action: "更新${{t/remote-repo}}"
 
     config-graph-not-updated: |+2
       .md

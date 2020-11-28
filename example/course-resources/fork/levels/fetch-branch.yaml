@@ -55,7 +55,7 @@
           - !dev.act.saveReference 
             repoSetupName: share-history-remote
             referenceName: fetch-branch-another-push-1
-    - !playActions 
+    - !execute  
       descriptionId: "level-data/fetch-branch/update-remote-action"
       actions:
           - !act.loadReference  
