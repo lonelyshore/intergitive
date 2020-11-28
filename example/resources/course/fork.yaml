@@ -196,6 +196,10 @@
           id: "fork-main-fetch-branch"
           nameKey: "levels/main.fetch-branch.name"
           configAssetId: "levels/fetch-branch"
+        - !level
+          id: "fork-main-simple-collaboration"
+          nameKey: "levels/main.simple-collaboration.name"
+          configAssetId: "levels/simple-collaboration"
 
 
 

@@ -1,0 +1,199 @@
+!level
+  repoVcsSetups:
+    share-history: !repoVcs 
+      workingPath: share-history
+      referenceStoreName: share-history
+      checkpointStoreName: share-history
+    share-history-remote: !repoVcs 
+      workingPath: share-history-remote
+      referenceStoreName: share-history-remote
+      checkpointStoreName: share-history-remote
+      repoType: remote
+    share-history-another: !repoVcs 
+      workingPath: share-history-another
+      referenceStoreName: share-history-another
+      checkpointStoreName: share-history-another
+
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+  # intro
+    - !elaborate 
+      descriptionId: "level-data/simple-collaboration/intro"
+
+  # fetch and merge
+    - !elaborate 
+      descriptionId: "level-data/simple-collaboration/fetch-routinely"
+    - !dev.devAction 
+      actions:
+          - !dev.act.git 
+            repoSetupName: share-history-another
+            arguments: [ "fetch", "--all" ]
+          - !dev.act.git 
+            repoSetupName: share-history-another
+            arguments: [ "merge", "--ff-only" ]
+          - !act.writeFile 
+            sourceAssetIds: [ "$level-data/simple-collaboration/poem:v1"]
+            destinationPaths: [ "$level-data/simple-collaboration/poem-path-another" ]
+          - !dev.act.git 
+            repoSetupName: share-history-another
+            arguments: [ "add", "-u" ]
+          - !dev.act.git 
+            repoSetupName: share-history-another
+            arguments: [ "commit", "-m", "$level-data/simple-collaboration/commit-message-1" ]
+          - !dev.act.git 
+            repoSetupName: share-history-another
+            arguments: [ "push", "origin", "master" ]
+          - !dev.act.saveReference 
+            repoSetupName: share-history-another
+            referenceName: simple-collaboration-push-1
+          - !dev.act.saveReference 
+            repoSetupName: share-history-remote
+            referenceName: simple-collaboration-push-1
+    - !execute  
+      descriptionId: "level-data/simple-collaboration/update-remote-action"
+      actions:
+          - !act.loadReference  
+            repoSetupName: share-history-another
+            referenceName: simple-collaboration-push-1
+          - !act.loadReference 
+            repoSetupName: share-history-remote
+            referenceName: simple-collaboration-push-1
+
+    - !instruct 
+      descriptionId: "level-data/simple-collaboration/urge-fetch-and-merge"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !dev.act.git 
+            repoSetupName: share-history
+            arguments: [ "fetch", "--all" ]
+          - !dev.act.git 
+            repoSetupName: share-history
+            arguments: [ "merge", "--ff-only" ]
+    - !verifyRepo 
+      referenceName: simple-collaboration-fetch-and-merge-1
+
+  # modify and push
+    - !elaborate 
+      descriptionId: "level-data/simple-collaboration/ready-to-continue"
+
+    - !instruct 
+      descriptionId: "level-data/simple-collaboration/commit-2"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !act.writeFile 
+            sourceAssetIds: [ "$level-data/simple-collaboration/poem:v2" ]
+            destinationPaths: [ "$level-data/simple-collaboration/poem-path-this" ]
+          - !dev.act.git 
+            repoSetupName: share-history
+            arguments: [ "add", "-u" ]
+          - !dev.act.git 
+            repoSetupName: share-history
+            arguments: [ "commit", "-m", "$level-data/simple-collaboration/commit-message-2" ]
+    - !verifyRepo 
+      referenceName: simple-collaboration-commit-2
+
+    - !instruct 
+      descriptionId: "level-data/simple-collaboration/push-2"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !act.push 
+          localSetupName: share-history
+          remoteNickName: origin
+          refspecs: '+refs/heads/master:refs/heads/master'
+    - !verifyRepo 
+      referenceName: simple-collaboration-push-2
+
+  # update and fetch remote second time
+    - !elaborate 
+      descriptionId: "level-data/simple-collaboration/update-remote-3"
+    - !dev.devAction 
+      actions:
+          - !dev.act.git 
+            repoSetupName: share-history-another
+            arguments: [ "fetch", "--all" ]
+          - !dev.act.git 
+            repoSetupName: share-history-another
+            arguments: [ "merge", "--ff-only" ]
+          - !act.writeFile 
+            sourceAssetIds: [ "$level-data/simple-collaboration/poem:v3"]
+            destinationPaths: [ "$level-data/simple-collaboration/poem-path-another" ]
+          - !dev.act.git 
+            repoSetupName: share-history-another
+            arguments: [ "add", "-u" ]
+          - !dev.act.git 
+            repoSetupName: share-history-another
+            arguments: [ "commit", "-m", "$level-data/simple-collaboration/commit-message-3" ]
+          - !dev.act.git 
+            repoSetupName: share-history-another
+            arguments: [ "push", "origin", "master" ]
+          - !dev.act.saveReference 
+            repoSetupName: share-history-another
+            referenceName: simple-collaboration-push-3
+          - !dev.act.saveReference 
+            repoSetupName: share-history-remote
+            referenceName: simple-collaboration-push-3
+    - !execute  
+      descriptionId: "level-data/simple-collaboration/update-remote-action"
+      actions:
+          - !act.loadReference  
+            repoSetupName: share-history-another
+            referenceName: simple-collaboration-push-3
+          - !act.loadReference 
+            repoSetupName: share-history-remote
+            referenceName: simple-collaboration-push-3
+
+    - !instruct 
+      descriptionId: "level-data/simple-collaboration/fetch-3"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !dev.act.git 
+            repoSetupName: share-history
+            arguments: [ "fetch", "--all" ]
+          - !dev.act.git 
+            repoSetupName: share-history
+            arguments: [ "merge", "--ff-only" ]
+    - !verifyRepo 
+      referenceName: simple-collaboration-fetch-and-merge-3
+
+  # modify and push 4
+    - !instruct 
+      descriptionId: "level-data/simple-collaboration/commit-4"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !act.writeFile 
+            sourceAssetIds: [ "$level-data/simple-collaboration/poem:v4" ]
+            destinationPaths: [ "$level-data/simple-collaboration/poem-path-this" ]
+          - !dev.act.git 
+            repoSetupName: share-history
+            arguments: [ "add", "-u" ]
+          - !dev.act.git 
+            repoSetupName: share-history
+            arguments: [ "commit", "-m", "$level-data/simple-collaboration/commit-message-4" ]
+    - !verifyRepo 
+      referenceName: simple-collaboration-commit-4
+
+    - !instruct 
+      descriptionId: "level-data/simple-collaboration/push-4"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !act.push 
+          localSetupName: share-history
+          remoteNickName: origin
+          refspecs: '+refs/heads/master:refs/heads/master'
+    - !verifyRepo 
+      referenceName: simple-collaboration-push-4
+
+    - !elaborate 
+      descriptionId: "level-data/simple-collaboration/summary"
+
+
+
+
+            

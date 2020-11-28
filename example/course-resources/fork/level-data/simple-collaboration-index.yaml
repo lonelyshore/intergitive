@@ -1,0 +1,144 @@
+asset_index:
+  infile:
+    intro: |+2
+      .md
+      目前為止，我們已經學會如何${{t/fetch}}和${{t/push}}  
+      我們可以利用這兩個技巧來和別人在一個倉庫上共同合作  
+      在這個章節中，將會模擬兩個人共同合作的感覺  
+
+      整個流程大致上將會如下進行：  
+      1. ${{t/fetch}}${{t/remote-repo}}的最新版本  
+      2. 更新${{t/local-repo}}，加入一些${{t/revision}}  
+      3. ${{t/push}}  
+
+      為了方便觀察兩人合作的成果  
+      在這個範例中，我們將會修改「${{level-data/simple-collaboration/poem-name}}」這個檔案  
+      模擬兩人一來一往的編寫這個絕句  
+      體會箇中趣味  
+
+      那麼，就讓我們開始吧  
+
+    fetch-routinely: |+2
+      .md
+      在使用 git 進行多人共同協作的時候  
+      首要注意的，就是記得時常${{t/fetch}}${{t/remote-repo}}  
+      頻繁獲得別人的工作進度，這樣才方便基於他人的進度來繼續工作  
+
+      在這裡的練習中，我們來模擬有其它的夥伴，${{t/push}}一個版本到${{t/remote-repo}}  
+      請在下一個步驟中按下「執行」按鈕，來模擬這件事情  
+
+    update-remote-action: "更新${{t/remote-repo}}"
+
+    urge-fetch-and-merge: |+2
+      .md
+      現在，${{t/remote-repo}}已經更新了 `master` 的進度  
+      現在，就讓我們把${{t/local-repo}}也更新到跟遠端一致吧  
+
+      請使用${{t/gui}}開啟位於「`#{{share-history}}`」的練習用${{t/repo}}  
+
+      接著，請按照先前所學，先${{t/fetch}}一次，取得遠端的最新版本  
+      請注意，這個時候我們自己的 `master` 還會是落後的  
+      所以接下來還要將 `origin/master` ${{t/merge}}到 `master` 之中  
+      這樣，我們才可以用 `master` 這個${{t/branch}}  
+      立足於最新的版本上，接力開發  
+      
+      完成之後，請按下「執行」按鈕，確認操作成功  
+
+    ready-to-continue: |+2
+      .md
+      現在，我們已經取得了來自${{t/remote-repo}}的最新版本  
+      並且，目前的工作中${{t/branch}}－－ `master` 也已經更新到和遠端一樣的進度  
+
+      我們可以注意到遠端增加了一個名叫「${{level-data/simple-collaboration/poem-name}}」的檔案  
+      還在裡面起了一個頭  
+
+      既然是五言絕句，就需要填滿四句才行  
+      接下來，就讓我們跟模擬出來的遠端朋友一起完成這首絕句吧  
+
+    commit-2: |+2
+      .md
+      請開啟「${{level-data/simple-collaboration/poem-name}}」<br>  
+      並且在第二句加上「`邀我至田家：他邀請我到田舍作客`」<br>  
+
+      緊接著，請以「`${{level-data/simple-collaboration/commit-message-2}}`」作為${{t/commit-msg}}建立${{t/revision}}  
+
+      完成之後，請按下「執行」按鈕，確認操作成功  
+
+    push-2: |+2
+      .md
+      在協作的過程中  
+      只要覺得本地變更是時候與其它人分享的時候，就可以${{t/push}}  
+
+      擇日不如撞日，我們現在就趕緊分享給遠端的虛擬朋友吧  
+
+      請根據之前所學，將 `master` ${{t/push}}到${{t/remote-repo}}  
+
+    update-remote-3: |+2
+      .md
+      很好，現在我們把我們對五言絕句的巧思也反饋回去了  
+      接下來，可以等待對方再一次修改並且${{t/push}}到${{t/remote-repo}}  
+
+      當然，虛擬朋友的一舉一動都在我們的控制中  
+      就讓我們在下一個步驟中按下「執行」按鈕，模擬遠方的朋友又一次更新遠端了吧  
+
+    fetch-3: |+2
+      .md
+      更新遠端之後，就讓我們再次依樣畫葫蘆  
+      ${{t/fetch}}並且${{t/merge}}遠端的 `origin/master` 到 `master` 裡面吧  
+
+      完成之後，請按下「執行」按鈕，確認操作成功  
+
+    commit-4: |+2
+      .md
+      現在我們已經收到了遠端傳回來的第三句  
+      賞析完之後，就讓我們補上五言絕句的最後一句吧  
+
+      請開啟「${{level-data/simple-collaboration/poem-name}}」<br>  
+      並且加入第四行「`低頭思故鄉：迷路在山中的我，只能悵然低頭開始想家`」<br>  
+
+      緊接著，請以「`${{level-data/simple-collaboration/commit-message-4}}`」作為${{t/commit-msg}}建立${{t/revision}}  
+
+      完成之後，請按下「執行」按鈕，確認操作成功  
+
+    push-4: |+2
+      .md
+      恭喜，我們已經完成一首經典的五言絕句  
+      就讓我們趕緊${{t/push}}到${{t/remote-repo}}跟遠方的虛擬朋友分享吧  
+
+      完成之後，請按下「執行」按鈕，確認操作成功  
+    
+    summary: |+2
+      .md
+      在這個章節中，我們和我們的虛擬朋友演練了如何藉由 git 共同協作  
+      或許聰明如你，已經注意到我們設想的虛擬朋友的行為太過天真了  
+
+      剛才演練的情景中，我們和朋友之間，都是按部就班一來一往  
+      但是現實的生活中，當我們${{t/push}}自己的工作成果後，並不會單純的空等  
+      更多的時候，我們會接續修改其它的檔案，醞釀下一次的${{t/push}}  
+      這個時候，情況就會變得複雜許多，但也正是 git 另一個強大的功能發揮作用的地方  
+
+      就讓我們期待在後續的章節中  
+      繼續鑽研共同協作的方法吧  
+
+# repo assets
+    poem-name: 五言絕句
+    poem-path-this: share-history/五言絕句.txt
+    poem-path-another: share-history-another/五言絕句.txt
+    poem:v1: |+2
+      昔有吳起者：從前有一個叫做吳起的人
+    poem:v2: |+2
+      昔有吳起者：從前有一個叫做吳起的人
+      邀我至田家：他邀請我到田舍作客
+    poem:v3: |+2
+      昔有吳起者：從前有一個叫做吳起的人
+      邀我至田家：他邀請我到田舍作客
+      雲深不知處：他的田舍在雲霧繚繞的山中，怎麼也找不到
+    poem:v4: |+2
+      昔有吳起者：從前有一個叫做吳起的人
+      邀我至田家：他邀請我到田舍作客
+      雲深不知處：他的田舍在雲霧繚繞的山中，怎麼也找不到
+      低頭思故鄉：迷路在山中的我，只能悵然低頭開始想家
+    commit-message-1: 五言絕句 - 1
+    commit-message-2: 五言絕句 - 2
+    commit-message-3: 五言絕句 - 3
+    commit-message-4: 五言絕句 - 4

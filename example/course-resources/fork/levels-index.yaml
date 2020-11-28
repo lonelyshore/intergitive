@@ -58,6 +58,7 @@ asset_index:
     main.clone-repo.name: "7-2 節：複製倉庫"
     main.push-branch.name: "7-3 節：推送分支"
     main.fetch-branch.name: "7-4 節：抓取分支"
+    main.simple-collaboration.name: "7-5 節：簡單的多人協作模式 "
     
 
   ondisk:
@@ -109,3 +110,4 @@ asset_index:
     clone-repo: "clone-repo.yaml"
     push-branch: "push-branch.yaml"
     fetch-branch: "fetch-branch.yaml"
+    simple-collaboration: "simple-collaboration.yaml"
