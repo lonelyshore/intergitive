@@ -13,8 +13,7 @@ asset_index:
 
       為了方便觀察兩人合作的成果  
       在這個範例中，我們將會修改「${{level-data/simple-collaboration/poem-name}}」這個檔案  
-      模擬兩人一來一往的編寫這個絕句  
-      體會箇中趣味  
+      模擬兩人一來一往的編寫這個絕句，體會箇中趣味  
 
       那麼，就讓我們開始吧  
 
@@ -58,7 +57,7 @@ asset_index:
     commit-2: |+2
       .md
       請開啟「${{level-data/simple-collaboration/poem-name}}」<br>  
-      並且在第二句加上「`邀我至田家：他邀請我到田舍作客`」<br>  
+      並且把第二行的「`2：`」改成「`2：邀我至田家`」<br>  
 
       緊接著，請以「`${{level-data/simple-collaboration/commit-message-2}}`」作為${{t/commit-msg}}建立${{t/revision}}  
 
@@ -94,7 +93,7 @@ asset_index:
       賞析完之後，就讓我們補上五言絕句的最後一句吧  
 
       請開啟「${{level-data/simple-collaboration/poem-name}}」<br>  
-      並且加入第四行「`低頭思故鄉：迷路在山中的我，只能悵然低頭開始想家`」<br>  
+      並且把第四行的「`4：`」「`4：低頭思故鄉`」<br>  
 
       緊接著，請以「`${{level-data/simple-collaboration/commit-message-4}}`」作為${{t/commit-msg}}建立${{t/revision}}  
 
@@ -122,22 +121,29 @@ asset_index:
 
 # repo assets
     poem-name: 五言絕句
+    poem-file-name: 五言絕句.txt
     poem-path-this: share-history/五言絕句.txt
     poem-path-another: share-history-another/五言絕句.txt
     poem:v1: |+2
-      昔有吳起者：從前有一個叫做吳起的人
+      1：昔有吳起者
+      2：
+      3：
+      4：
     poem:v2: |+2
-      昔有吳起者：從前有一個叫做吳起的人
-      邀我至田家：他邀請我到田舍作客
+      1：昔有吳起者
+      2：邀我至田家
+      3：
+      4：
     poem:v3: |+2
-      昔有吳起者：從前有一個叫做吳起的人
-      邀我至田家：他邀請我到田舍作客
-      雲深不知處：他的田舍在雲霧繚繞的山中，怎麼也找不到
+      1：昔有吳起者
+      2：邀我至田家
+      3：雲深不知處
+      4：
     poem:v4: |+2
-      昔有吳起者：從前有一個叫做吳起的人
-      邀我至田家：他邀請我到田舍作客
-      雲深不知處：他的田舍在雲霧繚繞的山中，怎麼也找不到
-      低頭思故鄉：迷路在山中的我，只能悵然低頭開始想家
+      1：昔有吳起者
+      2：邀我至田家
+      3：雲深不知處
+      4：低頭思故鄉
     commit-message-1: 五言絕句 - 1
     commit-message-2: 五言絕句 - 2
     commit-message-3: 五言絕句 - 3

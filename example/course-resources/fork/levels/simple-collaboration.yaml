@@ -37,7 +37,7 @@
             destinationPaths: [ "$level-data/simple-collaboration/poem-path-another" ]
           - !dev.act.git 
             repoSetupName: share-history-another
-            arguments: [ "add", "-u" ]
+            arguments: [ "add", "$level-data/simple-collaboration/poem-file-name" ]
           - !dev.act.git 
             repoSetupName: share-history-another
             arguments: [ "commit", "-m", "$level-data/simple-collaboration/commit-message-1" ]
