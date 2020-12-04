@@ -165,6 +165,8 @@ describe("Worktree Diff #core", function() {
 
                 articles['mixed space and eols'] = referenceLines.join('\r\n \n  ');
 
+                articles['adding one more empty line'] = articles['mixed space and eols'] + '\n';
+
                 let keys = Object.keys(articles);
 
                 for (let i = 0; i < keys.length; i++) {
