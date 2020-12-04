@@ -12,7 +12,7 @@ const wait = require('../../lib/utility').wait;
 
 const utils = require('./test-utils');
 const AssetLoader = require('../../lib/asset-loader').AssetLoader;
-const ActionExecutor = require('../../dev/action-executor').DevActionExecutor;
+const ActionExecutor = require('../../lib/action-executor').ActionExecutor;
 const RepoVcsSetup = require('../../lib/config-level').RepoVcsSetup;
 const RepoReferenceManager = require('../../lib/repo-vcs').RepoReferenceManager;
 const REPO_TYPE = require('../../lib/config-level').REPO_TYPE;
@@ -83,7 +83,7 @@ function assertRemoteUpdated(localRefs, remoteRefs, remoteName, matchedRefs) {
     });
 }
 
-describe('Action Executor #core', function() {
+describe.only('Action Executor #core', function() {
 
     let actionExecutor;
     const testRepoSetupName = 'test-repo';
@@ -915,6 +915,82 @@ describe('Action Executor #core', function() {
 
             });
 
+        });
+
+        describe("Merge", function() {
+
+            it("merge branches", function() {
+                
+                const toBranch = "master";
+                const fromBranch = "mergable";
+
+                let action = new actionTypes.MergeAction(
+                    testRepoSetupName,
+                    fromBranch
+                );
+
+                let toBranchSha;
+                let fromBranchSha;
+                let parentOneSha;
+                let parentTwoSha;
+
+                return repo.revparse([ toBranch, fromBranch ])
+                .then(results => {
+                    toBranchSha = results[0];
+                    fromBranchSha = results[1];
+                })
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return repo.revparse([ toBranch + "^1", toBranch + "^2" ])
+                    .then(results => {
+                        parentOneSha = results[0];
+                        parentTwoSha = results[1];
+                    })
+                })
+                .then(() => {
+                    return parentOneSha === toBranchSha
+                        && parentTwoSha === fromBranchSha;
+                })
+                .should.eventually.be.true;
+                
+            });
+
+            it("merge conflict will stop", function() {
+                
+                const toBranch = "master";
+                const fromBranch = "conflict-MM";
+
+                let action = new actionTypes.MergeAction(
+                    testRepoSetupName,
+                    fromBranch
+                );
+
+                let currentSha;
+                return repo.revparse([toBranch])
+                .then(result => {
+                    currentSha = result;
+                })
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return repo.revparse(["HEAD"])
+                    .then(result => {
+                        result.should.equal(currentSha);
+                    })
+                    .then(() => {
+                        return repo.status();
+                    })
+                    .then(result => {
+                        result.should.deep.include({
+                            conflicted: ["a.txt"]
+                        });
+                    });
+                })
+                .should.be.fulfilled;
+            });
         });
 
         describe('Remote Related', function() {

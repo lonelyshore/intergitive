@@ -20,21 +20,6 @@ class UnstageAllAction extends upstream.Action {
     }
 }
 
-/**
- * @inheritdoc
- */
-class MergeAction extends upstream.Action {
-    constructor(repoSetupName, withBranch) {
-        super();
-        this.klass = "MergeAction";
-        this.repoSetupName = repoSetupName;
-        this.withBranch = withBranch;
-    }
-
-    executeBy(actionExecutor) {
-        return actionExecutor.executeMerge(this.repoSetupName, this.withBranch);
-    }
-}
 
 /**
  * @inheritdoc
@@ -143,7 +128,6 @@ class CloneRepoAction extends upstream.Action {
 module.exports = Object.assign({}, upstream);
 module.exports.UnstageAction = UnstageAction;
 module.exports.UnstageAllAction = UnstageAllAction;
-module.exports.MergeAction = MergeAction;
 module.exports.ContinueMergeAction = ContinueMergeAction;
 module.exports.CleanCheckoutAction = CleanCheckoutAction;
 module.exports.GitCommandAction = GitCommandAction;
