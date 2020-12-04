@@ -83,7 +83,7 @@ function assertRemoteUpdated(localRefs, remoteRefs, remoteName, matchedRefs) {
     });
 }
 
-describe.only('Action Executor #core', function() {
+describe('Action Executor #core', function() {
 
     let actionExecutor;
     const testRepoSetupName = 'test-repo';
