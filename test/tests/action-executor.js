@@ -1061,10 +1061,10 @@ describe('Action Executor #core', function() {
                 })
                 .then(() => {
                     return Promise.all([
-                        fs.writeFile(path.join(repoPath, newFileName), newFileName),
-                        fs.writeFile(path.join(repoPath, newStagedFileName), newStagedFileName),
-                        fs.writeFile(path.join(repoPath, dirtyFileName), "cdnaifhdaifenfuidnafkldahfuief"),
-                        fs.writeFile(path.join(repoPath, dirtyStagedFileName), "jfkdajfiomiofmdodfjdifjsdiofjdisofjsdop"),
+                        fs.writeFile(path.join(workingPath, newFileName), newFileName),
+                        fs.writeFile(path.join(workingPath, newStagedFileName), newStagedFileName),
+                        fs.writeFile(path.join(workingPath, dirtyFileName), "cdnaifhdaifenfuidnafkldahfuief"),
+                        fs.writeFile(path.join(workingPath, dirtyStagedFileName), "jfkdajfiomiofmdodfjdifjsdiofjdisofjsdop"),
                         fs.remove(removedFileName),
                         fs.remove(removedStagedFileName)
                     ]);
@@ -1084,30 +1084,6 @@ describe('Action Executor #core', function() {
             it("checkout branch", function() {
                 return assertCleanCheckout("conflict-AA");
             });
-
-            it("checkout refspec", function() {
-                return assertCleanCheckout("HEAD~2");
-            })
-
-            it("checkout sha", function() {
-                
-                let targetSha;
-                return repo.revparse(["conflict-MM"])
-                .then(result => {
-                    targetSha = result.trim();
-
-                    return new actionTypes.CheckoutAction(
-                        testRepoSetupName,
-                        targetSha
-                    );
-                })
-                .then(action => {
-                    return action.executeBy(actionExecutor);
-                })
-                .then(() => {
-                    return assertCleanAt(targetSha);
-                });
-            })
         });
 
         describe('Remote Related', function() {
