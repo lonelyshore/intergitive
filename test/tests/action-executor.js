@@ -917,6 +917,120 @@ describe('Action Executor #core', function() {
 
         });
 
+        describe.only('Commit', function() {
+
+            it('Fails when nothing to commit', function() {
+                let action = new actionTypes.CommitAction(
+                    testRepoSetupName,
+                    'nothing'
+                );
+
+                return action.executeBy(actionExecutor)
+                .should.be.rejected;
+            });
+
+            const commitedFile = 'a.txt';
+            const dirtyNotCommited = 'b.txt';
+            
+
+            function modifyAndStageFiles() {
+                return fs.writeFile(
+                    path.join(workingPath, commitedFile),
+                    'here are some random content that should never match the original one'
+                )
+                .then(() => {
+                    return fs.writeFile(
+                        path.join(workingPath, dirtyNotCommited),
+                        'This is some other random content that should never be the same as the original one, again.'
+                    )
+                })
+                .then(() => {
+                    return repo.add([commitedFile]);
+                });
+            }
+
+            it('create commit pushes forward current branch', function() {
+                
+                let action = new actionTypes.CommitAction(
+                    testRepoSetupName,
+                    'what so ever'
+                );
+
+                let originalSha;
+
+                return repo.revparse(['HEAD'])
+                .then(result => {
+                    originalSha = result;
+                })
+                .then(() => modifyAndStageFiles())
+                .then(() => {
+                    action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    // Expects the commit before the current one, is the original one
+                    return repo.revparse(['HEAD^'])
+                    .should.eventually.equal(originalSha);
+                });
+            });
+
+            it('commit message and file correct', function() {
+
+                const commitMessage = 'Write some commit messages\nThis is second line';
+                let action = new actionTypes.CommitAction(
+                    testRepoSetupName,
+                    commitMessage
+                );
+
+                return modifyAndStageFiles()
+                .then(() => {
+                    action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return repo.raw(['cat-file', 'commit', 'HEAD'])
+                    .then(result => {
+                        let resultLines = result.split('\n')
+                        .filter(s => s.trim() !== '');
+
+                        return resultLines.slice(4)// there are 4 meta lines before message
+                        .join('\n');
+                    })
+                    .should.eventually.equal(commitMessage);;
+                })
+                .then(() => {
+                    return git.diff(['--name-only', 'HEAD', 'HEAD^'])
+                    .then(result => {
+                        return result.split('\n')
+                        .filter(s => s.trim() !== '');
+                    })
+                    .should.have.members([commitedFile]);
+                });
+            });
+
+            it('unstaged file untouched', function() {
+                let action = new actionTypes.CommitAction(
+                    testRepoSetupName,
+                    'what so ever'
+                );
+
+                return modifyAndStageFiles()
+                .then(() => {
+                    action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return repo.status();
+                })
+                .should.deep.include({
+                    not_added: [],
+                    conflicted: [],
+                    created: [],
+                    deleted: [],
+                    modified: [ dirtyNotCommited ],
+                    renamed: [],
+                    staged: []
+                });
+            });
+        })
+
         describe("Merge", function() {
 
             it("merge branches", function() {
@@ -993,7 +1107,7 @@ describe('Action Executor #core', function() {
             });
         });
 
-        describe.only("Clean Checkout", function() {
+        describe("Clean Checkout", function() {
 
             const assertCleanAt = function(targetSha) {
                 return repo.revparse(["HEAD"])
