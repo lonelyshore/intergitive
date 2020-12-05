@@ -917,7 +917,9 @@ describe('Action Executor #core', function() {
 
         });
 
-        describe.only('Commit', function() {
+        describe('Commit', function() {
+
+            this.timeout(5000);
 
             it('Fails when nothing to commit', function() {
                 let action = new actionTypes.CommitAction(
@@ -932,7 +934,6 @@ describe('Action Executor #core', function() {
             const commitedFile = 'a.txt';
             const dirtyNotCommited = 'b.txt';
             
-
             function modifyAndStageFiles() {
                 return fs.writeFile(
                     path.join(workingPath, commitedFile),
@@ -956,7 +957,7 @@ describe('Action Executor #core', function() {
                     'what so ever'
                 );
 
-                let originalSha;
+                let originalSha = '';
 
                 return repo.revparse(['HEAD'])
                 .then(result => {
@@ -964,16 +965,19 @@ describe('Action Executor #core', function() {
                 })
                 .then(() => modifyAndStageFiles())
                 .then(() => {
-                    action.executeBy(actionExecutor);
+                    return action.executeBy(actionExecutor);
                 })
                 .then(() => {
                     // Expects the commit before the current one, is the original one
                     return repo.revparse(['HEAD^'])
-                    .should.eventually.equal(originalSha);
-                });
+                    .then(result => {
+                        return result === originalSha;
+                    });
+                })
+                .should.eventually.equal(true);
             });
 
-            it('commit message and file correct', function() {
+            it('commit message correct', function() {
 
                 const commitMessage = 'Write some commit messages\nThis is second line';
                 let action = new actionTypes.CommitAction(
@@ -983,7 +987,7 @@ describe('Action Executor #core', function() {
 
                 return modifyAndStageFiles()
                 .then(() => {
-                    action.executeBy(actionExecutor);
+                    return action.executeBy(actionExecutor);
                 })
                 .then(() => {
                     return repo.raw(['cat-file', 'commit', 'HEAD'])
@@ -994,16 +998,30 @@ describe('Action Executor #core', function() {
                         return resultLines.slice(4)// there are 4 meta lines before message
                         .join('\n');
                     })
-                    .should.eventually.equal(commitMessage);;
+                })
+                .should.eventually.equal(commitMessage);;
+            });
+
+            it('commit file correct', function() {
+
+                const commitMessage = 'Write some commit messages\nThis is second line';
+                let action = new actionTypes.CommitAction(
+                    testRepoSetupName,
+                    commitMessage
+                );
+
+                return modifyAndStageFiles()
+                .then(() => {
+                    return action.executeBy(actionExecutor);
                 })
                 .then(() => {
-                    return git.diff(['--name-only', 'HEAD', 'HEAD^'])
+                    return repo.raw(['diff', '--name-only', 'HEAD', 'HEAD^'])
                     .then(result => {
                         return result.split('\n')
                         .filter(s => s.trim() !== '');
-                    })
-                    .should.have.members([commitedFile]);
-                });
+                    });
+                })
+                .should.eventually.have.members([commitedFile]);;
             });
 
             it('unstaged file untouched', function() {
@@ -1014,17 +1032,17 @@ describe('Action Executor #core', function() {
 
                 return modifyAndStageFiles()
                 .then(() => {
-                    action.executeBy(actionExecutor);
+                    return action.executeBy(actionExecutor);
                 })
                 .then(() => {
                     return repo.status();
                 })
-                .should.deep.include({
-                    not_added: [],
+                .should.eventually.deep.include({
+                    not_added: [ dirtyNotCommited ],
                     conflicted: [],
                     created: [],
                     deleted: [],
-                    modified: [ dirtyNotCommited ],
+                    modified: [],
                     renamed: [],
                     staged: []
                 });
