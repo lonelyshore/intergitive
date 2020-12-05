@@ -993,6 +993,123 @@ describe('Action Executor #core', function() {
             });
         });
 
+        describe.only("Clean Checkout", function() {
+
+            const assertCleanAt = function(targetSha) {
+                return repo.revparse(["HEAD"])
+                .then(result => {
+                    result.trim().should.equal(targetSha.trim());
+                })
+                .then(() => {
+                    return repo.status();
+                })
+                .then(result => {
+                    result.should.deep.include({
+                        not_added: [],
+                        conflicted: [],
+                        created: [],
+                        deleted: [],
+                        modified: [],
+                        renamed: [],
+                        staged: []
+                    });
+                });
+            };
+
+            const assertCleanCheckout = function(commitish) {
+                let action = new actionTypes.CheckoutAction(
+                    testRepoSetupName,
+                    commitish
+                );
+
+                let targetSha
+                return repo.revparse([commitish])
+                .then(result => {
+                    targetSha = result;
+                })
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return assertCleanAt(targetSha);
+                })
+                .should.be.fulfilled;                
+            }
+
+            it("checkout head", function() {
+                
+                let action = new actionTypes.CheckoutAction(
+                    testRepoSetupName,
+                    "HEAD"
+                );
+
+                const newFileName = "newFile";
+                const newStagedFileName = "newStageFile";
+                const dirtyFileName = "a.txt";
+                const dirtyStagedFileName = "c.txt";
+                const removedFileName = "e.txt";
+                const removedStagedFileName = "f.txt";
+
+                let initialSha;
+
+                return Promise.resolve()
+                .then(() => {
+                    return repo.revparse(["HEAD"])
+                    .then(result => {
+                        initialSha = result;
+                    });
+                })
+                .then(() => {
+                    return Promise.all([
+                        fs.writeFile(path.join(repoPath, newFileName), newFileName),
+                        fs.writeFile(path.join(repoPath, newStagedFileName), newStagedFileName),
+                        fs.writeFile(path.join(repoPath, dirtyFileName), "cdnaifhdaifenfuidnafkldahfuief"),
+                        fs.writeFile(path.join(repoPath, dirtyStagedFileName), "jfkdajfiomiofmdodfjdifjsdiofjdisofjsdop"),
+                        fs.remove(removedFileName),
+                        fs.remove(removedStagedFileName)
+                    ]);
+                })
+                .then(() => {
+                    return repo.add([ newStagedFileName, dirtyStagedFileName, removedStagedFileName ]);
+                })
+                .then(() => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return assertCleanAt(initialSha);
+                })
+                .should.be.fulfilled;
+            });
+
+            it("checkout branch", function() {
+                return assertCleanCheckout("conflict-AA");
+            });
+
+            it("checkout refspec", function() {
+                return assertCleanCheckout("HEAD~2");
+            })
+
+            it("checkout sha", function() {
+                
+                let targetSha;
+                return repo.revparse(["conflict-MM"])
+                .then(result => {
+                    targetSha = result.trim();
+
+                    return new actionTypes.CheckoutAction(
+                        testRepoSetupName,
+                        targetSha
+                    );
+                })
+                .then(action => {
+                    return action.executeBy(actionExecutor);
+                })
+                .then(() => {
+                    return assertCleanAt(targetSha);
+                });
+            })
+        });
+
         describe('Remote Related', function() {
 
             let remoteRepo;
