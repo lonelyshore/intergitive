@@ -1821,8 +1821,149 @@ describe('Action Executor #core', function() {
                         });
                     })
                 });
-            })
-        })
+
+                describe.only('two local repos', function() {
+
+                    let anotherLocalRepo;
+                    const anotherRepoName = 'another-local';
+                    const anotherWorkingPath = path.join(repoParentPath, anotherRepoName);
+                    let actionExecutorWithAnotherRepo;
+
+                    before(function() {
+                        let assetLoader = new AssetLoader(path.join(utils.RESOURCES_PATH, 'action-executor', 'resources'));
+
+                        let repoSetups = {
+                            [testRepoSetupName]: new RepoVcsSetup(
+                                path.relative(utils.PLAYGROUND_PATH, workingPath),
+                                '',
+                                '',
+                                REPO_TYPE.LOCAL
+                            ),
+                            [testRemoteRepoSetupName]: new RepoVcsSetup(
+                                path.relative(utils.PLAYGROUND_PATH, remoteWorkingPath),
+                                '',
+                                '',
+                                REPO_TYPE.REMOTE
+                            ),
+                            [anotherRepoName]: new RepoVcsSetup(
+                                path.relative(utils.PLAYGROUND_PATH, anotherWorkingPath),
+                                '',
+                                '',
+                                REPO_TYPE.LOCAL
+                            )
+                        };
+                
+                        actionExecutorWithAnotherRepo = new ActionExecutor(
+                            utils.PLAYGROUND_PATH, 
+                            repoStoreCollectionName,
+                            assetLoader,
+                            repoSetups
+                        );
+                    });
+
+                    beforeEach('Set Another Local', function() {
+
+                        return fs.remove(anotherWorkingPath)
+                        .then(() => {
+                            return fs.mkdtemp(repoParentPath);
+                        })
+                        .then(tempDir => {
+                            return zip.extractArchiveTo(
+                                archivePath,
+                                tempDir
+                            )
+                            .then(() => {
+                                return fs.move(
+                                    path.join(tempDir, repoArchiveName),
+                                    anotherWorkingPath
+                                );
+                            })
+                            .then(() => {
+                                return fs.remove(tempDir);
+                            });
+                        })
+                        .then(() => {
+                            anotherLocalRepo = simpleGitCtor(anotherWorkingPath);
+                        })
+                        .then(() => {
+                            return wait(100);
+                        })
+                        .then(() => {
+                            return repo.checkout(['-f', 'master']);
+                        })
+                        .then(() => {
+                            return repo.clean('f', ['-d']);
+                        })
+                        .then(() => {
+                            let action = new actionTypes.SetRemoteAction(
+                                anotherRepoName,
+                                testRemoteRepoSetupName,
+                                remoteNickName
+                            );
+        
+                            return action.executeBy(actionExecutorWithAnotherRepo);
+                        });
+                    });
+
+                    describe('Fetch', function() {
+
+                        it('fetch remote', function() {
+
+                            let updateRemote = () => {
+                                let createCommitInAnother = () => {
+                                    return fs.writeFile(
+                                        path.join(
+                                            anotherWorkingPath,
+                                            'a.txt'
+                                        ),
+                                        'some random content that should never be able to find something alike jiofjeiocnahfi;dfjico329'
+                                    )
+                                    .then(() => {
+                                        return anotherLocalRepo.add([
+                                            'a.txt'
+                                        ]);
+                                    })
+                                    .then(() => {
+                                        return anotherLocalRepo.commit(
+                                            'some message'
+                                        )
+                                    })
+                                };
+
+                                let anotherPushRemote = () => {
+                                    return anotherLocalRepo.push([
+                                        '-u',
+                                        remoteNickName,
+                                        'master'
+                                    ])
+                                };
+
+                                return createCommitInAnother()
+                                .then(anotherPushRemote);
+                            }
+
+                            let action = new actionTypes.FetchAction(
+                                testRepoSetupName,
+                                remoteNickName
+                            );
+
+                            return updateRemote()
+                            .then(() => {
+                                return action.executeBy(actionExecutorWithAnotherRepo);
+                            })
+                            .then(() => {
+                                return repo.revparse(['master', `${remoteNickName}/master`])
+                                .then(results => {
+                                    return results[0] === results[1];
+                                });
+                            })
+                            .should.eventually.be.false;
+                        });
+
+                    });
+                });
+            });
+        });
 
         describe('Meta', function() {
             it('set user name & email', function() {
