@@ -1822,7 +1822,7 @@ describe('Action Executor #core', function() {
                     })
                 });
 
-                describe.only('two local repos', function() {
+                describe('two local repos', function() {
 
                     let anotherLocalRepo;
                     const anotherRepoName = 'another-local';
