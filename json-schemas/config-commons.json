@@ -12,6 +12,12 @@
         "type": "string",
         "description": "Alias name of a repo defined in [repoVcs] block of the yaml"
     },
+    "repoSetupNames": {
+        "type": "array",
+        "items": {
+            "$ref": "#repoSetupName"
+        }
+    },
     "sourceRepoSetupName": {
         "type": "string",
         "description": "Alias name of a repo defined in [repoVcs] block of the yaml"

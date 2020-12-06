@@ -80,6 +80,9 @@
                 },
                 "appendCheckpoint": {
                     "$ref": "config-commons.json#appendCheckpoint"
+                },
+                "resettingRepos": {
+                    "$ref": "config-commons.json#repoSetupNames"
                 }
             },
             "required": [ "actions" ],
@@ -139,10 +142,7 @@
             "description": "set a checkpoint with name <checkpointName> for git repo names array <repoSetupNames>",
             "properties": {
                 "repoSetupNames": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "config-commons.json#repoSetupName"
-                    }
+                    "$ref": "config-commons.json#repoSetupNames"
                 },
                 "checkpointName": {
                     "$ref": "config-commons.json#checkpointName"
@@ -230,10 +230,7 @@
             "description": "loads final snapshots from previous level for <repoSetupNames>",
             "properties": {
                 "repoSetupNames": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "config-commons.json#/repoSetupName"
-                    }
+                    "$ref": "config-commons.json#repoSetupNames"
                 },
                 "appendCheckpoint": {
                     "$ref": "config-commons.json#appendCheckpoint"
