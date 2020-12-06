@@ -24,41 +24,24 @@
   # fetch and merge
     - !elaborate 
       descriptionId: "level-data/simple-collaboration/fetch-routinely"
-    - !dev.devAction 
+    - !execute 
+      resettingRepos:
+          - share-history-remote
+          - share-history-another
       actions:
-          - !dev.act.git 
-            repoSetupName: share-history-another
-            arguments: [ "fetch", "--all" ]
-          - !dev.act.git 
-            repoSetupName: share-history-another
-            arguments: [ "merge", "--ff-only" ]
+          - !act.pull 
+            localSetupName: share-history-another
+            remoteNickName: origin
+            branchName: master
           - !act.writeFile 
             sourceAssetIds: [ "$level-data/simple-collaboration/poem:v1"]
             destinationPaths: [ "$level-data/simple-collaboration/poem-path-another" ]
-          - !dev.act.git 
+          - !act.addRevision 
             repoSetupName: share-history-another
-            arguments: [ "add", "$level-data/simple-collaboration/poem-file-name" ]
-          - !dev.act.git 
-            repoSetupName: share-history-another
-            arguments: [ "commit", "-m", "$level-data/simple-collaboration/commit-message-1" ]
-          - !dev.act.git 
-            repoSetupName: share-history-another
-            arguments: [ "push", "origin", "master" ]
-          - !dev.act.saveReference 
-            repoSetupName: share-history-another
-            referenceName: simple-collaboration-push-1
-          - !dev.act.saveReference 
-            repoSetupName: share-history-remote
-            referenceName: simple-collaboration-push-1
-    - !execute  
-      descriptionId: "level-data/simple-collaboration/update-remote-action"
-      actions:
-          - !act.loadReference  
-            repoSetupName: share-history-another
-            referenceName: simple-collaboration-push-1
-          - !act.loadReference 
-            repoSetupName: share-history-remote
-            referenceName: simple-collaboration-push-1
+            commitMessage: "$level-data/simple-collaboration/commit-message-1"
+          - !act.pushAll 
+            localSetupName: share-history-another
+            remoteNickName: origin
 
     - !instruct 
       descriptionId: "level-data/simple-collaboration/urge-fetch-and-merge"
@@ -110,41 +93,24 @@
   # update and fetch remote second time
     - !elaborate 
       descriptionId: "level-data/simple-collaboration/update-remote-3"
-    - !dev.devAction 
+    - !execute 
+      resettingRepos:
+          - share-history-remote
+          - share-history-another
       actions:
-          - !dev.act.git 
-            repoSetupName: share-history-another
-            arguments: [ "fetch", "--all" ]
-          - !dev.act.git 
-            repoSetupName: share-history-another
-            arguments: [ "merge", "--ff-only" ]
+          - !act.pull 
+            localSetupName: share-history-another
+            remoteNickName: origin
+            branchName: master
           - !act.writeFile 
             sourceAssetIds: [ "$level-data/simple-collaboration/poem:v3"]
             destinationPaths: [ "$level-data/simple-collaboration/poem-path-another" ]
-          - !dev.act.git 
+          - !act.addRevision 
             repoSetupName: share-history-another
-            arguments: [ "add", "-u" ]
-          - !dev.act.git 
-            repoSetupName: share-history-another
-            arguments: [ "commit", "-m", "$level-data/simple-collaboration/commit-message-3" ]
-          - !dev.act.git 
-            repoSetupName: share-history-another
-            arguments: [ "push", "origin", "master" ]
-          - !dev.act.saveReference 
-            repoSetupName: share-history-another
-            referenceName: simple-collaboration-push-3
-          - !dev.act.saveReference 
-            repoSetupName: share-history-remote
-            referenceName: simple-collaboration-push-3
-    - !execute  
-      descriptionId: "level-data/simple-collaboration/update-remote-action"
-      actions:
-          - !act.loadReference  
-            repoSetupName: share-history-another
-            referenceName: simple-collaboration-push-3
-          - !act.loadReference 
-            repoSetupName: share-history-remote
-            referenceName: simple-collaboration-push-3
+            commitMessage: "$level-data/simple-collaboration/commit-message-3"
+          - !act.pushAll 
+            localSetupName: share-history-another
+            remoteNickName: origin
 
     - !instruct 
       descriptionId: "level-data/simple-collaboration/fetch-3"
