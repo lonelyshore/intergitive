@@ -80,6 +80,24 @@
             "title": "[Action] Debug Log",
             "description": "prints debug message"
         },
+        "checkout": {
+            "type": "object",
+            "title": "[Action] Checkout",
+            "description": "checkout <commitish> in repo with name <re[pSetupName>",
+            "properties": {
+                "repoSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                },
+                "commitish": {
+                    "$ref": "config-commons.json#/commitish"
+                }
+            },
+            "required": [
+                "repoSetupName",
+                "commitish"
+            ],
+            "additionalItems": false
+        },
         "stage": {
             "type": "object",
             "title": "[Action] Stage",
@@ -108,6 +126,102 @@
                 }
             },
             "required": [ "repoSetupName" ],
+            "additionalProperties": false
+        },
+        "commit": {
+            "type": "object",
+            "title": "[Action] Commit",
+            "description": "commit current index of repo <repoSetupName> with message <commitMessage>",
+            "properties": {
+                "repoSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                },
+                "commitMessage": {
+                    "$ref": "config-commons.json#/commitMessage"
+                }
+            },
+            "required": [ 
+                "repoSetupName",
+                "commitMessage"
+            ],
+            "additionalProperties": false
+        },
+        "merge": {
+            "type": "object",
+            "title": "[Action] Merge",
+            "description": "merge HEAD of repo <repoSetupName> with branch <withBranch>",
+            "properties": {
+                "repoSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                },
+                "withBranch": {
+                    "type": "string",
+                    "description": "the branch name of merged branch"
+                }
+            },
+            "required": [ 
+                "repoSetupName",
+                "withBranch"
+            ],
+            "additionalProperties": false
+        },
+        "fetch": {
+            "type": "object",
+            "title": "[Action] Fetch",
+            "description": "<localSetupName> fetches all branches from <remoteNickName>",
+            "properties": {
+                "localSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                },
+                "remoteNickName": {
+                    "$ref": "config-commons.json#/remoteNickName"
+                }
+            },
+            "required": [
+                "localSetupName",
+                "remoteNickName"
+            ],
+            "additionalProperties": false           
+        },
+        "pull": {
+            "type": "object",
+            "title": "[Action] Pull",
+            "description": "<localSetupName> fetches all branches from <remoteNickName>, then checkout and updates <branchName> to its latest",
+            "properties": {
+                "localSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                },
+                "remoteNickName": {
+                    "$ref": "config-commons.json#/remoteNickName"
+                },
+                "branchName": {
+                    "type": "string",
+                    "description": "branch name"
+                }
+            },
+            "required": [
+                "localSetupName",
+                "remoteNickName",
+                "branchName"
+            ],
+            "additionalProperties": false           
+        },
+        "addRevision": {
+            "type": "object",
+            "title": "[Action] Add Revision",
+            "description": "stage all files and commit current index of repo <repoSetupName> with message <commitMessage>",
+            "properties": {
+                "repoSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                },
+                "commitMessage": {
+                    "$ref": "config-commons.json#/commitMessage"
+                }
+            },
+            "required": [ 
+                "repoSetupName",
+                "commitMessage"
+            ],
             "additionalProperties": false
         },
         "setRemote": {
@@ -144,8 +258,7 @@
                     "$ref": "config-commons.json#/remoteNickName"
                 },
                 "refspecs": {
-                    "type": "string",
-                    "description": "git ref specs"
+                    "$ref": "config-commons.json#/refspecs"
                 }
             },
             "required": [
@@ -216,6 +329,24 @@
             "required": [
                 "repoSetupName",
                 "referenceName"
+            ],
+            "additionalProperties": false
+        },
+        "loadCheckpoint": {
+            "type": "object",
+            "title": "[Action] Load Checkpoint",
+            "description": "load git repo checkpoint snapshot with name <checkpointName> to repo <repoSetupName>",
+            "properties": {
+                "repoSetupName": {
+                    "$ref": "config-commons.json#/repoSetupName"
+                },
+                "referenceName": {
+                    "$ref": "config-commons.json#/checkpointName"
+                }
+            },
+            "required": [
+                "repoSetupName",
+                "checkpointName"
             ],
             "additionalProperties": false
         },
@@ -407,13 +538,20 @@
             { "$ref": "#/definitions/removeFile" },
             { "$ref": "#/definitions/moveFile" },
             { "$ref": "#/definitions/debugLog" },
+            { "$ref": "#/definitions/checkout" },
             { "$ref": "#/definitions/stage" },
             { "$ref": "#/definitions/stageAll" },
+            { "$ref": "#/definitions/commit" },
+            { "$ref": "#/definitions/merge" },
+            { "$ref": "#/definitions/fetch" },
+            { "$ref": "#/definitions/pull" },
+            { "$ref": "#/definitions/addRevision" },
             { "$ref": "#/definitions/setRemote" },
             { "$ref": "#/definitions/push" },
             { "$ref": "#/definitions/pushAll" },
             { "$ref": "#/definitions/setUser" },
-            { "$ref": "#/definitions/loadReference" }
+            { "$ref": "#/definitions/loadReference" },
+            { "$ref": "#/definitions/loadCheckpoint" }
         ]
     },
     "dev": {

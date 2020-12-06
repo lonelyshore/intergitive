@@ -35,9 +35,17 @@
             "type": "string"
         }
     },
+    "refspecs": {
+        "type": "string",
+        "description": "git ref specs"
+    },
     "commitish": {
         "type": "string",
         "description": "git commitish descriptor"
+    },
+    "commitMessage": {
+        "type": "string",
+        "description": "git commit message"
     },
     "appendCheckpoint": {
         "type": "boolean",
