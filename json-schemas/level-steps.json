@@ -211,15 +211,20 @@
             "title": "[Step] Auto Play Actions",
             "description": "automatically execute actions <actions>, can be retried with a click. Can optionally display hint message with asset ID <descriptionId>",
             "properties": {
+                "actions": {
+                    "$ref": "#/definitions/actionArray"
+                },
                 "descriptionId": {
                     "$ref": "config-commons.json#assetId"
                 },
-                "actions": {
-                    "$ref": "#/definitions/actionArray"
+                "appendCheckpoint": {
+                    "$ref": "config-commons.json#appendCheckpoint"
+                },
+                "resettingRepos": {
+                    "$ref": "config-commons.json#repoSetupNames"
                 }
             },
             "required": [
-                "descriptionId",
                 "actions"
             ],
             "additionalProperties": false
