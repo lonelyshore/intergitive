@@ -200,6 +200,22 @@
           id: "fork-main-simple-collaboration"
           nameKey: "levels/main.simple-collaboration.name"
           configAssetId: "levels/simple-collaboration"
+    - !sequential-section # chapter 8: share repository
+      id: "fork-main-section-integrate-repository"
+      nameKey: "levels/main.section-integrate-repository"
+      prerequisiteIds: 
+        - "fork-main-section-intro"
+        - "fork-main-section-create-commits"
+        - "fork-main-section-elaborate-commits"
+        - "fork-main-section-advaneced-history-browsing"
+        - "fork-main-section-create-and-checkout-branches"
+        - "fork-main-section-merge-and-delete-branches"
+        - "fork-main-section-share-repository"
+      children:
+        - !level
+          id: "fork-main-diverged-remote"
+          nameKey: "levels/main.diverged-remote.name"
+          configAssetId: "levels/diverged-remote"
 
 
 

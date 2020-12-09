@@ -1,0 +1,81 @@
+!level
+  repoVcsSetups:
+    share-history: !repoVcs 
+      workingPath: share-history
+      referenceStoreName: share-history
+      checkpointStoreName: share-history
+    share-history-remote: !repoVcs 
+      workingPath: share-history-remote
+      referenceStoreName: share-history-remote
+      checkpointStoreName: share-history-remote
+      repoType: remote
+    share-history-another: !repoVcs 
+      workingPath: share-history-another
+      referenceStoreName: share-history-another
+      checkpointStoreName: share-history-another
+
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+  # intro
+    - !elaborate 
+      descriptionId: "level-data/diverged-remote/intro"
+
+  # create commit on remote and local simultanously
+    - !playActions 
+      resettingRepos:
+          - share-history-another
+          - share-history-remote
+      actions:
+          - !act.pull 
+            localSetupName: share-history-another
+            remoteNickName: origin
+            branchName: master
+          - !act.writeFile 
+            sourceAssetIds: [ "$level-data/diverged-remote/poem-1"]
+            destinationPaths: [ "$level-data/diverged-remote/poem-path-1-another" ]
+          - !act.addRevision 
+            repoSetupName: share-history-another
+            commitMessage: "$level-data/diverged-remote/commit-message-another"
+          - !act.pushAll 
+            localSetupName: share-history-another
+            remoteNickName: origin
+
+    - !instruct 
+      descriptionId: "level-data/diverged-remote/encourage-commit"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !act.writeFile 
+            sourceAssetIds: [ "$level-data/diverged-remote/poem-2"]
+            destinationPaths: [ "$level-data/diverged-remote/poem-path-2-this" ]
+          - !act.addRevision 
+            repoSetupName: share-history
+            commitMessage: "$level-data/diverged-remote/commit-message-this"
+    - !verifyRepo 
+      referenceName: diverged-remote-commit-local
+
+  # try push
+    - !instruct 
+      descriptionId: "level-data/diverged-remote/try-push"
+      needConfirm: false
+    - !verifyInput 
+      answer: "2"
+
+  # eexplain push fail
+    - !instruct 
+      descriptionId: "level-data/diverged-remote/push-fail-try-fetch"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !dev.act.git 
+            repoSetupName: share-history
+            arguments: [ "fetch", "--all"]
+    - !verifyRepo 
+      referenceName: diverged-remote-fetch-remote
+
+    - !elaborate 
+      descriptionId: "level-data/diverged-remote/explain-diverged"
+
+    
+    

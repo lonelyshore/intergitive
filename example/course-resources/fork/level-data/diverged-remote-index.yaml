@@ -1,0 +1,83 @@
+asset_index:
+  infile:
+    intro: |+2
+      .md
+      在先前的章節中，我們學習如何和別人透過 git 共同工作的基本方式  
+      而在這個章節中，我們要來學習比較複雜的協作情境  
+      所謂的複雜，到底是甚麼情況呢？  
+      就讓我們直接實際來體驗看看吧  
+
+    encourage-commit: |+2
+      .md
+      首先，就讓我們先來建立${{t/revision}}看看吧  
+
+      請使用${{t/gui}}開啟位在「`#{{share-history}}`」的${{t/local-repo}}  
+
+      開啟之後，請在該資料夾中  
+      以「${{level-data/diverged-remote/poem-name-2}}」為名，建立純文字檔案  
+      並且${{t/stage}}該檔案，然後以「${{level-data/diverged-remote/commit-message-this}}」作為${{t/commit-msg}}  
+      建立${{t/revision}}  
+
+      完成之後，請按下「執行」按鈕，檢查是否成功  
+
+    try-push: |+2
+      .md
+      接下來，請嘗試${{t/push}}到${{t/remote-repo}}看看吧  
+
+      請回答這次${{t/push}}之後，發生了甚麼事情：  
+      1. 順利執行，沒有甚麼特別的事情發生  
+      2. 執行到一半，跳出一個對話框。`master` 跟 `origin/master` 沒有在同一個${{t/revision}}上  
+    
+      請以數字選項(1/2)回答  
+
+    push-fail-try-fetch: |+2
+      .md
+      我們發現剛才的${{t/push}}失敗了  
+      `master` 並沒有成功更新到遠端  
+      除此之外，還出現了如下圖的對話框  
+
+      ![illustration]({{images/push-failed-message}})  
+      <div class="img-title">圖(一)</div>  
+
+      這個對話框大致上描述了 git 遇到了問題無法${{t/push}}成功  
+      如果還沒關閉的話，請按下如上圖中紅框圈選的「Close」將它關閉  
+
+      感覺是${{t/remote-repo}}出了甚麼事情，導致我們無法成功${{t/push}}  
+      就讓我們${{t/fetch}}看看，就能知道發生了甚麼事情了  
+
+      ${{t/fetch}}完成後，請按下「執行」按鈕，檢查是否成功  
+
+    explain-diverged: |+2
+      .md
+      ${{t/fetch}}完成後，如果我們觀察${{t/gui}}的${{t/graph}}  
+      會得到如下圖的狀態  
+
+      ![illustration]({{images/diverged-remote-and-local}})  
+      <div class="img-title">圖(二)</div>  
+
+      從圖片不難看出來，代表遠端的 `origin/master` 和代表本地的 `master` 各自位在不同的${{t/revision}}  
+      原來是在我們${{t/push}}之前，有其它人搶先${{t/push}}一個${{t/revision}}到${{t/remote-repo}}上了  
+
+      而這形成了分歧的情況－－  
+      也就是 `origin/master` 無法直接${{t/fastforward}}到 `master` 所在的位置上  
+
+      當本地和遠端的${{t/branch}}形成分歧  
+      我們就無法${{t/push}}到遠端  
+      因為 git 並不知道應該如何消弭這兩者的分歧  
+
+      那麼要如何才能讓我們繼續${{t/push}}呢？  
+      就讓我們在下個章節來揭曉～
+
+
+# repo assets
+    poem-name-1: 五言律詩
+    poem-file-name-1: 五言律詩.txt
+    poem-path-1-another: share-history-another/五言律詩.txt
+    poem-name-2: 七言絕句
+    poem-file-name-2: 七言絕句.txt
+    poem-path-2-this: share-history/七言絕句.txt
+    
+    poem-1: ""
+    poem-2: ""
+    commit-message-another: 五言律詩
+    commit-message-this: 七言絕句

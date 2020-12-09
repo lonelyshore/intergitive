@@ -204,3 +204,7 @@ asset_index:
     fetch-branch-2: fetch-branch@fetch-branch-2.png
     recall-merge-1: fetch-branch@recall-merge-1.png
     recall-merge-2: fetch-branch@recall-merge-2.png
+
+# diverged-remote
+    push-failed-message: diverged-remote@push-failed-message.png
+    diverged-remote-and-local: diverged-remote@diverged-remote-and-local.png
