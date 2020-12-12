@@ -1,0 +1,137 @@
+!level
+  repoVcsSetups:
+    share-history: !repoVcs 
+      workingPath: share-history
+      referenceStoreName: share-history
+      checkpointStoreName: share-history
+    share-history-remote: !repoVcs 
+      workingPath: share-history-remote
+      referenceStoreName: share-history-remote
+      checkpointStoreName: share-history-remote
+      repoType: remote
+    share-history-another: !repoVcs 
+      workingPath: share-history-another
+      referenceStoreName: share-history-another
+      checkpointStoreName: share-history-another
+
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+  # intro
+    - !elaborate 
+      descriptionId: "level-data/merge-remote/intro"
+    
+    - !instruct 
+      descriptionId: "level-data/merge-remote/merge-1"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !dev.act.merge 
+            repoSetupName: share-history
+            withBranch: origin/master
+    - !verifyRepo 
+      referenceName: merge-remote-merge-remote-1
+
+    - !instruct 
+      descriptionId: "level-data/merge-remote/push-1"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !dev.act.git 
+            repoSetupName: share-history
+            arguments: [ "push", "origin", "master" ]
+    - !verifyRepo 
+      referenceName: merge-remote-push-remote-1
+
+  # multiple merge before finally push
+    - !elaborate 
+      descriptionId: "level-data/merge-remote/possibility-of-multiple-merge"
+
+    - !instruct 
+      descriptionId: "level-data/merge-remote/commit"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !act.writeFile 
+            sourceAssetIds: [ "$level-data/merge-remote/poem-1" ]
+            destinationPaths: [ "$level-data/merge-remote/poem-path-1-this" ]
+          - !act.addRevision 
+            repoSetupName: share-history
+            commitMessage: "$level-data/merge-remote/commit-message-this"
+    - !verifyRepo
+      referenceName: merge-remote-commit-this
+
+    - !playActions 
+      resettingRepos:
+          - share-history-another
+          - share-history-remote
+      actions:
+          - !act.pull 
+            localSetupName: share-history-another
+            remoteNickName: origin
+            branchName: master
+          - !act.removeFile  
+            targetPaths: [ "$level-data/merge-remote/removed-file-path-1" ]
+          - !act.addRevision 
+            repoSetupName: share-history-another
+            commitMessage: "$level-data/merge-remote/commit-message-another-1"
+          - !act.pushAll 
+            localSetupName: share-history-another
+            remoteNickName: origin
+
+    - !instruct 
+      descriptionId: "level-data/merge-remote/diverged-again"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !act.pull 
+            localSetupName: share-history
+            remoteNickName: origin
+            branchName: master
+    - !verifyRepo 
+      referenceName: merge-remote-merge-remote-2
+
+    - !playActions 
+      resettingRepos:
+          - share-history-another
+          - share-history-remote
+      actions:
+          - !act.pull 
+            localSetupName: share-history-another
+            remoteNickName: origin
+            branchName: master
+          - !act.removeFile  
+            targetPaths: [ "$level-data/merge-remote/removed-file-path-2" ]
+          - !act.addRevision 
+            repoSetupName: share-history-another
+            commitMessage: "$level-data/merge-remote/commit-message-another-2"
+          - !act.pushAll 
+            localSetupName: share-history-another
+            remoteNickName: origin
+
+    - !instruct 
+      descriptionId: "level-data/merge-remote/diverged-yet-again"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !act.pull 
+            localSetupName: share-history
+            remoteNickName: origin
+            branchName: master
+    - !verifyRepo 
+      referenceName: merge-remote-merge-remote-3
+
+    - !instruct 
+      descriptionId: "level-data/merge-remote/push-finally"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+          - !dev.act.git 
+            repoSetupName: share-history
+            arguments: [ "push", "origin", "master" ]
+    - !verifyRepo 
+      referenceName: merge-remote-push-remote-2
+
+
+    - !elaborate 
+      descriptionId: "level-data/merge-remote/summary"

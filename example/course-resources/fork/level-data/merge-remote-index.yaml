@@ -1,0 +1,95 @@
+asset_index:
+  infile:
+    intro: |+2
+      .md
+      在上個章節中，我們發現分歧的遠端和本地${{t/branch}}會造成本地無法${{t/push}}  
+      我們之前曾經學過，在${{t/fetch}}完之後要${{t/merge}}本地和遠端${{t/branch}}  
+      其實當時的用意，就是要化解這兩者的分歧  
+      因為化解分歧之後，我們就可以${{t/push}}了  
+
+      那麼，就讓我們立刻來嘗試看看吧
+
+    merge-1: |+2
+      .md
+      請使用${{t/gui}}開啟位於「`#{{share-history}}`」的練習用倉庫  
+
+      開啟之後，請回憶之前所學  
+      將 `origin/master` ${{t/merge}} 到 `master` 之中  
+
+      完成之後，請按下「執行」按鈕，檢查是否成功  
+
+    push-1: |+2
+      .md
+      現在，我們已經準備好可以重新${{t/push}}了  
+      請再次嘗試${{t/push}}到${{t/remote-repo}}吧  
+
+      完成之後，請按下「執行」按鈕，檢查是否成功  
+
+    possibility-of-multiple-merge: |+2
+      .md
+      恭喜，我們成功的和遠端的分歧合併，並且${{t/push}}出去了  
+
+      需要注意的是  
+      有些時候，一次合併可能不能把事情徹底解決  
+      因為當我們合併完準備推送時，有可能遠端又再一次的被更新了  
+
+      接下來就讓我們練習一下遇到這種情況的時候，應該要如何處理吧  
+
+    commit: |+2
+      .md
+      我們現在再嘗試新增一個${{t/revision}}然後${{t/push}}它  
+
+      請在「`#{{share-history}}`」這個資料夾中  
+      新增名為「${{level-data/merge-remote/poem-name-1}}」的純文字文件  
+      並且以「${{level-data/merge-remote/commit-message-this}}」為${{t/commit-msg}}，建立${{t/revision}}  
+
+      完成之後，請按下「執行」按鈕，檢查是否成功  
+
+    
+    diverged-again: |+2
+      .md
+      很不幸的，有小道消息指出  
+      就在我們建立好${{t/revision}}準備好要${{t/push}}時  
+      已經有人搶先一步推送到遠端  
+      這表示我們已經沒有辦法立刻${{t/push}}  
+      
+      我們可以試著推送看看，如果不行，就需要${{t/fetch}}並${{t/merge}}遠端
+
+      就需要${{t/fetch}}並${{t/merge}}遠端之後，先不要繼續${{t/push}}  
+      請按下「執行」按鈕，檢查是否成功合併  
+    
+    diverged-yet-again: |+2
+      .md
+      當我們成功與遠端合併準備好要${{t/push}}時  
+      很不幸的，有小道消息指出又有人再一次搶先一步${{t/push}}到${{t/remote-repo}}  
+
+      我們可以試著推送看看，如果不行，就需要${{t/fetch}}並${{t/merge}}遠端
+
+      ${{t/fetch}}並${{t/merge}}遠端之後，先不要繼續${{t/push}}  
+      請按下「執行」按鈕，檢查是否成功合併  
+
+    push-finally: |+2
+      .md
+      我們又一次地完成了合併  
+      請再一次嘗試${{t/push}}到遠端，希望這次可以一切順利  
+
+    summary: |+2
+      .md
+      恭喜，我們終於再次完成了${{t/push}}  
+      第二次的${{t/push}}真是多災多難不是嗎？  
+      
+      然而，現實情況的多人共同協作，常常比剛才練習的情況還要更加複雜  
+      但是沒有關係，我們將在緊接而來章節中學習如何應對  
+      敬請期待～
+      
+# repo assets
+    poem-name-1: 七言律詩
+    poem-file-name-1: 七言律詩.txt
+    poem-path-1-this: share-history/七言律詩.txt
+    removed-file-path-1: share-history-another/七言絕句.txt
+    removed-file-path-2: share-history-another/五言絕句.txt
+    
+    poem-1: ""
+    commit-message-this: 七言律詩
+    commit-message-another-1: 刪除七言絕句
+    commit-message-another-2: 刪除五言絕句

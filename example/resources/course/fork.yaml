@@ -216,6 +216,10 @@
           id: "fork-main-diverged-remote"
           nameKey: "levels/main.diverged-remote.name"
           configAssetId: "levels/diverged-remote"
+        - !level
+          id: "fork-main-merge-remote"
+          nameKey: "levels/main.merge-remote.name"
+          configAssetId: "levels/merge-remote"
 
 
 
