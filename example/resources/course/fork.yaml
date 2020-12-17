@@ -220,6 +220,10 @@
           id: "fork-main-merge-remote"
           nameKey: "levels/main.merge-remote.name"
           configAssetId: "levels/merge-remote"
+        - !level
+          id: "fork-main-merge-conflict"
+          nameKey: "levels/main.merge-conflict.name"
+          configAssetId: "levels/merge-conflict"
 
 
 

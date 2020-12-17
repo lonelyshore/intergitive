@@ -67,3 +67,6 @@ asset_index:
     fetch-f: "抓取(fetch)"
     fetch: "抓取"
     pull-f: "拉收(pull)"
+    conflict-f: "衝突(conflict)"
+    conflict: "衝突"
+    resolve: "消解"

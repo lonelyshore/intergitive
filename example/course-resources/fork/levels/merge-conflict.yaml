@@ -1,0 +1,158 @@
+!level
+  repoVcsSetups:
+    resolve-conflict: !repoVcs 
+      workingPath: resolve-conflict
+      referenceStoreName: resolve-conflict
+      checkpointStoreName: resolve-conflict
+    resolve-conflict-remote: !repoVcs 
+      workingPath: resolve-conflict-remote
+      referenceStoreName: resolve-conflict-remote
+      checkpointStoreName: resolve-conflict-remote
+      repoType: remote
+    resolve-conflict-another: !repoVcs 
+      workingPath: resolve-conflict-another
+      referenceStoreName: resolve-conflict-another
+      checkpointStoreName: resolve-conflict-another
+
+  steps:
+    - !dev.devAction 
+      actions:
+      # init repose: remote, this, another
+        - !dev.act.git 
+          repoSetupName: resolve-conflict-remote
+          arguments: [ "init", "--bare"]
+
+        - !dev.act.git
+          repoSetupName: resolve-conflict-another
+          arguments:
+            - init
+        - !dev.act.git 
+          repoSetupName: resolve-conflict-another
+          arguments: [ config, "--local", user.name, other]
+        - !dev.act.git 
+          repoSetupName: resolve-conflict-another
+          arguments: [ config, "--local", user.email, other@some.mail]
+        - !dev.act.git 
+          repoSetupName: resolve-conflict-another
+          arguments: [ config, "--local", core.autocrlf, input]
+
+      # link another repo to remote
+        - !act.setRemote
+          localSetupName: resolve-conflict-another
+          remoteSetupName: resolve-conflict-remote
+          remoteNickName: origin
+
+      # add initial commit
+        - !act.writeFile 
+          sourceAssetIds: [ "$level-data/merge-conflict/file" ]
+          destinationPaths: [ "$level-data/merge-conflict/file-path-another" ]
+        - !act.addRevision 
+          repoSetupName: resolve-conflict-another
+          commitMessage: "$level-data/merge-conflict/commit-message-1"
+        - !act.push 
+          localSetupName: resolve-conflict-another
+          remoteNickName: origin
+          refspecs: '+refs/heads/master:refs/heads/master'
+
+      # clone to local and configure it
+        - !dev.act.git 
+          repoSetupName: resolve-conflict
+          arguments: [ "clone", "../resolve-conflict-remote", "." ]
+
+        - !dev.act.git
+          repoSetupName: resolve-conflict
+          arguments:
+            - init
+        - !dev.act.git 
+          repoSetupName: resolve-conflict
+          arguments: [ config, "--local", user.name, someone]
+        - !dev.act.git 
+          repoSetupName: resolve-conflict
+          arguments: [ config, "--local", user.email, someone@some.mail]
+        - !dev.act.git 
+          repoSetupName: resolve-conflict
+          arguments: [ config, "--local", core.autocrlf, input]
+
+        - !act.setRemote
+          localSetupName: resolve-conflict
+          remoteSetupName: resolve-conflict-remote
+          remoteNickName: origin
+
+        - !dev.act.saveReference 
+          repoSetupName: resolve-conflict
+          referenceName: init
+        - !dev.act.saveReference 
+          repoSetupName: resolve-conflict-another
+          referenceName: init
+        - !dev.act.saveReference 
+          repoSetupName: resolve-conflict-remote
+          referenceName: init
+
+    - !playActions 
+      actions:
+        - !act.loadReference 
+          repoSetupName: resolve-conflict
+          referenceName: init
+        - !act.loadReference 
+          repoSetupName: resolve-conflict-another
+          referenceName: init
+        - !act.loadReference 
+          repoSetupName: resolve-conflict-remote
+          referenceName: init
+
+    # intro
+    - !elaborate 
+      descriptionId: "level-data/merge-conflict/intro"
+    
+    - !elaborate 
+      descriptionId: "level-data/merge-conflict/open-repo"
+
+    - !instruct 
+      descriptionId: "level-data/merge-conflict/commit-local-and-remote"
+      needConfirm: false
+
+    - !execute 
+      resettingRepos:
+        - resolve-conflict
+        - resolve-conflict-remote
+        - resolve-conflict-another
+      actions:
+      # commit local
+        - !act.writeFile 
+          sourceAssetIds: [ "$level-data/merge-conflict/file-local" ]
+          destinationPaths: [ "$level-data/merge-conflict/file-path-this" ]
+        - !act.addRevision 
+          repoSetupName: resolve-conflict
+          commitMessage: "$level-data/merge-conflict/commit-message-this"
+
+      # commit remote & push
+        - !act.writeFile 
+          sourceAssetIds: [ "$level-data/merge-conflict/file-another" ]
+          destinationPaths: [ "$level-data/merge-conflict/file-path-another" ]
+        - !act.addRevision 
+          repoSetupName: resolve-conflict-another
+          commitMessage: "$level-data/merge-conflict/commit-message-another"
+        - !act.pushAll 
+          localSetupName: resolve-conflict-another
+          remoteNickName: origin
+
+    - !instruct 
+      descriptionId: "level-data/merge-conflict/try-merge"
+      needConfirm: false
+    - !verifyInput 
+      answer: "2"
+
+    - !elaborate  
+      descriptionId: "level-data/merge-conflict/encounter-conflict"
+
+    - !elaborate 
+      descriptionId: "level-data/merge-conflict/conflict-status"
+
+    - !elaborate 
+      descriptionId: "level-data/merge-conflict/resovle-conflict-view"
+
+    - !instruct 
+      descriptionId: "level-data/merge-conflict/answer-conflicted-file"
+      needConfirm: false
+    - !verifyInput 
+      answer: "3"

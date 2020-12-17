@@ -1,0 +1,190 @@
+asset_index:
+  infile:
+    intro: |+2
+      .md
+      在前面的章節  
+      我們學習到當本地和遠端同時有修改時，可以透過${{t/merge}}兩邊的版本來消除分歧  
+      但是，合併不一定總是可以順利進行  
+      尤其是修改到同一個檔案時更是如此  
+      在這個章節中，我們將會看到所謂不太順利的情況會是甚麼樣子的  
+      
+    open-repo: |+2
+      .md
+      從這個章節開始，我們將會換用一個新的練習用${{t/repo}}  
+      它的位置是「`#{{resolve-conflict}}`」  
+      請使用${{t/gui}}開啟這個${{t/local-repo}}  
+
+      為了方便教學  
+      我們假設了一個情境是想要透過編輯「`${{level-data/merge-conflict/file-name}}`」這個檔案  
+      來決定一家百貨公司各個樓層的主題  
+      我們將會和一個位在遠方的另一個夥伴共同編輯這個檔案  
+
+    commit-local-and-remote: |+2
+      .md
+      為了簡化教學內容  
+      在接下來的章節中，大部分需要在本地修改檔案並建立${{t/revision}}的工作  
+      我們都會使用這個教學中一個自動執行的步驟來代勞  
+
+      請在下面的步驟中，按下「執行」按鈕，自動修改本地的「${{level-data/merge-conflict/file-name}}」  
+      並且建立${{t/revision}}
+
+    try-merge: |+2
+      .md
+      現在我們已經透過上面的步驟，自動建立了一個${{t/revision}}  
+      按照慣例，我們應該要把它${{t/push}}到遠端  
+
+      但是又一次很不幸的，就在我們建立完${{t/revision}}之後  
+      遠端也已經有人${{t/push}}，因此產生分歧了！  
+
+      請嘗試${{t/fetch}}之後試著${{t/merge}} `origin/master` 到 `master`  
+      請問嘗試${{t/merge}}之後，發生了甚麼事情呢？  
+      1. ${{t/merge}}順利的完成了
+      2. ${{t/merge}}沒有完成，${{t/merge-commit}}沒有出現  
+      
+      請使用數字選項(1/2)來回答  
+
+    encounter-conflict: |+2
+      .md
+      沒錯，我們發現之前一直有辦法融合分歧的${{t/merge}}居然沒有發揮作用  
+      取而代之的，是出現如下圖的對話框  
+
+      ![illustration]({{images/conflict-modal}})  
+      <div class="img-title">圖(一)</div>  
+
+      這個對話框的大致意思是${{t/merge}}的時候發生了「${{t/conflict-f}}」  
+      而且它沒有辦法被自動解決，需要手動處理  
+
+      我們可以先把這個對話框關閉，在來繼續看下去  
+
+    
+    conflict-status: |+2
+      .md
+      所謂的「${{t/conflict}}」是怎麼發生的呢？  
+      當${{t/merge}}的兩邊有一個檔案被兩側同時修改，git 會試著自動融合這些修改  
+      但接下來的幾個章節中，我們會看到某些例子中 git 沒有辦法自動處理  
+      這時候，就會造成${{t/conflict}}  
+
+      當發生${{t/conflict}}之後，除了顯示出對話框之外  
+      ${{t/gui}}也會有明顯的提示告知使用者  
+      如同下圖所示  
+
+      ![illustration]({{images/conflict-status}})  
+      <div class="img-title">圖(二)</div>  
+
+      上圖中的紅框圈選出的就是當${{t/merge}}發生${{t/conflict}}的時候才會有的狀態提示  
+      它的意思大致上是「<br>
+      分支${{t/merge}}發生了${{t/conflict}}。請將${{t/conflict}}修正後繼續${{t/merge}}  
+      」<br>
+
+      必須要注意的是  
+      當 git 處於${{t/conflict}}狀態時，很多 git 的操作還是可以繼續使用  
+      可是有些時候會造成預想之外的效果，並不建議在這個情況下操作  
+      因此，當看到 git 發生${{t/conflict}}的時候  
+      建議一定要先按照接下來教學的方式來${{t/resolve}}${{t/conflict}}  
+
+    resovle-conflict-view: |+2
+      .md
+      在${{t/conflict}}發生的時候  
+      ${{t/gui}}的另一個特性就是當開啟${{st/changes-tab}}的時候  
+      會進入${{t/resolve}}${{t/conflict}}模式  
+      如下圖所示  
+
+      ![illustration]({{images/conflict-resolve-view}})  
+      <div class="img-title">圖(三)</div>  
+
+      上圖中的紅框圈選出我們之前曾經介紹過的「${{t/unstaged}}」  
+      從這裡面，我們可以看到名為「${{level-data/merge-conflict/file-name}}」的檔案，它被標上了驚嘆號  
+      這個從所未見的符號，就標示出了目前發生了${{t/conflict}}的檔案  
+      如果有多個檔案發生${{t/conflict}}，就會有多個檔案在這裡被用驚嘆號標出  
+
+      上圖中的橘框則圈選出目前選中的檔案(「${{level-data/merge-conflict/file-name}}」)的${{t/conflict}}${{t/resolve}}介面  
+      在接下來的章節中，我們將會更深入介紹如何使用這個介面  
+      在目前這個時間點，我們就先知道有它的存在就可以了  
+
+    answer-conflicted-file: |+2
+      .md
+      在我們結束這個章節之前  
+      請回答目前我們遇到${{t/conflict}}的檔案的名稱是下列何者吧  
+
+      1. 購物中心
+      2. Outlet
+      3. 百貨公司
+      4. 百貨商場  
+
+      請以數字選項(1/2/3/4)作答
+
+
+      
+
+# repo assets
+    file-name: 百貨公司
+    file-file-name: 百貨公司.txt
+    file-path-another: resolve-conflict-another/百貨公司.txt
+    file-path-this: resolve-conflict/百貨公司.txt
+    
+    file: |+2
+      20F：
+      19F：
+      18F：
+      17F：
+      16F：
+      15F：
+      14F：
+      13F：
+      12F：
+      11F：
+      10F：
+      09F：
+      08F：
+      07F：
+      06F：
+      05F：
+      04F：
+      03F：
+      02F：
+      01F：
+    file-local: |+2
+      20F：
+      19F：
+      18F：
+      17F：
+      16F：
+      15F：
+      14F：
+      13F：
+      12F：
+      11F：
+      10F：
+      09F：
+      08F：
+      07F：
+      06F：
+      05F：
+      04F：
+      03F：
+      02F：
+      01F：化妝品、精品
+    file-another: |+2
+      20F：
+      19F：
+      18F：
+      17F：
+      16F：
+      15F：
+      14F：
+      13F：
+      12F：
+      11F：
+      10F：
+      09F：
+      08F：
+      07F：
+      06F：
+      05F：
+      04F：
+      03F：
+      02F：
+      01F：游泳池
+    commit-message-1: 加入百貨公司
+    commit-message-this: 一樓設置化妝品、精品
+    commit-message-another: 一樓就是要游泳啦

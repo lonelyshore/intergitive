@@ -208,3 +208,8 @@ asset_index:
 # diverged-remote
     push-failed-message: diverged-remote@push-failed-message.png
     diverged-remote-and-local: diverged-remote@diverged-remote-and-local.png
+
+# merge-conflict
+    conflict-modal: merge-conflict@conflict-modal.png
+    conflict-status: merge-conflict@conflict-status.png
+    conflict-resolve-view: merge-conflict@conflict-resolve-view.png
