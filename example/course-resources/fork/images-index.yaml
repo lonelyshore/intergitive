@@ -213,3 +213,10 @@ asset_index:
     conflict-modal: merge-conflict@conflict-modal.png
     conflict-status: merge-conflict@conflict-status.png
     conflict-resolve-view: merge-conflict@conflict-resolve-view.png
+
+# resolve-conflict
+    resolve-conflict-first-open-tool: resolve-conflict@resolve-conflict-first-open-tool.png
+    intro-merge-tool: resolve-conflict@intro-merge-tool.png
+    intro-merge-tool-change-picker: resolve-conflict@intro-merge-tool-change-picker.png
+    intro-merge-tool-picked: resolve-conflict@intro-merge-tool-picked.png
+    conflict-resolved-changes-tab: resolve-conflict@conflict-resolved-changes-tab.png

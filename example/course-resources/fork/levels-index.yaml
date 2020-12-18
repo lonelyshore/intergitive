@@ -65,6 +65,7 @@ asset_index:
     main.diverged-remote.name: "8-1 節：遭遇來自遠端的分歧"
     main.merge-remote.name: "8-2 節：合併分歧的遠端"
     main.merge-conflict.name: "8-3 節：合併衝突與合併中狀態"
+    main.resolve-conflict.name: "8-4 節：在合併工具中解決合併衝 "
     
 
   ondisk:
@@ -122,3 +123,4 @@ asset_index:
     diverged-remote: "diverged-remote.yaml"
     merge-remote: "merge-remote.yaml"
     merge-conflict: "merge-conflict.yaml"
+    resolve-conflict: "resolve-conflict.yaml"

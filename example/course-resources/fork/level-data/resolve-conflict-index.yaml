@@ -1,0 +1,120 @@
+asset_index:
+  infile:
+    intro: |+2
+      .md
+      在上個章節中，我們學習到了${{t/merge}}的時候有可能會遇到${{t/conflict}}  
+      發生這個問題之後，就會中斷我們的${{t/merge}}  
+
+      為了要繼續進行  
+      我們將在這個章節中認識${{t/conflict}}發生的原因，以及學習如何${{t/resolve}}它  
+
+    open-merge-tool: |+2
+      .md
+      我們將繼續承接前一個章節所使用的練習用${{t/repo}}  
+      因此，請使用${{t/gui}}開啟位在「`#{{resolve-conflict}}`」的${{t/repo}}  
+
+      開啟之後，請切換到${{st/changes-tab}}  
+      應該會看到如下圖的情況  
+
+      ![illustration]({{images/resolve-conflict-first-open-tool}})  
+      <div class="img-title">圖(一)</div>  
+
+      如上圖紅框圈選範圍所示，這個介面顯示出目前所選中的發生${{t/conflict}}的檔案  
+      因為${{t/conflict}}總是發生在${{t/merge}}的雙方都有修改到檔案的時候  
+      我們可以看到上圖紅框範圍內分別列出了來自 `origin/master` 還有 `master` 的修改摘要  
+
+      為了${{t/resolve}}${{t/conflict}}，我們可以使用${{t/gui}}內建的工具  
+      請按下如上圖中橘框所圈選的「Merge(合併)」按鈕，開啟工具  
+
+    intro-merge-tool: |+2
+      .md
+      當我們如上一個步驟所指示的開啟內建${{t/merge}}工具之後  
+      就會出現如下圖所示的新視窗  
+
+      ![illustration]({{images/intro-merge-tool}})  
+      <div class="img-title">圖(二)</div>  
+
+      如上圖所示，這個工具大概切分成三個區塊  
+      紅框所圈選的，位於上半部的左右兩個區塊  
+      分別呈現了來自${{t/merge}}雙方${{t/branch}}的修改內容(在這裡是 `origin/master` 還有 `master`)  
+      仔細一看，會發現左右兩邊都同時修改了「${{level-data/resolve-conflict/file-name}}」這個檔案中對於「01樓」的描述  
+      也就是說，兩邊對於百貨公司的一樓的展售項目意見不太一致  
+
+      而橘框所圈選的，位於下半部的區塊  
+      則顯示目前為止的合併結果  
+      如果我們像上圖一樣把這個區塊的卷軸捲到底部  
+      就會看到如上圖一樣的<code class="red-backed inline-txt ">--- Merge Conflict ---</code><br>
+      表示這裡發生了衝突  
+
+      我們把上下兩半部互相對照一下就不難發現  
+      下半部抱怨發生衝突的地方，正好就是上半部左右兩邊同時有修改的「01樓」這行  
+      也就是說，${{t/merge}}${{t/conflict}}的原因非常簡單－－  
+      **當兩個${{t/merge}}的${{t/branch}}，在同一個檔案的同一行有修改，就會${{t/conflict}}**  
+
+      了解了${{t/conflict}}的成因後  
+      接下來就讓我們來看要如何${{t/resolve}}吧  
+
+    resolve: |+2
+      .md
+      在很多時候，${{t/resolve}}的工作其實很簡單  
+      我們有來自左右兩邊的修改，只要選擇覺得合理的那一邊放入${{t/merge}}結果就好了  
+
+      如下圖所示  
+      ${{t/gui}}內建的修改工具也擁有這個常用的小功能  
+      讓我們可以方便的選擇想要保存的修改  
+
+      ![illustration]({{images/intro-merge-tool-change-picker}})  
+      <div class="img-title">圖(三)</div>  
+
+      如上圖所示，當滑鼠移動到發生衝突的修改旁邊時  
+      介面上就會出現如紅框圈選的標記，暗示這裡可以使用滑鼠選擇這個修改  
+      
+      在這裡我們希望選擇「01樓：化妝品、精品」這個修改  
+      所以就直接如上圖在這個修改旁邊按下滑鼠左鍵加以揀選  
+
+      揀選完成之後，合併工具下半部的合併成果就會跟著改變  
+      變成如下圖所示的狀態  
+
+      ![illustration]({{images/intro-merge-tool-picked}})  
+      <div class="img-title">圖(四)</div>  
+
+      從上圖紅框圈選處可以發現  
+      合併成果的區塊中，已經從原本的<code class="red-backed inline-txt ">--- Merge Conflict ---</code>變成了我們所選擇的修改  
+
+      確認選擇的修改正確無誤之後  
+      請按下上圖橘框圈選的「Resolve(${{t/resolve}})」來確認完成修正  
+
+      全部完成後，請按下下面的「執行」按鈕，檢查是否成功  
+
+    continue-merge: |+2
+      .md
+      恭喜！  
+      完成了在合併工具中的作業後，我們成功排除了所有的衝突  
+      這個時候，${{t/gui}}的${{st/changes-tab}}會變成如下圖的狀態  
+
+      ![illustration]({{images/conflict-resolved-changes-tab}})  
+      <div class="img-title">圖(五)</div>  
+
+      從上圖中，我們發現「${{t/unstaged}}」中原本被標示出來有衝突的檔案已經不見了  
+      表示所有的衝突都已經獲得解決  
+
+      接下來要做的，就是建立${{t/revision}}把這個狀態保留下來  
+      引此，請按下如上圖中以紅框圈選的「Commit(${{提交}})」按鈕  
+
+      完成之後，請按下下面的「執行」按鈕，檢查是否成功  
+
+    continue-push: |+2
+      .md
+      太好了，我們終於成功地把 `origin/master` ${{t/merge}}到 `master` 之中  
+      把兩個${{t/branch}}的分歧給融合之後，我們終於可以繼續先前被迫中斷的${{t/push}}  
+
+      請按照之前所學，將 `master` ${{t/push}} 到${{t/remote-repo}}  
+      完成之後，請按下下面的「執行」按鈕，檢查是否成功  
+      
+      
+
+# repo assets
+    file-name: 百貨公司
+    full-file-name: 百貨公司.txt
+    file-path-another: resolve-conflict-another/百貨公司.txt
+    file-path-this: resolve-conflict/百貨公司.txt

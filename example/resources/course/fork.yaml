@@ -224,6 +224,10 @@
           id: "fork-main-merge-conflict"
           nameKey: "levels/main.merge-conflict.name"
           configAssetId: "levels/merge-conflict"
+        - !level
+          id: "fork-main-resolve-conflict"
+          nameKey: "levels/main.resolve-conflict.name"
+          configAssetId: "levels/resolve-conflict"
 
 
 

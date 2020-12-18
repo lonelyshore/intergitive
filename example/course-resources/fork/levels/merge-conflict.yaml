@@ -139,6 +139,14 @@
     - !instruct 
       descriptionId: "level-data/merge-conflict/try-merge"
       needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !act.fetch 
+          localSetupName: resolve-conflict
+          remoteNickName: origin
+        - !act.merge 
+          repoSetupName: resolve-conflict
+          withBranch: origin/master
     - !verifyInput 
       answer: "2"
 

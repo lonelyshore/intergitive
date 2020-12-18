@@ -1,0 +1,65 @@
+!level
+  repoVcsSetups:
+    resolve-conflict: !repoVcs 
+      workingPath: resolve-conflict
+      referenceStoreName: resolve-conflict
+      checkpointStoreName: resolve-conflict
+    resolve-conflict-remote: !repoVcs 
+      workingPath: resolve-conflict-remote
+      referenceStoreName: resolve-conflict-remote
+      checkpointStoreName: resolve-conflict-remote
+      repoType: remote
+    resolve-conflict-another: !repoVcs 
+      workingPath: resolve-conflict-another
+      referenceStoreName: resolve-conflict-another
+      checkpointStoreName: resolve-conflict-another
+
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+    # intro
+    - !elaborate 
+      descriptionId: "level-data/resolve-conflict/intro"
+
+    - !instruct 
+      descriptionId: "level-data/resolve-conflict/open-merge-tool"
+    
+    - !elaborate 
+      descriptionId: "level-data/resolve-conflict/intro-merge-tool"
+
+    - !instruct 
+      descriptionId: "level-data/resolve-conflict/resolve"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !act.writeFile 
+          sourceAssetIds: [ "$level-data/merge-conflict/file-local" ]
+          destinationPaths: [ "$level-data/resolve-conflict/file-path-this" ]
+        - !dev.act.git 
+          repoSetupName: resolve-conflict
+          arguments: [ "add", "--", "$level-data/resolve-conflict/full-file-name" ]
+    - !verifyRepo  
+      referenceName: resolve-conflict-resolve
+
+    - !instruct 
+      descriptionId: "level-data/resolve-conflict/continue-merge"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.continueMerge 
+          repoSetupName: resolve-conflict
+    - !verifyRepo 
+      referenceName: resolve-conflict-commit
+
+
+    - !instruct 
+      descriptionId: "level-data/resolve-conflict/continue-push"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !act.pushAll 
+          localSetupName: resolve-conflict
+          remoteNickName: origin
+    - !verifyRepo 
+      referenceName: resolve-conflict-push
+    
