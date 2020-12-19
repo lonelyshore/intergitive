@@ -54,8 +54,6 @@
           localSetupName: resolve-conflict
           remoteNickName: origin
           branchName: master
-    - !verifyRepo 
-      referenceName: resolve-multiple-conflicts-generate-conflicts-1
 
     # resolve conflicts
     - !elaborate 
@@ -123,8 +121,6 @@
           localSetupName: resolve-conflict
           remoteNickName: origin
           branchName: master
-    - !verifyRepo 
-      referenceName: resolve-multiple-conflicts-generate-conflicts-2
 
     # resolve conflicts 2
     - !elaborate 
