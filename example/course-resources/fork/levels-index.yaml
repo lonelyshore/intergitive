@@ -67,6 +67,7 @@ asset_index:
     main.merge-conflict.name: "8-3 節：合併衝突與合併中狀態"
     main.resolve-conflict.name: "8-4 節：在合併工具中解決合併衝突"
     main.resolve-multiple-conflicts.name: "8-5 節：解決多個合併衝突"
+    main.resolve-with-editor.name: "8-6 節：使用文字編輯器解決合併衝突"
     
 
   ondisk:
@@ -126,3 +127,4 @@ asset_index:
     merge-conflict: "merge-conflict.yaml"
     resolve-conflict: "resolve-conflict.yaml"
     resolve-multiple-conflicts: "resolve-multiple-conflicts.yaml"
+    resolve-with-editor: "resolve-with-editor.yaml"

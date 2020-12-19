@@ -1,0 +1,113 @@
+!level
+  repoVcsSetups:
+    resolve-conflict: !repoVcs 
+      workingPath: resolve-conflict
+      referenceStoreName: resolve-conflict
+      checkpointStoreName: resolve-conflict
+    resolve-conflict-remote: !repoVcs 
+      workingPath: resolve-conflict-remote
+      referenceStoreName: resolve-conflict-remote
+      checkpointStoreName: resolve-conflict-remote
+      repoType: remote
+    resolve-conflict-another: !repoVcs 
+      workingPath: resolve-conflict-another
+      referenceStoreName: resolve-conflict-another
+      checkpointStoreName: resolve-conflict-another
+
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+    # intro & setup
+    - !elaborate 
+      descriptionId: "level-data/resolve-with-editor/intro"
+    - !instruct 
+      descriptionId: "level-data/resolve-with-editor/generate-conflicts"
+    - !execute 
+      resettingRepos:
+        - resolve-conflict
+        - resolve-conflict-another
+        - resolve-conflict-remote
+      actions:
+        - !act.pull
+          localSetupName: resolve-conflict-another
+          remoteNickName: origin
+          branchName: master
+        - !act.writeFile 
+          sourceAssetIds: [ "$level-data/resolve-with-editor/file-another" ]
+          destinationPaths: [ "$level-data/resolve-with-editor/file-path-another" ]
+        - !act.addRevision 
+          repoSetupName: resolve-conflict-another
+          commitMessage: "$level-data/resolve-with-editor/commit-message"
+        - !act.push 
+          localSetupName: resolve-conflict-another
+          remoteNickName: origin
+          refspecs: '+refs/heads/master:refs/heads/master'
+        
+        - !act.writeFile 
+          sourceAssetIds: [ "$level-data/resolve-with-editor/file-this" ]
+          destinationPaths: [ "$level-data/resolve-with-editor/file-path-this" ]
+        - !act.addRevision 
+          repoSetupName: resolve-conflict
+          commitMessage: "$level-data/resolve-with-editor/commit-message"
+        - !act.pull 
+          localSetupName: resolve-conflict
+          remoteNickName: origin
+          branchName: master
+
+    # edit file
+    - !instruct 
+      descriptionId: "level-data/resolve-with-editor/confirm-conflicted-file"
+      needConfirm: false
+    - !verifyInput 
+      answer: "1"
+
+    - !elaborate 
+      descriptionId: "level-data/resolve-with-editor/conflict-markers"
+    - !elaborate 
+      descriptionId: "level-data/resolve-with-editor/benefit-of-direct-edit"
+    - !instruct 
+      descriptionId: "level-data/resolve-with-editor/confirm-conflicted-content"
+      needConfirm: false
+    - !verifyInput 
+      answer: "2"  
+
+    - !instruct 
+      descriptionId: "level-data/resolve-with-editor/resolve-by-editting"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !act.writeFile 
+          sourceAssetIds: [ "$level-data/resolve-with-editor/file-resolved" ]
+          destinationPaths: [ "$level-data/resolve-with-editor/file-path-this" ]
+    - !verifyRepo 
+      referenceName: resolve-with-editor-editted
+
+    - !elaborate 
+      descriptionId: "level-data/resolve-with-editor/need-for-staging"
+    - !instruct 
+      descriptionId: "level-data/resolve-with-editor/stage-and-commit"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: resolve-conflict
+          arguments: [ "add", "--", "$level-data/resolve-with-editor/full-file-name" ]
+        - !dev.act.continueMerge 
+          repoSetupName: resolve-conflict
+    - !verifyRepo 
+      referenceName: resolve-with-editor-stage-and-commit
+
+    - !instruct 
+      descriptionId: "level-data/resolve-with-editor/push"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !act.push 
+          localSetupName: resolve-conflict
+          remoteNickName: origin
+          refspecs: '+refs/heads/master:refs/heads/master'
+    - !verifyRepo 
+      referenceName: resolve-with-editor-push
+    
+    - !elaborate 
+      descriptionId: "level-data/resolve-with-editor/summary"
