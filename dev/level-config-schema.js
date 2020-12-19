@@ -10,6 +10,10 @@ const isString = function(obj) {
     return typeof obj === 'string' || obj instanceof String;
 };
 
+const isBool = function(obj) {
+    return typeof(obj) === 'boolean'
+};
+
 const memberIsStringArray = function(data, memberName) {
     return memberName in data
         && data[memberName] !== null
@@ -140,13 +144,15 @@ let gitCommandActionType = new yaml.Type(
             return data !== null
                 && "repoSetupName" in data
                 && isString(data.repoSetupName)
-                && (!('arguments' in data) || memberIsStringArray(data, 'arguments'));
+                && (!('arguments' in data) || memberIsStringArray(data, 'arguments'))
+                && (!('ignoreError' in data) || isBool(data.ignoreError));
         },
 
         construct: function(data) {
             return new actionConfig.GitCommandAction(
                 data.repoSetupName,
-                data.arguments || []
+                data.arguments || [],
+                data.ignoreError
             );
         },
 

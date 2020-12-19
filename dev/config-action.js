@@ -56,15 +56,16 @@ class CleanCheckoutAction extends upstream.Action {
  * @inheritdoc
  */
 class GitCommandAction extends upstream.Action {
-    constructor(repoSetupName, commandArguments) {
+    constructor(repoSetupName, commandArguments, ignoreError) {
         super();
         this.klass = "GitCommandAction";
         this.repoSetupName = repoSetupName;
         this.arguments = commandArguments;
+        this.ignoreError = ignoreError;
     }
 
     executeBy(actionExecutor) {
-        return actionExecutor.executeGitCommand(this.repoSetupName, this.arguments);
+        return actionExecutor.executeGitCommand(this.repoSetupName, this.arguments, this.ignoreError);
     }
 }
 

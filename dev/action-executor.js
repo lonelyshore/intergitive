@@ -79,7 +79,7 @@ class DevActionExecutor extends ActionExecutor {
         });
     }
 
-    executeGitCommand(repoSetupName, commandArguments) {
+    executeGitCommand(repoSetupName, commandArguments, ignoreError) {
         return this[getRepo](repoSetupName)
         .then(repo => {
 
@@ -113,8 +113,16 @@ class DevActionExecutor extends ActionExecutor {
             });
         })
         .catch(err => {
-            console.error(`[executeGitCommand] error occured when executing git command [${commandArguments.join([","])}]\nerror: ` + err.message);
-            throw err;
+            if (ignoreError) {
+                console.error(`[executeGitCommand] error occured and NOT thrown intentionally when executing git command [${commandArguments.join([","])}]\nerror: ` + err.message + '\n');
+                console.error('=====\n');
+                return;    
+            }
+            else {
+                console.error(`[executeGitCommand] error occured when executing git command [${commandArguments.join([","])}]\nerror: ` + err.message + '\n');
+                console.error('=====\n')
+                throw err;
+            }
         });
     }
 

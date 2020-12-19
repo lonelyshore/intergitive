@@ -453,6 +453,11 @@
                     "items": {
                         "type": "string"
                     }
+                },
+                "ignoreError": {
+                    "type": "boolean",
+                    "description": "whether errors from git should be ignored or not",
+                    "default": true
                 }
             },
             "required": [
