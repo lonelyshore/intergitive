@@ -63,4 +63,7 @@
           refspecs: '+refs/heads/master:refs/heads/master'
     - !verifyRepo 
       referenceName: resolve-conflict-push
+
+    - !elaborate 
+      descriptionId: "level-data/resolve-conflict/summary"
     

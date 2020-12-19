@@ -220,3 +220,7 @@ asset_index:
     intro-merge-tool-change-picker: resolve-conflict@intro-merge-tool-change-picker.png
     intro-merge-tool-picked: resolve-conflict@intro-merge-tool-picked.png
     conflict-resolved-changes-tab: resolve-conflict@conflict-resolved-changes-tab.png
+
+# resolve-multiple-conflicts
+    resolve-tool-display-multiple-conflict: resolve-multiple-conflicts@resolve-tool-display-multiple-conflict.png
+    resolve-tool-display-single-conflict: resolve-multiple-conflicts@resolve-tool-display-single-conflict.png

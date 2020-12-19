@@ -228,6 +228,10 @@
           id: "fork-main-resolve-conflict"
           nameKey: "levels/main.resolve-conflict.name"
           configAssetId: "levels/resolve-conflict"
+        - !level
+          id: "fork-main-resolve-multiple-conflicts"
+          nameKey: "levels/main.resolve-multiple-conflicts.name"
+          configAssetId: "levels/resolve-multiple-conflicts"
 
 
 

@@ -1,0 +1,162 @@
+!level
+  repoVcsSetups:
+    resolve-conflict: !repoVcs 
+      workingPath: resolve-conflict
+      referenceStoreName: resolve-conflict
+      checkpointStoreName: resolve-conflict
+    resolve-conflict-remote: !repoVcs 
+      workingPath: resolve-conflict-remote
+      referenceStoreName: resolve-conflict-remote
+      checkpointStoreName: resolve-conflict-remote
+      repoType: remote
+    resolve-conflict-another: !repoVcs 
+      workingPath: resolve-conflict-another
+      referenceStoreName: resolve-conflict-another
+      checkpointStoreName: resolve-conflict-another
+
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+    # intro & setup
+    - !elaborate 
+      descriptionId: "level-data/resolve-multiple-conflicts/intro"
+    - !instruct 
+      descriptionId: "level-data/resolve-multiple-conflicts/generate-conflicts-1"
+      needConfirm: false
+    - !execute 
+      resettingRepos:
+        - resolve-conflict
+        - resolve-conflict-another
+        - resolve-conflict-remote
+      actions:
+        - !act.pull
+          localSetupName: resolve-conflict-another
+          remoteNickName: origin
+          branchName: master
+        - !act.writeFile 
+          sourceAssetIds: [ "$level-data/resolve-multiple-conflicts/file-another-1" ]
+          destinationPaths: [ "$level-data/resolve-multiple-conflicts/file-path-another" ]
+        - !act.addRevision 
+          repoSetupName: resolve-conflict-another
+          commitMessage: "$level-data/resolve-multiple-conflicts/commit-message-1"
+        - !act.push 
+          localSetupName: resolve-conflict-another
+          remoteNickName: origin
+          refspecs: '+refs/heads/master:refs/heads/master'
+        
+        - !act.writeFile 
+          sourceAssetIds: [ "$level-data/resolve-multiple-conflicts/file-this-1" ]
+          destinationPaths: [ "$level-data/resolve-multiple-conflicts/file-path-this" ]
+        - !act.addRevision 
+          repoSetupName: resolve-conflict
+          commitMessage: "$level-data/resolve-multiple-conflicts/commit-message-1"
+        - !act.pull 
+          localSetupName: resolve-conflict
+          remoteNickName: origin
+          branchName: master
+    - !verifyRepo 
+      referenceName: resolve-multiple-conflicts-generate-conflicts-1
+
+    # resolve conflicts
+    - !elaborate 
+      descriptionId: "level-data/resolve-multiple-conflicts/multiple-conflicts"
+
+    - !instruct 
+      descriptionId: "level-data/resolve-multiple-conflicts/resolve-conflicts-1"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !act.writeFile 
+          sourceAssetIds: [ "$level-data/resolve-multiple-conflicts/file-resolved-1" ]
+          destinationPaths: [ "$level-data/resolve-multiple-conflicts/file-path-this" ]
+        - !dev.act.git 
+          repoSetupName: resolve-conflict
+          arguments: [ "add", "--", "$level-data/resolve-multiple-conflicts/full-file-name" ]
+    - !verifyRepo 
+      referenceName: resolve-multiple-conflicts-resolve-1
+
+    - !instruct 
+      descriptionId: "level-data/resolve-multiple-conflicts/commit-and-push-1"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.continueMerge 
+          repoSetupName: resolve-conflict
+        - !act.push 
+          localSetupName: resolve-conflict
+          remoteNickName: origin
+          refspecs: '+refs/heads/master:refs/heads/master'
+    - !verifyRepo 
+      referenceName: resolve-multiple-conflicts-commit-and-push-1
+
+    # generate conflicts 2
+    - !elaborate 
+      descriptionId: "level-data/resolve-multiple-conflicts/prompt-practice"
+    - !execute 
+      resettingRepos:
+        - resolve-conflict
+        - resolve-conflict-another
+        - resolve-conflict-remote
+      actions:
+        - !act.pull
+          localSetupName: resolve-conflict-another
+          remoteNickName: origin
+          branchName: master
+        - !act.writeFile 
+          sourceAssetIds: [ "$level-data/resolve-multiple-conflicts/file-another-2" ]
+          destinationPaths: [ "$level-data/resolve-multiple-conflicts/file-path-another" ]
+        - !act.addRevision 
+          repoSetupName: resolve-conflict-another
+          commitMessage: "$level-data/resolve-multiple-conflicts/commit-message-2"
+        - !act.push 
+          localSetupName: resolve-conflict-another
+          remoteNickName: origin
+          refspecs: '+refs/heads/master:refs/heads/master'
+        
+        - !act.writeFile 
+          sourceAssetIds: [ "$level-data/resolve-multiple-conflicts/file-this-2" ]
+          destinationPaths: [ "$level-data/resolve-multiple-conflicts/file-path-this" ]
+        - !act.addRevision 
+          repoSetupName: resolve-conflict
+          commitMessage: "$level-data/resolve-multiple-conflicts/commit-message-3"
+        - !act.pull 
+          localSetupName: resolve-conflict
+          remoteNickName: origin
+          branchName: master
+    - !verifyRepo 
+      referenceName: resolve-multiple-conflicts-generate-conflicts-2
+
+    # resolve conflicts 2
+    - !elaborate 
+      descriptionId: "level-data/resolve-multiple-conflicts/single-conflict"
+
+    - !instruct 
+      descriptionId: "level-data/resolve-multiple-conflicts/resolve-conflicts-2"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !act.writeFile 
+          sourceAssetIds: [ "$level-data/resolve-multiple-conflicts/file-resolved-2" ]
+          destinationPaths: [ "$level-data/resolve-multiple-conflicts/file-path-this" ]
+        - !dev.act.git 
+          repoSetupName: resolve-conflict
+          arguments: [ "add", "--", "$level-data/resolve-multiple-conflicts/full-file-name" ]
+    - !verifyRepo 
+      referenceName: resolve-multiple-conflicts-resolve-2
+
+    - !instruct 
+      descriptionId: "level-data/resolve-multiple-conflicts/commit-and-push-1"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.continueMerge 
+          repoSetupName: resolve-conflict
+        - !act.push 
+          localSetupName: resolve-conflict
+          remoteNickName: origin
+          refspecs: '+refs/heads/master:refs/heads/master'
+    - !verifyRepo 
+      referenceName: resolve-multiple-conflicts-commit-and-push-2
+
+    - !elaborate 
+      descriptionId: "level-data/resolve-multiple-conflicts/summary"
