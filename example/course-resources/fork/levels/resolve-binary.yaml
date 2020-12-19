@@ -1,0 +1,129 @@
+!level
+  repoVcsSetups:
+    resolve-conflict: !repoVcs 
+      workingPath: resolve-conflict
+      referenceStoreName: resolve-conflict
+      checkpointStoreName: resolve-conflict
+    resolve-conflict-remote: !repoVcs 
+      workingPath: resolve-conflict-remote
+      referenceStoreName: resolve-conflict-remote
+      checkpointStoreName: resolve-conflict-remote
+      repoType: remote
+    resolve-conflict-another: !repoVcs 
+      workingPath: resolve-conflict-another
+      referenceStoreName: resolve-conflict-another
+      checkpointStoreName: resolve-conflict-another
+
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+    # intro
+    - !elaborate 
+      descriptionId: "level-data/resolve-binary/intro"
+    - !instruct 
+      descriptionId: "level-data/resolve-binary/generate-conflicts"
+    - !execute 
+      resettingRepos:
+        - resolve-conflict
+        - resolve-conflict-another
+        - resolve-conflict-remote
+      actions:
+        - !act.pull
+          localSetupName: resolve-conflict-another
+          remoteNickName: origin
+          branchName: master
+        - !act.writeFile 
+          sourceAssetIds: 
+            - "images/resolve-binary-file-another-1"
+            - "images/resolve-binary-file-another-2"
+          destinationPaths:
+            - "$level-data/resolve-binary/file-path-another-1"
+            - "$level-data/resolve-binary/file-path-another-2"
+        - !act.addRevision 
+          repoSetupName: resolve-conflict-another
+          commitMessage: "$level-data/resolve-binary/commit-message"
+        - !act.push 
+          localSetupName: resolve-conflict-another
+          remoteNickName: origin
+          refspecs: '+refs/heads/master:refs/heads/master'
+        
+        - !act.writeFile 
+          sourceAssetIds: 
+            - "images/resolve-binary-file-this-1"
+            - "images/resolve-binary-file-this-2"
+          destinationPaths:
+            - "$level-data/resolve-binary/file-path-this-1"
+            - "$level-data/resolve-binary/file-path-this-2"
+        - !act.addRevision 
+          repoSetupName: resolve-conflict
+          commitMessage: "$level-data/resolve-binary/commit-message"
+    
+    # resolve
+    - !instruct 
+      descriptionId: "level-data/resolve-binary/confirm-conflicts"
+      needConfirm: false
+    - !verifyInput 
+      answer: "3"
+
+    - !elaborate 
+      descriptionId: "level-data/resolve-binary/binary-conflict"
+
+    - !elaborate 
+      descriptionId: "level-data/resolve-binary/intro-file-picker-panel"
+    - !elaborate 
+      descriptionId: "level-data/resolve-binary/unpick-local"
+    - !elaborate 
+      descriptionId: "level-data/resolve-binary/unpick-upstream"
+
+    - !instruct
+      descriptionId: "level-data/resolve-binary/pick-file-1"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !act.fetch 
+          localSetupName: resolve-conflict
+          remoteNickName: origin
+        - !dev.act.git
+          repoSetupName: resolve-conflict
+          arguments: [ "merge", "origin/master" ]
+          ignoreError: true
+        - !dev.act.git 
+          repoSetupName: resolve-conflict
+          arguments: [ "checkout", "--ours", "$level-data/resolve-binary/full-file-name-1" ]
+        - !dev.act.git 
+          repoSetupName: resolve-conflict
+          arguments: [ "add", "--", "$level-data/resolve-binary/full-file-name-1" ]
+    - !verifyRepo 
+      referenceName: resolve-binary-resolved-1
+
+    - !instruct 
+      descriptionId: "level-data/resolve-binary/pick-file-2"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: resolve-conflict
+          arguments: [ "checkout", "--theirs", "$level-data/resolve-binary/full-file-name-2" ]
+        - !dev.act.git 
+          repoSetupName: resolve-conflict
+          arguments: [ "add", "--", "$level-data/resolve-binary/full-file-name-2" ]
+    - !verifyRepo 
+      referenceName: resolve-binary-resolved-uncommited
+
+    - !instruct
+      descriptionId: "level-data/resolve-binary/commit-and-push"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.continueMerge 
+          repoSetupName: resolve-conflict
+        - !act.push 
+          localSetupName: resolve-conflict
+          remoteNickName: origin
+          refspecs: '+refs/heads/master:refs/heads/master'
+    - !verifyRepo 
+      referenceName: resolve-binary-commit-and-push
+
+    - !elaborate 
+      descriptionId: "level-data/resolve-binary/summary"
+

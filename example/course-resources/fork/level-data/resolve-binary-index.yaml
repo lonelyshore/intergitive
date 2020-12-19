@@ -1,0 +1,174 @@
+asset_index:
+  infile:
+    intro: |+2
+      .md
+      在前面的章節中  
+      我們介紹了不使用合併工具，直接編輯檔案的方法來解決衝突  
+      事實上，除了文字檔以外，其它類型的檔案都沒有辦法使用合併工具來解決衝突  
+      在這個章節中，我們將學習在這種情況時應該怎麼處理  
+
+    generate-conflicts: |+2
+      .md
+      和先前的慣例一樣，我們將繼續承接前一個章節所使用的練習用${{t/repo}}  
+      因此，請使用${{t/gui}}開啟位在「`#{{resolve-conflict}}`」的${{t/repo}}  
+
+      緊接著，我們又需要製造一些練習用的${{t/conflict}}  
+      請在下一個步驟中按下「執行」按鈕，自動製造本地和遠端的${{t/conflict}}  
+
+    confirm-conflicts: |+2
+      .md
+      我們已經成功製造了本地和遠端的分歧  
+      請在${{t/fetch}}${{t/remote-repo}}之後  
+      試圖${{t/merge}} `origin/master` 到 `master` 之中  
+      這將會觸發我們剛才所埋藏的${{t/conflict}}  
+
+      發生${{t/conflict}}之後，請開啟${{t/gui}}的${{st/changes-tab}}  
+      讓我們確認一下目前發生${{t/conflict}}的檔案有哪些：  
+      1. 「雅量.txt」與「出師表.txt」  
+      2. 「小算盤.exe」與「小畫家.exe」  
+      3. 「商標.png」與「吉祥物.png」  
+
+      請以數字選項(1/2/3)回答  
+
+    binary-conflict: |+2
+      .md
+      經過上面的問答，我們發現這次發生${{t/conflict}}的檔案跟以前的類型不太一樣  
+      以前都是純文字檔案，但是這次卻是圖檔(PNG)  
+
+      請回想之前 git 在文字檔發生衝突的時候  
+      會在出檔案內以特別的符號標出那些地方有修改衝突  
+      然後讓我們自行選擇該如何處理或直接修改檔案為理想中的版本  
+      
+      現在請想像  
+      圖片發生衝突如果硬要用合併工具開啟，就會是把圖片當作文字檔開啟  
+      通常我們會看到一堆亂碼，或者合併工具會拒絕開啟  
+      (以${{t/gui}}的情況是開啟之後一片空白)  
+      這表示我們不能使用合併工具來解決這種衝突  
+      這個時候該怎麼辦呢？  
+
+    intro-file-picker-panel: |+2
+      .md
+      還好，${{t/gui}}提供了一個功能讓我們我們直接選擇想使用合併雙方哪一方的檔案  
+      這個功能就在如下圖所示的${{st/changes-tab}}的合併狀態介面上  
+
+      ![illustration]({{images/resolve-binary-picker-overview}})  
+      <div class="img-title">圖(一)</div>  
+
+      上圖顯示了當我們發生衝突時切換到${{st/changes-tab}}的情況  
+      我們可以從紅框圈選範圍內看到目前有兩個檔案發生衝突  
+      且目前選擇要處理的是「${{level-data/resolve-binary/full-file-name-1}}」這個檔案  
+
+      橘框圈選範圍內則是我們很熟悉的合併狀態介面  
+      當我們仔細一看，會注意到這個介面上有兩個打勾的核選方塊  
+      也就是上圖中用綠色框線圈選的部分  
+      這兩個方塊，其實分別代表了目前這個檔案是否要考量被核選的這一方  
+
+    unpick-local: |+2
+      .md
+      上圖中提到的兩個方塊其實是可以操作的，例如下圖所示  
+
+      ![illustration]({{images/resolve-binary-picker-zoom}})  
+      <div class="img-title">圖(二)</div>  
+
+      上圖中，我們用紅色框線把代表 `master` 這一邊的區塊給圈選出來  
+      只要用滑鼠左鍵點擊這個區塊，或是附在旁邊的核選方塊  
+      就可以切換目前 `master` 方的選取狀態  
+      變成如下圖的狀態  
+
+      ![illustration]({{images/resolve-binary-unpick-local}})  
+      <div class="img-title">圖(三)</div>  
+
+      從上圖我們可以注意到  
+      點擊完 `master` 區塊之後，他的核選方塊就被取消勾選了  
+      而且紅框圈選出來的按鈕，從熟悉的「Merge(合併)」變成了「Choose origin/master(選擇 `origin/master`)」  
+      這是因為我們取消了 `master` 的一方，表達「只想要使用來自 `origin/master` 的版本」  
+
+    unpick-upstream: |+2
+      .dm
+      如果我們接續上圖中呈現的狀態  
+      再點選一次 `master` 的區塊，就可以重新選取一次 `master`  
+      這時候如果再去點選 `origin/master` 的區塊，就會把 `origin/master` 取消選取  
+      變成如下圖的狀態  
+
+      ![illustration]({{images/resolve-binary-unpick-upstream}})  
+      <div class="img-title">圖(四)</div>  
+
+      這一次，我們可以觀察到 `master` 被選取而 `origin/master` 被取消選取  
+      下方紅框圈選的按鈕，則顯示「Choose master(選擇 `master`)」  
+      表示這次我們表達了「只想要使用來自 `master` 的檔案版本」  
+
+    pick-file-1: |+2
+      .md
+      剛才提到我們可以操作合併狀態介面來選擇要使用來自 `master` 或 `origin/master` 的檔案  
+      現在就讓我們來實際操作一下看看吧  
+
+      首先，請如下圖所示進行操作  
+      選擇讓「${{level-data/resolve-binary/full-file-name-1}}」使用 `master` 的版本  
+
+      ![illustration]({{images/resolve-binary-pick-local-for-1}})  
+      <div class="img-title">圖(五)</div>  
+
+      第一步，請先從「${{t/unstaged}}」裡面選取如紅框所示的「${{level-data/resolve-binary/full-file-name-1}}」
+      確認他是反白被選中之後，再如前所述操作合併狀態介面  
+      調整為只有選擇 `master` 的版本  
+
+      調整完之後  
+      如上圖橘框圈選的按鈕，應該字樣會顯示「Choose master(選擇 `maser`)」  
+      按下這個按鈕，就可以確認使用 `master` 的版本  
+      git 會將「${{level-data/resolve-binary/full-file-name-1}}」從${{t/unstaged}}變成${{t/staged}}  
+
+      (你會注意到，選擇了 `master` 的檔案並沒有出現在${{t/staged}}  
+       這是因為合併途中，${{t/staged}}}選是的是當前${{t/index}}和${{t/head}}的差異  
+       既然選擇了來自 `master` 的檔案(也就是${{t/head}})，當然是沒有差異)  
+
+      全部完成後，請按下下面的「執行」按鈕，檢查是否成功  
+      
+    pick-file-2: |+2
+      .md
+      完成「${{level-data/resolve-binary/full-file-name-1}}」的操作後，請繼續如下圖所示進行操作  
+      選擇讓「${{level-data/resolve-binary/full-file-name-2}}」使用 **`origin/master`** 的版本  
+
+      ![illustration]({{images/resolve-binary-pick-upstream-for-2}})  
+      <div class="img-title">圖(六)</div>  
+
+      現在我們還剩下「${{level-data/resolve-binary/full-file-name-2}}」要調整  
+      請再如前所述操作合併狀態介面  
+      將它調整為只有選擇 **`origin/master`** 的版本  
+
+      調整完之後  
+      如上圖橘框圈選的按鈕，應該字樣會顯示「Choose origin/master(選擇 `origin/maser`)」  
+      按下這個按鈕，就可以確認使用 `origin/master` 的版本  
+      git 會將「${{level-data/resolve-binary/full-file-name-2}}」從${{t/unstaged}}變成${{t/staged}}  
+
+      全部完成後，請按下下面的「執行」按鈕，檢查是否成功  
+
+    commit-and-push: |+2
+      .md
+      恭喜，我們成功的將難以處理的兩個發生${{t/conflict}}的圖片檔  
+      分別選擇使用 `master` (本地)以及 `origin/master` (遠端)的版本來解決  
+
+      接下來，請繼續按照之前所學  
+      建立${{t/revision}}然後${{t/push}}到${{t/remote-repo}}  
+
+      全部完成後，請按下下面的「執行」按鈕，檢查是否成功  
+
+    summary: |+2
+      .md
+      在這個章節中  
+      我們學習了當非純文字檔案，例如圖片、影片、音樂等等，發生${{t/conflict}}的時候應該如何處理  
+      在這個情況中，合併工具沒有辦法幫上忙  
+      但是我們可以選擇要沿用自${{t/merge}}的兩方${{t/branch}}的其中一方  
+
+      在前面的練習中，我們直接強硬地指定了要使用那些版本的檔案  
+      但是在真實的情況中，通常我們需要和發生${{t/conflict}}開發夥伴進行溝通，來決定要選擇使用哪個檔案  
+
+# repo assets
+    file-name-1: 商標
+    full-file-name-1: 商標.png
+    file-path-another-1: resolve-conflict-another/商標.png
+    file-path-this-1: resolve-conflict/商標.png
+    file-name-2: 吉祥物
+    full-file-name-2: 吉祥物.png
+    file-path-another-2: resolve-conflict-another/吉祥物.png
+    file-path-this-2: resolve-conflict/吉祥物.png
+    commit-message: "加入商標和吉祥物"

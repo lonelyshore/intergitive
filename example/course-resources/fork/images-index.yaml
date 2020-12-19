@@ -224,3 +224,15 @@ asset_index:
 # resolve-multiple-conflicts
     resolve-tool-display-multiple-conflict: resolve-multiple-conflicts@resolve-tool-display-multiple-conflict.png
     resolve-tool-display-single-conflict: resolve-multiple-conflicts@resolve-tool-display-single-conflict.png
+
+# resolve-binary
+    resolve-binary-file-another-1: resolve-binary@file-anotehr-1.png
+    resolve-binary-file-this-1: resolve-binary@file-this-1.png
+    resolve-binary-file-another-2: resolve-binary@file-another-2.png
+    resolve-binary-file-this-2: resolve-binary@file-this-2.png
+    resolve-binary-picker-overview: resolve-binary@resolve-binary-picker-overview.png
+    resolve-binary-picker-zoom: resolve-binary@resolve-binary-picker-zoom.png
+    resolve-binary-unpick-local: resolve-binary@resolve-binary-unpick-local.png
+    resolve-binary-unpick-upstream: resolve-binary@resolve-binary-unpick-upstream.png
+    resolve-binary-pick-local-for-1: resolve-binary@resolve-binary-pick-local-for-1.png
+    resolve-binary-pick-upstream-for-2: resolve-binary@resolve-binary-pick-upstream-for-2.png

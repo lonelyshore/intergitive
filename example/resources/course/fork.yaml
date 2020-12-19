@@ -236,6 +236,10 @@
           id: "fork-main-resolve-with-editor"
           nameKey: "levels/main.resolve-with-editor.name"
           configAssetId: "levels/resolve-with-editor"
+        - !level
+          id: "fork-main-resolve-binary"
+          nameKey: "levels/main.resolve-binary.name"
+          configAssetId: "levels/resolve-binary"
 
 
 
