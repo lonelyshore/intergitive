@@ -84,7 +84,7 @@ asset_index:
       這是因為我們取消了 `master` 的一方，表達「只想要使用來自 `origin/master` 的版本」  
 
     unpick-upstream: |+2
-      .dm
+      .md
       如果我們接續上圖中呈現的狀態  
       再點選一次 `master` 的區塊，就可以重新選取一次 `master`  
       這時候如果再去點選 `origin/master` 的區塊，就會把 `origin/master` 取消選取  
@@ -108,7 +108,7 @@ asset_index:
       ![illustration]({{images/resolve-binary-pick-local-for-1}})  
       <div class="img-title">圖(五)</div>  
 
-      第一步，請先從「${{t/unstaged}}」裡面選取如紅框所示的「${{level-data/resolve-binary/full-file-name-1}}」
+      第一步，請先從「${{t/unstaged}}」裡面選取如紅框所示的「${{level-data/resolve-binary/full-file-name-1}}」<br>
       確認他是反白被選中之後，再如前所述操作合併狀態介面  
       調整為只有選擇 `master` 的版本  
 
@@ -136,7 +136,7 @@ asset_index:
       將它調整為只有選擇 **`origin/master`** 的版本  
 
       調整完之後  
-      如上圖橘框圈選的按鈕，應該字樣會顯示「Choose origin/master(選擇 `origin/maser`)」  
+      如上圖紅框圈選的按鈕，應該字樣會顯示「Choose origin/master(選擇 `origin/maser`)」  
       按下這個按鈕，就可以確認使用 `origin/master` 的版本  
       git 會將「${{level-data/resolve-binary/full-file-name-2}}」從${{t/unstaged}}變成${{t/staged}}  
 
