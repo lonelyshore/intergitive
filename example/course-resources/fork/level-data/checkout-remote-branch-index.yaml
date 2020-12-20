@@ -40,7 +40,7 @@ asset_index:
 
     confirm-tracking-branch-number: |+2
       .md
-      與之相對的，本地目前不是 `origin/` 開頭的${{t/branch}}又有多少呢？  
+      與之相對的，本地目前**不是** `origin/` 開頭的${{t/branch}}又有多少呢？  
       請回答在下面的文字輸入方塊中  
     
     source-of-tracking-branch: |+2
@@ -57,7 +57,7 @@ asset_index:
     checkout-remote-1: |+2
       .md
       誠如剛才所說，進行這個操作最簡單的方式就是切換到${{t/remote-branch}}  
-      就讓我們先把目標設定成要建立 `origin/1` 的${{t/tracking-branch}}  
+      就讓我們把目標設定成要建立 `origin/1` 的${{t/tracking-branch}}  
       請如下圖所示進行操作  
 
       ![illustration]({{images/checkout-remote-graph}})  
@@ -75,14 +75,14 @@ asset_index:
       ![illustration]({{images/checkout-remote-modal}})  
       <div class="img-title">圖(二)</div>  
 
-      上圖對話框的內容大意是「接下來將要建立${{t/branch}}追蹤 `origin/1`」  
+      上圖對話框的內容大意是「接下來將要建立${{t/branch}}追蹤 `origin/1`」<br>
       請直接選擇如上圖紅框所圈選出來的「Track(追蹤)」按鈕就可以了  
 
       完成之後，請按下下面的「執行」按鈕，檢查是否成功  
 
     confirm-checkout-result: |+2
       .md
-      恭喜，我們已經成功的為 `origin/1` 建立${{t/tracking-branch}}「`1`」<br>  
+      恭喜，我們已經成功的為 `origin/1` 建立${{t/tracking-branch}}「`1`」<br>
       按照一般的慣例，${{t/tracking-branch}}的名字會沿用${{t/remote-branch}}的名字  
       差別只是把 `origin` 的前綴給拿掉而已  
 
