@@ -12,7 +12,7 @@ asset_index:
       一如往常，我們將繼續承接前一個章節所使用的練習用${{t/repo}}  
       因此，請使用${{t/gui}}開啟位在「`#{{manage-remote}}`」的${{t/repo}}  
 
-      接著，請如下圖所示操作，刪除 `origin/master`  
+      接著，請如下圖所示操作，刪除 `origin/new`  
 
       ![illustration]({{images/delete-remote-branch-graph}})  
       <div class="img-title">圖(一)</div>  
