@@ -1,0 +1,74 @@
+asset_index:
+  infile:
+    intro: |+2
+      .md
+      到目前為止，我們已經學習如何${{t/fetch}}與${{t/push}}後  
+      或許有人會開始好奇，**新的**遠端分支都是怎麼產生的呢？  
+      其實我們已經知道怎麼做了，要更新${{t/remote-branch}}的位置，就是${{t/push}}  
+      就讓我們嘗試看看，建立一個新的本地分支，然後推送到遠端  
+
+    create-branch: |+2
+      .md
+      一如既往地，在這個章節，我們將繼承前一個章節的${{t/repo}}  
+      請使用${{t/gui}}開啟位於「`#{{manage-remote}}`」的${{t/repo}}  
+
+      我們的目標是要建立新的${{t/branch}}然後推送到遠端  
+      就讓我們在 `master` 所在的${{t/revision}}上，建立一個名為「`new`」的${{t/branch}}  
+      並且切換過去吧  
+
+      因為建立${{t/branch}}已經是有點久遠的事情  
+      可以參考如下圖的操作來複習一下應該如何進行  
+
+      ![illustration]({{images/create-remote-branch-graph}})  
+      <div class="img-title">圖(一)</div>  
+
+      首先，請如上圖所示  
+      使用滑鼠對 `master` 所在的${{t/revision}}按右鍵，展開選單  
+      從選單上選擇如紅框圈選的「${{st/create-branch}}」，跳出如下圖的對話框  
+
+      ![illustration]({{images/create-remote-branch-modal}})  
+      <div class="img-title">圖(二)</div>  
+
+      請在如上圖中紅框圈選選的文字輸入方塊中填入我們預想的分支名－－「new」  
+      並且記得把橘框圈選的核選方塊打勾，確保建立完分支後立刻切換過去  
+      最後，按下綠框圈選的「${{st/create-branch-modal-confirm-2}}」  
+
+      完成之後，請按下下面的「執行」按鈕，檢查是否成功  
+
+    confirm-branch-created: |+2
+      .md
+      恭喜，現在我們的${{t/local-repo}}之中有了 `new` 這個新的${{t/branch}}  
+      但是目前為止，它都還沒有與之對應的${{t/remote-branch}}  
+      沒有關係，接下來就讓我們把它${{t/push}}到遠端看看  
+
+    push-branch: |+2
+      .md
+      請按照如下圖所示的步驟進行操作，將 `new` ${{t/push}}到遠端  
+
+      ![illustration]({{images/create-remote-branch-push}})  
+      <div class="img-title">圖(三)</div>  
+
+      首先，請按下如上圖紅框範圍中所圈選的「Push(推送)」按鈕  
+      按下之後，會跳出如下圖的對話框  
+
+      ![illustration]({{images/create-remote-branch-push-modal}})  
+      <div class="img-title">圖(四)</div>  
+
+      雖然這個對話框沒有甚麼特別需要調整的地方，但是有一些值得注意的細節可以說明  
+      在紅框圈選範圍中，可以看到我們預計推送到遠端的之後的遠端分支名 `origin/new`  
+      並且，在後面有一段「(new)」表示這個分支在遠端是新增加的  
+
+      在橘框圈選的核選方塊上，說明著「要建立追蹤」  
+      意思是推送出去之後， `new` 就會開始成為 `origin/new` 的${{t/tracking-branch}}  
+
+      最後，我們按下綠框圈選的「Push(推送)」  
+      就可以把這個分支給${{t/push}}出去  
+
+      完成之後，請按下下面的「執行」按鈕，檢查是否成功  
+
+    summary: |+2
+      .md
+      恭喜！${{t/push}}完成之後，我們就會注意到${{t/repo}}之中出現了 `origin/new`  
+      表示從現在開始遠端也有了這個新的分支  
+
+# repo assets

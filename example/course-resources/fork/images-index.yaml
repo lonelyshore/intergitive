@@ -244,3 +244,9 @@ asset_index:
 # checkout-remote-branch
     checkout-remote-graph: checkout-remote-branch@checkout-remote-graph.png
     checkout-remote-modal: checkout-remote-branch@checkout-remote-modal.png
+
+# create-remote-branch
+    create-remote-branch-graph: create-remote-branch@create-remote-branch-graph.png
+    create-remote-branch-modal: create-remote-branch@create-remote-branch-modal.png
+    create-remote-branch-push: create-remote-branch@create-remote-branch-push.png
+    create-remote-branch-push-modal: create-remote-branch@create-remote-branch-push-modal.png

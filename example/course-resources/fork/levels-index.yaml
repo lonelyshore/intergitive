@@ -74,6 +74,7 @@ asset_index:
 
   # level names of section nine
     main.checkout-remote-branch.name: "9-1 節：遠端分支與追蹤分支"
+    main.create-remote-branch.name: "9-2 節：建立遠端分支"
 
   ondisk:
   # level configs of section one: intro
@@ -138,3 +139,4 @@ asset_index:
 
   # level configs of section nine: manager remote
     checkout-remote-branch: "checkout-remote-branch.yaml"
+    create-remote-branch: "create-remote-branch.yaml"

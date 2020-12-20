@@ -261,6 +261,10 @@
           id: "fork-main-checkout-remote-branch"
           nameKey: "levels/main.checkout-remote-branch.name"
           configAssetId: "levels/checkout-remote-branch"
+        - !level
+          id: "fork-main-create-remote-branch"
+          nameKey: "levels/main.create-remote-branch.name"
+          configAssetId: "levels/create-remote-branch"
 
 
 

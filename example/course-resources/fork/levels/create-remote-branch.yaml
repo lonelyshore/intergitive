@@ -1,0 +1,50 @@
+!level
+  repoVcsSetups:
+    manage-remote: !repoVcs 
+      workingPath: manage-remote
+      referenceStoreName: manage-remote
+      checkpointStoreName: manage-remote
+    manage-remote-remote: !repoVcs 
+      workingPath: manage-remote-remote
+      referenceStoreName: manage-remote-remote
+      checkpointStoreName: manage-remote-remote
+      repoType: remote
+    manage-remote-another: !repoVcs 
+      workingPath: manage-remote-another
+      referenceStoreName: manage-remote-another
+      checkpointStoreName: manage-remote-another
+
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+    # intro
+    - !elaborate 
+      descriptionId: "level-data/create-remote-branch/intro"
+
+    - !instruct 
+      descriptionId: "level-data/create-remote-branch/create-branch"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: manage-remote
+          arguments: [ "checkout", "-fB", "new", "master" ]
+    - !verifyRepo 
+      referenceName: create-remote-branch-checkuot-and-create-new
+
+    - !elaborate 
+      descriptionId: "level-data/create-remote-branch/confirm-branch-created"
+
+    - !instruct 
+      descriptionId: "level-data/create-remote-branch/push-branch"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: manage-remote
+          arguments: [ "push", "-u", "origin", "new" ]
+    - !verifyRepo
+      referenceName: create-remote-branch-push-new
+
+    - !elaborate 
+      descriptionId: "level-data/create-remote-branch/summary"
