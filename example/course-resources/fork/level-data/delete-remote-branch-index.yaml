@@ -1,0 +1,37 @@
+asset_index:
+  infile:
+    intro: |+2
+      .md
+      從前面的章節中，我們學習了如何建立${{t/remote-branch}}  
+      既然如此，理所當然也要學習如何刪除  
+      就讓我們在這個章節中以先前創造出來的 `origin/new` 這個分支為對象  
+      練習如何刪除${{t/remote-branch}}吧  
+
+    delete-branch: |+2
+      .md
+      一如往常，我們將繼續承接前一個章節所使用的練習用${{t/repo}}  
+      因此，請使用${{t/gui}}開啟位在「`#{{manage-remote}}`」的${{t/repo}}  
+
+      接著，請如下圖所示操作，刪除 `origin/master`  
+
+      ![illustration]({{images/delete-remote-branch-graph}})  
+      <div class="img-title">圖(一)</div>  
+
+      首先，請如上圖所示，在${{t/graph}}上找到 `origin/new` 所在的${{t/revision}}  
+      找到之後，點擊滑鼠右鍵展開選單  
+      緊接著，在選單上選擇如紅框圈選所示的「origin/new」，展開子選單(注意不要選到「new」)  
+      最後，在子選單上選擇如橘框圈選的「${{st/delete-branch-item}}」，將會跳出如下圖的對話框  
+
+      ![illustration]({{images/delete-remote-branch-modal}})  
+      <div class="img-title">圖(二)</div>  
+
+      這個對話框大致上說明繼續進行操作的話，會將遠端的 `origin/new` 給刪除  
+      這裡，我們選擇如上圖紅框圈選的「${{st/delete-modal-confirm}}」來確認刪除  
+
+      完成之後，請按下下面的「執行」按鈕，檢查是否成功  
+
+    summary: |+2
+      .md
+      恭喜！  
+      現在我們已經刪除${{t/remote-branch}}  
+      我們可以嘗試${{t/fetch}}看看， `origin/new` 已經再也不會出現  

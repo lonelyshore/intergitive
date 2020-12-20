@@ -250,3 +250,7 @@ asset_index:
     create-remote-branch-modal: create-remote-branch@create-remote-branch-modal.png
     create-remote-branch-push: create-remote-branch@create-remote-branch-push.png
     create-remote-branch-push-modal: create-remote-branch@create-remote-branch-push-modal.png
+
+# delete-remote-branch
+    delete-remote-branch-graph: delete-remote-branch@delete-remote-branch-graph.png
+    delete-remote-branch-modal: delete-remote-branch@delete-remote-branch-modal.png
