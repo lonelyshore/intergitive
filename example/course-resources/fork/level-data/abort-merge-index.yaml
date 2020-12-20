@@ -1,0 +1,72 @@
+asset_index:
+  infile:
+    intro: |+2
+      .md
+      在前面的章節裡面，我們學習了各種各樣${{t/resolve}}${{t/conflict}}的技巧  
+      有些時候我們會發現衝突實在太複雜，一時難以解決而又有其它更優先的事情要進行  
+      這個時候，放棄並中止${{t/merge}}會是一種選擇  
+
+      在這個章節中，就讓我們來看看應該如何放棄吧  
+
+    generate-conflict: |+2
+      .md
+      一如往常，我們將繼續承接前一個章節所使用的練習用${{t/repo}}  
+      因此，請使用${{t/gui}}開啟位在「`#{{resolve-conflict}}`」的${{t/repo}}  
+
+      緊接著，我們需要製造大量的${{t/conflict}}  
+      請在下一個步驟中按下「執行」按鈕，自動製造本地和遠端的${{t/conflict}}  
+
+    confirm-conflict: |+2
+      .md
+      現在，我們的練習用${{t/repo}}裡面已經堆滿了自動製造的${{t/conflict}}  
+      如果我們仔細一數發生${{t/conflict}}的檔案數量  
+      會發現驚人的多達十幾個檔案需要處理  
+      這種數量一般來說都是一時半刻難以解決的  
+
+      如果又遇到有其它比較緊急的事情，或是需要跟同伴先商議應該如何處理的話  
+      暫時先放棄處理可能是一種策略  
+      
+      那麼，就讓我們來看看應該如何暫時放棄吧  
+
+    abort-merge: |+2
+      .md
+      當發生${{t/conflict}}之後，${{t/gui}}應該會呈現如下圖的狀態  
+
+      ![illustration]({{images/abort-merge-main}})  
+      <div class="img-title">圖(一)</div>  
+
+      上圖中的紅框圈選處是${{t/gui}}我們目前發生了${{t/conflict}}的貼心提醒  
+      當看到這個的時候，我們就知道${{t/conflict}}還正在處理當中  
+
+      而橘框圈選出來的按鈕，上面寫著「Abort(放棄)」的字樣  
+      意思就是按下去之後可以中止${{t/merge}}  
+
+      當我們按下去之後，就會跳出如下圖的確認對話框  
+
+      ![illustration]({{images/abort-merge-modal}})  
+      <div class="img-title">圖(二)</div>  
+
+      只要再按下上圖中紅框圈選的「Abort merge(放棄合併)」，就可以確認放棄  
+      跟眼前令人崩潰的眾多${{t/conflict}}說再見  
+
+      完成之後，請按下下面的「執行」按鈕，檢查是否成功  
+
+    summary: |+2
+      .md
+      恭喜，目前為止，我們已經徹底學會了各種跟遠端整合的技巧  
+      我們知道發生分歧的時候要跟遠端合併  
+      還知道了合併有可能遭遇${{t/conflict}}  
+      更學習了各種解決以及放棄解決${{t/conflict}}的方法  
+
+      但是，從加入${{t/remote-repo}}的概念之後  
+      我們都只侷限自己在已經存在的${{t/branch}}上面做事  
+      這是因為多出了遠端的${{t/branch}}之後事情又變得更複雜了  
+      在後續的章節中，就讓我們來更深入的認識遠端的${{t/branch}}吧  
+      敬請期待~~
+
+      
+
+# repo assets
+    file-another: "another"
+    file-this: "this"
+    commit-message: "add many"

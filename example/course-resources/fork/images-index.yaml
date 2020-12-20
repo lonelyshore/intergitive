@@ -236,3 +236,7 @@ asset_index:
     resolve-binary-unpick-upstream: resolve-binary@resolve-binary-unpick-upstream.png
     resolve-binary-pick-local-for-1: resolve-binary@resolve-binary-pick-local-for-1.png
     resolve-binary-pick-upstream-for-2: resolve-binary@resolve-binary-pick-upstream-for-2.png
+
+# abort-merge
+    abort-merge-main: abort-merge@abort-merge-main.png
+    abort-merge-modal: abort-merge@abort-merge-modal.png

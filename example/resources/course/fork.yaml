@@ -240,6 +240,10 @@
           id: "fork-main-resolve-binary"
           nameKey: "levels/main.resolve-binary.name"
           configAssetId: "levels/resolve-binary"
+        - !level
+          id: "fork-main-abort-merge"
+          nameKey: "levels/main.abort-merge.name"
+          configAssetId: "levels/abort-merge"
 
 
 

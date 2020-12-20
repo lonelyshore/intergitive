@@ -69,6 +69,7 @@ asset_index:
     main.resolve-multiple-conflicts.name: "8-5 節：解決多個合併衝突"
     main.resolve-with-editor.name: "8-6 節：使用文字編輯器解決合併衝突"
     main.resolve-binary.name: "8-7 節：選取他方或我方解決合併衝突"
+    main.abort-merge.name: "8-8 節：放棄解決合併衝突"
     
 
   ondisk:
@@ -130,3 +131,4 @@ asset_index:
     resolve-multiple-conflicts: "resolve-multiple-conflicts.yaml"
     resolve-with-editor: "resolve-with-editor.yaml"
     resolve-binary: "resolve-binary.yaml"
+    abort-merge: "abort-merge.yaml"

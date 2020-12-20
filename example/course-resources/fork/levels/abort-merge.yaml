@@ -1,0 +1,134 @@
+!level
+  repoVcsSetups:
+    resolve-conflict: !repoVcs 
+      workingPath: resolve-conflict
+      referenceStoreName: resolve-conflict
+      checkpointStoreName: resolve-conflict
+    resolve-conflict-remote: !repoVcs 
+      workingPath: resolve-conflict-remote
+      referenceStoreName: resolve-conflict-remote
+      checkpointStoreName: resolve-conflict-remote
+      repoType: remote
+    resolve-conflict-another: !repoVcs 
+      workingPath: resolve-conflict-another
+      referenceStoreName: resolve-conflict-another
+      checkpointStoreName: resolve-conflict-another
+
+  steps:
+    - !loadLastLevelFinalSnapshot {}
+
+    # intro
+    - !elaborate 
+      descriptionId: "level-data/abort-merge/intro"
+    - !instruct 
+      descriptionId: "level-data/abort-merge/generate-conflict"
+    - !execute 
+      resettingRepos:
+        - resolve-conflict
+        - resolve-conflict-another
+        - resolve-conflict-remote
+      actions:
+        - !act.pull
+          localSetupName: resolve-conflict-another
+          remoteNickName: origin
+          branchName: master
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/abort-merge/file-another"
+            - "$level-data/abort-merge/file-another"
+            - "$level-data/abort-merge/file-another"
+            - "$level-data/abort-merge/file-another"
+            - "$level-data/abort-merge/file-another"
+            - "$level-data/abort-merge/file-another"
+            - "$level-data/abort-merge/file-another"
+            - "$level-data/abort-merge/file-another"
+            - "$level-data/abort-merge/file-another"
+            - "$level-data/abort-merge/file-another"
+            - "$level-data/abort-merge/file-another"
+            - "$level-data/abort-merge/file-another"
+            - "$level-data/abort-merge/file-another"
+            - "$level-data/abort-merge/file-another"
+            - "$level-data/abort-merge/file-another"
+            - "$level-data/abort-merge/file-another"
+          destinationPaths:
+            - "resolve-conflict-another/1.txt"
+            - "resolve-conflict-another/2.txt"
+            - "resolve-conflict-another/3.txt"
+            - "resolve-conflict-another/4.txt"
+            - "resolve-conflict-another/5.txt"
+            - "resolve-conflict-another/6.txt"
+            - "resolve-conflict-another/7.txt"
+            - "resolve-conflict-another/8.txt"
+            - "resolve-conflict-another/9.txt"
+            - "resolve-conflict-another/10.txt"
+            - "resolve-conflict-another/11.txt"
+            - "resolve-conflict-another/12.txt"
+            - "resolve-conflict-another/13.txt"
+            - "resolve-conflict-another/14.txt"
+            - "resolve-conflict-another/15.txt"
+            - "resolve-conflict-another/16.txt"
+        - !act.addRevision 
+          repoSetupName: resolve-conflict-another
+          commitMessage: "$level-data/abort-merge/commit-message"
+        - !act.push 
+          localSetupName: resolve-conflict-another
+          remoteNickName: origin
+          refspecs: '+refs/heads/master:refs/heads/master'
+        
+        - !act.writeFile 
+          sourceAssetIds:
+            - "$level-data/abort-merge/file-this"
+            - "$level-data/abort-merge/file-this"
+            - "$level-data/abort-merge/file-this"
+            - "$level-data/abort-merge/file-this"
+            - "$level-data/abort-merge/file-this"
+            - "$level-data/abort-merge/file-this"
+            - "$level-data/abort-merge/file-this"
+            - "$level-data/abort-merge/file-this"
+            - "$level-data/abort-merge/file-this"
+            - "$level-data/abort-merge/file-this"
+            - "$level-data/abort-merge/file-this"
+            - "$level-data/abort-merge/file-this"
+            - "$level-data/abort-merge/file-this"
+            - "$level-data/abort-merge/file-this"
+            - "$level-data/abort-merge/file-this"
+            - "$level-data/abort-merge/file-this"
+          destinationPaths:
+            - "resolve-conflict/1.txt"
+            - "resolve-conflict/2.txt"
+            - "resolve-conflict/3.txt"
+            - "resolve-conflict/4.txt"
+            - "resolve-conflict/5.txt"
+            - "resolve-conflict/6.txt"
+            - "resolve-conflict/7.txt"
+            - "resolve-conflict/8.txt"
+            - "resolve-conflict/9.txt"
+            - "resolve-conflict/10.txt"
+            - "resolve-conflict/11.txt"
+            - "resolve-conflict/12.txt"
+            - "resolve-conflict/13.txt"
+            - "resolve-conflict/14.txt"
+            - "resolve-conflict/15.txt"
+            - "resolve-conflict/16.txt"
+        - !act.addRevision 
+          repoSetupName: resolve-conflict
+          commitMessage: "$level-data/abort-merge/commit-message"
+        - !act.pull 
+          localSetupName: resolve-conflict
+          remoteNickName: origin
+          branchName: master
+    
+    - !elaborate 
+      descriptionId: "level-data/abort-merge/confirm-conflict"
+
+    - !instruct 
+      descriptionId: "level-data/abort-merge/abort-merge"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: resolve-conflict
+          arguments: [ "merge", "--abort" ]
+    - !verifyRepo 
+      referenceName: abort-merge-aborted
+
