@@ -10,6 +10,7 @@ asset_index:
     main.section-merge-and-delete-branches: "第六章：合併與刪除分支－－刪減分歧"
     main.section-share-repository: "第七章：多人共享版本歷史"
     main.section-integrate-repository: "第八章：整合多人提交歷史"
+    main.section-manage-remote: "第九章：管理遠端"
 
   # level names of section one
     main.intro-install.name: "1-1 節：安裝"
@@ -70,7 +71,9 @@ asset_index:
     main.resolve-with-editor.name: "8-6 節：使用文字編輯器解決合併衝突"
     main.resolve-binary.name: "8-7 節：選取他方或我方解決合併衝突"
     main.abort-merge.name: "8-8 節：放棄解決合併衝突"
-    
+
+  # level names of section nine
+    main.checkout-remote-branch.name: "9-1 節：遠端分支與追蹤分支"
 
   ondisk:
   # level configs of section one: intro
@@ -132,3 +135,6 @@ asset_index:
     resolve-with-editor: "resolve-with-editor.yaml"
     resolve-binary: "resolve-binary.yaml"
     abort-merge: "abort-merge.yaml"
+
+  # level configs of section nine: manager remote
+    checkout-remote-branch: "checkout-remote-branch.yaml"

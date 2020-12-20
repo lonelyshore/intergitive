@@ -1,0 +1,213 @@
+!level
+  repoVcsSetups:
+    manage-remote: !repoVcs 
+      workingPath: manage-remote
+      referenceStoreName: manage-remote
+      checkpointStoreName: manage-remote
+    manage-remote-remote: !repoVcs 
+      workingPath: manage-remote-remote
+      referenceStoreName: manage-remote-remote
+      checkpointStoreName: manage-remote-remote
+      repoType: remote
+    manage-remote-another: !repoVcs 
+      workingPath: manage-remote-another
+      referenceStoreName: manage-remote-another
+      checkpointStoreName: manage-remote-another
+
+  steps:
+    # prepare repositories
+    - !dev.devAction 
+      actions:
+      # init repose: remote, this, another
+        - !dev.act.git 
+          repoSetupName: manage-remote-remote
+          arguments: [ "init", "--bare"]
+
+        - !dev.act.git
+          repoSetupName: manage-remote-another
+          arguments:
+            - init
+        - !dev.act.git 
+          repoSetupName: manage-remote-another
+          arguments: [ config, "--local", user.name, other]
+        - !dev.act.git 
+          repoSetupName: manage-remote-another
+          arguments: [ config, "--local", user.email, other@some.mail]
+        - !dev.act.git 
+          repoSetupName: manage-remote-another
+          arguments: [ config, "--local", core.autocrlf, input]
+
+      # link another repo to remote
+        - !act.setRemote
+          localSetupName: manage-remote-another
+          remoteSetupName: manage-remote-remote
+          remoteNickName: origin
+
+      # add commits
+        # master
+        - !act.writeFile &write1 
+          sourceAssetIds: [ "$level-data/checkout-remote-branch/file-content-1" ]
+          destinationPaths: [ "$level-data/checkout-remote-branch/file-path-another" ]
+        - !act.addRevision &addRevision #1
+          repoSetupName: manage-remote-another
+          commitMessage: "$level-data/checkout-remote-branch/commit-message"
+        - !act.writeFile &write2
+          sourceAssetIds: [ "$level-data/checkout-remote-branch/file-content-2" ]
+          destinationPaths: [ "$level-data/checkout-remote-branch/file-path-another" ]        
+        - *addRevision #2
+        - *write1
+        - *addRevision #3
+        - *write2
+        - *addRevision #4
+        - *write1
+        - *addRevision #5
+        - *write2
+        - *addRevision #6
+        - *write1
+        - *addRevision #7
+        - *write2
+        - *addRevision #8
+        - *write1
+        - *addRevision #9
+        - *write2
+        - *addRevision #10
+        - !dev.act.idle &wait
+          seconds: 1
+
+        # branch-1
+        - !dev.act.git 
+          repoSetupName: manage-remote-another
+          arguments: [ "checkout", "-fB", "1", "master~8" ]
+        - !act.writeFile &write3
+          sourceAssetIds: [ "$level-data/checkout-remote-branch/file-content-3" ]
+          destinationPaths: [ "$level-data/checkout-remote-branch/file-path-another" ] 
+        - *addRevision
+        - *write1
+        - *addRevision
+        - *write2
+        - *addRevision
+        - *wait
+
+        # branch-2
+        - !dev.act.git 
+          repoSetupName: manage-remote-another
+          arguments: [ "checkout", "-fB", "2", "master~5" ]
+        - *write3
+        - *addRevision
+        - *write1
+        - *addRevision
+        - *write2
+        - *addRevision
+        - *wait
+
+        # branch-3
+        - !dev.act.git 
+          repoSetupName: manage-remote-another
+          arguments: [ "checkout", "-fB", "3", "master~2" ]
+        - *write3
+        - *addRevision
+        - *write1
+        - *addRevision
+        - *write2
+        - *addRevision
+        - *wait
+
+        # back to master
+        - !dev.act.git 
+          repoSetupName: manage-remote-another
+          arguments: [ "checkout", "-f", "master" ]
+        - *write1
+        - *addRevision #11
+        - *write2
+        - *addRevision #12
+
+
+        - !act.pushAll
+          localSetupName: manage-remote-another
+          remoteNickName: origin
+          
+
+      # clone to local and configure it
+        - !dev.act.git 
+          repoSetupName: manage-remote
+          arguments: [ "clone", "../manage-remote-remote", "." ]
+
+        - !dev.act.git
+          repoSetupName: manage-remote
+          arguments:
+            - init
+        - !dev.act.git 
+          repoSetupName: manage-remote
+          arguments: [ config, "--local", user.name, someone]
+        - !dev.act.git 
+          repoSetupName: manage-remote
+          arguments: [ config, "--local", user.email, someone@some.mail]
+        - !dev.act.git 
+          repoSetupName: manage-remote
+          arguments: [ config, "--local", core.autocrlf, input]
+
+        - !act.setRemote
+          localSetupName: manage-remote
+          remoteSetupName: manage-remote-remote
+          remoteNickName: origin
+
+        - !dev.act.saveReference 
+          repoSetupName: manage-remote
+          referenceName: init
+        - !dev.act.saveReference 
+          repoSetupName: manage-remote-another
+          referenceName: init
+        - !dev.act.saveReference 
+          repoSetupName: manage-remote-remote
+          referenceName: init
+
+    - !playActions 
+      actions:
+        - !act.loadReference 
+          repoSetupName: manage-remote
+          referenceName: init
+        - !act.loadReference 
+          repoSetupName: manage-remote-another
+          referenceName: init
+        - !act.loadReference 
+          repoSetupName: manage-remote-remote
+          referenceName: init
+
+    - !elaborate 
+      descriptionId: "level-data/checkout-remote-branch/intro"
+    - !elaborate 
+      descriptionId: "level-data/checkout-remote-branch/remote-and-tracking-branch"
+
+    - !instruct 
+      descriptionId: "level-data/checkout-remote-branch/confirm-remote-branch-number"
+      needConfirm: false
+    - !verifyInput 
+      answer: "4"
+
+    - !instruct 
+      descriptionId: "level-data/checkout-remote-branch/confirm-tracking-branch-number"
+      needConfirm: false
+    - !verifyInput 
+      answer: "1"
+
+    - !elaborate 
+      descriptionId: "level-data/checkout-remote-branch/source-of-tracking-branch"
+
+    # checkout remote
+    - !instruct 
+      descriptionId: "level-data/checkout-remote-branch/checkout-remote-1"
+      needConfirm: false
+    - !dev.needAction 
+      actions:
+        - !dev.act.git 
+          repoSetupName: manage-remote
+          arguments: [ "checkout", "--track", "origin/1" ]
+    - !verifyRepo 
+      referenceName: checkout-remote-branch-track-1
+
+    - !elaborate 
+      descriptionId: "level-data/checkout-remote-branch/confirm-checkout-result"
+      
+    - !elaborate 
+      descriptionId: "level-data/checkout-remote-branch/summary"
+

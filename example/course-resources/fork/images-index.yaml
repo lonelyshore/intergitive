@@ -240,3 +240,7 @@ asset_index:
 # abort-merge
     abort-merge-main: abort-merge@abort-merge-main.png
     abort-merge-modal: abort-merge@abort-merge-modal.png
+
+# checkout-remote-branch
+    checkout-remote-graph: checkout-remote-branch@checkout-remote-graph.png
+    checkout-remote-modal: checkout-remote-branch@checkout-remote-modal.png

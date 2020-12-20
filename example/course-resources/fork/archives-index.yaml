@@ -12,3 +12,6 @@ asset_index:
     resolve-conflict: resolve-conflict.zip
     resolve-conflict-another: resolve-conflict-another.zip
     resolve-conflict-remote: resolve-conflict-remote.zip
+    manage-remote: manage-remote.zip
+    manage-remote-another: manage-remote-another.zip
+    manage-remote-remote: manage-remote-remote.zip

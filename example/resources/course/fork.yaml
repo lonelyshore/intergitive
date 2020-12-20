@@ -200,7 +200,7 @@
           id: "fork-main-simple-collaboration"
           nameKey: "levels/main.simple-collaboration.name"
           configAssetId: "levels/simple-collaboration"
-    - !sequential-section # chapter 8: share repository
+    - !sequential-section # chapter 8: integrate repository
       id: "fork-main-section-integrate-repository"
       nameKey: "levels/main.section-integrate-repository"
       prerequisiteIds: 
@@ -244,6 +244,23 @@
           id: "fork-main-abort-merge"
           nameKey: "levels/main.abort-merge.name"
           configAssetId: "levels/abort-merge"
+    - !sequential-section # chapter 9: manage remote
+      id: "fork-main-section-manage-remote"
+      nameKey: "levels/main.section-manage-remote"
+      prerequisiteIds: 
+        - "fork-main-section-intro"
+        - "fork-main-section-create-commits"
+        - "fork-main-section-elaborate-commits"
+        - "fork-main-section-advaneced-history-browsing"
+        - "fork-main-section-create-and-checkout-branches"
+        - "fork-main-section-merge-and-delete-branches"
+        - "fork-main-section-share-repository"
+        - "fork-main-section-integrate-repository"
+      children:
+        - !level
+          id: "fork-main-checkout-remote-branch"
+          nameKey: "levels/main.checkout-remote-branch.name"
+          configAssetId: "levels/checkout-remote-branch"
 
 
 

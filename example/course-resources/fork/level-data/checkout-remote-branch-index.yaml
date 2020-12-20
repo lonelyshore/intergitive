@@ -1,0 +1,109 @@
+asset_index:
+  infile:
+    intro: |+2
+      .md
+      目前為止，我們學習了如何${{t/fetch}}和${{t/push}}${{t/remote-repo}}  
+      也學習了當我們和${{t/remote-repo}}發生${{t/conflict}}應該如何${{t/resolve}}  
+
+      而這些與遠端的互動操作中，主要都是仰賴於 `origin/` 開頭的分支以及非 `origin/` 開頭的分支之間的連動  
+      例如 `origin/master` 和 `master`  
+      在後者被${{t/push}}的時候，前者的位置也會被連帶更新  
+      這其實表示它們之間有一種對應關係  
+
+    remote-and-tracking-branch: |+2
+      .md
+      前面提到的這種對應關係，其實在 git 裡面叫做「**${{t/tracking-f}}**」  
+
+      而牽涉其中的分支，又被分成了兩種類型的${{t/branch}}－－  
+      它們分別是「**${{t/remote-branch-f}}**」以及「**${{t/tracking-branch-f}}**」  
+
+      其中「${{t/remote-branch}}」就是擁有 `origin/` 前綴的${{t/branch}}，例如 `origin/master`  
+      它們代表著${{t/remote-repo}}裡面的${{t/branch}}的位置  
+
+      而「${{t/tracking-branch}}」則是與之對應的本地${{t/branch}}，例如 `master`  
+      這邊所謂的「與之對應」，就是前面說的「${{t/tracking}}」  
+      `master` ${{t/tracking}} `origin/master`  
+
+      在接下來的章節中，我們將會更仔細的觀察這兩者的互動  
+
+    confirm-remote-branch-number: |+2
+      .md
+      當我們複製${{t/remote-repo}}到本地的時候  
+      其實 git 會把所有遠端目前存在的${{t/branch}}都建立一個${{t/remote-branch}}  
+      也就是說，遠端有多少個${{t/branch}}  
+      我們的本地就會有多少個 `origin/` 開頭系列的${{t/branch}}  
+
+      從這個章節開始，我們將使用新的練習用${{t/repo}}  
+      請使用${{t/gui}}開啟位於「`#{{manage-remote}}`」的${{t/repo}}  
+      並且計算一下目前裡面有多少個 `origin/` 開頭的${{t/remote-branch}}呢？  
+      請注意連同 `origin/master` 也要被計算在內才行  
+
+    confirm-tracking-branch-number: |+2
+      .md
+      與之相對的，本地目前不是 `origin/` 開頭的${{t/branch}}又有多少呢？  
+      請回答在下面的文字輸入方塊中  
+    
+    source-of-tracking-branch: |+2
+      .md
+      從前面的問答我們可以發現  
+      其實${{t/remote-branch}}不一定會存在對應的、追蹤他的${{t/tracking-branch}}  
+
+      大多時候，我們如果看到遠端有人開立了新的${{t/branch}}，想要跳上去做事  
+      我們首先需要做的是建立與之對應的${{t/tracking-branch}}  
+      而其中最簡單的方式，就是切換到${{t/remote-branch}}  
+
+      接下來，就讓我們學習如何建立${{t/tracking-branch}}吧  
+
+    checkout-remote-1: |+2
+      .md
+      誠如剛才所說，進行這個操作最簡單的方式就是切換到${{t/remote-branch}}  
+      就讓我們先把目標設定成要建立 `origin/1` 的${{t/tracking-branch}}  
+      請如下圖所示進行操作  
+
+      ![illustration]({{images/checkout-remote-graph}})  
+      <div class="img-title">圖(一)</div>  
+
+      首先，請如上圖，在${{t/graph}}上找到 `origin/1` 所在的${{t/revision}}  
+      然後對準它，按下滑鼠右鍵，展開選單  
+
+      接著在選單上找到如上圖紅框圈選範圍所示的「origin/1」  
+      選擇這個選項後，會進一步展開子選單  
+
+      再來在子選單上找到如上圖橘框圈選起來的「Checkout...(切換到...)」  
+      選擇這個選項後，就會跳出如下圖的對話框  
+
+      ![illustration]({{images/checkout-remote-modal}})  
+      <div class="img-title">圖(二)</div>  
+
+      上圖對話框的內容大意是「接下來將要建立${{t/branch}}追蹤 `origin/1`」  
+      請直接選擇如上圖紅框所圈選出來的「Track(追蹤)」按鈕就可以了  
+
+      完成之後，請按下下面的「執行」按鈕，檢查是否成功  
+
+    confirm-checkout-result: |+2
+      .md
+      恭喜，我們已經成功的為 `origin/1` 建立${{t/tracking-branch}}「`1`」<br>  
+      按照一般的慣例，${{t/tracking-branch}}的名字會沿用${{t/remote-branch}}的名字  
+      差別只是把 `origin` 的前綴給拿掉而已  
+
+      接下來，如同我們前面學習過的  
+      當我們再本地為身為${{t/tracking-branch}}的 `1` 加入新的${{t/revision}}之後再${{t/push}}  
+      身為${{t/remote-branch}}的 `origin/1` 的位置就會跟著一起被更新了  
+
+    summary: |+2
+      .md
+      在這個章節中，我們明確地闡述了遠端協作中的兩種重要的${{t/branch}}：  
+      「${{t/remote-branch}}」以及「${{t/tracking-branch}}」  
+      同時，我們也學習了如何建立新的${{t/tracking-branch}}來追蹤既存的${{t/remote-branch}}  
+
+      在接下來的幾個章節，我們還會繼續介紹與這兩種${{t/branch}}相關的操作  
+      敬請期待~~
+
+# repo assets
+    full-file-name: "file.txt"
+    file-path-this: "manage-remote/file.txt"
+    file-path-another: "manage-remote-another/file.txt"
+    file-content-1: "1"
+    file-content-2: "2"
+    file-content-3: "3"
+    commit-message: "commit"
