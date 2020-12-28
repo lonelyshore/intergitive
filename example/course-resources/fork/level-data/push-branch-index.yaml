@@ -37,7 +37,7 @@ asset_index:
 
     commit-1: |+2
       .md
-      完成檔案修改後，就讓我們來建立${{t/revision}}吧  
+      經過剛才的步驟，我們已經自動的修改資料夾中的檔案，就讓我們來建立${{t/revision}}吧  
       請以「${{level-data/push-branch/commit-message-1}}」作為${{t/commit-msg}}  
       建立${{t/revision}}  
 

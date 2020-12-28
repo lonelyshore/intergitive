@@ -14,7 +14,7 @@ asset_index:
       請使用${{t/gui}}開啟位在「`#{{share-history}}`」的${{t/local-repo}}  
 
       開啟之後，請在該資料夾中  
-      以「${{level-data/diverged-remote/poem-name-2}}」為名，建立純文字檔案  
+      以「${{level-data/diverged-remote/poem-file-name-2}}」為名，建立純文字檔案  
       並且${{t/stage}}該檔案，然後以「${{level-data/diverged-remote/commit-message-this}}」作為${{t/commit-msg}}  
       建立${{t/revision}}  
 

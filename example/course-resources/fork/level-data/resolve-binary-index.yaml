@@ -118,7 +118,7 @@ asset_index:
       git 會將「${{level-data/resolve-binary/full-file-name-1}}」從${{t/unstaged}}變成${{t/staged}}  
 
       (你會注意到，選擇了 `master` 的檔案並沒有出現在${{t/staged}}  
-       這是因為合併途中，${{t/staged}}}選是的是當前${{t/index}}和${{t/head}}的差異  
+       這是因為合併途中，${{t/staged}}顯示的是當前${{t/index}}和${{t/head}}的差異  
        既然選擇了來自 `master` 的檔案(也就是${{t/head}})，當然是沒有差異)  
 
       全部完成後，請按下下面的「執行」按鈕，檢查是否成功  

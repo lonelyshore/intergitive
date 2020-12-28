@@ -66,7 +66,7 @@ asset_index:
       而最簡單的一種方式，就是把心目中的「${{t/remote-repo}}」整份複製到指定的位置上  
       這個操作，叫做「${{t/clone-repo-f}}」  
 
-      請按照下列圖示，依序操作，來將位於「`#{{share-history-remote}}`」複製到「`#{{share-history}}`」  
+      請按照下列圖示，依序操作，來將位於「`#{{share-history-remote}}`」的${{t/repo}}，複製到「`#{{share-history}}`」  
 
       ![illustration]({{images/clone-operate-1}})  
       <div class="img-title">圖(二)</div>  
@@ -99,7 +99,7 @@ asset_index:
     intro-cloned-repo: |+2
       .md
       恭喜，現在我們已經成功複製${{t/repo}}  
-      這表示我們已經準備好，可以透過網路共享`share-history`這個資料夾裡面的版本歷史  
+      這表示我們已經準備好，可以透過網路共享 `share-history` 這個資料夾裡面的版本歷史  
       除此之外，為了方便，這個操作已經直接把目前存放在遠端的版本歷史給下載下來  
 
       我們可以使用${{t/gui}}開啟位於「`#{{share-history}}`」的${{t/repo}}  
@@ -132,7 +132,7 @@ asset_index:
       最簡單的方法，就是使用「${{t/clone-repo}}」  
       這個操作會幫我們把指定的${{t/remote-repo}}的版本歷史下載到指定的位置上，以此建立一個${{t/local-repo}}  
 
-      最後，我們發現經過前述操作之後，多出了一種以`origin/`開頭的${{t/branch}}  
+      最後，我們發現經過前述操作之後，多出了一種以 `origin/` 開頭的${{t/branch}}  
       在緊接而來的章節，我們將詳細介紹這種前所未見的${{t/branch}}有甚麼特殊之處  
       以及我們可以如何透過它們來達成備份/共用版本歷史的目標  
 

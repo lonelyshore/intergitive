@@ -8,7 +8,7 @@ asset_index:
       .md
       目前為止，經過了前面的學習後  
       我們已經能夠非常熟練地使用 git 來管控我們資料夾的版本變化  
-      但是，並不是 git 安裝完成，後所有資料夾就都自動地被納入 git 的管理  
+      但是，並不是 git 安裝完成後，所有資料夾就都自動地被納入 git 的管理  
       事實上，git 能夠管理的，只有擁有 git 倉庫的資料夾  
       在這個章節中，就讓我們來學習看看要如何建立 git 倉庫吧  
 
@@ -84,7 +84,7 @@ asset_index:
 
     create-repo-for-midpoint: |+2
       請按照前面的操作指引  
-      在「#{{create-repo-midpoint}}」建立 git ${{t/repo}}，將其納管  
+      在「`#{{create-repo-midpoint}}`」建立 git ${{t/repo}}，將其納管  
 
       完成之後，請按下「執行」按鈕，確認結果  
 

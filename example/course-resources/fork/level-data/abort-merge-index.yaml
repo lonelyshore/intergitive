@@ -35,7 +35,7 @@ asset_index:
       ![illustration]({{images/abort-merge-main}})  
       <div class="img-title">圖(一)</div>  
 
-      上圖中的紅框圈選處是${{t/gui}}我們目前發生了${{t/conflict}}的貼心提醒  
+      上圖中的紅框圈選處是${{t/gui}}告訴我們目前發生了${{t/conflict}}的貼心提醒  
       當看到這個的時候，我們就知道${{t/conflict}}還正在處理當中  
 
       而橘框圈選出來的按鈕，上面寫著「Abort(放棄)」的字樣  

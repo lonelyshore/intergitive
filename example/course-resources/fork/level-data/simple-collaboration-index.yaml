@@ -23,7 +23,7 @@ asset_index:
       首要注意的，就是記得時常${{t/fetch}}${{t/remote-repo}}  
       頻繁獲得別人的工作進度，這樣才方便基於他人的進度來繼續工作  
 
-      在這裡的練習中，我們來模擬有其它的夥伴，${{t/push}}一個版本到${{t/remote-repo}}  
+      在這裡的練習中，我們將模擬有其它的夥伴${{t/push}}一個版本到${{t/remote-repo}}  
       請在下一個步驟中按下「執行」按鈕，來模擬這件事情  
 
     update-remote-action: "更新${{t/remote-repo}}"
@@ -56,7 +56,7 @@ asset_index:
 
     commit-2: |+2
       .md
-      請開啟「${{level-data/simple-collaboration/poem-name}}」<br>  
+      請開啟「`#{{share-history}}`」這個資料夾裡面的「${{level-data/simple-collaboration/poem-name}}」<br>  
       並且把第二行的「`2：`」改成「`2：邀我至田家`」<br>  
 
       緊接著，請以「`${{level-data/simple-collaboration/commit-message-2}}`」作為${{t/commit-msg}}建立${{t/revision}}  
