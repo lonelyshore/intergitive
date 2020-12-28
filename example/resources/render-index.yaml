@@ -26,3 +26,4 @@ asset_index:
     preCompleteLevelDescription: "哎呀，被發現關卡的尾巴在這裡了 ฅ^•ﻌ•^ฅ"
     completeLevelDescription: "恭喜您已經完成此關卡，請按下確認回到選單畫面  (*￣▽￣)/‧☆*\"'*-.,_,.-*'\"*-.,_☆"
     buttonConfirmText: "確認"
+    loadEbusyMessage: "讀取關卡時發生錯誤。請關閉所有受 git 管控而被開啟編輯的檔案後再嘗試一次"
