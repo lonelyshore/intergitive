@@ -24,9 +24,9 @@ asset_index:
 
     multiple-conflicts: |+2
       .md
-      恭喜，我們成功地製造了檔案的${{t/conflict}}  
-      請按照先前所學，開啟${{t/gui}}內建的${{t/conflict}}合併工具  
-      這個時候，我們會看到如下圖的情況  
+      恭喜，我們成功地製造了「${{level-data/resolve-multiple-conflicts/file-name}}」這個檔案的${{t/conflict}}  
+      請按照先前所學，開啟${{t/gui}}內建的${{t/conflict}}合併工具，來替這個檔案排除${{t/conflict}}  
+      開啟之後，我們會看到如下圖的情況  
 
       ![illustration]({{images/resolve-tool-display-multiple-conflict}})  
       <div class="img-title">圖(一)</div>  

@@ -3,6 +3,7 @@ repoSetups:
   local:
     !repoVcs
       workingPath: "repo"
+      repoType: "local"
       referenceStoreName: "compare-vcs-grow-local-ref"
 stages:
   - name: init
