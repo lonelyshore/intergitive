@@ -112,7 +112,7 @@ asset_index:
 
     move-branch-2: |+2
       .md
-      現在，${{t/head}}已經不再指向「`${{level-data/merge-branch/branch-name-no-hamburger}}}`」了  
+      現在，${{t/head}}已經不再指向「`${{level-data/merge-branch/branch-name-no-hamburger}}`」了  
       所以就讓我們一鼓作氣  
       把這個${{t/branch}}給先移除  
       然後再在最下面的${{t/revision}}給重新建立吧  

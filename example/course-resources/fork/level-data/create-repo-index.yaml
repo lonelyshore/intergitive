@@ -83,6 +83,7 @@ asset_index:
       就讓我們來試試看吧～
 
     create-repo-for-midpoint: |+2
+      .md
       請按照前面的操作指引  
       在「`#{{create-repo-midpoint}}`」建立 git ${{t/repo}}，將其納管  
 
