@@ -4,12 +4,15 @@
   "description": "An interactive git tutorial",
   "main": "main.js",
   "private": true,
+  "engines": {
+    "node": ">=12.20"
+  },
   "dependencies": {
     "adm-zip": "^0.4.16",
     "fs-extra": "^8.0.0",
     "js-yaml": "^3.13.1",
     "marked": "^0.7.0",
-    "nodegit": "^0.24.3",
+    "nodegit": "^0.26.5",
     "override-require": "^1.1.1",
     "vue": "^2.6.10"
   },
@@ -17,7 +20,7 @@
     "@vue/devtools": "^5.3.3",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "electron": "^4.2.2",
+    "electron": "^8.2.5",
     "electron-mocha": "^8.0.2",
     "electron-packager": "^13.1.1",
     "electron-rebuild": "^1.8.5",
@@ -47,10 +50,9 @@
     "bake-fork": "npm run \"load-native-node\" && node ./dev/course-maker.js bake-course ./example \"/\" fork ./test/resources/repo-archive",
     "build-win64": "npm run \"load-native-electron\" && electron-packager . intergitive --platform=win32 --arch=x64 --ignore=\"^/\\.module_cache/\" --ignore=\"^/test\" --ignore=\"^/playground\" --ignore=\"^/bake\" --ignore=\"^/drawings\" --out=\"out\"",
     "build-win64-dev": "npm run \"load-native-electron\" && electron-packager . intergitive --platform=win32 --arch=x64 --prune=false",
-    "load-native-node": "node \"./dev/module-switch.js\" load nodegit node-10-11",
-    "load-native-electron": "node \"./dev/module-switch.js\" load nodegit electron-4",
-    "raw": "mocha --recursive \"./test/tests/*.js\"",
-    "postinstall": "node \"./dev/post-install.js\""
+    "load-native-node": "node \"./dev/module-switch.js\" load nodegit node",
+    "load-native-electron": "node \"./dev/module-switch.js\" load nodegit electron",
+    "raw": "mocha --recursive \"./test/tests/*.js\""
   },
   "author": "zedaizd",
   "license": "ISC"

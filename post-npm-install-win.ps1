@@ -13,7 +13,7 @@ Remove-Item -Force -Path .\.npmrc
 # load for electron first
 $content = @"
 runtime = electron
-target = 4.0.0
+target = 8.2.0
 target_arch = $architecture
 disturl = "https://atom.io/download/atom-shell"
 "@
@@ -28,13 +28,13 @@ $outStream.Flush()
 $outStream.Close()
 $outStream.Dispose()
 
-npm install nodegit
+npm install nodegit@0.26.x
 
-node .\dev\module-switch.js save nodegit electron-4
+node .\dev\module-switch.js save nodegit electron
 
 # # load for current node
 Remove-Item -Force -Path .\.npmrc
 
-npm install nodegit
+npm install nodegit@0.26.x
 
-node .\dev\module-switch.js save nodegit node-10-11
+node .\dev\module-switch.js save nodegit node
