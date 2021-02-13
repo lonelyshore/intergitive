@@ -8,4 +8,6 @@
 /out
 **/archives/init-repo-store
 .~lock.*
+/dist/
+
 
