@@ -2,6 +2,7 @@
 
 const path = require('path');
 const fs = require('fs-extra');
+const { IgnorePlugin } = require('webpack');
 const distPath = path.resolve(__dirname, 'dist');
 
 const main = {
@@ -22,6 +23,9 @@ const main = {
       },
     ],
   },
+  plugins: [
+    new IgnorePlugin(/build\/Debug\/nodegit.node/i)
+  ]
   //mode: "development"
 };
 
