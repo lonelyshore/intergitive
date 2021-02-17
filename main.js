@@ -1,6 +1,7 @@
 "use strict";
 
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow } = require('electron');
+const path = require('path');
 
 function createWindow () {
   // Create the browser window.
@@ -8,9 +9,10 @@ function createWindow () {
     width: 1000,
     height: 1000,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      preload: path.resolve(__dirname, './src/preload.js')
     }
-  })
+  });
 
   // and load the index.html of the app.
   win.loadFile('index.html');
