@@ -19,7 +19,14 @@ const base = {
   },
   plugins: [
     new IgnorePlugin(/build\/Debug\/nodegit.node$/i)
-  ]
+  ],
+  // externals: [
+  //   function(context, request, callback) {
+  //     if(/^nodegit/.test(request))
+  //       return callback(null, 'commonjs' + " " + request);
+  //     callback();
+  //   },
+  // ]
 }
 
 const main = Object.assign(
