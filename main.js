@@ -10,7 +10,7 @@ function createWindow () {
     height: 1000,
     webPreferences: {
       nodeIntegration: true,
-      preload: path.resolve(__dirname, './src/preload.js')
+      //preload: path.resolve(__dirname, './src/preload.js')
     }
   });
 

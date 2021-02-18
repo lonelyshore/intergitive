@@ -58,20 +58,6 @@ const preload = Object.assign(
   base
 );
 
-const setting = Object.assign(
-  {
-    entry: [
-      path.resolve(__dirname, './example-course-settings.yaml')
-    ],
-    output: {
-      filename: 'example-course-settings.yaml',
-      path: path.resolve(distPath, './src'),
-    },
-    target: 'electron-preload'
-  },
-  base
-);
-
 const renderer = Object.assign(
   {
     entry: path.resolve(__dirname, './lib/render-level.js'),
@@ -85,9 +71,11 @@ const renderer = Object.assign(
 );
 
 
-module.exports = [main, preload, renderer];
+module.exports = [main, renderer];
 
-fs.ensureDir(path.resolve(__dirname, 'dist'));
+fs.ensureDirSync(path.resolve(__dirname, 'dist'));
 fs.copySync(path.resolve(__dirname, 'static'), path.resolve(__dirname, 'dist/static'));
 fs.copyFileSync(path.resolve(__dirname, 'index.html'), path.resolve(__dirname, 'dist/index.html'));
-fs.copyFileSync(path.resolve(__dirname, 'example-course-settings.yaml'), path.resolve(__dirname, 'dist/src/example-course-settings.yaml'));
+
+fs.ensureDirSync(path.resolve(__dirname, 'dist/lib'));
+fs.copyFileSync(path.resolve(__dirname, 'example-course-settings.yaml'), path.resolve(__dirname, 'dist/lib/example-course-settings.yaml'));
