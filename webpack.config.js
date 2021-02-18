@@ -88,5 +88,6 @@ const renderer = Object.assign(
 module.exports = [main, preload, renderer];
 
 fs.ensureDir(path.resolve(__dirname, 'dist'));
+fs.copySync(path.resolve(__dirname, 'static'), path.resolve(__dirname, 'dist/static'));
 fs.copyFileSync(path.resolve(__dirname, 'index.html'), path.resolve(__dirname, 'dist/index.html'));
 fs.copyFileSync(path.resolve(__dirname, 'example-course-settings.yaml'), path.resolve(__dirname, 'dist/src/example-course-settings.yaml'));
