@@ -65,7 +65,12 @@ const renderer = Object.assign(
       filename: 'render-level.js',
       path: path.join(distPath, 'lib'),
     },
-    target: 'electron-renderer'
+    target: 'electron-renderer',
+    resolve: {
+      alias: {
+        "vue$" : "vue/dist/vue.common.js"
+      }
+    }
   },
   base
 );
