@@ -1,7 +1,8 @@
 "use strict";
 
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const mainStore = require('./lib/main-store');
 
 function createWindow () {
   // Create the browser window.
@@ -10,7 +11,7 @@ function createWindow () {
     height: 1000,
     webPreferences: {
       nodeIntegration: true,
-      //preload: path.resolve(__dirname, './src/preload.js')
+      preload: path.resolve(__dirname, './src/preload.js')
     }
   });
 
@@ -31,5 +32,13 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
+});
+
+ipcMain.handle('store', async (event, arg) => {
+  console.log(arg);
+  let funcName = arg.shift();
+
+  let result = await mainStore[funcName](...arg);
+  return { state: null, extras: result};
 });
 

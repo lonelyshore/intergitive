@@ -2,15 +2,15 @@
 
 console.warn('preload');
 
-const { contextBridge } = require('electron');
+const { contextBridge, ipcRenderer } = require('electron');
 
 console.warn('preload - 1');
 
-const store = require('../lib/store');
+const state = require('../lib/state');
 
 console.warn('preload - 2');
 
-const paths = require('./paths');
+//const paths = require('./paths');
 
 console.warn('preload - 3');
 
@@ -22,6 +22,10 @@ console.warn('preload - 3');
 // );
 
 window.api = {
-    getStore: () => store,
-    getPaths: () => paths
+    invokeStore: (methodName, ...extraArgs) => {
+        extraArgs = extraArgs || [];
+        extraArgs.unshift(methodName);
+        return ipcRenderer.invoke('store', extraArgs);
+    },
+    createNewState: () => new state.State(),
 }

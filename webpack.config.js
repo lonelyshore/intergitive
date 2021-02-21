@@ -93,7 +93,7 @@ const renderer = Object.assign(
 );
 
 
-module.exports = [main, renderer];
+module.exports = [main, preload, renderer];
 
 fs.ensureDirSync(path.resolve(__dirname, 'dist'));
 fs.copySync(path.resolve(__dirname, 'static'), path.resolve(__dirname, 'dist/static'));

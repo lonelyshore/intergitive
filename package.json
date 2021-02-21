@@ -42,7 +42,7 @@
     "test-core": "npm run \"load-native-node\" && mocha --recursive \"./test/tests/*.js\" --grep \"#core\"",
     "test-remote": "mocha \"./playground/remote.js\"",
     "==== Electron ====": "",
-    "start": "npm run \"load-native-electron\" && electron .",
+    "start": "npm run \"load-native-electron\" && npm run test-pack",
     "rebuild": "npm run \"load-native-electron\" && electron-rebuild -f --version 4.2.2 -w nodegit",
     "echeck-course": "npm run \"load-native-electron\" && electron-mocha \"./test/tests/course-validity.js\"",
     "etest": "npm run \"load-native-electron\" && electron-mocha --renderer --recursive \"./test/tests/*.js\"",
