@@ -84,3 +84,7 @@ fs.copyFileSync(path.resolve(__dirname, 'index.html'), path.resolve(__dirname, '
 
 fs.ensureDirSync(path.resolve(__dirname, 'dist/lib'));
 fs.copyFileSync(path.resolve(__dirname, 'example-course-settings.yaml'), path.resolve(__dirname, 'dist/lib/example-course-settings.yaml'));
+
+fs.ensureDirSync(path.resolve(__dirname, 'dist/lib/example'));
+fs.copySync(path.resolve(__dirname, 'example/resources'), path.resolve(__dirname, 'dist/lib/example/resources'));
+fs.copySync(path.resolve(__dirname, 'example/course-resources/fork'), path.resolve(__dirname, 'dist/lib/example/course-resources/fork'))
