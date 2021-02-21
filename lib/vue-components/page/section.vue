@@ -1,3 +1,10 @@
+<template>
+    <div class="section">
+        <course-menu-list v-bind:children="children"></course-menu-list>
+    </div>        
+</template>
+
+<script>
 'use strict';
 
 let components = Object.assign({}, require('../menu-components'));
@@ -28,10 +35,6 @@ exports = module.exports = {
             this.title = text;
         });
     },
-   components: components,
-    template: `
-<div class="section">
-    <course-menu-list v-bind:children="children"></course-menu-list>
-</div>    
-  `
+   components: components
 };
+</script>

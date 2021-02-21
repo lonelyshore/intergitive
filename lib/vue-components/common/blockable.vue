@@ -1,3 +1,10 @@
+<template>
+    <div class="blockable" v-bind:blocked="isBlocked">
+        <slot></slot>
+    </div>
+</template>
+
+<script>
 'use strict';
 
 exports = module.exports = {
@@ -9,10 +16,6 @@ exports = module.exports = {
     },
     props: {
         stepKey: String,
-    },
-    template: `
-<div class="blockable" v-bind:blocked="isBlocked">
-    <slot></slot>
-</div>
-`
+    }
 }
+</script>

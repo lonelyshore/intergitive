@@ -1,3 +1,11 @@
+<template>
+    <div class="nested-course-item-preview menu-list-entry" v-on:click="onClick" v-bind:progress="progressStatusValue">
+        <span>{{ name }}</span>
+        <span v-if="isDebug">{{ progressStatusValue }}</span>
+    </div>        
+</template>
+
+<script>
 'use strict';
 
 const courseConfig = require('../../config-course');
@@ -37,11 +45,6 @@ exports = module.exports = {
             if (this.progressStatus !== progress.ProgressEnum.LOCKED || this.isDebug)
                 this.$root.$data.store.navigate(this.item);
         }
-    },
-    template: `
-<div class="nested-course-item-preview menu-list-entry" v-on:click="onClick" v-bind:progress="progressStatusValue">
-    <span>{{ name }}</span>
-    <span v-if="isDebug">{{ progressStatusValue }}</span>
-</div>    
-  `
+    }
 };
+</script>

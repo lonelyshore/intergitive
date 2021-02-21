@@ -1,3 +1,20 @@
+<template>
+    <div class="level" v-bind:non-interactable="!levelState.interactable">
+        <div
+            v-for="(stepKey) in renderSteps"
+            is="blockable"
+            v-bind:step-key="stepKey"
+            v-bind:key="`blockable-${stepKey}`">
+            <div          
+                v-bind:is="stepStates[stepKey].step.componentType"
+                v-bind:step-key="stepKey"
+                v-bind:key="`level-step-${stepKey}`">
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
 'use strict';
 
 let components = Object.assign({}, require('../step-components'));
@@ -18,20 +35,6 @@ exports = module.exports = {
           return this.levelState.stepsReady ? this.levelState.stepStates : {};
         }
     },
-    components: components,
-    template: `
-<div class="level" v-bind:non-interactable="!levelState.interactable">
-    <div
-        v-for="(stepKey) in renderSteps"
-        is="blockable"
-        v-bind:step-key="stepKey"
-        v-bind:key="\`blockable-\${stepKey}\`">
-        <div          
-        v-bind:is="stepStates[stepKey].step.componentType"
-        v-bind:step-key="stepKey"
-        v-bind:key="\`level-step-\${stepKey}\`"
-        ></div>
-    </div>
-</div>    
-`
+    components: components
 };
+</script>
