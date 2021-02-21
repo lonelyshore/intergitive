@@ -82,9 +82,9 @@ fs.ensureDirSync(path.resolve(__dirname, 'dist'));
 fs.copySync(path.resolve(__dirname, 'static'), path.resolve(__dirname, 'dist/static'));
 fs.copyFileSync(path.resolve(__dirname, 'index.html'), path.resolve(__dirname, 'dist/index.html'));
 
-fs.ensureDirSync(path.resolve(__dirname, 'dist/lib'));
-fs.copyFileSync(path.resolve(__dirname, 'example-course-settings.yaml'), path.resolve(__dirname, 'dist/lib/example-course-settings.yaml'));
+//fs.ensureDirSync(path.resolve(__dirname, 'dist'));
+fs.copyFileSync(path.resolve(__dirname, 'example-course-settings.yaml'), path.resolve(__dirname, 'dist/example-course-settings.yaml'));
 
-fs.ensureDirSync(path.resolve(__dirname, 'dist/lib/example'));
-fs.copySync(path.resolve(__dirname, 'example/resources'), path.resolve(__dirname, 'dist/lib/example/resources'));
-fs.copySync(path.resolve(__dirname, 'example/course-resources/fork'), path.resolve(__dirname, 'dist/lib/example/course-resources/fork'))
+fs.ensureDirSync(path.resolve(__dirname, 'dist/example'));
+fs.copySync(path.resolve(__dirname, 'example/resources'), path.resolve(__dirname, 'dist/example/resources'));
+fs.copySync(path.resolve(__dirname, 'example/course-resources/fork'), path.resolve(__dirname, 'dist/example/course-resources/fork'))

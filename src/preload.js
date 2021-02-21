@@ -10,7 +10,7 @@ const store = require('../lib/store');
 
 console.warn('preload - 2');
 
-const paths = require('../paths');
+const paths = require('./paths');
 
 console.warn('preload - 3');
 

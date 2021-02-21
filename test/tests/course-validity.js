@@ -5,7 +5,7 @@ const yaml = require('js-yaml');
 const path = require('path');
 
 
-const paths = require('../../paths');
+const paths = require('../../lib/paths');
 const zip = require('../../lib/simple-archive');
 const repoVcs = require('../../lib/repo-vcs');
 const configCourse = require('../../lib/config-course');
