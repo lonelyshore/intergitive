@@ -1,3 +1,46 @@
+<template>
+    <div class="level-block verify" v-bind:appending="appending">
+        <div class="content" v-html="description"></div>
+
+        <div class="processing-box">
+            <input 
+                v-model="input"
+                v-bind:placeholder="placeholder"
+                v-bind:disabled="isInputCorrect" />
+
+
+
+            <button 
+                v-on:click="submit"
+                v-bind:disabled="isButtonDisabled"
+                v-if="!isInputCorrect">
+                {{submitText}}
+            </button>
+
+            <img 
+                class="inline-img"
+                v-if="isInputCorrect"
+                v-bind:src="correctImagePath" />
+        </div>
+
+        <span
+            red-highlight
+            v-if="isInputIncorrect">
+            {{failedText}}
+        </span>
+
+        <div v-if="isDebug">
+            Current Phase: {{phase}}
+            <button
+                v-on:click="skip"
+                style="pointer-events: visiblePainted;">
+                SKIP
+            </button>
+        </div>
+    </div>    
+</template>
+
+<script>
 'use strict';
 
 const stepConfig = require('../../config-step');
@@ -134,46 +177,6 @@ exports = module.exports = {
             this.store.markProcessComplete(this.stepKey);
 
         }
-    },
-    template: `
-<div class="level-block verify" v-bind:appending="appending">
-    <div class="content" v-html="description"></div>
-
-    <div class="processing-box">
-        <input 
-            v-model="input"
-            v-bind:placeholder="placeholder"
-            v-bind:disabled="isInputCorrect" />
-
-
-
-        <button 
-            v-on:click="submit"
-            v-bind:disabled="isButtonDisabled"
-            v-if="!isInputCorrect">
-            {{submitText}}
-        </button>
-
-        <img 
-            class="inline-img"
-            v-if="isInputCorrect"
-            v-bind:src="correctImagePath">
-        </img>
-    </div>
-
-    <span
-        red-highlight
-        v-if="isInputIncorrect">
-        {{failedText}}
-    </span>
-
-    <div v-if="isDebug">
-        Current Phase: {{phase}}
-        <button
-            v-on:click="skip"
-            style="pointer-events: visiblePainted;">
-            SKIP
-        </button>
-    </div>
-</div>`
+    }
 }
+</script>

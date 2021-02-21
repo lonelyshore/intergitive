@@ -1,3 +1,31 @@
+<template>
+    <div class="level-block autoplay">
+
+        <span class="title">{{description}}</span>
+
+        <div class="processing-box">
+            {{statusDescription}}
+
+            <button 
+                v-on:click="process"
+                v-bind:disabled="!canRunManually"
+                v-if="!isCompleted">
+                {{buttonText}}
+            </button>
+
+            <img
+                class="inline-img"
+                v-if="isCompleted"
+                v-bind:src="correctImagePath"/>            
+        </div>
+
+        <div v-if="isDebug">
+            Current Phase: {{phase}}
+        </div>
+    </div>
+</template>
+
+<script>
 'use strict';
 
 const readonly = require('../../readonly');
@@ -145,31 +173,6 @@ exports = module.exports = {
             this.phase = Phase.SUCCESS;
             this.store.markProcessComplete(this.stepKey);
         }
-    },
-    template: `
-<div class="level-block autoplay">
-
-    <span class="title">{{description}}</span>
-
-    <div class="processing-box">
-        {{statusDescription}}
-
-        <button 
-            v-on:click="process"
-            v-bind:disabled="!canRunManually"
-            v-if="!isCompleted">
-            {{buttonText}}
-        </button>
-
-        <img
-            class="inline-img"
-            v-if="isCompleted"
-            v-bind:src="correctImagePath">
-        </img>
-    </div>
-
-    <div v-if="isDebug">
-        Current Phase: {{phase}}
-    </div>
-</div>`
-}
+    }
+};
+</script>

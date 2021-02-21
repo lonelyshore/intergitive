@@ -1,3 +1,20 @@
+<template>
+    <div class="level-block complete">
+
+        <span class="processing-box">
+            <span v-if="isEnabled">{{ completeDescription }}</span>
+            <span v-else>{{ incompleteDescription }}</span>
+
+            <button 
+                v-on:click="onClick"
+                v-bind:disabled="!isEnabled">
+                {{ buttonConfirmText }}
+            </button>
+        </span>
+    </div>
+</template>
+
+<script>
 'use strict';
 
 const stepConfig = require('../../config-step');
@@ -46,19 +63,6 @@ exports = module.exports = {
         onClick: function(event) {
             this.store.markProcessComplete(this.stepKey);
         }
-    },
-    template: `
-<div class="level-block complete">
-
-    <span class="processing-box">
-        <span v-if="isEnabled">{{ completeDescription }}</span>
-        <span v-else>{{ incompleteDescription }}</span>
-
-        <button 
-            v-on:click="onClick"
-            v-bind:disabled="!isEnabled">
-            {{ buttonConfirmText }}
-        </button>
-    </span>
-</div>`
+    }
 }
+</script>

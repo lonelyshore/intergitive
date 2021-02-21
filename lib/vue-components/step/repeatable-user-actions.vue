@@ -1,3 +1,22 @@
+<template>
+    <div class="level-block verify">
+
+        <span>{{description}}</span>
+
+        <div class="processing-box">
+            {{status}}: {{statusDescription}}
+            <button v-on:click="process" v-bind:disabled="isRunning">
+                {{buttonText}}
+            </button>
+        </div>
+
+        <div v-if="isDebug">
+            Current Phase: {{phase}}
+        </div>
+    </div>
+</template>
+
+<script>
 'use strict';
 
 const readonly = require('../../readonly');
@@ -93,21 +112,6 @@ exports = module.exports = {
                 }
             });
         },
-    },
-    template: `
-<div class="level-block verify">
-
-    <span>{{description}}</span>
-
-    <div class="processing-box">
-        {{status}}: {{statusDescription}}
-        <button v-on:click="process" v-bind:disabled="isRunning">
-            {{buttonText}}
-        </button>
-    </div>
-
-    <div v-if="isDebug">
-        Current Phase: {{phase}}
-    </div>
-</div>`
+    }
 }
+</script>
