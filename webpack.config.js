@@ -3,6 +3,7 @@
 const path = require('path');
 const fs = require('fs-extra');
 const { IgnorePlugin } = require('webpack');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const distPath = path.resolve(__dirname, 'dist');
 
 const base = {
@@ -59,6 +60,7 @@ const preload = Object.assign(
 );
 
 const renderer = Object.assign(
+  base,
   {
     entry: path.resolve(__dirname, './lib/render-level.js'),
     output: {
@@ -68,11 +70,26 @@ const renderer = Object.assign(
     target: 'electron-renderer',
     resolve: {
       alias: {
-        "vue$" : "vue/dist/vue.common.js"
+        "vue$" : "vue/dist/vue.runtime.common.js"
       }
-    }
-  },
-  base
+    },
+    module: {
+      rules: [
+        {
+          test: /\.node$/,
+          loader: 'node-loader',
+        },
+        {
+          test: /\.vue$/,
+          loader: 'vue-loader'
+        }
+      ]
+    },
+    plugins: [
+      new IgnorePlugin(/build\/Debug\/nodegit.node$/i),
+      new VueLoaderPlugin()
+    ],
+  }
 );
 
 
