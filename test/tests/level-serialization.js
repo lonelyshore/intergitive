@@ -26,7 +26,7 @@ chai.should();
 /**
  * This test fixture ensures that serialization of level configuration
  * has the following properties:
- * 1. All defined step types (in config-step.js) and actions types (in config-actino.js)
+ * 1. All defined step types (in config-step.js) and actions types (in lib/config-actino.js)
  *    can be serialized and deserialized via YAML
  * 2. The YAML serialization is stable.
  *    The object deserialized from a text equals to the one that generates the text.
@@ -101,5 +101,25 @@ describe.only('Level Serialization #core', function() {
             );
         });
 
+    });
+
+
+    it('GENERATE_TESTS', function() {
+        createTestsForSampleObjects(sampleSteps, allStepTypes);
+        createTestsForSampleObjects(sampleActions, allActionTypes);
     })
-})
+
+});
+
+function createTestsForSampleObjects(sampleObjects, refTypes) {
+    describe('Validate Serialization', function() {
+
+        sampleObjects.forEach(obj => {
+            it(obj.constructor.name, function(){
+                return Promise.resolve()
+                .then(() => yaml.dump(obj, { schema: LEVEL_CONFIG_SCHEMA }))
+                .should.eventually.be.fulfilled;
+            });
+        });
+    });
+}
