@@ -47,3 +47,14 @@ ipcMain.handle('progress', async (event, arg) => {
   let funcName = arg.shift();
   return progress[funcName](...arg);
 });
+
+ipcMain.handle('load', async (event, arg) => {
+  let funcName = arg.shift();
+  return mainStore.loaderPair[funcName](...arg)
+  .catch(err => {
+    console.error(`Failed to load using loaderPair[${funcName}](${arg.join(', ')}) with following error:`);
+    console.error(err);
+
+    return '';
+  });
+})
