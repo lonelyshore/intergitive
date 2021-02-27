@@ -21,11 +21,18 @@ console.warn('preload - 3');
 //     }
 // );
 
+function invokeService(serviceName, methodName, extraArgs) {
+    extraArgs = extraArgs || [];
+    extraArgs.unshift(methodName);
+    return ipcRenderer.invoke(serviceName, extraArgs);
+}
+
+function genInvokeServiceFunc(serviceName) {
+    return (methodName, ...extraArgs) => invokeService(serviceName, methodName, extraArgs);
+}
+
 window.api = {
-    invokeStore: (methodName, ...extraArgs) => {
-        extraArgs = extraArgs || [];
-        extraArgs.unshift(methodName);
-        return ipcRenderer.invoke('store', extraArgs);
-    },
+    invokeStore: genInvokeServiceFunc('store'),
+    invokeProgressService: genInvokeServiceFunc('progress'),
     createNewState: () => new state.State(),
 }

@@ -9,7 +9,7 @@
 'use strict';
 
 const courseConfig = require('../../config-course');
-const progress = require('../../progress');
+const { ProgressEnum } = require('../../../common/progress');
 
 exports = module.exports = {
     data: function(){
@@ -29,7 +29,7 @@ exports = module.exports = {
             return this.$root.$data.store.state.levelState.isDebug;
         },
         progressStatusValue: function() {
-            return progress.ProgressEnum.ToStringLiteral(this.progressStatus);
+            return ProgressEnum.ToStringLiteral(this.progressStatus);
         }
     },
     created: function() {
@@ -42,7 +42,7 @@ exports = module.exports = {
     },
     methods: {
         onClick: function(event) {
-            if (this.progressStatus !== progress.ProgressEnum.LOCKED || this.isDebug)
+            if (this.progressStatus !== ProgressEnum.LOCKED || this.isDebug)
                 this.$root.$data.store.navigate(this.item);
         }
     }

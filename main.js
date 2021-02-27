@@ -3,6 +3,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const mainStore = require('./lib/main-store');
+const progress = require('./lib/progress-service');
 
 function createWindow () {
   // Create the browser window.
@@ -42,3 +43,7 @@ ipcMain.handle('store', async (event, arg) => {
   return { state: null, extras: result};
 });
 
+ipcMain.handle('progress', async (event, arg) => {
+  let funcName = arg.shift();
+  return progress[funcName](...arg);
+});
