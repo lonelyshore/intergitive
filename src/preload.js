@@ -33,7 +33,8 @@ function genInvokeServiceFunc(serviceName) {
 
 window.api = {
     invokeStore: genInvokeServiceFunc('store'),
+    invokeSelect: genInvokeServiceFunc('select'),
     invokeProgressService: genInvokeServiceFunc('progress'),
-    load: genInvokeServiceFunc('load'), // loads using functions defined in LoaderPair (load-course-asset.js)
+    invokeLoad: genInvokeServiceFunc('load'), // loads using functions defined in LoaderPair (load-course-asset.js)
     createNewState: () => new state.State(),
 }

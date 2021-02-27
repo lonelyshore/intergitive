@@ -35,12 +35,19 @@ app.on('window-all-closed', () => {
   }
 });
 
+// Invoke store methods and returns with store's new state
 ipcMain.handle('store', async (event, arg) => {
-  console.log(arg);
   let funcName = arg.shift();
 
   let result = await mainStore[funcName](...arg);
-  return { state: null, extras: result};
+  return { state: null, extras: result };
+});
+
+// Invoke functions of store and only return its original return value
+ipcMain.handle('select', async (event, arg) => {
+  let funcName = arg.shift();
+
+  return mainStore[funcName](...arg);
 });
 
 ipcMain.handle('progress', async (event, arg) => {
@@ -48,6 +55,7 @@ ipcMain.handle('progress', async (event, arg) => {
   return progress[funcName](...arg);
 });
 
+// loads from LoaderPair
 ipcMain.handle('load', async (event, arg) => {
   let funcName = arg.shift();
   return mainStore.loaderPair[funcName](...arg)
