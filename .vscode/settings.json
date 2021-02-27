@@ -2,7 +2,7 @@
     "yaml.schemas": {
         "json-schemas/course.json": "*/course/*.yaml",
         "json-schemas/asset-index.json": "*-index.yaml",
-        "json-schemas/level.json": "*/levels/*.yaml",
+        "json-schemas/level.json": ["*/levels/*.yaml", "test/resources/serialization/sample-steps.yaml", "test/resources/serialization/sample-actions.yaml"],
         "json-schemas/generate-repo.json": "generate-*-repo.yaml",
         "json-schemas/serialized-course-settings.json": "/*-course-settings.yaml"
     },
@@ -33,6 +33,8 @@
         "!act.setUser mapping",
         "!act.loadReference mapping",
         "!act.loadCheckpoint mapping",
+        "!act.saveCheckpoint mapping",
+        "!act.compareReference mapping"
 
         "!dev.act.unstage mapping",
         "!dev.act.unstageAll mapping",
@@ -59,6 +61,8 @@
         "!playActions mapping",
         "!loadLastLevelFinalSnapshot mapping",
         "!openWorkingPath mapping",
+        "!completeLevel mapping",
+        "!saveProgress mapping",
 
         "!dev.needAction mapping",
         "!dev.devAction mapping",
