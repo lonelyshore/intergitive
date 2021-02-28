@@ -1,3 +1,13 @@
+- !act.sequential 
+  - !act.writeFile 
+    sourceAssetIds: ['kerker', 'noking']
+    destinationPaths: ['42', '87']
+  - !act.removeFile 
+    targetPaths: ['kerker', 'noking']
+  - !act.moveFile 
+    sourcePaths: ['kerker', 'noking']
+    targetPaths: ['42', '87']
+  - !act.log "some message"
 - !act.writeFile 
   sourceAssetIds: ['kerker', 'noking']
   destinationPaths: ['42', '87']

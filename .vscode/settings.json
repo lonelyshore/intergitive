@@ -15,6 +15,7 @@
 
         "!repoVcs mapping",
 
+        "!act.sequential sequence",
         "!act.writeFile mapping",
         "!act.removeFile mapping",
         "!act.moveFile mapping",
