@@ -52,7 +52,7 @@
         - !act.push 
           localSetupName: resolve-conflict-another
           remoteNickName: origin
-          refspecs: '+refs/heads/master:refs/heads/master'
+          refSpecs: '+refs/heads/master:refs/heads/master'
 
       # clone to local and configure it
         - !dev.act.git 

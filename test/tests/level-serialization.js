@@ -182,7 +182,7 @@ function createTestsForSampleObjects(sampleObjects, refTypes) {
                         propNames.push('actions');
                     }
                     if ('appendCheckpoint' in a) {
-                        propNames.push('appendCheckpoing');
+                        propNames.push('appendCheckpoint');
                     }
                 }
 

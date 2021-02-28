@@ -45,7 +45,7 @@
         - !act.push 
           localSetupName: resolve-conflict-another
           remoteNickName: origin
-          refspecs: '+refs/heads/master:refs/heads/master'
+          refSpecs: '+refs/heads/master:refs/heads/master'
         
         - !act.writeFile 
           sourceAssetIds: 
@@ -120,7 +120,7 @@
         - !act.push 
           localSetupName: resolve-conflict
           remoteNickName: origin
-          refspecs: '+refs/heads/master:refs/heads/master'
+          refSpecs: '+refs/heads/master:refs/heads/master'
     - !verifyRepo 
       referenceName: resolve-binary-commit-and-push
 

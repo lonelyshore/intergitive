@@ -41,7 +41,7 @@
             "type": "string"
         }
     },
-    "refspecs": {
+    "refSpecs": {
         "type": "string",
         "description": "git ref specs"
     },

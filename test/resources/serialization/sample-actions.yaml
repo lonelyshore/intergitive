@@ -38,7 +38,7 @@
 - !act.push 
   localSetupName: 'kerker'
   remoteNickName: 'not-origin'
-  refspecs: 'ref/head/*:ref/head/*'
+  refSpecs: 'ref/head/*:ref/head/*'
 - !act.pushAll 
   localSetupName: 'kerker'
   remoteNickName: 'not-origin'
@@ -61,4 +61,4 @@
   referenceName: 'noking'
 - !act.compareReference 
   repoSetupName: 'kerker'
-  referenceVersionName: 'noking'
+  referenceName: 'noking'

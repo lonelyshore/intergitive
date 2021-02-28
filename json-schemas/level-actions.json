@@ -249,7 +249,7 @@
         "push": {
             "type": "object",
             "title": "[Action] Push",
-            "description": "<localSetupName> pushes <refspecs> to <remoteNickName>",
+            "description": "<localSetupName> pushes <refSpecs> to <remoteNickName>",
             "properties": {
                 "localSetupName": {
                     "$ref": "config-commons.json#/repoSetupName"
@@ -257,14 +257,14 @@
                 "remoteNickName": {
                     "$ref": "config-commons.json#/remoteNickName"
                 },
-                "refspecs": {
-                    "$ref": "config-commons.json#/refspecs"
+                "refSpecs": {
+                    "$ref": "config-commons.json#/refSpecs"
                 }
             },
             "required": [
                 "localSetupName",
                 "remoteNickName",
-                "refspecs"
+                "refSpecs"
             ],
             "additionalProperties": false
         },

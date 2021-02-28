@@ -425,14 +425,14 @@ function validateLevels(course, levelConfigAndNames, loaderPair, courseName) {
                                 if (action instanceof configAction.LoadReferenceAction) {
                                     return {
                                         repoName: action.repoSetupName,
-                                        referenceName: action.referenceVersionName,
+                                        referenceName: action.referenceName,
                                         host: `${hostStep}.!act.loadReference`
                                     }
                                 }
                                 else if (action instanceof configAction.CompareReferenceAction) {
                                     return {
                                         repoName: action.repoSetupName,
-                                        referenceName: action.referenceVersionName,
+                                        referenceName: action.referenceName,
                                         host: `${hostStep}.!act.compareReference`
                                     }
                                 }
