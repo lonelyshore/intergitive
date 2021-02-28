@@ -2,23 +2,17 @@
 
 const path = require("path");
 const fs = require("fs-extra");
-const yaml = require("js-yaml");
-const simpleGit = require("simple-git/promise");
-const utils = require("./test-utils");
+const assert = require('assert');
 
+const yaml = require("js-yaml");
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
 
-const zip = require("../../lib/simple-archive");
-const vcs = require("../../lib/repo-vcs");
-
-const ActionExecutor = require("../../dev/action-executor").DevActionExecutor;
-const AssetLoader = require("../../lib/asset-loader").AssetLoader;
-const RepoSetup = require("../../lib/config-level").RepoVcsSetup;
+const utils = require("./test-utils");
+const { typeCheck } = require('../../lib/utility');
 const { LEVEL_CONFIG_SCHEMA } = require('../../lib/level-config-schema');
 const stepConfigs = require('../../lib/config-step');
 const actionConfigs = require('../../lib/config-action');
-const assert = require('chai').assert
 
 chai.use(chaiAsPromised);
 chai.should();
@@ -115,11 +109,92 @@ function createTestsForSampleObjects(sampleObjects, refTypes) {
     describe('Validate Serialization', function() {
 
         sampleObjects.forEach(obj => {
-            it(obj.constructor.name, function(){
+            it(obj.constructor.name, function() {
                 return Promise.resolve()
                 .then(() => yaml.dump(obj, { schema: LEVEL_CONFIG_SCHEMA }))
                 .should.eventually.be.fulfilled;
             });
         });
     });
+
+    describe('Validate Deserialized Equals Original', function() {
+
+        sampleObjects.forEach(obj => {
+            it(obj.constructor.name, function() {
+                return Promise.resolve()
+                .then(() => {
+                    let another = yaml.load(
+                        yaml.dump(
+                            obj,
+                            { schema: LEVEL_CONFIG_SCHEMA }
+                        ),
+                        { schema: LEVEL_CONFIG_SCHEMA }
+                    );
+
+                    return equals(obj, another);
+                })
+                .should.eventually.be.true;
+            })
+        });
+
+        function equals(a, b) {
+            if (a === undefined) {
+                return b === undefined;
+            }
+            else if (a === null) {
+                return b === null;
+            }
+            else if (typeCheck.isNumber(a)) {
+                assert(typeCheck.isNumber(b), 'b should be a number, too');
+
+                return Math.abs(a - b) < 0.01;
+            }
+            else if (typeCheck.isString(a)) {
+                assert(typeCheck.isString(b), 'b should be a string, too');
+
+                return a === b;
+            }
+            else if (typeCheck.isBool(a)) {
+                assert(typeCheck.isBool(b), 'b should be a bool, too');
+
+                return a === b;
+            }
+            else if (typeCheck.isArray(a)) {
+                assert(typeCheck.isArray(b), 'b should be an array, too');
+
+                return a.length === b.length
+                    && a.map((itemA, index) => {
+                        return equals(itemA, b[index]);
+                    }).every(result => result);
+            }
+            else {
+                let propNames = Object.keys(a);
+
+                if (a instanceof stepConfigs.Step){
+
+                    assert(b instanceof stepConfigs.Step);
+
+                    // Because some steps uses getter & setter to force
+                    // its subclass initialize "actions" or "appendCheckpoint",
+                    // these properties cannot be detected by Object.keys.
+                    // Please refer to "hasActionStep" and "mayAppendCheckpointStep" in config-step.js
+                    if ('actions' in a) {
+                        propNames.push('actions');
+                    }
+                    if ('appendCheckpoint' in a) {
+                        propNames.push('appendCheckpoing');
+                    }
+                }
+
+                return propNames.map(propName => {
+                    return propName in a
+                        && propName in b
+                        && equals(a[propName], b[propName]);
+                })
+                .every(ret => ret);
+            }
+
+        }
+
+    })
 }
