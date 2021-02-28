@@ -4,6 +4,8 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const mainStore = require('./lib/main-store');
 const progress = require('./lib/progress-service');
+const assert = require('assert');
+const { typeCheck } = require('./lib/utility');
 
 function createWindow () {
   // Create the browser window.
@@ -65,4 +67,11 @@ ipcMain.handle('load', async (event, arg) => {
 
     return '';
   });
+});
+
+ipcMain.handle('execute', async (event, arg) => {
+  assert(typeCheck.isString(arg));
+  console.log('received: ' + arg);
+  
+  return mainStore.execute(arg);
 })
