@@ -35,7 +35,7 @@
         "!act.loadReference mapping",
         "!act.loadCheckpoint mapping",
         "!act.saveCheckpoint mapping",
-        "!act.compareReference mapping"
+        "!act.compareReference mapping",
 
         "!dev.act.unstage mapping",
         "!dev.act.unstageAll mapping",

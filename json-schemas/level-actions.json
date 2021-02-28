@@ -1,5 +1,13 @@
 {
     "definitions": {
+        "sequential": {
+            "type": "array",
+            "title": "[Action] Sequential Actions",
+            "description": "Execute children actions sequentially",
+            "items": {
+                "$ref": "#/dev"
+            }
+        },
         "writeFile": {
             "type": "object",
             "title": "[Action] Write File",
@@ -539,6 +547,7 @@
     "production": {
         "comments": "Describes production action subclasses",
         "anyOf": [
+            { "$ref": "#/definitions/sequential" },
             { "$ref": "#/definitions/writeFile" },
             { "$ref": "#/definitions/removeFile" },
             { "$ref": "#/definitions/moveFile" },
