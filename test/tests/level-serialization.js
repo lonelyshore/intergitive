@@ -184,6 +184,15 @@ function createTestsForSampleObjects(sampleObjects, refTypes) {
                     if ('appendCheckpoint' in a) {
                         propNames.push('appendCheckpoint');
                     }
+
+                    assert('createInitialState' in a);
+                    assert('createInitialState' in b);
+                }
+
+                if (a instanceof actionConfigs.Action) {
+                    assert(b instanceof actionConfigs.Action);
+                    assert('executeBy' in a);
+                    assert('executeBy' in b);
                 }
 
                 return propNames.map(propName => {
