@@ -25,7 +25,7 @@ chai.should();
  * 2. The YAML serialization is stable.
  *    The object deserialized from a text equals to the one that generates the text.
  */
-describe.only('Level Serialization #core', function() {
+describe('Level Serialization #core', function() {
 
     let sampleSteps = [];
     let sampleActions = [];
