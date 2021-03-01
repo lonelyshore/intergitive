@@ -19,12 +19,12 @@ const base = {
 
 const main = {
   entry: [
-    path.resolve(__dirname, './main.js'),
+    path.resolve(__dirname, './lib/main.js'),
     
   ],
   output: {
-    filename: 'main.js',
-    path: distPath,
+    filename: './main.js',
+    path: path.resolve(distPath, 'src'),
   },
   target: 'electron-main',
   node: {
@@ -64,7 +64,7 @@ const renderer = {
     entry: path.resolve(__dirname, './lib/render-level.js'),
     output: {
       filename: 'render-level.js',
-      path: path.join(distPath, 'lib'),
+      path: path.join(distPath, 'src'),
     },
     node: {
       __dirname: false,

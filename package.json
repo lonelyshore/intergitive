@@ -57,8 +57,8 @@
     "load-native-node": "node \"./dev/module-switch.js\" load nodegit node",
     "load-native-electron": "node \"./dev/module-switch.js\" load nodegit electron",
     "raw": "mocha --recursive \"./test/tests/*.js\"",
-    "test-pack": "npm run pack-dev && electron ./dist/main.js",
-    "test-pack-production": "npm run pack && electron ./dist/main.js"
+    "test-pack": "npm run pack-dev && electron ./dist/src/main.js",
+    "test-pack-production": "npm run pack && electron ./dist/src/main.js"
   },
   "author": "zedaizd",
   "license": "ISC"
