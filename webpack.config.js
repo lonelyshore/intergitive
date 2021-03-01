@@ -7,20 +7,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const distPath = path.resolve(__dirname, 'dist');
 
 const base = {
-  node: {
-    __dirname: false,
-  },
-  module: {
-    rules: [
-      {
-        test: /\.node$/,
-        loader: 'node-loader',
-      },
-    ],
-  },
-  plugins: [
-    new IgnorePlugin(/build\/Debug\/nodegit.node$/i)
-  ],
+
   // externals: [
   //   function(context, request, callback) {
   //     if(/^nodegit/.test(request))
@@ -30,42 +17,57 @@ const base = {
   // ]
 }
 
-const main = Object.assign(
-  {
-    entry: [
-      path.resolve(__dirname, './main.js'),
-      
-    ],
-    output: {
-      filename: 'main.js',
-      path: distPath,
-    },
-    target: 'electron-main'
-  }, 
-  base
-);
+const main = {
+  entry: [
+    path.resolve(__dirname, './main.js'),
+    
+  ],
+  output: {
+    filename: 'main.js',
+    path: distPath,
+  },
+  target: 'electron-main',
+  node: {
+    __dirname: false,
+  },
+  module: {
+    // rules: [
+    //   {
+    //     test: /\.node$/,
+    //     loader: 'node-loader',
+    //   },
+    // ],
+  },
+  plugins: [
+    new IgnorePlugin(/build\/Debug\/nodegit.node$/i)
+  ],
+  externals: {
+    nodegit: 'commonjs nodegit'
+  },
+};
 
-const preload = Object.assign(
-  {
+const preload = {
     entry: [
       path.resolve(__dirname, './src/preload.js'),
     ],
+    node: {
+      __dirname: false,
+    },
     output: {
       filename: 'preload.js',
       path: path.resolve(distPath, './src'),
     },
     target: 'electron-preload'
-  },
-  base
-);
+};
 
-const renderer = Object.assign(
-  base,
-  {
+const renderer = {
     entry: path.resolve(__dirname, './lib/render-level.js'),
     output: {
       filename: 'render-level.js',
       path: path.join(distPath, 'lib'),
+    },
+    node: {
+      __dirname: false,
     },
     target: 'electron-renderer',
     resolve: {
@@ -76,21 +78,15 @@ const renderer = Object.assign(
     module: {
       rules: [
         {
-          test: /\.node$/,
-          loader: 'node-loader',
-        },
-        {
           test: /\.vue$/,
           loader: 'vue-loader'
         }
       ]
     },
     plugins: [
-      new IgnorePlugin(/build\/Debug\/nodegit.node$/i),
       new VueLoaderPlugin()
     ],
-  }
-);
+};
 
 
 module.exports = [main, preload, renderer];
@@ -105,3 +101,6 @@ fs.copyFileSync(path.resolve(__dirname, 'example-course-settings.yaml'), path.re
 fs.ensureDirSync(path.resolve(__dirname, 'dist/example'));
 fs.copySync(path.resolve(__dirname, 'example/resources'), path.resolve(__dirname, 'dist/example/resources'));
 fs.copySync(path.resolve(__dirname, 'example/course-resources/fork'), path.resolve(__dirname, 'dist/example/course-resources/fork'))
+
+fs.ensureDirSync(path.resolve(__dirname, 'dist/example/execution'));
+fs.copySync(path.resolve(__dirname, 'example/execution/progress'), path.resolve(__dirname, 'dist/example/execution/progress'));
