@@ -89,18 +89,28 @@ const renderer = {
 };
 
 
-module.exports = [main, preload, renderer];
+module.exports = (env) => {
+  fs.ensureDirSync(path.resolve(__dirname, 'dist'));
+  fs.copySync(path.resolve(__dirname, 'static'), path.resolve(__dirname, 'dist/static'));
+  fs.copyFileSync(path.resolve(__dirname, 'index.html'), path.resolve(__dirname, 'dist/index.html'));
+  
+  //fs.ensureDirSync(path.resolve(__dirname, 'dist'));
+  fs.copyFileSync(path.resolve(__dirname, 'example-course-settings.yaml'), path.resolve(__dirname, 'dist/example-course-settings.yaml'));
+  
+  fs.ensureDirSync(path.resolve(__dirname, 'dist/example'));
+  fs.copySync(path.resolve(__dirname, 'example/resources'), path.resolve(__dirname, 'dist/example/resources'));
+  fs.copySync(path.resolve(__dirname, 'example/course-resources/fork'), path.resolve(__dirname, 'dist/example/course-resources/fork'))
+  
+  fs.ensureDirSync(path.resolve(__dirname, 'dist/example/execution'));
+  fs.copySync(path.resolve(__dirname, 'example/execution/progress'), path.resolve(__dirname, 'dist/example/execution/progress'));
 
-fs.ensureDirSync(path.resolve(__dirname, 'dist'));
-fs.copySync(path.resolve(__dirname, 'static'), path.resolve(__dirname, 'dist/static'));
-fs.copyFileSync(path.resolve(__dirname, 'index.html'), path.resolve(__dirname, 'dist/index.html'));
+  if (env.pack) {
+    console.log('Packing nodegit...');
+    fs.ensureDirSync(path.resolve(__dirname, 'dist/node_modules'));
+    fs.copySync(path.resolve(__dirname, 'node_modules/nodegit'), path.resolve(__dirname, 'dist/node_modules/nodegit'));
+  }
 
-//fs.ensureDirSync(path.resolve(__dirname, 'dist'));
-fs.copyFileSync(path.resolve(__dirname, 'example-course-settings.yaml'), path.resolve(__dirname, 'dist/example-course-settings.yaml'));
+  return [main, preload, renderer];
+};
 
-fs.ensureDirSync(path.resolve(__dirname, 'dist/example'));
-fs.copySync(path.resolve(__dirname, 'example/resources'), path.resolve(__dirname, 'dist/example/resources'));
-fs.copySync(path.resolve(__dirname, 'example/course-resources/fork'), path.resolve(__dirname, 'dist/example/course-resources/fork'))
 
-fs.ensureDirSync(path.resolve(__dirname, 'dist/example/execution'));
-fs.copySync(path.resolve(__dirname, 'example/execution/progress'), path.resolve(__dirname, 'dist/example/execution/progress'));
