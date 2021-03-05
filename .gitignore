@@ -10,4 +10,8 @@
 .~lock.*
 /dist/
 
+/main.js
+/render-level.js
+/preload.js
+
 
