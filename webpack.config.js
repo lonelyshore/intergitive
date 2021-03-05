@@ -5,7 +5,7 @@ const fs = require('fs-extra');
 const { IgnorePlugin } = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CSPWebpackPlugin = require('csp-webpack-plugin');
+const CspHtmlWebpackPlugin = require('csp-html-webpack-plugin');
 const distPath = path.resolve(__dirname);
 
 const main = {
@@ -76,6 +76,13 @@ const renderer = {
     },
     plugins: [
       new VueLoaderPlugin(),
+      new HtmlWebpackPlugin({
+        template: 'src/index_template.html'
+      }),
+      new CspHtmlWebpackPlugin({
+        'script-src': '',
+        'style-src': ''
+      })
     ],
 };
 

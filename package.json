@@ -20,7 +20,7 @@
     "@vue/devtools": "^5.3.3",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "csp-webpack-plugin": "^2.0.2",
+    "csp-html-webpack-plugin": "^5.1.0",
     "electron": "^8.2.5",
     "electron-mocha": "^8.0.2",
     "electron-packager": "^13.1.1",
