@@ -8,103 +8,95 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CspHtmlWebpackPlugin = require('csp-html-webpack-plugin');
 const distPath = path.resolve(__dirname);
 
-const main = {
-  entry: [
-    path.resolve(__dirname, './lib/main.js'),
-    
-  ],
-  output: {
-    filename: './main.js',
-    path: path.resolve(distPath),
-  },
-  target: 'electron-main',
-  node: {
-    __dirname: false,
-  },
-  module: {
-    // rules: [
-    //   {
-    //     test: /\.node$/,
-    //     loader: 'node-loader',
-    //   },
-    // ],
-  },
-  plugins: [
-    new IgnorePlugin(/build\/Debug\/nodegit.node$/i)
-  ],
-  externals: {
-    nodegit: 'commonjs nodegit'
-  },
-};
+module.exports = (env, options) => {
+  if (env.pack) {
+    console.log('Packing nodegit...');
+  }
 
-const preload = {
+  const main = {
     entry: [
-      path.resolve(__dirname, './src/preload.js'),
+      path.resolve(__dirname, './lib/main.js'),
+      
     ],
-    node: {
-      __dirname: false,
-    },
     output: {
-      filename: 'preload.js',
+      filename: './main.js',
       path: path.resolve(distPath),
     },
-    target: 'electron-preload'
-};
-
-const renderer = {
-    entry: path.resolve(__dirname, './lib/render-level.js'),
-    output: {
-      filename: 'render-level.js',
-      path: path.join(distPath),
-    },
+    target: 'electron-main',
     node: {
       __dirname: false,
     },
-    target: 'electron-renderer',
-    resolve: {
-      alias: {
-        "vue$" : "vue/dist/vue.runtime.common.js"
-      }
-    },
     module: {
-      rules: [
-        {
-          test: /\.vue$/,
-          loader: 'vue-loader'
-        }
-      ]
+      // rules: [
+      //   {
+      //     test: /\.node$/,
+      //     loader: 'node-loader',
+      //   },
+      // ],
     },
     plugins: [
-      new VueLoaderPlugin(),
-      new HtmlWebpackPlugin({
-        template: 'src/index_template.html'
-      }),
+      new IgnorePlugin(/build\/Debug\/nodegit.node$/i)
+    ],
+    externals: {
+      nodegit: 'commonjs nodegit'
+    },
+  };
+  
+  const preload = {
+      entry: [
+        path.resolve(__dirname, './src/preload.js'),
+      ],
+      node: {
+        __dirname: false,
+      },
+      output: {
+        filename: 'preload.js',
+        path: path.resolve(distPath),
+      },
+      target: 'electron-preload'
+  };
+  
+  let rendererPlugins = [
+    new VueLoaderPlugin(),
+    new HtmlWebpackPlugin({
+      template: 'src/index_template.html'
+    }),
+  ];
+
+  if (options.mode === 'production') {
+    rendererPlugins.push(
       new CspHtmlWebpackPlugin({
         'script-src': '',
         'style-src': ''
       })
-    ],
-};
-
-
-module.exports = (env) => {
-  // fs.ensureDirSync(path.resolve(__dirname, 'dist'));
-  // fs.copySync(path.resolve(__dirname, 'static'), path.resolve(__dirname, 'dist/static'));
-  // fs.copyFileSync(path.resolve(__dirname, 'index.html'), path.resolve(__dirname, 'dist/index.html'));
-  // fs.copyFileSync(path.resolve(__dirname, 'example-course-settings.yaml'), path.resolve(__dirname, 'dist/example-course-settings.yaml'));
-  
-  // fs.ensureDirSync(path.resolve(__dirname, 'dist/example'));
-  // fs.copySync(path.resolve(__dirname, 'example/resources'), path.resolve(__dirname, 'dist/example/resources'));
-  // fs.copySync(path.resolve(__dirname, 'example/course-resources/fork'), path.resolve(__dirname, 'dist/example/course-resources/fork'))
-  
-  // fs.ensureDirSync(path.resolve(__dirname, 'dist/example/execution'));
-  // fs.copySync(path.resolve(__dirname, 'example/execution/progress'), path.resolve(__dirname, 'dist/example/execution/progress'));
-
-  if (env.pack) {
-    console.log('Packing nodegit...');
-    // fs.ensureDirSync(path.resolve(__dirname, 'dist/node_modules'));
-    // fs.copySync(path.resolve(__dirname, 'node_modules/nodegit'), path.resolve(__dirname, 'dist/node_modules/nodegit'));
+    );
   }
+
+  const renderer = {
+      entry: path.resolve(__dirname, './lib/render-level.js'),
+      output: {
+        filename: 'render-level.js',
+        path: path.join(distPath),
+      },
+      node: {
+        __dirname: false,
+      },
+      target: 'electron-renderer',
+      resolve: {
+        alias: {
+          "vue$" : "vue/dist/vue.runtime.common.js"
+        }
+      },
+      module: {
+        rules: [
+          {
+            test: /\.vue$/,
+            loader: 'vue-loader'
+          }
+        ]
+      },
+      plugins: rendererPlugins
+  };
 
   return [main, preload, renderer];
 };
