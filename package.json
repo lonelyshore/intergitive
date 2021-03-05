@@ -20,11 +20,13 @@
     "@vue/devtools": "^5.3.3",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
+    "csp-webpack-plugin": "^2.0.2",
     "electron": "^8.2.5",
     "electron-mocha": "^8.0.2",
     "electron-packager": "^13.1.1",
     "electron-rebuild": "^1.8.5",
     "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.2.0",
     "mocha": "^6.1.4",
     "nested-error-stacks": "^2.1.0",
     "node-loader": "^1.0.2",
@@ -32,7 +34,7 @@
     "simple-git": "^2.24.0",
     "vue-loader": "^15.9.6",
     "vue-template-compiler": "^2.6.10",
-    "webpack": "^4.46.0",
+    "webpack": "^5.24.3",
     "webpack-cli": "^4.5.0"
   },
   "scripts": {
