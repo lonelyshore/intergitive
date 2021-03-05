@@ -43,7 +43,7 @@
 <script>
 'use strict';
 
-const stepConfig = require('../../config-step');
+const stepConfig = window.dependencies.stepConfigs;
 const Phase = stepConfig.UserDrivenProcessPhase;
 
 exports = module.exports = {

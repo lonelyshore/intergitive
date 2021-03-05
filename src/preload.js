@@ -38,7 +38,7 @@ function genInvokeServiceFunc(serviceName) {
 }
 
 window.api = {
-    levelSchema: null,
+    levelSchema: yamlOption,
     invokeStore: genInvokeServiceFunc('store'),
     invokeSelect: genInvokeServiceFunc('select'),
     invokeProgressService: genInvokeServiceFunc('progress'),

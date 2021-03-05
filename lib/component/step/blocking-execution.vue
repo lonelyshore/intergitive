@@ -29,7 +29,7 @@
 'use strict';
 
 const readonly = require('../../readonly');
-const stepConfig = require('../../config-step');
+const stepConfig = window.dependencies.stepConfigs;
 const Phase = stepConfig.AutoFirstProcessPhase;
 
 exports = module.exports = {

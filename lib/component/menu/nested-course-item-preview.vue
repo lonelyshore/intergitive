@@ -8,7 +8,7 @@
 <script>
 'use strict';
 
-const courseConfig = require('../../config-course');
+const courseConfig = window.dependencies.courseConfig;
 const { ProgressEnum } = require('../../../common/progress');
 
 exports = module.exports = {
