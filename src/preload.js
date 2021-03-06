@@ -52,6 +52,7 @@ window.api = {
         );
     },
     createNewState: () => new state.State(),
+    isDebug: () => ipcRenderer.sendSync('is-debug'),
 };
 window.dependencies = {
     stepConfigs: stepConfigs,
@@ -59,4 +60,4 @@ window.dependencies = {
     courseConfig: courseConfig,
     courseSchema: COURSE_CONFIG_SCHEMA,
     levelSchema: LEVEL_CONFIG_SCHEMA,
-}
+};
