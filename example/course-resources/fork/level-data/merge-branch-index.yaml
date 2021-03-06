@@ -59,57 +59,45 @@ asset_index:
       請開啟位於「`#{{merge-branches}}`」的「`${{level-data/merge-branch/file-2-name}}`」  
       並回答它的檔案內容是下列何者：  
 
-      <div style="display: flex;justify-content: space-evenly;">
-        <table>
-          <tbody>
-            <tr>
-              <td style="text-align: center;font-weight: bold;">
-                1
-              </td>
-            </tr>
-            <tr>
-              <td style="text-aligh: left;font-family: monospace;">
-                /------\ 漢堡皮<br>
-                ^^^^^^^^ 培根<br>
-                \------/ 漢堡皮<br>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table>
-          <tbody>
-            <tr>
-              <td style="text-align: center;font-weight: bold;">
-                2
-              </td>
-            </tr>
-            <tr>
-              <td style="text-aligh: left;font-family: monospace;">
-                /------\ 漢堡皮<br>
-                ++ ++ ++ 酸黃瓜<br>
-                ######## 漢堡肉<br>
-                ^^^^^^^^ 培根<br>
-                \------/ 漢堡皮<br>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table>
-          <tbody>
-            <tr>
-              <td style="text-align: center;font-weight: bold;">
-                3
-              </td>
-            </tr>
-            <tr>
-              <td style="text-aligh: left;font-family: monospace;">
-                ^^^^^^^^ 培根<br>
-                ######## 漢堡肉<br>
-                ^^^^^^^^ 培根<br>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-header">
+              1
+            </div>
+            <div class="card-body text-left font-monospace">
+              /------\ 漢堡皮<br>
+              ^^^^^^^^ 培根<br>
+              \------/ 漢堡皮<br>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-header">
+              2
+            </div>
+            <div class="card-body text-left font-monospace">
+              /------\ 漢堡皮<br>
+              ++ ++ ++ 酸黃瓜<br>
+              ######## 漢堡肉<br>
+              ^^^^^^^^ 培根<br>
+              \------/ 漢堡皮<br>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-header">
+              3
+            </div>
+            <div class="card-body text-left font-monospace">
+              ^^^^^^^^ 培根<br>
+              ######## 漢堡肉<br>
+              ^^^^^^^^ 培根<br>
+            </div>
+          </div>
+        </div>
       </div>
 
       請以數字選項(1/2/3)作答  
@@ -136,62 +124,50 @@ asset_index:
       請檢視「`${{level-data/merge-branch/file-2-name}}`」的內容  
       並回答它的看起來像是下列何者：  
 
-      <div style="display: flex;justify-content: space-evenly;">
-        <table>
-          <tbody>
-            <tr>
-              <td style="text-align: center;font-weight: bold;">
-                1
-              </td>
-            </tr>
-            <tr>
-              <td style="text-aligh: left;font-family: monospace;">
-                /------\ 漢堡皮<br>
-                ******** 黃芥末醬<br>
-                ~~~~~~~~ 生菜<br>
-                ++ ++ ++ 酸黃瓜<br>
-                ######## 漢堡肉<br>
-                \------/ 漢堡皮<br>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table>
-          <tbody>
-            <tr>
-              <td style="text-align: center;font-weight: bold;">
-                2
-              </td>
-            </tr>
-            <tr>
-              <td style="text-aligh: left;font-family: monospace;">
-                ~~~~~~~~ 生菜<br>
-                ~~~~~~~~ 生菜<br>
-                ~~~~~~~~ 生菜<br>
-                ~~~~~~~~ 生菜<br>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table>
-          <tbody>
-            <tr>
-              <td style="text-align: center;font-weight: bold;">
-                3
-              </td>
-            </tr>
-            <tr>
-              <td style="text-aligh: left;font-family: monospace;">
-                /------\ 漢堡皮<br>
-                ######## 漢堡肉<br>
-                ######## 漢堡肉<br>
-                ######## 漢堡肉<br>
-                ######## 漢堡肉<br>
-                \------/ 漢堡皮<br>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-header">
+              1
+            </div>
+            <div class="card-body text-left font-monospace">
+              /------\ 漢堡皮<br>
+              ******** 黃芥末醬<br>
+              ~~~~~~~~ 生菜<br>
+              ++ ++ ++ 酸黃瓜<br>
+              ######## 漢堡肉<br>
+              \------/ 漢堡皮<br>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-header">
+              2
+            </div>
+            <div class="card-body text-left font-monospace">
+              ~~~~~~~~ 生菜<br>
+              ~~~~~~~~ 生菜<br>
+              ~~~~~~~~ 生菜<br>
+              ~~~~~~~~ 生菜<br>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-header">
+              3
+            </div>
+            <div class="card-body text-left font-monospace">
+              /------\ 漢堡皮<br>
+              ######## 漢堡肉<br>
+              ######## 漢堡肉<br>
+              ######## 漢堡肉<br>
+              ######## 漢堡肉<br>
+              \------/ 漢堡皮<br>
+            </div>
+          </div>
+        </div>
       </div>
 
       請以數字選項(1/2/3)作答 
@@ -242,57 +218,45 @@ asset_index:
 
       請回答目前檔案內容是下列何者：  
 
-      <div style="display: flex;justify-content: space-evenly;">
-        <table>
-          <tbody>
-            <tr>
-              <td style="text-align: center;font-weight: bold;">
-                1
-              </td>
-            </tr>
-            <tr>
-              <td style="text-aligh: left;font-family: monospace;">
-                ^^^^^^^^ 培根<br>
-                ~~~~~~~~ 生菜<br>
-                ^^^^^^^^ 培根<br>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table>
-          <tbody>
-            <tr>
-              <td style="text-align: center;font-weight: bold;">
-                2
-              </td>
-            </tr>
-            <tr>
-              <td style="text-aligh: left;font-family: monospace;">
-                #~#~#~#~ 培生菜根<br>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table>
-          <tbody>
-            <tr>
-              <td style="text-align: center;font-weight: bold;">
-                3
-              </td>
-            </tr>
-            <tr>
-              <td style="text-aligh: left;font-family: monospace;">
-                /------\ 漢堡皮<br>
-                ******** 黃芥末醬<br>
-                ~~~~~~~~ 生菜<br>
-                ++ ++ ++ 酸黃瓜<br>
-                ######## 漢堡肉<br>
-                ^^^^^^^^ 培根<br>
-                \------/ 漢堡皮<br>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-header">
+              1
+            </div>
+            <div class="card-body text-left font-monospace">
+              ^^^^^^^^ 培根<br>
+              ~~~~~~~~ 生菜<br>
+              ^^^^^^^^ 培根<br>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-header">
+              2
+            </div>
+            <div class="card-body text-left font-monospace">
+              #~#~#~#~ 培生菜根<br>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-header">
+              3
+            </div>
+            <div class="card-body text-left font-monospace">
+              /------\ 漢堡皮<br>
+              ******** 黃芥末醬<br>
+              ~~~~~~~~ 生菜<br>
+              ++ ++ ++ 酸黃瓜<br>
+              ######## 漢堡肉<br>
+              ^^^^^^^^ 培根<br>
+              \------/ 漢堡皮<br>
+            </div>
+          </div>
+        </div>
       </div>
 
       請以數字選項(1/2/3)作答  
