@@ -22,6 +22,7 @@ module.exports = (env, options) => {
     output: {
       filename: './main.js',
       path: path.resolve(distPath),
+      devtoolModuleFilenameTemplate: '[absolute-resource-path]'
     },
     target: 'electron-main',
     node: {
