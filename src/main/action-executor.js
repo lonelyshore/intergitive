@@ -298,7 +298,7 @@ class ActionExecutor {
         return this[operateRepo](
             localSetupName,
             repo => {
-                return repo.getReferenceNames(git.Reference.TYPE.LISTALL)
+                return repo.getReferenceNames(git.Reference.TYPE.ALL)
                 .then(refSpecs => {
                     if (isForce) {
                         refSpecs.forEach((spec, index) => {
