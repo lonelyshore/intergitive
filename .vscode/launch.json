@@ -12,7 +12,7 @@
             "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
 
             // This is the important stuff
-            "program": "${workspaceRoot}/lib/main.js",
+            "program": "${workspaceRoot}/src/main/main.js",
             "outFiles": [
                 "${workspaceRoot}/main.js"
             ],
