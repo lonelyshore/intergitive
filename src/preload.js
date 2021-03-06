@@ -1,14 +1,7 @@
 'use strict';
 
-console.warn('preload');
-
-const { contextBridge, ipcRenderer } = require('electron');
-
-console.warn('preload - 1');
-
+const { contextBridge, ipcRenderer, remote } = require('electron');
 const state = require('../lib/state');
-
-console.warn('preload - 2');
 
 const yaml = require('js-yaml');
 const stepConfigs = require('../lib/config-step');
@@ -18,7 +11,6 @@ const { LEVEL_CONFIG_SCHEMA } = require('../lib/level-config-schema');
 const { COURSE_CONFIG_SCHEMA } = require('../lib/course-config-schema');
 const yamlOption = { schema: LEVEL_CONFIG_SCHEMA };
 
-console.warn('preload - 3');
 
 // contextBridge.exposeInMainWorld(
 //     'api', {
@@ -54,6 +46,7 @@ window.api = {
     createNewState: () => new state.State(),
     getConfig: (configName) => ipcRenderer.sendSync('get-config', [configName]),
 };
+
 window.dependencies = {
     stepConfigs: stepConfigs,
     actionConfigs: actionConfigs,
@@ -61,3 +54,7 @@ window.dependencies = {
     courseSchema: COURSE_CONFIG_SCHEMA,
     levelSchema: LEVEL_CONFIG_SCHEMA,
 };
+
+window.electronRemote = {
+    dialog: () => remote.dialog,
+}
