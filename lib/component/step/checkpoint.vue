@@ -22,7 +22,7 @@
 'use strict';
 
 const readonly = require('../../readonly');
-const stepConfig = window.dependencies.stepConfigs;
+const stepConfig = require('../../config-step');
 
 
 let PHASE = {
