@@ -52,7 +52,7 @@ window.api = {
         );
     },
     createNewState: () => new state.State(),
-    isDebug: () => ipcRenderer.sendSync('is-debug'),
+    getConfig: (configName) => ipcRenderer.sendSync('get-config', [configName]),
 };
 window.dependencies = {
     stepConfigs: stepConfigs,
