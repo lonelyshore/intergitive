@@ -16,7 +16,7 @@ module.exports = (env, options) => {
 
   const main = {
     entry: [
-      path.resolve(__dirname, './lib/main.js'),
+      path.resolve(__dirname, './src/main/main.js'),
       
     ],
     output: {
@@ -46,7 +46,7 @@ module.exports = (env, options) => {
   
   const preload = {
       entry: [
-        path.resolve(__dirname, './src/preload.js'),
+        path.resolve(__dirname, './src/main/preload.js'),
       ],
       node: {
         __dirname: false,
@@ -79,7 +79,7 @@ module.exports = (env, options) => {
   }
 
   const renderer = {
-      entry: path.resolve(__dirname, './lib/render-level.js'),
+      entry: path.resolve(__dirname, './src/renderer/render-level.js'),
       output: {
         filename: 'render-level.js',
         path: path.join(distPath),
