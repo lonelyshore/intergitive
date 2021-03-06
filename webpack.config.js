@@ -62,7 +62,10 @@ module.exports = (env, options) => {
     new MiniCssExtractPlugin(),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
-      template: 'src/index_template.html'
+      template: 'src/index_template.html',
+      templateParameters: {
+        debug: options.mode !== 'production'
+      }
     }),
   ];
 
