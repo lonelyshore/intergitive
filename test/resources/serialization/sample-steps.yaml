@@ -5,8 +5,14 @@
 - !dev.devAction 
   actions: *refActions
 - !execute 
+  actions: *refActions
+- !execute 
   descriptionId: "level-data/commit-and-diverse/modify-folder"
   actions: *refActions
+  appendCheckpoint: false
+  resettingRepos: 
+    - kerker
+    - noking
 - !verifyInput 
   answer: '123456'
 - !verifyInput 
