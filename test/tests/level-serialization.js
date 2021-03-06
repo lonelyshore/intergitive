@@ -9,10 +9,10 @@ const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
 
 const utils = require("./test-utils");
-const { typeCheck } = require('../../lib/utility');
-const { LEVEL_CONFIG_SCHEMA } = require('../../lib/level-config-schema');
-const stepConfigs = require('../../lib/config-step');
-const actionConfigs = require('../../lib/config-action');
+const { typeCheck } = require('../../src/common/utility');
+const { LEVEL_CONFIG_SCHEMA } = require('../../src/common/level-config-schema');
+const stepConfigs = require('../../src/common/config-step');
+const actionConfigs = require('../../src/common/config-action');
 
 chai.use(chaiAsPromised);
 chai.should();

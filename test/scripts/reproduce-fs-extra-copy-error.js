@@ -8,10 +8,10 @@ const devParams = require('../../dev/parameters');
 
 const ACTION_SCHEMAS = require("../../dev/config-schema").LEVEL_CONFIG_SCHEMA;
 const ActionExecutor = require("../../dev/action-executor").DevActionExecutor;
-const Action = require("../../lib/config-action").Action;
-const AssetLoader = require("../../lib/asset-loader").AssetLoader;
-const RepoSetup = require("../../lib/config-level").RepoVcsSetup;
-const RefMaker = require("../../lib/repo-vcs").RepoReferenceMaker;
+const Action = require("../../src/main/config-action").Action;
+const AssetLoader = require("../../src/main/asset-loader").AssetLoader;
+const RepoSetup = require("../../src/common/config-level").RepoVcsSetup;
+const RefMaker = require("../../src/main/repo-vcs").RepoReferenceMaker;
 
 const resoruceBasePath = path.resolve(__dirname, "../resources");
 const assetStorePath = path.join(resoruceBasePath, "vcs-compare", "assets");

@@ -2,14 +2,12 @@
 
 const path = require('path');
 const fs = require('fs-extra');
-const yaml = require('js-yaml');
-const simpleGit = require('simple-git/promise');
 const utils = require('./test-utils');
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 
-const zip = require('../../lib/simple-archive');
+const zip = require('../../src/main/simple-archive');
 
 chai.use(chaiAsPromised);
 chai.should();

@@ -3,7 +3,7 @@
 const path = require("path");
 const fs = require("fs-extra");
 const yaml = require("js-yaml");
-const AssetIndex = require("../lib/asset-loader").AssetIndex;
+const AssetIndex = require("../src/main/asset-loader").AssetIndex;
 
 const collectIndexPaths = function(basePath) {
     let results = [];

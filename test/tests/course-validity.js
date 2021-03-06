@@ -6,16 +6,16 @@ const path = require('path');
 
 
 const paths = require('../../paths');
-const zip = require('../../lib/simple-archive');
-const repoVcs = require('../../lib/repo-vcs');
-const configCourse = require('../../lib/config-course');
-const configLevel = require('../../lib/config-level');
+const zip = require('../../src/main/simple-archive');
+const repoVcs = require('../../src/main/repo-vcs');
+const configCourse = require('../../src/common/config-course');
+const configLevel = require('../../src/common/config-level');
 const loadCourseAsset = require('../../dev/dev-load-course-asset');
-const AssetLoader = require('../../lib/asset-loader').AssetLoader;
+const AssetLoader = require('../../src/main/asset-loader').AssetLoader;
 const configAction = require('../../dev/config-action');
-const configStep = require('../../lib/config-step');
-const RuntimeCourseSettings = require('../../lib/runtime-course-settings');
-const loaderUtility = require('../../lib/loader-utility');
+const configStep = require('../../src/common/config-step');
+const RuntimeCourseSettings = require('../../src/main/runtime-course-settings');
+const loaderUtility = require('../../src/main/loader-utility');
 
 const testUtils = require('./test-utils');
 

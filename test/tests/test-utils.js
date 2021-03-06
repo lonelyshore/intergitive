@@ -5,11 +5,13 @@ const path = require('path');
 const yaml = require('js-yaml');
 const simpleGitCtor = require('simple-git/promise');
 const random = require('seedrandom');
-const eol = require('../../lib/text-eol');
-let rng = random('seed');
-const normalizePathSep = require('../../lib/noarmalize-path-sep');
+
+const eol = require('../../src/common/text-eol');
+const normalizePathSep = require('../../src/main/noarmalize-path-sep');
 
 const resourcesPath = path.resolve(__dirname, "../resources");
+
+let rng = random('seed');
 
 function generateConfigSummary(workingPath) {
     let repo = new simpleGitCtor(workingPath);

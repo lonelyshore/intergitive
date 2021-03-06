@@ -1,6 +1,6 @@
 "use strict";
 
-const upstream = require("../lib/config-action");
+const upstream = require("../src/common/config-action");
 const ActionExecutor = require("./action-executor").DevActionExecutor;
 
 class UnstageAction extends upstream.Action {

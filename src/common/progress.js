@@ -1,6 +1,6 @@
 'use strict';
 
-const readonly = require('../lib/readonly');
+const readonly = require('./readonly');
 
 let ProgressEnum = {
     COMPLETED: Symbol('completed'),

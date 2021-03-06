@@ -1,6 +1,6 @@
 'use strict';
 
-const readonly = require('./readonly');
+const readonly = require('../common/readonly');
 const AssetLoader = require('./asset-loader').AssetLoader;
 
 const matchMustacheAssetId = /[\$\#\^]?{{[\s\w\d:\/\-_\.]*}}/g;

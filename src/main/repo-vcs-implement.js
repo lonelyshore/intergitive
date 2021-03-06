@@ -2,12 +2,14 @@
 "use strict";
 
 const fs = require("fs-extra");
-const git = require("./git-kit");
 const path = require('path');
 const assert = require('assert');
+
+const readline = require('readline');
+
+const git = require("./git-kit");
 const serialization = require('./repo-serilization');
 const normalizePathSep = require('./noarmalize-path-sep');
-const readline = require('readline');
 
 const GitStorage = require('./repo-storage/repo-git-storage');
 const ArchiveStorage = require('./repo-storage/repo-archive-storage');

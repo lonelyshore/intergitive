@@ -4,12 +4,12 @@
 
 const path = require("path");
 const fs = require("fs-extra");
-const zip = require("../../lib/simple-archive");
+const zip = require("../../src/main/simple-archive");
 const simpleGitCtor = require("simple-git/promise");
 const utils = require("./test-utils");
-const AssetLoader = require("../../lib/asset-loader").AssetLoader;
+const AssetLoader = require("../../src/main/asset-loader").AssetLoader;
 const ActionExecutor = require("../../dev/action-executor").DevActionExecutor;
-const RepoVcsSetup = require("../../lib/config-level").RepoVcsSetup;
+const RepoVcsSetup = require("../../src/common/config-level").RepoVcsSetup;
 const actionTypes = require("../../dev/config-action");
 const parseRefs = require('./action-executor').parseRefs;
 const assertRemoteUpdated = require('./action-executor').assertRemoteUpdated;

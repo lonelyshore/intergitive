@@ -1,5 +1,5 @@
 <template>
-    <div class="nested-course-item-preview menu-list-entry" v-on:click="onClick" v-bind:progress="progressStatusValue">
+    <div class="level-preview menu-list-entry" v-on:click="onClick" v-bind:progress="progressStatusValue">
         <span>{{ name }}</span>
         <span v-if="isDebug">{{ progressStatusValue }}</span>
     </div>        
@@ -8,7 +8,7 @@
 <script>
 'use strict';
 
-const courseConfig = require('../../config-course');
+const courseConfig = require('../../../common/config-course');
 const { ProgressEnum } = require('../../../common/progress');
 
 exports = module.exports = {
@@ -20,7 +20,7 @@ exports = module.exports = {
     },
     props: {
         item: {
-            type: courseConfig.NestedNamedCourseItem,
+            type: courseConfig.LevelItem,
             required: true
         }
     },

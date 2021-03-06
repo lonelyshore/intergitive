@@ -2,7 +2,7 @@
 
 const fs = require('fs-extra');
 const path = require('path');
-const paths = require('../paths');
+const paths = require('../../paths');
 const { ProgressData } = require('../common/progress');
 
 class ProgressService{

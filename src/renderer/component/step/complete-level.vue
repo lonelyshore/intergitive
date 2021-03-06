@@ -17,7 +17,7 @@
 <script>
 'use strict';
 
-const stepConfig = require('../../config-step');
+const stepConfig = require('../../../common/config-step');
 
 exports = module.exports = {
     computed: {

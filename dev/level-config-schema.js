@@ -2,8 +2,8 @@
 
 const yaml = require("js-yaml");
 const actionConfig = require("./config-action");
-const dummyActionConfigDict = require('../lib/dummy-dev-action-config-schema').devActionSchemaDict;
-const upstream = require("../lib/level-config-schema");
+const dummyActionConfigDict = require('../src/common/dummy-dev-action-config-schema').devActionSchemaDict;
+const upstream = require("../src/common/level-config-schema");
 
 
 const isString = function(obj) {

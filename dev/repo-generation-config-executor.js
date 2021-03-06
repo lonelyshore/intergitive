@@ -3,15 +3,15 @@
 const fs = require('fs-extra');
 const path = require('path');
 const yaml = require('js-yaml');
-const zip = require('../lib/simple-archive');
-const RepoVcsSetup = require('../lib/config-level').RepoVcsSetup;
-const REPO_TYPE = require('../lib/config-level').REPO_TYPE;
+const zip = require('../src/main/simple-archive');
+const RepoVcsSetup = require('../src/common/config-level').RepoVcsSetup;
+const REPO_TYPE = require('../src/common/config-level').REPO_TYPE;
 
 module.exports.RepoGenerationConfigExecutor = class RepoGenerationConfigExecutor {
 
     constructor() {
         this.SCHEMA = require('./level-config-schema').LEVEL_CONFIG_SCHEMA;
-        this.Action = require('../lib/config-action').Action;
+        this.Action = require('../src/common/config-action').Action;
     }
 
     /**

@@ -1,8 +1,8 @@
 "use strict";
 
 const vcs = require("./repo-vcs-implement");
-const eol = require("./text-eol");
-const readonly = require('./readonly');
+const eol = require("../common/text-eol");
+const readonly = require('../common/readonly');
 
 const RepoStorage = require('./repo-storage/repo-storage');
 const GitStorage = require('./repo-storage/repo-git-storage');

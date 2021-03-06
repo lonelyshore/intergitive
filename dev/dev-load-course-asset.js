@@ -1,6 +1,8 @@
+'use strict';
+
 const yaml = require('js-yaml');
-const loadCourseAsset = require('../lib/load-course-asset');
-const LEVEL_SCHEMA = require('../dev/level-config-schema').LEVEL_CONFIG_SCHEMA;
+const loadCourseAsset = require('../src/main/load-course-asset');
+const LEVEL_SCHEMA = require('./level-config-schema').LEVEL_CONFIG_SCHEMA;
 
 class DevLoaderPair extends loadCourseAsset.LoaderPair {
 

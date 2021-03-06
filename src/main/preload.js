@@ -1,14 +1,13 @@
 'use strict';
 
 const { contextBridge, ipcRenderer, remote } = require('electron');
-const state = require('../lib/state');
 
 const yaml = require('js-yaml');
-const stepConfigs = require('../lib/config-step');
-const actionConfigs = require('../lib/config-action');
-const courseConfig = require('../lib/config-course');
-const { LEVEL_CONFIG_SCHEMA } = require('../lib/level-config-schema');
-const { COURSE_CONFIG_SCHEMA } = require('../lib/course-config-schema');
+const stepConfigs = require('../common/config-step');
+const actionConfigs = require('../common/config-action');
+const courseConfig = require('../common/config-course');
+const { LEVEL_CONFIG_SCHEMA } = require('../common/level-config-schema');
+const { COURSE_CONFIG_SCHEMA } = require('../common/course-config-schema');
 const yamlOption = { schema: LEVEL_CONFIG_SCHEMA };
 
 function invokeService(serviceName, methodName, extraArgs) {
@@ -36,7 +35,6 @@ contextBridge.exposeInMainWorld(
                 actionContent
             );
         },
-        createNewState: () => new state.State(),
         getConfig: (configName) => ipcRenderer.sendSync('get-config', [configName]),
     }
 );

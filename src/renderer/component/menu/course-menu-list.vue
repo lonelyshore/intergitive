@@ -12,7 +12,7 @@
 <script>
 'use strict';
 
-let courseConfig = require('../../config-course');
+let courseConfig = require('../../../common/config-course');
 
 exports = module.exports = {
     props: {

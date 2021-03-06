@@ -3,12 +3,12 @@
 const fs = require('fs-extra');
 const path = require('path');
 const simpleGit = require('simple-git/promise');
-const zip = require('../../lib/simple-archive');
+const zip = require('../../src/main/simple-archive');
 const utils = require('../tests/test-utils');
 const generateBaseRepo = require('../../dev/generate-base-repo').generateBaseRepo;
 
 const SAVE_TYPE = require('../../dev/generate-base-repo').SAVE_TYPE;
-const STORAGE_TYPE = require('../../lib/repo-vcs').STORAGE_TYPE;
+const STORAGE_TYPE = require('../../src/main/repo-vcs').STORAGE_TYPE;
 
 
 const workingPath = path.resolve(__dirname, '../playground/generate-repo');

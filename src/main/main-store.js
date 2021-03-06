@@ -6,15 +6,15 @@ const yaml = require('js-yaml');
 const { shell } = require('electron');
 const marked = require('marked');
 
-const paths = require('../paths');
+const paths = require('../../paths');
 const zip = require('./simple-archive');
 const loaderUtility = require('./loader-utility');
 
 const normalizePathSep = require('./noarmalize-path-sep');
 const ActionExecutor = require('./action-executor').ActionExecutor;
 const loadCourseAsset = require('./load-course-asset');
-const stepConfigs = require('./config-step');
-const { LEVEL_CONFIG_SCHEMA } = require('./level-config-schema');
+const stepConfigs = require('../common/config-step');
+const { LEVEL_CONFIG_SCHEMA } = require('../common/level-config-schema');
 
 const loaderPair = loadCourseAsset.createCourseAssetLoaderPair(
     paths

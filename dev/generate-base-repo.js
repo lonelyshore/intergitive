@@ -2,12 +2,12 @@
 
 const fs = require("fs-extra");
 const path = require("path");
-const zip = require('../lib/simple-archive');
+const zip = require('../src/main/simple-archive');
 
 const ActionExecutor = require("./action-executor").DevActionExecutor;
-const actionConfigs = require("../dev/config-action");
-const AssetLoader = require("../lib/asset-loader").AssetLoader;
-const REPO_STORAGE_TYPE = require('../lib/repo-vcs').STORAGE_TYPE;
+const actionConfigs = require("./config-action");
+const AssetLoader = require("../src/main/asset-loader").AssetLoader;
+const REPO_STORAGE_TYPE = require('../src/main/repo-vcs').STORAGE_TYPE;
 
 let SAVE_TYPE = {
     ARCHIVE: REPO_STORAGE_TYPE.ARCHIVE,

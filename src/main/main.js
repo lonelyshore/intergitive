@@ -5,7 +5,7 @@ const path = require('path');
 const mainStore = require('./main-store');
 const progress = require('./progress-service');
 const assert = require('assert');
-const { typeCheck } = require('./utility');
+const { typeCheck } = require('../common/utility');
 
 function createWindow () {
   // Create the browser window.

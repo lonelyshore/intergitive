@@ -21,8 +21,8 @@
 <script>
 'use strict';
 
-const readonly = require('../../readonly');
-const stepConfig = require('../../config-step');
+const readonly = require('../../../common/readonly');
+const stepConfig = require('../../../common/config-step');
 
 
 let PHASE = {

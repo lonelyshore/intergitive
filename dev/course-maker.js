@@ -2,11 +2,11 @@
 
 const fs = require('fs-extra');
 const path = require('path');
-const AssetLoader = require('../lib/asset-loader').AssetLoader;
+const AssetLoader = require('../src/main/asset-loader').AssetLoader;
 const devRunner = require('./dev-runner');
-const loadCourseAsset = require('../lib/load-course-asset');
-const RuntimeCourseSettings = require('../lib/runtime-course-settings');
-const zip = require('../lib/simple-archive');
+const loadCourseAsset = require('../src/main/load-course-asset');
+const RuntimeCourseSettings = require('../src/main/runtime-course-settings');
+const zip = require('../src/main/simple-archive');
 
 const fileSystemBasePath = path.resolve(__dirname, '../bake');
 

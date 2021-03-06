@@ -26,7 +26,7 @@ const fs = require('fs-extra');
 const zip = require('../simple-archive');
 
 const RepoStorage = require('./repo-storage');
-const readonlyWrap = require('../readonly').wrap;
+const readonlyWrap = require('../../common/readonly').wrap;
 
 class Props {
 

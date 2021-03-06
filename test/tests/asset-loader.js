@@ -1,10 +1,14 @@
 'use strict';
 
-const AssetLoader = require('../../lib/asset-loader').AssetLoader;
-const MutableAssetLoader = require('../../lib/asset-loader').MutableAssetLoader;
-const NotFoundError = require('../../lib/asset-loader').NotFoundError;
-const CyclicFallbackError = require('../../lib/asset-loader').CyclicFallbackError;
 const path = require('path');
+
+const { 
+    AssetLoader, 
+    MutableAssetLoader, 
+    NotFoundError, 
+    CyclicFallbackError 
+} = require('../../src/main/asset-loader');
+
 const utils = require('./test-utils');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');

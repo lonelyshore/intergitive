@@ -3,8 +3,8 @@
 const path = require("path");
 const fs = require('fs-extra');
 const utils = require("./test-utils");
-const eol = require('../../lib/text-eol');
-const vcs = require('../../lib/repo-vcs-implement');
+const eol = require('../../src/common/text-eol');
+const vcs = require('../../src/main/repo-vcs-implement');
 
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");

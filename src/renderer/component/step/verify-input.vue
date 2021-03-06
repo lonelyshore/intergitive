@@ -1,22 +1,33 @@
 <template>
     <div class="level-block verify" v-bind:appending="appending">
-        <div class="processing-box">
-            <a v-if="!appending">{{ description }}</a>
+        <div class="content" v-html="description"></div>
 
-            {{status}}: {{statusDescription}}
+        <div class="processing-box">
+            <input 
+                v-model="input"
+                v-bind:placeholder="placeholder"
+                v-bind:disabled="isInputCorrect" />
+
+
 
             <button 
-                v-on:click="operate"
-                v-bind:disabled="isRunning"
-                v-if="!isSuccess">
-                {{buttonText}}
+                v-on:click="submit"
+                v-bind:disabled="isButtonDisabled"
+                v-if="!isInputCorrect">
+                {{submitText}}
             </button>
 
             <img 
                 class="inline-img"
-                v-if="isSuccess"
+                v-if="isInputCorrect"
                 v-bind:src="correctImagePath" />
         </div>
+
+        <span
+            red-highlight
+            v-if="isInputIncorrect">
+            {{failedText}}
+        </span>
 
         <div v-if="isDebug">
             Current Phase: {{phase}}
@@ -32,12 +43,14 @@
 <script>
 'use strict';
 
-const stepConfig = require('../../config-step');
+const stepConfig = require('../../../common/config-step');
 const Phase = stepConfig.UserDrivenProcessPhase;
 
 exports = module.exports = {
     data: function() {
         return {
+            description: '',
+            input: '',
             phase: Phase.IDLE
         };
     },
@@ -48,32 +61,14 @@ exports = module.exports = {
         levelState: function() {
             return this.store.state.levelState;
         },
-        description: function() {
-            return this.levelState.terms.verifyRepoDescription;
+        placeholder: function() {
+            return this.levelState.terms.verifyInputPlaceholder;
         },
-        status: function() {
-            return this.levelState.terms.operationStatus;
+        submitText: function() {
+            return this.levelState.terms.verifyInputSubmitText;
         },
-        statusDescription: function() {
-            switch(this.phase) {
-                case Phase.IDLE:
-                    return this.levelState.terms.operationReady;
-
-                case Phase.RUNNING:
-                    return this.levelState.terms.operationRunning;
-
-                case Phase.FAILED:
-                    return this.levelState.terms.operationFailed;
-
-                case Phase.SUCCESS:
-                    return this.levelState.terms.operationCompleted;
-
-                default:
-                    return `Please translate for ${this.phase}`;
-            }
-        },        
-        buttonText: function() {
-            return this.levelState.terms.startOperationButton;
+        failedText: function() {
+            return this.levelState.terms.verifyInputFailed;
         },
         stepState: function() {
             return this.levelState.stepStates[this.stepKey];
@@ -85,7 +80,7 @@ exports = module.exports = {
             else {
                 let renderStepIndex = this.levelState.renderSteps.indexOf(this.stepKey);
 
-                if (renderStepIndex !== 0) {
+                if (renderStepIndex !== 0 && !this.stepState.step.descriptionId) {
                     let previousKey = `${this.levelState.renderSteps[renderStepIndex - 1]}`;
                     let previousStep = this.levelState.stepStates[previousKey].step;
                     return previousStep instanceof stepConfig.InstructStep;
@@ -102,17 +97,14 @@ exports = module.exports = {
         isDebug: function() {
             return this.levelState.isDebug;
         },
-        isRunning: function() {
+        isButtonDisabled: function() {
             return this.phase === Phase.RUNNING;
         },
-        isSuccess: function() {
+        isInputCorrect: function() {
             return this.phase === Phase.SUCCESS;
         },
-        isFailed: function() {
+        isInputIncorrect: function() {
             return this.phase === Phase.FAILED;
-        },
-        isIdle: function() {
-            return this.phase === Phase.IDLE;
         },
         correctImagePath: function() {
             return this.levelState.commonAssetRelativePaths.imgCorrect;
@@ -122,6 +114,21 @@ exports = module.exports = {
         stepKey: String,
     },
     created: function() {
+        let verifyInputStep = this.stepState.step;
+
+        if (verifyInputStep.descriptionId) {
+            this.store.loadText(verifyInputStep.descriptionId)
+            .then(text => {
+                return this.store.processAssetIdInText(text);
+            })
+            .then(text => {
+                return this.store.processMarkdown(text);
+            })            
+            .then(text => {
+                this.description = text;
+            })
+        }
+
         this.phase = Phase.IDLE;
     },
     watch: {
@@ -130,22 +137,21 @@ exports = module.exports = {
                 this.store.unblock(this.stepKey);
             }
             else if (val === stepConfig.ProcessState.PROCESSING
-                    || val === stepConfig.ProcessState.PREPARE_PROCESS) {
+                || val === stepConfig.ProcessState.PREPARE_PROCESS) {
                 this.phase = Phase.IDLE;
             }
         }
     },    
     methods: {
-        operate: function(event) {
+        submit: function(event) {
 
-            if (this.phase === Phase.RUNNING
-                || this.phase === Phase.SUCCESS) {
+            if (this.phase === Phase.RUNNING) {
                 return;
             }
 
             this.phase = Phase.RUNNING;
 
-            this.store.verifyRepoEqual(this.stepKey)
+            this.store.verifyInputAnswer(this.stepKey, this.input)
             .then(success => {
                 if (success) {
                     this.phase = Phase.SUCCESS; 
@@ -154,27 +160,22 @@ exports = module.exports = {
                 else {
                     this.phase = Phase.FAILED;
                 }
+            })
+            .catch(error => {
+                this.phase = Phase.FAILED;
+                console.error(error);
             });
+
         },
         skip: function(event) {
 
-            if (this.phase === Phase.RUNNING
-                || this.phase === Phase.SUCCESS) {
+            if (this.phase === Phase.RUNNING) {
                 return;
             }
 
-            this.phase = Phase.RUNNING;
+            this.phase = Phase.SUCCESS; 
+            this.store.markProcessComplete(this.stepKey);
 
-            this.store.loadRepoReferenceForVerifyStep(this.stepKey)
-            .then(success => {
-                if (success) {
-                    this.phase = Phase.SUCCESS; 
-                    this.store.markProcessComplete(this.stepKey);
-                }
-                else {
-                    this.phase = Phase.FAILED;
-                }
-            });           
         }
     }
 }

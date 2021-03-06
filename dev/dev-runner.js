@@ -6,16 +6,16 @@ const path = require('path');
 const NestedError = require('nested-error-stacks');
 
 const actionConf = require('./config-action');
-const stepConf = require('../lib/config-step');
-const courseConfig = require('../lib/config-course');
-const vcs = require('../lib/repo-vcs');
+const stepConf = require('../src/common/config-step');
+const courseConfig = require('../src/common/config-course');
+const vcs = require('../src/main/repo-vcs');
 const devParams = require('./parameters');
-const loadCourseAsset = require('../lib/load-course-asset');
-const LEVEL_SCHEMA = require('../dev/level-config-schema').LEVEL_CONFIG_SCHEMA;
-const COURSE_SCHEMA = require('../lib/course-config-schema').COURSE_CONFIG_SCHEMA;
-const REPO_TYPE = require('../lib/config-level').REPO_TYPE;
-const ActionExecutor = require('../dev/action-executor').DevActionExecutor;
-const Level = require('../lib/config-level').Level;
+const loadCourseAsset = require('../src/main/load-course-asset');
+const LEVEL_SCHEMA = require('./level-config-schema').LEVEL_CONFIG_SCHEMA;
+const COURSE_SCHEMA = require('../src/common/course-config-schema').COURSE_CONFIG_SCHEMA;
+const REPO_TYPE = require('../src/common/config-level').REPO_TYPE;
+const ActionExecutor = require('./action-executor').DevActionExecutor;
+const Level = require('../src/common/config-level').Level;
 
 
 const loadReferenceMakerMapping = function(repoVcsSetups, storePath) {

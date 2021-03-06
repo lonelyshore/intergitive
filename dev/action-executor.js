@@ -1,13 +1,14 @@
 "use strict";
 
-const simpleGit = require("simple-git/promise");
-const zip = require('../lib/simple-archive');
 const path = require('path');
 const fs = require('fs-extra');
-const vcs = require('../lib/repo-vcs');
-const utility = require('../lib/utility');
-const ActionExecutor = require("../lib/action-executor").ActionExecutor;
-const REPO_TYPE = require('../lib/config-level').REPO_TYPE;
+const simpleGit = require("simple-git/promise");
+
+const zip = require('../src/main/simple-archive');
+const vcs = require('../src/main/repo-vcs');
+const utility = require('../src/common/utility');
+const ActionExecutor = require("../src/main/action-executor").ActionExecutor;
+const REPO_TYPE = require('../src/common/config-level').REPO_TYPE;
 
 const getRepo = Symbol("getRepo");
 

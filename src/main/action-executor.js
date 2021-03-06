@@ -5,10 +5,10 @@ const path = require("path");
 const git = require("./git-kit");
 const vcs = require('./repo-vcs');
 const { assert } = require("console");
-const wait = require('./utility').wait;
+const wait = require('../common/utility').wait;
 const AssetLoader = require("./asset-loader").AssetLoader;
-const RepoVcsSetup = require("./config-level").RepoVcsSetup;
-const REPO_TYPE = require('./config-level').REPO_TYPE;
+const RepoVcsSetup = require("../common/config-level").RepoVcsSetup;
+const REPO_TYPE = require('../common/config-level').REPO_TYPE;
 
 const operateRepo = Symbol("operateRepo");
 

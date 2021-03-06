@@ -9,11 +9,11 @@ const utils = require("./test-utils");
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
 
-const zip = require("../../lib/simple-archive");
-const vcs = require("../../lib/repo-vcs");
+const zip = require("../../src/main/simple-archive");
+const vcs = require("../../src/main/repo-vcs");
 
 const ActionExecutor = require("../../dev/action-executor").DevActionExecutor;
-const AssetLoader = require("../../lib/asset-loader").AssetLoader;
+const AssetLoader = require("../../src/main/asset-loader").AssetLoader;
 
 
 chai.use(chaiAsPromised);

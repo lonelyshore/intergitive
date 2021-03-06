@@ -1,8 +1,8 @@
 'use strict';
 
-const readonly = require('../lib/readonly');
+const readonly = require('../src/common/readonly');
 
-const STORAGE_TYPE = require('../lib/repo-vcs').STORAGE_TYPE;
+const STORAGE_TYPE = require('../src/main/repo-vcs').STORAGE_TYPE;
 
 
 

@@ -5,18 +5,16 @@ const fs = require("fs-extra");
 const assert = require('assert');
 const utils = require("./test-utils");
 
-
-
 const simpleGit = require('simple-git/promise');
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
 
-const zip = require("../../lib/simple-archive");
-const vcs = require("../../lib/repo-vcs");
+const zip = require("../../src/main/simple-archive");
+const vcs = require("../../src/main/repo-vcs");
 
 const ActionExecutor = require("../../dev/action-executor").DevActionExecutor;
-const AssetLoader = require("../../lib/asset-loader").AssetLoader;
-const RepoSetup = require("../../lib/config-level").RepoVcsSetup;
+const AssetLoader = require("../../src/main/asset-loader").AssetLoader;
+const RepoSetup = require("../../src/common/config-level").RepoVcsSetup;
 
 chai.use(chaiAsPromised);
 chai.should();
