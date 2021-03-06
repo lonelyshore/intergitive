@@ -6,6 +6,7 @@ const { IgnorePlugin } = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CspHtmlWebpackPlugin = require('csp-html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const distPath = path.resolve(__dirname);
 
 module.exports = (env, options) => {
@@ -57,6 +58,7 @@ module.exports = (env, options) => {
   };
   
   let rendererPlugins = [
+    new MiniCssExtractPlugin(),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       template: 'src/index_template.html'
@@ -89,6 +91,10 @@ module.exports = (env, options) => {
       },
       module: {
         rules: [
+          {
+            test: /\.css$/,
+            use: [MiniCssExtractPlugin.loader, 'css-loader'],
+          },
           {
             test: /\.vue$/,
             loader: 'vue-loader'
