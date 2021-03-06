@@ -266,35 +266,55 @@ asset_index:
       從我們前面的問答可以看到  
       在融合之前，我們的兩個漢堡長這樣：  
 
-      ```
-      培根：
-      /------\ 漢堡皮
-      ++ ++ ++ 酸黃瓜
-      ######## 漢堡肉
-      ^^^^^^^^ 培根
-      \------/ 漢堡皮
-                
-
-      生菜：
-      /------\ 漢堡皮
-      ******** 黃芥末醬
-      ~~~~~~~~ 生菜
-      ++ ++ ++ 酸黃瓜
-      ######## 漢堡肉
-      \------/ 漢堡皮
-      ```
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-header">
+              培根
+            </div>
+            <div class="card-body text-left font-monospace">
+              /------\ 漢堡皮<br>
+              ++ ++ ++ 酸黃瓜<br>
+              ######## 漢堡肉<br>
+              ^^^^^^^^ 培根<br>
+              \------/ 漢堡皮<br>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-header">
+              生菜
+            </div>
+            <div class="card-body text-left font-monospace">
+              /------\ 漢堡皮<br>
+              ******** 黃芥末醬<br>
+              ~~~~~~~~ 生菜<br>
+              ++ ++ ++ 酸黃瓜<br>
+              ######## 漢堡肉<br>
+              \------/ 漢堡皮<br>
+            </div>
+          </div>
+        </div>
+      </div>
 
       融合之後，長這樣：  
 
-      ```
-      /------\ 漢堡皮
-      ******** 黃芥末醬
-      ~~~~~~~~ 生菜
-      ++ ++ ++ 酸黃瓜
-      ######## 漢堡肉
-      ^^^^^^^^ 培根
-      \------/ 漢堡皮
-      ```  
+      <div class="card w-50">
+        <div class="card-header">
+          融合漢堡
+        </div>
+        <div class="card-body text-left font-monospace">
+          /------\ 漢堡皮<br>
+          ******** 黃芥末醬<br>
+          ~~~~~~~~ 生菜<br>
+          ++ ++ ++ 酸黃瓜<br>
+          ######## 漢堡肉<br>
+          ^^^^^^^^ 培根<br>
+          \------/ 漢堡皮<br>
+        </div>
+      </div>
+
 
       很明顯的  
       相比於培根漢堡  
