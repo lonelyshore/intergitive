@@ -11,6 +11,7 @@
 /dist/
 
 /main.js
+/main.css
 /render-level.js
 /preload.js
 /index.html
