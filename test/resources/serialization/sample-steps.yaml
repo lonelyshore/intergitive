@@ -1,0 +1,81 @@
+- !dev.needAction 
+  actions: &refActions
+  - !act.log 
+    '123456'
+- !dev.devAction 
+  actions: *refActions
+- !execute 
+  actions: *refActions
+- !execute 
+  descriptionId: "level-data/commit-and-diverse/modify-folder"
+  actions: *refActions
+  appendCheckpoint: false
+  resettingRepos: 
+    - kerker
+    - noking
+- !verifyInput 
+  answer: '123456'
+- !verifyInput 
+  answer: '123456'
+  descriptionId: '123456'
+  appendCheckpoint: false
+- !verifyOneRepo
+  repoSetupName: create-repo-empty
+  referenceName: create-repo-init-git
+- !verifyOneRepo
+  repoSetupName: create-repo-empty
+  referenceName: create-repo-init-git
+  appendCheckpoint: false
+- !verifyRepo 
+  referenceName: "branch-for-variant-commit-alt-3"
+- !verifyRepo 
+  referenceName: "branch-for-variant-commit-alt-3"
+  appendCheckpoint: false
+- !elaborate
+  descriptionId: "level-data/demo/description:elaborate:checkpoint"
+- !elaborate
+  descriptionId: "level-data/demo/description:elaborate:checkpoint"
+  needConfirm: false
+- !illustrate
+  descriptionId: "level-data/demo/description:elaborate:checkpoint"
+- !illustrate
+  descriptionId: "level-data/demo/description:elaborate:checkpoint"
+  needConfirm: false
+- !instruct
+  descriptionId: "level-data/demo/description:elaborate:checkpoint"
+- !instruct
+  descriptionId: "level-data/demo/description:elaborate:checkpoint"
+  needConfirm: false
+- !partialCheckpoint
+  repoSetupNames: ['123', '456']
+  checkpointName: 'kerker'
+- !checkpoint
+  checkpointName: 'kerker'
+- !loadOneReference
+  repoSetupName: 'kerker'
+  referenceName: 'noking'
+- !loadOneReference
+  repoSetupName: 'kerker'
+  referenceName: 'noking'
+  appendCheckpoint: false
+- !loadReference
+  referenceName: 'noking'
+- !loadReference
+  referenceName: 'noking'
+  appendCheckpoint: false
+- !playActions
+  actions: *refActions
+- !playActions
+  descriptionId: '123456'
+  actions: *refActions
+  appendCheckpoint: false
+  resettingRepos: ['kerker', 'noking']
+- !loadLastLevelFinalSnapshot
+  {}
+- !loadLastLevelFinalSnapshot
+  repoSetupNames: ['kerker', 'noking']
+  appendCheckpoint: false
+- !openWorkingPath
+  repoSetupName: 'kerker'
+- !completeLevel {}
+- !saveProgress {}

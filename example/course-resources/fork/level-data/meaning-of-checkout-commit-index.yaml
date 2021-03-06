@@ -29,14 +29,16 @@ asset_index:
       假設我們切換到${{t/repo}}中從上往下數第二個的版本  
       事情會按照下面圖(二-1)還有圖(二-2)依序發生：
 
-      <div class="side-by-side-container">
-        <div style="float: left;width: 46%;padding: 2%;">
-          <img src="{{images/illustrate-checkout-step-one}}" alt="illustration">
-          <div class="img-title">圖(二-1)</div>  
-        </div>
-        <div style="float: left;width: 46%;padding: 2%;">
-          <img src="{{images/illustrate-checkout-step-two}}" alt="illustration">
-          <div class="img-title">圖(二-2)</div>  
+      <div class="container">
+        <div class="row">
+          <div class="col-lg align-middle text-center">
+            <img src="{{images/illustrate-checkout-step-one}}" alt="illustration">
+            <div class="img-title">圖(二-1)</div>  
+          </div>
+          <div class="col-lg align-middle text-center">
+            <img src="{{images/illustrate-checkout-step-two}}" alt="illustration">
+            <div class="img-title">圖(二-2)</div>
+          </div>
         </div>
       </div> 
 

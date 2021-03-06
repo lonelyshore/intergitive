@@ -5,6 +5,20 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Debug Main Process",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceRoot}",
+            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+
+            // This is the important stuff
+            "program": "${workspaceRoot}/lib/main.js",
+            "outFiles": [
+                "${workspaceRoot}/main.js"
+            ],
+            "sourceMaps": true
+        },
+        {
             "type": "node",
             "request": "launch",
             "name": "Bake",
@@ -25,7 +39,7 @@
             "args": [
                 "save",
                 "nodegit",
-                "electron-4"
+                "electron"
             ],
         },
         {

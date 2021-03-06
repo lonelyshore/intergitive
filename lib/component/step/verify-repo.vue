@@ -1,3 +1,35 @@
+<template>
+    <div class="level-block verify" v-bind:appending="appending">
+        <div class="processing-box">
+            <a v-if="!appending">{{ description }}</a>
+
+            {{status}}: {{statusDescription}}
+
+            <button 
+                v-on:click="operate"
+                v-bind:disabled="isRunning"
+                v-if="!isSuccess">
+                {{buttonText}}
+            </button>
+
+            <img 
+                class="inline-img"
+                v-if="isSuccess"
+                v-bind:src="correctImagePath" />
+        </div>
+
+        <div v-if="isDebug">
+            Current Phase: {{phase}}
+            <button
+                v-on:click="skip"
+                style="pointer-events: visiblePainted;">
+                SKIP
+            </button>
+        </div>
+    </div>    
+</template>
+
+<script>
 'use strict';
 
 const stepConfig = require('../../config-step');
@@ -144,35 +176,6 @@ exports = module.exports = {
                 }
             });           
         }
-    },
-    template: `
-<div class="level-block verify" v-bind:appending="appending">
-    <div class="processing-box">
-        <a v-if="!appending">{{ description }}</a>
-
-        {{status}}: {{statusDescription}}
-
-        <button 
-            v-on:click="operate"
-            v-bind:disabled="isRunning"
-            v-if="!isSuccess">
-            {{buttonText}}
-        </button>
-
-        <img 
-            class="inline-img"
-            v-if="isSuccess"
-            v-bind:src="correctImagePath">
-        </img>
-    </div>
-
-    <div v-if="isDebug">
-        Current Phase: {{phase}}
-        <button
-            v-on:click="skip"
-            style="pointer-events: visiblePainted;">
-            SKIP
-        </button>
-    </div>
-</div>`
+    }
 }
+</script>

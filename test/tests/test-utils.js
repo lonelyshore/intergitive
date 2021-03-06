@@ -25,7 +25,7 @@ function generateConfigSummary(workingPath) {
                     && !v.toLowerCase().startsWith('user.email')
                     && v.trim();
             })
-            .sort((a, b) => a < b);
+            .sort();
         }
     });
 }
@@ -47,7 +47,7 @@ function generateRepoHistorySummary(workingPath) {
         }
     })
     .then(() => {
-        refCommits.sort((a, b) => a < b);
+        refCommits.sort();
     })
     .then(() => {
         return refCommits;
@@ -73,7 +73,7 @@ function generateIndexDiffSummary(workingPath) {
         }
     })
     .then(() => {
-        diffs.sort((a, b) => a < b);
+        diffs.sort();
     })
     .then(() => {
         return diffs;
@@ -153,7 +153,7 @@ function generateWorktreeSummary(workingPath) {
         return Promise.all(calcHashes);
     })
     .then(() => {
-        summary.sort((a, b) => a < b);
+        summary.sort();
     })
     .then(() => {
         return summary;

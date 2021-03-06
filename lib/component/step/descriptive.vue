@@ -1,3 +1,17 @@
+<template>
+    <div class="level-block descriptive" v-bind:class="[mode]">
+        <span class="title">{{title}}</span>
+        <div class="content" v-html="content"></div>
+        <div class="processing-box" v-if="needConfirm">
+            <button v-on:click="confirm" v-if="!isConfirmed">
+                {{confirmButtonText}}
+            </button>
+            <img class="inline-img" v-if="isConfirmed" v-bind:src="correctImagePath">
+        </div>
+    </div>
+</template>
+
+<script>
 'use strict';
 
 const stepConfig = require('../../config-step');
@@ -79,16 +93,6 @@ exports = module.exports = {
                 }
             }
         }
-    },
-    template: `
-<div class="level-block descriptive" v-bind:class="[mode]">
-    <span class="title">{{title}}</span>
-    <div class="content" v-html="content"></div>
-    <div class="processing-box" v-if="needConfirm">
-        <button v-on:click="confirm" v-if="!isConfirmed">
-            {{confirmButtonText}}
-        </button>
-        <img class="inline-img" v-if="isConfirmed" v-bind:src="correctImagePath">
-    </div>
-</div>`
+    }
 };
+</script>

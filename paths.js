@@ -4,11 +4,12 @@ const yaml = require('js-yaml');
 
 const RuntimeCourseSettings = require('./lib/runtime-course-settings');
 
-let rawSetting = fs.readFileSync(path.join(__dirname, 'example-course-settings.yaml'));
+const projectPath = path.resolve(__dirname);
+let rawSetting = fs.readFileSync(path.join(projectPath, 'example-course-settings.yaml'));
 let courseSettings = yaml.safeLoad(rawSetting);
 
 let baseSetting = new RuntimeCourseSettings(
-    __dirname,
+    projectPath,
     courseSettings
 );
 

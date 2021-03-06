@@ -29,7 +29,7 @@ stages:
       - !act.push &pushMaster
         localSetupName: local
         remoteNickName: origin
-        refspecs: '+refs/heads/master:refs/heads/master'
+        refSpecs: '+refs/heads/master:refs/heads/master'
   - name: push-all
     save:
       - remote
@@ -99,7 +99,7 @@ stages:
       - !act.push
         localSetupName: local
         remoteNickName: origin
-        refspecs: ":refs/heads/second-branch"
+        refSpecs: ":refs/heads/second-branch"
   - name: add-second-branch-to-conflict-mixed
     save:
       - remote

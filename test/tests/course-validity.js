@@ -15,7 +15,7 @@ const AssetLoader = require('../../lib/asset-loader').AssetLoader;
 const configAction = require('../../dev/config-action');
 const configStep = require('../../lib/config-step');
 const RuntimeCourseSettings = require('../../lib/runtime-course-settings');
-const utility = require('../../lib/utility');
+const loaderUtility = require('../../lib/loader-utility');
 
 const testUtils = require('./test-utils');
 
@@ -425,14 +425,14 @@ function validateLevels(course, levelConfigAndNames, loaderPair, courseName) {
                                 if (action instanceof configAction.LoadReferenceAction) {
                                     return {
                                         repoName: action.repoSetupName,
-                                        referenceName: action.referenceVersionName,
+                                        referenceName: action.referenceName,
                                         host: `${hostStep}.!act.loadReference`
                                     }
                                 }
                                 else if (action instanceof configAction.CompareReferenceAction) {
                                     return {
                                         repoName: action.repoSetupName,
-                                        referenceName: action.referenceVersionName,
+                                        referenceName: action.referenceName,
                                         host: `${hostStep}.!act.compareReference`
                                     }
                                 }
@@ -633,7 +633,7 @@ function validateLevels(course, levelConfigAndNames, loaderPair, courseName) {
                  */
                 function validateTextReplacements(text, host, loader, repoSetups) {
 
-                    return utility.searchMustacheReplacementPairs(
+                    return loaderUtility.searchMustacheReplacementPairs(
                         text,
                         loader
                     )

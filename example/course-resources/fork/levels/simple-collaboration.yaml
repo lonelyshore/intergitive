@@ -86,7 +86,7 @@
         - !act.push 
           localSetupName: share-history
           remoteNickName: origin
-          refspecs: '+refs/heads/master:refs/heads/master'
+          refSpecs: '+refs/heads/master:refs/heads/master'
     - !verifyRepo 
       referenceName: simple-collaboration-push-2
 
@@ -152,7 +152,7 @@
         - !act.push 
           localSetupName: share-history
           remoteNickName: origin
-          refspecs: '+refs/heads/master:refs/heads/master'
+          refSpecs: '+refs/heads/master:refs/heads/master'
     - !verifyRepo 
       referenceName: simple-collaboration-push-4
 

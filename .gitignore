@@ -8,4 +8,10 @@
 /out
 **/archives/init-repo-store
 .~lock.*
+/dist/
 
+/main.js
+/main.css
+/render-level.js
+/preload.js
+/index.html

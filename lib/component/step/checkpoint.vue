@@ -1,3 +1,24 @@
+<template>
+    <div class="level-block verify">
+        <span class="processing-box">
+            <span>{{statusDescription}}</span>
+
+            <button v-on:click="save" v-if="showSaveButton">
+                {{saveButtonText}}
+            </button>
+
+            <button v-on:click="load" v-if="canLoad">
+                {{loadButtonText}}
+            </button>
+        </span>
+
+        <div v-if="isDebug">
+            Current Phase: {{phase}}
+        </div>
+    </div>    
+</template>
+
+<script>
 'use strict';
 
 const readonly = require('../../readonly');
@@ -142,23 +163,6 @@ exports = module.exports = {
                 this.phase = PHASE.LOADING_FAILED;
             });
         },
-    },
-    template: `
-<div class="level-block verify">
-    <span class="processing-box">
-        <span>{{statusDescription}}</span>
-
-        <button v-on:click="save" v-if="showSaveButton">
-            {{saveButtonText}}
-        </button>
-
-        <button v-on:click="load" v-if="canLoad">
-            {{loadButtonText}}
-        </button>
-    </span>
-
-    <div v-if="isDebug">
-        Current Phase: {{phase}}
-    </div>
-</div>`
+    }
 }
+</script>>

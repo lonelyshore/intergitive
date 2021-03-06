@@ -1,3 +1,15 @@
+<template>
+    <div class="menu-list">
+        <div
+            v-for="(child) in children"
+            v-bind:is="getPreviewComponent(child)"
+            v-bind:key="child.id"
+            v-bind:item="child">
+        </div>
+    </div>    
+</template>
+
+<script>
 'use strict';
 
 let courseConfig = require('../../config-course');
@@ -29,15 +41,6 @@ exports = module.exports = {
         components = Object.assign(components, require('../common-components'));
         this.$options.components = components;
 
-    },
-    template: `
-<div class="menu-list">
-    <div
-        v-for="(child) in children"
-        v-bind:is="getPreviewComponent(child)"
-        v-bind:key="child.id"
-        v-bind:item="child">
-    </div>
-</div>
-  `
+    }
 };
+</script>

@@ -1,3 +1,11 @@
+<template>
+    <div class="nav-bar">
+        <img class="back" v-on:click="clickBack" v-if="canBackward" src="static/images/left_arrow_white.svg" />
+        <span class="title">{{ title }}</span>
+    </div>        
+</template>
+
+<script>
 'use strict';
 
 exports = module.exports = {
@@ -48,11 +56,6 @@ exports = module.exports = {
                 }
             });
         }
-    },
-    template: `
-<div class="nav-bar">
-    <img class="back" v-on:click="clickBack" v-if="canBackward" src="example/static/images/left_arrow_white.svg"></img>
-    <span class="title">{{ title }}</span>
-</div>    
-  `
+    }
 };
+</script>

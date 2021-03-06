@@ -189,38 +189,42 @@ asset_index:
       顧名思義，這是一個用來玩圈圈叉叉的檔案  
       目前它的檔案內容是下列何者呢？  
 
-      <table class="distribute">
-        <tbody>
-          <tr>
-            <td class="cell">
-              ｏ｜　｜　<br>
-              －＋－＋－<br>
-              ｘ｜ｘ｜　<br>
-              －＋－＋－<br>
-              ｏ｜　｜　<br>
-            </td>
-            <td class="cell">
-              ｏ｜　｜　<br>
-              －＋－＋－<br>
-              ｘ｜ｘ｜　<br>
-              －＋－＋－<br>
-              　｜　｜ｏ<br>
-            </td>
-            <td class="cell">
-              ｏ｜　｜　<br>
-              －＋－＋－<br>
-              　｜　｜　<br>
-              －＋－＋－<br>
-              　｜　｜　<br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: center;font-weight: bold;">1</td>
-            <td style="text-align: center;font-weight: bold;">2</td>
-            <td style="text-align: center;font-weight: bold;">3</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="container">
+        <div class="row">
+          <div class="col align-middle text-center">
+            ｏ｜　｜　<br>
+            －＋－＋－<br>
+            ｘ｜ｘ｜　<br>
+            －＋－＋－<br>
+            ｏ｜　｜　<br>
+          </div>
+          <div class="col align-middle text-center">
+            ｏ｜　｜　<br>
+            －＋－＋－<br>
+            ｘ｜ｘ｜　<br>
+            －＋－＋－<br>
+            　｜　｜ｏ<br>
+          </div>
+          <div class="col align-middle text-center">
+            ｏ｜　｜　<br>
+            －＋－＋－<br>
+            　｜　｜　<br>
+            －＋－＋－<br>
+            　｜　｜　<br>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col align-middle text-center">
+            1
+          </div>
+          <div class="col align-middle text-center">
+            2
+          </div>
+          <div class="col align-middle text-center">
+            3
+          </div>
+        </div>
+      </div>
 
       請以數字(1/2/3)作答  
 
@@ -295,30 +299,32 @@ asset_index:
       .md
       從上面兩個問答的區塊，我們不難發現確實這個檔案出現了如下表的兩種不同的版本  
 
-      <table class="distribute">
-        <tbody>
-          <tr>
-            <td class="cell">
-              ｏ｜　｜　<br>
-              －＋－＋－<br>
-              　｜ｘ｜　<br>
-              －＋－＋－<br>
-              　｜　｜　<br>
-            </td>
-            <td class="cell">
-              ｏ｜　｜　<br>
-              －＋－＋－<br>
-              　｜　｜　<br>
-              －＋－＋－<br>
-              ｘ｜　｜　<br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: center;font-weight: bold;">表(一-1) 原本版本</td>
-            <td style="text-align: center;font-weight: bold;">表(一-2) 分歧版本</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="container">
+        <div class="row">
+          <div class="col align-middle text-center">
+            ｏ｜　｜　<br>
+            －＋－＋－<br>
+            　｜ｘ｜　<br>
+            －＋－＋－<br>
+            　｜　｜　<br>
+          </div>
+          <div class="col align-middle text-center">
+            ｏ｜　｜　<br>
+            －＋－＋－<br>
+            　｜　｜　<br>
+            －＋－＋－<br>
+            ｘ｜　｜　<br>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col align-middle text-center">
+            表(一-1) 原本版本
+          </div>
+          <div class="col align-middle text-center">
+            表(一-2) 分歧版本
+          </div>
+        </div>
+      </div>
 
       事實上，製造出這樣的分歧正是 git 主要用途：  
       在開發/撰寫東西到一半的時候  

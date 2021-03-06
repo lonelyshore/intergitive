@@ -1,5 +1,13 @@
 {
     "definitions": {
+        "sequential": {
+            "type": "array",
+            "title": "[Action] Sequential Actions",
+            "description": "Execute children actions sequentially",
+            "items": {
+                "$ref": "#/dev"
+            }
+        },
         "writeFile": {
             "type": "object",
             "title": "[Action] Write File",
@@ -249,7 +257,7 @@
         "push": {
             "type": "object",
             "title": "[Action] Push",
-            "description": "<localSetupName> pushes <refspecs> to <remoteNickName>",
+            "description": "<localSetupName> pushes <refSpecs> to <remoteNickName>",
             "properties": {
                 "localSetupName": {
                     "$ref": "config-commons.json#/repoSetupName"
@@ -257,14 +265,14 @@
                 "remoteNickName": {
                     "$ref": "config-commons.json#/remoteNickName"
                 },
-                "refspecs": {
-                    "$ref": "config-commons.json#/refspecs"
+                "refSpecs": {
+                    "$ref": "config-commons.json#/refSpecs"
                 }
             },
             "required": [
                 "localSetupName",
                 "remoteNickName",
-                "refspecs"
+                "refSpecs"
             ],
             "additionalProperties": false
         },
@@ -539,6 +547,7 @@
     "production": {
         "comments": "Describes production action subclasses",
         "anyOf": [
+            { "$ref": "#/definitions/sequential" },
             { "$ref": "#/definitions/writeFile" },
             { "$ref": "#/definitions/removeFile" },
             { "$ref": "#/definitions/moveFile" },

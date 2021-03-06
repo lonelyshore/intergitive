@@ -1,0 +1,74 @@
+- !act.sequential 
+  - !act.writeFile 
+    sourceAssetIds: ['kerker', 'noking']
+    destinationPaths: ['42', '87']
+  - !act.removeFile 
+    targetPaths: ['kerker', 'noking']
+  - !act.moveFile 
+    sourcePaths: ['kerker', 'noking']
+    targetPaths: ['42', '87']
+  - !act.log "some message"
+- !act.writeFile 
+  sourceAssetIds: ['kerker', 'noking']
+  destinationPaths: ['42', '87']
+- !act.removeFile 
+  targetPaths: ['kerker', 'noking']
+- !act.moveFile 
+  sourcePaths: ['kerker', 'noking']
+  targetPaths: ['42', '87']
+- !act.log "some message"
+- !act.checkout 
+  repoSetupName: 'kerker'
+  commitish: 'ref/heads/noking'
+- !act.stage 
+  pathSpecs: ['kerker/noking', 'gg']
+  repoSetupName: 'kerker.noking'
+- !act.stageAll 
+  repoSetupName: 'kerker'
+- !act.commit 
+  repoSetupName: 'kerker'
+  commitMessage: 'What a wonderful world 上大人孔乙己 あいうえお'
+- !act.merge 
+  repoSetupName: 'kerker'
+  withBranch: 'this/is-a-branch'
+- !act.fetch 
+  localSetupName: 'kerker'
+  remoteNickName: 'not-origin'
+- !act.pull 
+  localSetupName: 'kerker'
+  remoteNickName: 'not-origin'
+  branchName: 'this/is-a-branch'
+- !act.addRevision 
+  repoSetupName: 'kerker'
+  commitMessage: 'What a wonderful world 上大人孔乙己 あいうえお'
+- !act.setRemote 
+  localSetupName: 'kerker'
+  remoteSetupName: 'another-kerker'
+  remoteNickName: 'not-origin'
+- !act.push 
+  localSetupName: 'kerker'
+  remoteNickName: 'not-origin'
+  refSpecs: 'ref/head/*:ref/head/*'
+- !act.pushAll 
+  localSetupName: 'kerker'
+  remoteNickName: 'not-origin'
+- !act.pushAll 
+  localSetupName: 'kerker'
+  remoteNickName: 'not-origin'
+  isForce: true
+- !act.setUser 
+  repoSetupName: 'kerker'
+  userName: 'some'
+  userEmail: 'some@mail.service'
+- !act.saveCheckpoint
+  repoSetupName: 'kerker'
+  checkpointName: 'noking'
+- !act.loadCheckpoint 
+  repoSetupName: 'kerker'
+  checkpointName: 'noking'
+- !act.loadReference
+  repoSetupName: 'kerker'
+  referenceName: 'noking'
+- !act.compareReference 
+  repoSetupName: 'kerker'
+  referenceName: 'noking'
