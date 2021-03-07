@@ -429,3 +429,4 @@ module.exports.areDirectorySame = areDirectorySame;
 module.exports.inplaceShuffle = inplaceShuffle;
 module.exports.eolToRandom = randomConvert;
 module.exports.RepoArchiveConfigExecutor = require('../../dev/repo-generation-config-executor').RepoGenerationConfigExecutor;
+module.exports.getAllFilesRecursive = getAllFilesRecursive;
