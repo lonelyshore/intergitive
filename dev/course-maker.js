@@ -27,7 +27,7 @@ function operate(args) {
             return bakeCourse(args);
 
         case 'populate-asset':
-            if (args[1] === 'help' || args.length !== 5) {
+            if (args[1] === 'help' || args.length !== 4) {
                 console.log(`
         populate-asset: populate asset IDs from source to target
         arguments:

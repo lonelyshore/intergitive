@@ -10,7 +10,7 @@
 
 const fs = require('fs-extra');
 const path = require('path');
-const { assert } = require('assert');
+const assert = require('assert');
 
 const yaml = require('js-yaml');
 
@@ -29,19 +29,19 @@ class PopulatedIndex {
 function collectAssetIds(rawIndex) {
     let keys = [];
     if (rawIndex.ondisk) {
-        keys.concat(Object.keys(rawIndex.ondisk));
+        keys = keys.concat(Object.keys(rawIndex.ondisk));
     }
     if (rawIndex.infile) {
-        keys.concat(Object.keys(rawIndex.infile));
+        keys = keys.concat(Object.keys(rawIndex.infile));
     }
     if (rawIndex.fallback) {
         let fallback = rawIndex.fallback;
         if (fallback.default) {
             assert(fallback.default.keys !== null && Array.isArray(fallback.default.keys));
-            keys.concat(fallback.default.keys);
+            keys = keys.concat(fallback.default.keys);
         }
         if (fallback.redirects) {
-            keys.concat(Object.keys(fallback.redirects));
+            keys = keys.concat(Object.keys(fallback.redirects));
         }
     }
 
@@ -55,7 +55,7 @@ function collectAssetIds(rawIndex) {
  * @returns {insertFallbackCb}
  */
 function createInsertToFallbackCb(sourceBundlePaths, targetBundlePaths, rawTargetIndex) {
-    if (rawTargetIndex.fallback && rawTargetIndex.fallback.default) {
+    if ('fallback' in rawTargetIndex && 'default' in rawTargetIndex.fallback) {
 
         let defaultSetting = rawTargetIndex.default;
         assert(
@@ -126,7 +126,7 @@ function populateIndex(rawSourceIndex, rawTargetIndex, insertFallbackCb) {
 
     let addedKeys = [];
     let rawNewIndex = JSON.parse(JSON.stringify(rawTargetIndex)); // lazy deep clone...
-    let newFallback = rawNewIndex.fallback;
+    let newFallback = rawNewIndex.fallback || {};
 
     sourceKeys.forEach(sourceKey => {
         if (!targetKeySet.has(sourceKeys)) {
@@ -134,6 +134,8 @@ function populateIndex(rawSourceIndex, rawTargetIndex, insertFallbackCb) {
             insertFallbackCb(sourceKey, newFallback);
         }
     });
+
+    rawNewIndex.fallback = newFallback;
 
     return new PopulatedIndex(
         rawNewIndex,
@@ -155,10 +157,10 @@ function createOrPopulateIndex(assetLoaderBasePath, sourceBundlePaths, targetBun
         .then(content => yaml.load(content))
         .then(obj => obj.asset_index),
 
-        fs.readFile(path.join(assetLoaderBasePath, ...targetBundlePaths, indexFileRelativePaths))
+        fs.readFile(path.join(assetLoaderBasePath, ...targetBundlePaths, indexRelativePath))
         .then(content => yaml.load(content))
         .then(obj => obj.asset_index)
-        .catch(err => {})
+        .catch(err => { return {}; })
     ])
     .then(indices => {
         return populateIndex(
@@ -172,10 +174,13 @@ function createOrPopulateIndex(assetLoaderBasePath, sourceBundlePaths, targetBun
         )
     })
     .then(populatedIndex => {
-        return fs.writeFile(
-            path.join(assetLoaderBasePath, ...targetBundlePaths, indexFileRelativePaths),
+        let filePath = path.join(assetLoaderBasePath, ...targetBundlePaths, indexRelativePath);
+
+        return fs.ensureFile(filePath)
+        .then(() => fs.writeFile(
+            filePath,
             yaml.dump({ 'asset_index': populatedIndex.assetIndex })
-        )
+        ))
         .then(() => populatedIndex.populatedKeys);
     })
 }
@@ -198,9 +203,11 @@ function listIndices(assetLoaderBasePath, bundlePaths) {
 
 function populateAssetBundles(assetLoaderBasePath, sourceBundlePaths, targetBundlePaths) {
 
-    return fs.ensureDir(path.join(assetLoaderBasePath, targetBundlePaths))
+    return fs.ensureDir(path.join(assetLoaderBasePath, ...targetBundlePaths))
     .then(() => listIndices(assetLoaderBasePath, sourceBundlePaths))
     .then(indexFileRelativePaths => {
+
+        console.log(`Totally ${indexFileRelativePaths.length} files to process`);
 
         let populatedKeys = [];
 
@@ -214,13 +221,22 @@ function populateAssetBundles(assetLoaderBasePath, sourceBundlePaths, targetBund
                 ))
                 .then(newlyAddedKeys => {
                     let keysWithFile = newlyAddedKeys.map(key => path.basename(indexFileRelativePath) + key);
-                    populatedKeys.concat(keysWithFile);
+                    populatedKeys = populatedKeys.concat(keysWithFile);
+
+                    console.log(`Processed ${indexFileRelativePath}`);
+                })
+                .catch(err => {
+                    console.error(err);
                 })
             },
             Promise.resolve()
         );
 
-        return thread;
+        return thread.then(() => populatedKeys);
+    })
+    .then(populatedKeys =>  {
+        console.log('All files populated');
+        return fs.writeFile('populatedKeys', yaml.dump(populatedKeys));
     });
 }
 
