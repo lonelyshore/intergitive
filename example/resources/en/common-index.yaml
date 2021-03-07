@@ -1,0 +1,8 @@
+asset_index:
+  fallbacks:
+    default:
+      path_replacement:
+        - zh-Hant
+      keys:
+        - imgCorrect
+    
