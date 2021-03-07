@@ -423,7 +423,7 @@ let store = {
         return api.invokeLoad('loadCourseText', assetId, this.state.courseState.courseName, this.appState.language);
     },
     processAssetIdInText(text) {
-        return api.invokeSelect('processAssetIdInText', text);
+        return api.invokeSelect('processAssetIdInText', text, this.appState.language);
     },
     processMarkdown(content) {
         if (content.startsWith('.md')) {

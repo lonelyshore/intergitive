@@ -15,6 +15,7 @@ const ActionExecutor = require('./action-executor').ActionExecutor;
 const loadCourseAsset = require('./load-course-asset');
 const stepConfigs = require('../common/config-step');
 const { LEVEL_CONFIG_SCHEMA } = require('../common/level-config-schema');
+const { language } = require('../../paths');
 
 const loaderPair = loadCourseAsset.createCourseAssetLoaderPair(
     paths
@@ -112,15 +113,15 @@ let store = {
             return action.executeBy(this.actionExecutor);
         });
     },
-    processAssetIdInText(text) {
+    processAssetIdInText(text, language) {
         return loaderUtility.searchMustacheReplacementPairs(
             text,
-            loaderPair.getCourseLoader(this.courseState.courseName)
+            loaderPair.getCourseLoader(this.courseState.courseName, language)
         )
         .then(replacements => {
             let baseText = replacements.length === 0 ? text : text.substring(0, replacements[0].startingIndex);
             
-            let loader = loaderPair.getCourseLoader(this.courseState.courseName);
+            let loader = loaderPair.getCourseLoader(this.courseState.courseName, language);
 
             return replacements.reduce(
                 (concatReplacements, replacement, replacementIndex) => {
@@ -260,7 +261,7 @@ let store = {
                         new ActionExecutor(
                             paths.playgroundPath,
                             paths.repoStoreCollectionName,
-                            loaderPair.getCourseLoader(this.courseState.courseName),
+                            loaderPair.getCourseLoader(this.courseState.courseName, language),
                             repoVcsSetups
                         );
                 })
