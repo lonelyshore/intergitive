@@ -38,21 +38,26 @@ class LoaderPair {
         this.assetNameToId = new CourseAssetNameToId();
     }
 
-    getCourseLoader(courseName) {
-        return this.course.getLoaderForBundlePath(courseName);
+    getGlobalLoader(language) {
+        return this.global.getLoaderForBundlePath(language);
+    }
+
+    getCourseLoader(courseName, language) {
+        return this.course.getLoaderForBundlePath(courseName, language);
     }
 
     /**
      * 
      * @param {string} courseName 
+     * @param {string} language The language code of loaded course
      * @returns {Promise} A promise that yields CourseConfig
      */
-    loadCourse(courseName) {
-        return this.loadCourseRaw(courseName)
+    loadCourse(courseName, language) {
+        return this.loadCourseRaw(courseName, language)
         .then(content => {
             console.log(`loading ${courseName} json`);
             return yaml.safeLoad(content, { schema: courseSchema});
-        });            
+        });
     }
 
     /**
@@ -60,8 +65,8 @@ class LoaderPair {
      * @param {string} courseName 
      * @returns {Promise} A promise that yields CourseConfig
      */
-    loadCourseRaw(courseName) {
-        let loader = this.global;
+    loadCourseRaw(courseName, language) {
+        let loader = this.getGlobalLoader(language);
 
         return loader.loadTextContent(this.assetNameToId.course(courseName));        
     }
@@ -69,29 +74,40 @@ class LoaderPair {
     /**
      * 
      * @param {string} stringKey 
+     * @param {string} language The language code of loaded course
      * @returns {Promise} A promise that yields string content for common use
      */
-    loadCommonString(stringKey) {
-        return this.global.loadTextContent(this.assetNameToId.courseRenderAsset(stringKey));
+    loadCommonString(stringKey, language) {
+        return this.getGlobalLoader(
+            language
+        ).loadTextContent(
+            this.assetNameToId.courseRenderAsset(stringKey)
+        );
     }
 
     /**
      * 
      * @param {string} key 
+     * @param {string} language The language code of loaded course
      * @returns {Promise} A promise that yields full path to a common asset
      */
-    loadCommonAssetPath(key) {
-        return this.global.getFullAssetPath(this.assetNameToId.commonAsset(key));
+    loadCommonAssetPath(key, language) {
+        return this.getGlobalLoader(
+            language
+        ).getFullAssetPath(
+            this.assetNameToId.commonAsset(key)
+        );
     }
 
     /**
      * 
      * @param {string} levelName 
      * @param {string} courseName 
+     * @param {string} language The language code of loaded course
      * @returns {Promise} A promise that yields LevelConfig
      */
-    loadLevelFromCourse(levelName, courseName) {
-        let loader = this.getCourseLoader(courseName);
+    loadLevelFromCourse(levelName, courseName, language) {
+        let loader = this.getCourseLoader(courseName, language);
 
         return loader.loadTextContent(levelName)
         .then(text => {
@@ -104,16 +120,24 @@ class LoaderPair {
      * 
      * @param {string} stringKey
      * @param {string} courseName
+     * @param {string} language The language code of loaded course
      * @returns {Promise} A promise that yields string content for course content
      */
-    loadCourseText(stringKey, courseName) {
-        let loader = this.getCourseLoader(courseName);
+    loadCourseText(stringKey, courseName, language) {
+        let loader = this.getCourseLoader(courseName, language);
 
         return loader.loadTextContent(stringKey);
     }
 
-    loadRepoArchivePath(repoName, courseName) {
-        let loader = this.getCourseLoader(courseName);
+    /**
+     * 
+     * @param {string} repoName
+     * @param {string} courseName
+     * @param {string} language The language code of loaded course
+     * @returns {Promise} A promise that yields string content for course content
+     */
+    loadRepoArchivePath(repoName, courseName, language) {
+        let loader = this.getCourseLoader(courseName, language);
 
         return loader.getFullAssetPath(this.assetNameToId.repoArchive(repoName));
     }
@@ -125,7 +149,7 @@ class LoaderPair {
  * @returns {LoaderPair}
  */
 function createCourseAssetLoaderPair(courseSettings) {
-    let globalLoader = new AssetLoader(courseSettings.resourcesPath, ...courseSettings.bundlePath);
+    let globalLoader = new AssetLoader(courseSettings.resourcesPath);
     let courseLoader = new AssetLoader(courseSettings.courseResourcesPath);
 
     return new LoaderPair(globalLoader, courseLoader);

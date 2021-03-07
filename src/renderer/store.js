@@ -308,6 +308,10 @@ function calculateCourseUnlockStatus(progressInfo, courseTree) {
 
 let store = {
     state: {
+        appState: {
+            courseName: api.getConfig('course'),
+            language: api.getConfig('language')
+        },
         levelState: {
             isDebug: api.getConfig('isDebug'),
             stepsReady: false,
@@ -370,6 +374,9 @@ let store = {
         },
         progressManager: new ProgressManager(),
     },
+    get appState() {
+        return this.state.appState;
+    },
     get levelState() {
         return this.state.levelState;
     },
@@ -384,7 +391,7 @@ let store = {
 
         Object.keys(this.levelState.terms).forEach(key => {
             loadPromises.push(
-                api.invokeLoad('loadCommonString', key)
+                api.invokeLoad('loadCommonString', key, this.appState.language)
                 .then(term => {
                     this.levelState.terms[key] = term;
                 })
@@ -398,7 +405,7 @@ let store = {
 
         Object.keys(this.levelState.commonAssetRelativePaths).forEach(key => {
             loadPromises.push(
-                api.invokeLoad('loadCommonAssetPath', key)
+                api.invokeLoad('loadCommonAssetPath', key, this.appState.language)
                 .then(fullAssetPath => {
                     return this.getAssetRelativePath(
                         fullAssetPath
@@ -413,7 +420,7 @@ let store = {
         return Promise.all(loadPromises);
     },
     loadText(assetId) {
-        return api.invokeLoad('loadCourseText', assetId, this.state.courseState.courseName);
+        return api.invokeLoad('loadCourseText', assetId, this.state.courseState.courseName, this.appState.language);
     },
     processAssetIdInText(text) {
         return api.invokeSelect('processAssetIdInText', text);
@@ -429,12 +436,12 @@ let store = {
     getAssetRelativePath(assetFullPath) {
         return api.invokeSelect('getAssetRelativePath', assetFullPath);
     },
-    loadCourse(courseName) {
+    loadCourse() {
         this.courseState.isReady = false;
         this.courseState.courseTree = null;
         this.courseState.courseList = null;
 
-        return api.invokeLoad('loadCourseRaw', courseName)
+        return api.invokeLoad('loadCourseRaw', this.appState.courseName, this.appState.language)
         .then(content => {
             return yaml.safeLoad(content, { schema: COURSE_CONFIG_SCHEMA });
         })
@@ -442,7 +449,7 @@ let store = {
             this.courseState.courseTree = this.buildCourseTree(course);
             this.courseState.courseList = courseConfig.flattenCourseTree(course);
             this.courseState.isReady = true;
-            this.courseState.courseName = courseName;
+            this.courseState.courseName = this.appState.courseName;
         })
         .then(() => {
             return this.state.progressManager.getProgress(this.state.courseState.courseName);
@@ -457,7 +464,7 @@ let store = {
             });
         })
         .then(() => {
-            return api.invokeSelect('setCurrentCourse', courseName);
+            return api.invokeSelect('setCurrentCourse', this.appState.courseName);
         })
         .catch(err => {
             console.error(err);
@@ -480,7 +487,7 @@ let store = {
         this.levelState.repoSetupNames = [];
         this.levelState.workingPaths = {};
 
-        return api.invokeSelect('loadLevel', levelName)
+        return api.invokeSelect('loadLevel', levelName, this.appState.language)
         .then(mainLevelState => {
             this.levelState.workingPaths = mainLevelState.workingPaths;
             this.levelState.repoSetupNames = mainLevelState.repoSetupNames;

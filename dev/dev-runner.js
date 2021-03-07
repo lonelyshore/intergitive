@@ -255,6 +255,7 @@ function CollectCourseItemIdToItemDict(course) {
 /**
  * 
  * @param {string} courseName
+ * @param {string} language
  * @param {string} fileSystemBaseFolder
  * @param {string} repoStoreSubPath
  * @param {loadCourseAsset.LoaderPair} loaderPair
@@ -277,7 +278,7 @@ const run = function(courseName, fileSystemBaseFolder, repoStoreSubPath, loaderP
 
     let course;
     
-    return loaderPair.loadCourse(courseName)
+    return loaderPair.loadCourse(courseName, language)
     .then(result => {
         course = result;
     })

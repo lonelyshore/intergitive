@@ -23,7 +23,7 @@ var app = new Vue({
             return this.store.loadCommonAssetRelativePaths();
         })
         .then(() => {
-            return this.store.loadCourse(window.api.getConfig('coursePath'));
+            return this.store.loadCourse();
         })
         .then(() => {
             this.store.navigate(this.store.courseState.courseTree);

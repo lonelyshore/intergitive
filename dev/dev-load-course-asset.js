@@ -15,8 +15,8 @@ class DevLoaderPair extends loadCourseAsset.LoaderPair {
         super(globalLoader, courseLoader);
     }
 
-    loadLevelFromCourse(levelName, courseName) {
-        let loader = this.getCourseLoader(courseName);
+    loadLevelFromCourse(levelName, courseName, language) {
+        let loader = this.getCourseLoader(courseName, language);
 
         return loader.loadTextContent(levelName)
         .then(text => {

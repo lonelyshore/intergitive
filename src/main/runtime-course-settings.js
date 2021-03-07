@@ -1,6 +1,7 @@
 'use strict';
 const path = require('path');
 const CourseStruct = require('./course-struct');
+const { ApplicationConfig } = require('../common/config-app');
 
 class SerializedCourseSettings {
     constructor(
@@ -20,15 +21,17 @@ class RuntimeCourseSettings extends CourseStruct {
      * 
      * @param {string} projectPath
      * @param {SerializedCourseSettings} serializedCourseSettings 
+     * @param {ApplicationConfig} appConfig
      */
-    constructor(projectPath, serializedCourseSettings) {
+    constructor(projectPath, serializedCourseSettings, appConfig) {
         super(path.join(projectPath, serializedCourseSettings.relativeBasePath));
         this.projectPath = projectPath;
         this.serializedSettings = serializedCourseSettings;
+        this.appConfig = appConfig;
     }
 
-    get bundlePath() {
-        return this.serializedSettings.bundlePaths;
+    get language() {
+        return this.appConfig.language;
     }
 
     get repoStoreCollectionName() {
@@ -36,7 +39,7 @@ class RuntimeCourseSettings extends CourseStruct {
     }
 
     get course() {
-        return this.serializedSettings.selectedCourse;
+        return this.appConfig.courseName;
     }
 }
 

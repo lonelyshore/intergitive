@@ -21,6 +21,7 @@ const testUtils = require('./test-utils');
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
+const { ApplicationConfig } = require('../../src/common/config-app');
 
 chai.use(chaiAsPromised);
 chai.should();
@@ -35,7 +36,11 @@ if (process.env.COURSE_CONFIG_PATH) {
 
     courseSettings = new RuntimeCourseSettings(
         testUtils.PROJECT_PATH,
-        serializedCourseSettings
+        serializedCourseSettings,
+        new ApplicationConfig(
+            serializedCourseSetting.bundlePaths[0],
+            serializedCourseSettings.selectedCourse
+        )
     );
 }
 
@@ -48,8 +53,9 @@ describe('Prepare to Validate Course Setting', function() {
         let validatedCourse;
         let loaderPair = loadCourseAsset.createCourseAssetLoaderPair(courseSettings);
         let courseName = courseSettings.course;
+        let language = courseSettings.language;
 
-        return loaderPair.loadCourse(courseName)
+        return loaderPair.loadCourse(courseName, language)
         .then(course => {
             validatedCourse = course;
         })
@@ -64,7 +70,7 @@ describe('Prepare to Validate Course Setting', function() {
             let loadLevelConfigAndNames = validatedLevels.reduce(
                 (loadLevelConfigAndNames, level) => {
                     return loadLevelConfigAndNames.then(levelConfigAndNames => {
-                        return loaderPair.loadLevelFromCourse(level.configAssetId, courseName)
+                        return loaderPair.loadLevelFromCourse(level.configAssetId, courseName, language)
                         .then(levelConfig => {
                             levelConfigAndNames.push({ config: levelConfig, name: level.id });
                             return levelConfigAndNames;
@@ -83,7 +89,8 @@ describe('Prepare to Validate Course Setting', function() {
                     validatedCourse,
                     levelConfigAndNames,
                     loaderPair,
-                    courseName
+                    courseName,
+                    language
                 );
             });
         });
@@ -238,7 +245,7 @@ function gatherValidatableLevelList(course, assetLoader, skipUntil) {
  * @param {loadCourseAsset.LoaderPair} loaderPair 
  * @param {string} courseName 
  */
-function validateLevels(course, levelConfigAndNames, loaderPair, courseName) {
+function validateLevels(course, levelConfigAndNames, loaderPair, courseName, language) {
 
     /**
      * 
@@ -248,7 +255,7 @@ function validateLevels(course, levelConfigAndNames, loaderPair, courseName) {
      * @param {loadCourseAsset.LoaderPair} loaderPair 
      * @param {string} courseName 
      */
-    function validateLevel(levelConfig, previousLevelId, levelName, loaderPair, courseName) {
+    function validateLevel(levelConfig, previousLevelId, levelName, loaderPair, courseName, language) {
 
         describe(`Level ${levelName}`, function() {
 
@@ -285,7 +292,8 @@ function validateLevels(course, levelConfigAndNames, loaderPair, courseName) {
                             .then(() => {
                                 return loaderPair.loadRepoArchivePath(
                                     repoSetup.referenceStoreName,
-                                    courseName
+                                    courseName,
+                                    language
                                 )
                             })
                             .then(archivePath => {
@@ -687,7 +695,8 @@ function validateLevels(course, levelConfigAndNames, loaderPair, courseName) {
                 lastLevel ? lastLevel.id : '',
                 levelConfigAndName.name,
                 loaderPair,
-                courseName
+                courseName,
+                language
             );
         })
     })

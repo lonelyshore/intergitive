@@ -7,6 +7,7 @@ const devRunner = require('./dev-runner');
 const loadCourseAsset = require('../src/main/load-course-asset');
 const RuntimeCourseSettings = require('../src/main/runtime-course-settings');
 const zip = require('../src/main/simple-archive');
+const { ApplicationConfig } = require('../src/common/config-app');
 
 const fileSystemBasePath = path.resolve(__dirname, '../bake');
 
@@ -27,7 +28,7 @@ function operate(args) {
     bake-course: bake for a course
       arguments:
         relativeBasePath: path to folder where common assets (resources) and course asset folder (course-resources) located
-        bundlePaths: asset loader bundle tokens separated by slashes ('/'). Pass a single slash for empty bundles
+        language: target language code
         selectedCourse: asset id of the baked course, without "course/" prefix
         sourceRepoStorePath: path to repo store that is used to bake the course`);
                 return Promise.resolve();
@@ -37,9 +38,13 @@ function operate(args) {
                 projectPath,
                 {
                     relativeBasePath: args[1],
-                    bundlePaths: args[2] === '/' ? [] : args[2].split('/'),
+                    bundlePaths: args[2],
                     selectedCourse: args[3]
-                }
+                },
+                new ApplicationConfig(
+                    args[2],
+                    args[3]
+                )
             );
 
             let loaderPair = loadCourseAsset.createCourseAssetLoaderPair(settings);
@@ -61,6 +66,7 @@ function operate(args) {
             .then(() => {
                 return devRunner.run(
                     settings.course,
+                    settings.language,
                     fileSystemBasePath,
                     'repo-stores',
                     loaderPair

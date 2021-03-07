@@ -59,11 +59,11 @@ function initializeCheckpointStore(storePath, checkpointStoreName) {
     });
 }
 
-function initializeRepoStore(storePath, refStoreName, loaderPair, courseName) {
+function initializeRepoStore(storePath, refStoreName, loaderPair, courseName, language) {
     let refStorePath = path.join(storePath, refStoreName);
     return fs.emptyDir(refStorePath)
     .then(() => {
-        return loaderPair.loadRepoArchivePath(refStoreName, courseName);
+        return loaderPair.loadRepoArchivePath(refStoreName, courseName, language);
     })
     .then(archivePath => {
         return zip.extractArchiveTo(
@@ -90,7 +90,8 @@ let store = {
     },
     config: {
         isDebug: process.env.NODE_ENV !== 'production',
-        coursePath: paths.course,
+        course: paths.course,
+        language: paths.language
     },
     get levelState() {
         return this.state.levelState;
@@ -185,13 +186,13 @@ let store = {
     setCurrentCourse(courseName) {
         this.courseState.courseName = courseName;
     },
-    loadLevel(levelName) {
+    loadLevel(levelName, language) {
         this.levelState.steps = {};
         this.actionExecutor = null;
         this.levelState.repoSetupNames = [];
         this.levelState.workingPaths = {};
 
-        return loaderPair.loadLevelFromCourse(levelName, this.courseState.courseName)
+        return loaderPair.loadLevelFromCourse(levelName, this.courseState.courseName, language)
         .then(config => {
             
             return Promise.resolve()
@@ -245,7 +246,8 @@ let store = {
                                     repoStorePath,
                                     repoVcsSetup.referenceStoreName,
                                     loaderPair,
-                                    this.courseState.courseName
+                                    this.courseState.courseName,
+                                    language
                                 )
                             );
                         }
@@ -269,13 +271,8 @@ let store = {
             .catch(err => {
                 console.error(`Error occured when loading repo setups ${err}`);
                 if (err.code === 'EBUSY') {
-                    return loaderPair.loadCommonString('loadEbusyMessage')
-                    .then(message => {
-                        console.error(message);
-                    })
-                    .then(() => {
-                        throw err;
-                    });
+                    console.error(err);
+                    throw err;
                 }
                 throw err;
             })
