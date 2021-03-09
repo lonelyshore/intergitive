@@ -122,6 +122,12 @@ describe.only('AssetLoader #core', function() {
 
             testShouldContainAsset(`${assets}/default_fallback_asset_path`);
 
+            testShouldContainAsset(`${assets}/another_default_fallback_raw_text`);
+
+            testShouldContainAsset(`${assets}/another_default_fallback_text_from_file`);
+
+            testShouldContainAsset(`${assets}/another_default_fallback_asset_path`);
+
             testShouldContainAsset(`${assets}/redirect_fallback_raw_text`);
 
             testShouldContainAsset(`${assets}/redirect_fallback_text_from_file`);
@@ -201,20 +207,22 @@ describe.only('AssetLoader #core', function() {
 
         describe('Double Fallbacks', function() {
 
-            testShouldContainAsset('assets/redirect_double_fallback_raw_text');
+            testShouldContainAsset(`${assets}/redirect_double_fallback_raw_text`);
 
-            testShouldContainAsset('assets/redirect_double_fallback_text_from_file');
+            testShouldContainAsset(`${assets}/redirect_double_fallback_text_from_file`);
 
             testShouldContainAsset(`${assets}/default_double_fallback_asset_path`);
 
+            testShouldContainAsset(`${assets}/another_default_double_fallback_asset_path`);
+
             it('double fallback to raw text', function() {
-                return assetLoader.loadTextContent('assets/redirect_double_fallback_raw_text')
+                return assetLoader.loadTextContent(`${assets}/redirect_double_fallback_raw_text`)
                 .should.eventually
                 .equal('double_fallback');
             });
 
             it('double fallback to text content from file', function() {
-                return assetLoader.loadTextContent('assets/redirect_double_fallback_text_from_file')
+                return assetLoader.loadTextContent(`${assets}/redirect_double_fallback_text_from_file`)
                 .should.eventually
                 .equal('content of redirect_double_fallback_text_from_file');
             });
@@ -230,6 +238,18 @@ describe.only('AssetLoader #core', function() {
                     )
                 );
             });
+
+            it('another default double fallback to asset path', function() {
+                return assetLoader.getFullAssetPath(`${assets}/another_default_double_fallback_asset_path`)
+                .should.eventually
+                .equal(
+                    path.join(
+                        fallbackTargetFallbackLanguagePath,
+                        assets,
+                        'another_default_double_fallback.txt'
+                    )
+                );
+            });
         });
 
         describe('Handle Not Found', function() {
@@ -239,6 +259,8 @@ describe.only('AssetLoader #core', function() {
             testShouldNotContainAsset(`${assets}/redirect_not_found`);
 
             testShouldNotContainAsset(`${assets}/default_not_found`);
+
+            testShouldNotContainAsset(`${assets}/another_default_not_found`);
 
             it('text content not found', function() {
                 return assetLoader.loadTextContent(`${assets}/not_exists`)
@@ -299,6 +321,17 @@ describe.only('AssetLoader #core', function() {
                     assetName: assetName
                 });
             });
+
+            it('another asset path fallback not found', function() {
+                let assetName = 'another_default_not_found';
+                return assetLoader.getFullAssetPath(`${assets}/${assetName}`)
+                .should.be.eventually.rejectedWith(NotFoundError)
+                .and.include({
+                    startingContainerPath: path.join(testCourceTestLanguageSubPath, assets),
+                    finalContainerPath: path.join(testCourceFallbackLanguageSubPath, assets),
+                    assetName: assetName
+                });
+            });
         });
 
         describe('Handle Container Not Found', function() {
@@ -337,6 +370,8 @@ describe.only('AssetLoader #core', function() {
 
             testShouldNotContainAsset('default_cyclic');
 
+            testShouldNotContainAsset('another_default_cyclic');
+
             it('cycle in redirect', function() {
                 let assetName = 'redirect_cyclic';
 
@@ -350,6 +385,17 @@ describe.only('AssetLoader #core', function() {
 
             it('cycle in default fallback', function() {
                 let assetName = 'default_cyclic';
+
+                return assetLoader.getFullAssetPath(`${assets}/${assetName}`)
+                .should.be.eventually.rejectedWith(CyclicFallbackError)
+                .and.include({
+                    startingContainerPath: path.join(testCourceTestLanguageSubPath, assets),
+                    assetName: assetName
+                });
+            });
+
+            it('another cycle in default fallback', function() {
+                let assetName = 'another_default_cyclic';
 
                 return assetLoader.getFullAssetPath(`${assets}/${assetName}`)
                 .should.be.eventually.rejectedWith(CyclicFallbackError)
