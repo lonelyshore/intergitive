@@ -16,7 +16,7 @@ const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 chai.should();
 
-describe('AssetLoader #core', function() {
+describe.only('AssetLoader #core', function() {
 
     describe('Mutability', function() {
         it('Cannot mutate bundle path state of AssetLoader', function() {
@@ -51,6 +51,10 @@ describe('AssetLoader #core', function() {
             path.join('test-course', 'test-language');
         const testCourceTestLanguagePath = 
             path.join(resourcePath, testCourceTestLanguageSubPath);
+        const testCourceFallbackLanguageSubPath =
+            path.join('test-course', 'fallback-language');
+        const testCourceFallbackLanguagePath = 
+            path.join(resourcePath, testCourceFallbackLanguageSubPath);
         const fallbackTargetTestLanguageSubPath =
             path.join('fallback-target', 'test-language');
         const fallbackTargetTestLanguagePath =
@@ -112,25 +116,25 @@ describe('AssetLoader #core', function() {
 
         describe('Simple Fallbacks', function() {
 
-            testShouldContainAsset('assets/default_fallback_raw_text');
+            testShouldContainAsset(`${assets}/default_fallback_raw_text`);
 
-            testShouldContainAsset('assets/default_fallback_text_from_file');
+            testShouldContainAsset(`${assets}/default_fallback_text_from_file`);
 
             testShouldContainAsset(`${assets}/default_fallback_asset_path`);
 
-            testShouldContainAsset('assets/redirect_fallback_raw_text');
+            testShouldContainAsset(`${assets}/redirect_fallback_raw_text`);
 
-            testShouldContainAsset('assets/redirect_fallback_text_from_file');
+            testShouldContainAsset(`${assets}/redirect_fallback_text_from_file`);
 
             testShouldContainAsset(`${assets}/redirect_fallback_asset_path`);
 
             it('default fallback to raw text', function() {
-                return assetLoader.loadTextContent('assets/default_fallback_raw_text')
+                return assetLoader.loadTextContent(`${assets}/default_fallback_raw_text`)
                 .should.eventually.equal('fallback text');
             });
 
             it('default fallback text content from file', function() {
-                return assetLoader.loadTextContent('assets/default_fallback_text_from_file')
+                return assetLoader.loadTextContent(`${assets}/default_fallback_text_from_file`)
                 .should.eventually
                 .equal('多國語言にほんごالعربيةTiếng việtไทย');
             });
@@ -147,14 +151,37 @@ describe('AssetLoader #core', function() {
                 );
             });
 
+            it('another default fallback to raw text', function() {
+                return assetLoader.loadTextContent(`${assets}/another_default_fallback_raw_text`)
+                .should.eventually.equal('another fallback text');
+            });
+
+            it('another default fallback text content from file', function() {
+                return assetLoader.loadTextContent(`${assets}/another_default_fallback_text_from_file`)
+                .should.eventually
+                .equal('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus urna neque viverra justo nec ultrices dui.');
+            });
+
+            it('another default fallback asset path', function() {
+                return assetLoader.getFullAssetPath(`${assets}/another_default_fallback_asset_path`)
+                .should.eventually
+                .equal(
+                    path.join(
+                        testCourceFallbackLanguagePath,
+                        assets,
+                        'asset3.png'
+                    )
+                );
+            });
+
             it('redirect fallback to raw text', function() {
-                return assetLoader.loadTextContent('assets/redirect_fallback_raw_text')
+                return assetLoader.loadTextContent(`${assets}/redirect_fallback_raw_text`)
                 .should.eventually
                 .equal('\"DOUBLE QUOTE\"');
             });
 
             it('redirect fallback text content from file', function() {
-                return assetLoader.loadTextContent('assets/redirect_fallback_text_from_file')
+                return assetLoader.loadTextContent(`${assets}/redirect_fallback_text_from_file`)
                 .should.eventually
                 .equal('\'SINGLE QUOTE\'');
             });
@@ -170,7 +197,6 @@ describe('AssetLoader #core', function() {
                     )
                 );
             });
-
         });
 
         describe('Double Fallbacks', function() {

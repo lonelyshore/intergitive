@@ -13,9 +13,7 @@ const handleError = Symbol("HandleError");
 const INFILE_SOURCE = Symbol('infile');
 const ONDISK_SOURCE = Symbol('ondisk');
 
-function isString(obj) {
-    return typeof obj === 'string' || obj instanceof String;
-}
+const { typeCheck } = require('../common/utility');
 
 function calculateRedirect(currentBundleTokens, redirectBundleTokens) {
     let mergedTokens = currentBundleTokens.map((element, index) => {
@@ -89,24 +87,34 @@ class AssetIndex {
             assert(fallbacksSource instanceof Object, "[AssetIndex] expect fallbackSource to be a map");
 
             if ("default" in fallbacksSource) {
-                let defaultSetting = fallbacksSource.default;
-                assert(defaultSetting instanceof Object, "[AssetIndex] expect defaultSetting to be a map");
-                assert("path_replacement" in defaultSetting, "[AssetIndex] path_replacement missing");
-                assert(Array.isArray(defaultSetting.path_replacement), "[AssetIndex] expect path_replacement to be an array");
-                assert(defaultSetting.path_replacement.length === bundleTokens.length, "[AssetIndex] expect path_replacement have same length as bundleTokens");
-                defaultSetting.path_replacement.forEach(element => {
-                    assert(isString(element));
-                });
-                let defaultRedirect = calculateRedirect(bundleTokens, defaultSetting.path_replacement);
+                let defaultSettings = fallbacksSource.default;
+                
+                if (!Array.isArray(defaultSettings)) {
+                    defaultSettings = [defaultSettings];
+                }
+                
+                defaultSettings.forEach(defaultSetting => {
+                    assert("path_replacement" in defaultSetting, "[AssetIndex] path_replacement missing");
+                    assert(Array.isArray(defaultSetting.path_replacement), "[AssetIndex] expect path_replacement to be an array");
+                    assert(defaultSetting.path_replacement.length === bundleTokens.length, "[AssetIndex] expect path_replacement have same length as bundleTokens");
 
-                assert("keys" in defaultSetting, "[AssetIndex] keys missing");
+                    defaultSetting.path_replacement.forEach(element => {
+                        assert(typeCheck.isString(element));
+                    });
 
-                let keys = defaultSetting.keys;
-                assert(Array.isArray(keys), "[AssetIndex] expect keys to be an array");
-                keys.forEach(element => { 
-                    assert(isString(element));
-                    fallbacks[element] = defaultRedirect;
-                });
+                    let defaultRedirect = calculateRedirect(bundleTokens, defaultSetting.path_replacement);
+    
+                    assert("keys" in defaultSetting, "[AssetIndex] keys missing");
+    
+                    let keys = defaultSetting.keys;
+                    assert(Array.isArray(keys), "[AssetIndex] expect keys to be an array");
+                    keys.forEach(element => { 
+                        assert(typeCheck.isString(element));
+                        if (element in fallbacks) console.error(`Duplicated fallback element for key ${element}`);
+                        fallbacks[element] = defaultRedirect;
+                    });
+                })
+
             }
 
             if ("redirects" in fallbacksSource) {
@@ -117,7 +125,7 @@ class AssetIndex {
                     assert(Array.isArray(value));
                     assert(value.length === bundleTokens.length);
                     value.forEach(element => {
-                        assert(isString(element));
+                        assert(typeCheck.isString(element));
                     });
 
                     let redirect = calculateRedirect(
@@ -125,6 +133,7 @@ class AssetIndex {
                         value
                     );
 
+                    if (key in fallbacks) console.error(`Duplicated fallback element for key ${key}`);
                     fallbacks[key] = redirect;
                 });
             }

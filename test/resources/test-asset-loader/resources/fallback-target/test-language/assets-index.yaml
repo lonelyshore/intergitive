@@ -10,10 +10,10 @@ asset_index:
     redirect_fallback_asset_path: "asset2.txt"
   fallbacks:
     default:
-      path_replacement: ["", "fallback-language"]
-      keys:
-        - "default_cyclic"
-        - "default_double_fallback_asset_path"
+      - path_replacement: ["", "fallback-language"]
+        keys:
+          - "default_cyclic"
+          - "default_double_fallback_asset_path"
     redirects:
       redirect_cyclic: ["test-course", "test-language"]
       redirect_double_fallback_raw_text: ["", "fallback-language"]

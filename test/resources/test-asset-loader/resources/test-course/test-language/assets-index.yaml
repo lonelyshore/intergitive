@@ -6,15 +6,23 @@ asset_index: # comprised by three parts: infile, ondisk, and fallbacks. All opti
     text:from-file: "text_from_file.txt"
     picture: "picture.png"
   fallbacks: # redirecting queries to other asset indices. optional
-    default: # enumerates set of assets that are redirected to a default asset. optional
-      path_replacement: ["fallback-target", "test-language"] # the new base path of the remapped keys; mandatory when .fallbacks.default exists.
-      keys: # an array of remapped keys. mandatory when fallback/default exists.
-        - "default_fallback_raw_text"
-        - "default_fallback_text_from_file"
-        - "default_fallback_asset_path"
-        - "default_double_fallback_asset_path"
-        - "default_not_found"
-        - "default_cyclic"
+    default: # optional. enumerates set of assets that are redirected to a default asset. 
+      - path_replacement: ["fallback-target", "test-language"] # the new base path of the remapped keys; mandatory when .fallbacks.default exists.
+        keys: # an array of remapped keys. mandatory when fallback/default exists.
+          - "default_fallback_raw_text"
+          - "default_fallback_text_from_file"
+          - "default_fallback_asset_path"
+          - "default_double_fallback_asset_path"
+          - "default_not_found"
+          - "default_cyclic"
+      - path_replacement: ["", "another-language"] # the new base path of the remapped keys; mandatory when .fallbacks.default exists.
+        keys: # an array of remapped keys. mandatory when fallback/default exists.
+          - "another_default_fallback_raw_text"
+          - "another_default_fallback_text_from_file"
+          - "another_default_fallback_asset_path"
+          - "another_default_double_fallback_asset_path"
+          - "another_default_not_found"
+          - "another_default_cyclic"
     redirects: # optional. an array of key value paris. each value is the new base path of the remapped key
       redirect_fallback_raw_text: ["fallback-target", "test-language"]
       redirect_fallback_text_from_file: ["fallback-target", "test-language"]

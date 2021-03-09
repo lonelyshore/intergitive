@@ -4,8 +4,12 @@ asset_index:
   ondisk:
     redirect_double_fallback_text_from_file: "redirect_double_fallback_text_from_file.txt"
     default_double_fallback_asset_path: "default_double_fallback.txt"
+    another_default_double_fallback_asset_path: "another_default_double_fallback.txt"
   fallbacks:
     default:
-      path_replacement: ["test-course", "test-language"]
-      keys:
-        - "default_cyclic"      
+      - path_replacement: ["test-course", "test-language"]
+        keys:
+          - "default_cyclic"      
+      - path_replacement: ["test-course", "fallback-language"]
+        keys:
+          - "another_default_cyclic"
