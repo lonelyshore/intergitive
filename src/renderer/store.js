@@ -541,7 +541,8 @@ let store = {
             .then(() => {
                 return api.invokeSelect(
                     'processAssetIdInText', 
-                    stepState.step.answer
+                    stepState.step.answer,
+                    this.appState.language
                 )
                 .then(processed => {
                     processedAnswer = processed;
