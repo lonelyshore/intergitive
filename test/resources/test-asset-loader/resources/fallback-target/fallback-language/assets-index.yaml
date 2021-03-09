@@ -10,6 +10,6 @@ asset_index:
       - path_replacement: ["test-course", "test-language"]
         keys:
           - "default_cyclic"      
-      - path_replacement: ["test-course", "fallback-language"]
+      - path_replacement: ["test-course", ""]
         keys:
           - "another_default_cyclic"

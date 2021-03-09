@@ -15,7 +15,7 @@ asset_index: # comprised by three parts: infile, ondisk, and fallbacks. All opti
           - "default_double_fallback_asset_path"
           - "default_not_found"
           - "default_cyclic"
-      - path_replacement: ["", "another-language"] # the new base path of the remapped keys; mandatory when .fallbacks.default exists.
+      - path_replacement: ["", "fallback-language"] # the new base path of the remapped keys; mandatory when .fallbacks.default exists.
         keys: # an array of remapped keys. mandatory when fallback/default exists.
           - "another_default_fallback_raw_text"
           - "another_default_fallback_text_from_file"

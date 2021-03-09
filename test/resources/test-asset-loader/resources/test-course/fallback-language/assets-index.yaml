@@ -4,7 +4,7 @@ asset_index:
     not_in_used_fallback: "this is not used..."
   ondisk:
     another_default_fallback_text_from_file: "text_from_file.txt"
-    another_default_fallback_asset_path: "asset1.png"
+    another_default_fallback_asset_path: "asset3.png"
   fallbacks:
     default:
       - path_replacement: ["fallback-target", "fallback-language"]
