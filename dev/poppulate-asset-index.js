@@ -34,14 +34,20 @@ function collectAssetIds(rawIndex) {
     if (rawIndex.infile) {
         keys = keys.concat(Object.keys(rawIndex.infile));
     }
-    if (rawIndex.fallback) {
-        let fallback = rawIndex.fallback;
-        if (fallback.default) {
-            assert(fallback.default.keys !== null && Array.isArray(fallback.default.keys));
-            keys = keys.concat(fallback.default.keys);
+    if ('fallbacks' in rawIndex) {
+        let fallbacks = rawIndex.fallbacks;
+        if ('default' in fallbacks) {
+            let defaults = fallbacks.default;
+            if (!Array.isArray(defaults)) defaults = [defaults];
+
+            defaults.forEach(defaultSetting => {
+                assert(defaultSetting.keys !== null && Array.isArray(defaultSetting.keys));
+                keys = keys.concat(defaultSetting.keys);
+            })
+
         }
-        if (fallback.redirects) {
-            keys = keys.concat(Object.keys(fallback.redirects));
+        if (fallbacks.redirects) {
+            keys = keys.concat(Object.keys(fallbacks.redirects));
         }
     }
 
@@ -50,14 +56,20 @@ function collectAssetIds(rawIndex) {
 
 /**
  * 
- * @param {*} newKey 
- * @param {*} fallback 
+ * @param {Array<string>} sourceBundlePaths 
+ * @param {Array<string>} targetBundlePaths 
+ * @param {Object} rawTargetIndex 
  * @returns {insertFallbackCb}
  */
 function createInsertToFallbackCb(sourceBundlePaths, targetBundlePaths, rawTargetIndex) {
-    if ('fallback' in rawTargetIndex && 'default' in rawTargetIndex.fallback) {
+    if ('fallbacks' in rawTargetIndex && 'default' in rawTargetIndex.fallbacks) {
 
         let defaultSetting = rawTargetIndex.default;
+
+        if (Array.isArray(defaultSetting)) {
+            defaultSetting = defaultSetting[0];
+        }
+
         assert(
             defaultSetting.path_replacement
             && Array.isArray(defaultSetting.path_replacement)
@@ -70,23 +82,27 @@ function createInsertToFallbackCb(sourceBundlePaths, targetBundlePaths, rawTarge
             sourceBundlePaths
         );
 
-        return (newKey, fallback) => {
-            let redirects = fallback.redirects || {};
+        return (newKey, fallbacks) => {
+            let redirects = fallbacks.redirects || {};
             redirects[newKey] = redirectTokens;
 
-            fallback.redirects = redirects;
+            fallbacks.redirects = redirects;
         };
     }
     else {
-        return (newKey, fallback) => {
-            if (!('default' in fallback)) {
-                fallback.default = {
+        return (newKey, fallbacks) => {
+            if (!('default' in fallbacks)) {
+                fallbacks.default = [{
                     'path_replacement': createRedirectTokens(targetBundlePaths, sourceBundlePaths),
                     keys: []
-                };
+                }];
             }
 
-            fallback.default.keys.push(newKey);
+            if (!Array.isArray(fallbacks.default)) {
+                fallbacks.default = [fallbacks.default];
+            }
+
+            fallbacks.default[0].keys.push(newKey);
         }
     }
 
@@ -106,10 +122,10 @@ function createInsertToFallbackCb(sourceBundlePaths, targetBundlePaths, rawTarge
 }
 
 /**
- * A callback used to inject new key into fallback
+ * A callback used to inject new key into fallbacks
  * @callback insertFallbackCb
  * @param {String} newKey
- * @param {Object} fallback
+ * @param {Object} fallbacks
  */
 
 /**
@@ -126,7 +142,7 @@ function populateIndex(rawSourceIndex, rawTargetIndex, insertFallbackCb) {
 
     let addedKeys = [];
     let rawNewIndex = JSON.parse(JSON.stringify(rawTargetIndex)); // lazy deep clone...
-    let newFallback = rawNewIndex.fallback || {};
+    let newFallback = rawNewIndex.fallbacks || {};
 
     sourceKeys.forEach(sourceKey => {
         if (!targetKeySet.has(sourceKeys)) {
@@ -135,7 +151,7 @@ function populateIndex(rawSourceIndex, rawTargetIndex, insertFallbackCb) {
         }
     });
 
-    rawNewIndex.fallback = newFallback;
+    rawNewIndex.fallbacks = newFallback;
 
     return new PopulatedIndex(
         rawNewIndex,
