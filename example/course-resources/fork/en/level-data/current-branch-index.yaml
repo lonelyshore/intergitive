@@ -1,0 +1,18 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - ''
+          - zh-Hant
+        keys:
+          - intro
+          - findout-current-branch
+          - elaborate-current-branch
+          - compare-checkout-revision-and-branch
+          - more-on-current-branch
+          - question-current-not-on-branch
+          - checkout-master-revision
+          - question-current-not-on-branch-display
+          - intro-detached-head
+          - importance-of-detached-head
+          - summary

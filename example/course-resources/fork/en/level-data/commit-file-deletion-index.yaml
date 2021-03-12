@@ -1,0 +1,19 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - ''
+          - zh-Hant
+        keys:
+          - intro
+          - delete-one
+          - view-changes-tab
+          - introduce-deletion-mark
+          - explain-unstaged-files
+          - stage-deleted
+          - explain-staged-files
+          - more-on-head
+          - commit
+          - warn-deleted-still-saved
+          - summary
+          - commit-msg

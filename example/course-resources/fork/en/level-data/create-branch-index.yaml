@@ -1,0 +1,18 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - ''
+          - zh-Hant
+        keys:
+          - intro
+          - instruct-restore-diverse-history
+          - execute-restore-diverse-history
+          - diverse-history-restored
+          - observe-diversed-history
+          - urge-branch-hold-commit
+          - instruct-create-branch
+          - urge-verify-effect-of-branch
+          - confirm-effect-of-branch
+          - summary
+          - created-branch-name-1

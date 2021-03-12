@@ -1,0 +1,53 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - ''
+          - zh-Hant
+        keys:
+          - intro
+          - focus-commit-info
+          - author-and-date
+          - set-author-name
+          - commit-message
+          - commit-hash
+          - sha-1
+          - hash-coverage
+          - search-commit
+          - summary
+          - 'file-1:v1'
+          - 'file-1:v2'
+          - 'file-1:v3'
+          - 'file-2:v1'
+          - 'file-2:v2'
+          - 'file-2:v3'
+          - 'file-2:v4'
+          - 'file-3:v1'
+          - 'file-3:v2'
+          - 'file-3:v3'
+          - 'file-3:v4'
+          - 'file-4:v1'
+          - 'file-4:v2'
+          - 'file-4:v3'
+          - 'file-4:v4'
+          - 'file-4:v5'
+          - 'file-4:v6'
+          - 'file-4:v7'
+          - file-2-name
+          - file-2-filename
+          - file-3-name
+          - file-3-filename
+          - file-4-name
+          - file-4-filename
+          - short-message
+          - long-message
+          - proper-message
+          - diff1-message
+          - diff2-message
+          - diff3-message
+          - add-other-files-message
+          - change-1-message
+          - change-2-message
+          - change-3-message
+          - change-4-message
+          - end-message

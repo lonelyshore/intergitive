@@ -1,0 +1,15 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - ''
+          - zh-Hant
+        keys:
+          - intro
+          - guide-lookup-diff
+          - read-diff
+          - inspect-diff-1
+          - verify-diff-not-file-tree
+          - inspect-diff-2
+          - inspect-diff-3
+          - summary

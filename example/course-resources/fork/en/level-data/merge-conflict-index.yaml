@@ -1,0 +1,25 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - ''
+          - zh-Hant
+        keys:
+          - intro
+          - open-repo
+          - commit-local-and-remote
+          - try-merge
+          - encounter-conflict
+          - conflict-status
+          - resovle-conflict-view
+          - answer-conflicted-file
+          - file-name
+          - full-file-name
+          - file-path-another
+          - file-path-this
+          - file
+          - file-local
+          - file-another
+          - commit-message-1
+          - commit-message-this
+          - commit-message-another

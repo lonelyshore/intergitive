@@ -1,0 +1,31 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - ''
+          - zh-Hant
+        keys:
+          - intro
+          - fetch-routinely
+          - update-remote-action
+          - urge-fetch-and-merge
+          - ready-to-continue
+          - commit-2
+          - push-2
+          - update-remote-3
+          - fetch-3
+          - commit-4
+          - push-4
+          - summary
+          - poem-name
+          - poem-file-name
+          - poem-path-this
+          - poem-path-another
+          - 'poem:v1'
+          - 'poem:v2'
+          - 'poem:v3'
+          - 'poem:v4'
+          - commit-message-1
+          - commit-message-2
+          - commit-message-3
+          - commit-message-4

@@ -1,0 +1,18 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - ''
+          - zh-Hant
+        keys:
+          - intro
+          - open-merge-tool
+          - intro-merge-tool
+          - resolve
+          - continue-merge
+          - continue-push
+          - summary
+          - file-name
+          - full-file-name
+          - file-path-another
+          - file-path-this

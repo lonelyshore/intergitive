@@ -1,0 +1,12 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - ''
+          - zh-Hant
+        keys:
+          - intro
+          - instruct-show-file-history
+          - introduce-file-history-gui
+          - instruct-show-file-4-history
+          - summary

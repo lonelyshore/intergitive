@@ -1,0 +1,27 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - ''
+          - zh-Hant
+        keys:
+          - intro
+          - generate-conflicts
+          - confirm-conflicts
+          - binary-conflict
+          - intro-file-picker-panel
+          - unpick-local
+          - unpick-upstream
+          - pick-file-1
+          - pick-file-2
+          - commit-and-push
+          - summary
+          - file-name-1
+          - full-file-name-1
+          - file-path-another-1
+          - file-path-this-1
+          - file-name-2
+          - full-file-name-2
+          - file-path-another-2
+          - file-path-this-2
+          - commit-message

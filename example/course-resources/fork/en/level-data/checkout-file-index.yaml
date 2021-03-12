@@ -1,0 +1,17 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - ''
+          - zh-Hant
+        keys:
+          - intro
+          - view-diff-of-first-change
+          - checkout-file-2-first
+          - confirm-file-2-changed
+          - see-folder-staged-and-unstaged
+          - illusrate-staged-unstaged-after-checkout-file
+          - introduce-checkout-previous-state
+          - checkout-file-2-before-first
+          - confirm-file-2-checkouted-before-first
+          - summary

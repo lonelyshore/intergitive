@@ -1,0 +1,36 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - ''
+          - zh-Hant
+        keys:
+          - open-in
+          - open-in-explorer
+          - checkout-revision
+          - changes-tab
+          - all-commits-tab
+          - unstaged-changes
+          - staged-changes
+          - act-stage
+          - act-unstage
+          - discard-changes
+          - reset-file-item
+          - reset-file-sub-current
+          - reset-file-sub-previous
+          - show-file-history
+          - copy-commit-hash
+          - toolbar-view
+          - view-show-head
+          - create-branch
+          - create-branch-modal-confirm
+          - create-branch-modal-confirm-2
+          - checkout-branch-item
+          - checkout-after-create-checkbox
+          - merge-into-item-prefix
+          - merge-modal-confirm
+          - delete-branch-item
+          - delete-modal-confirm
+          - tool-bar-file
+          - clone-item
+          - clone-modal-clone-button

@@ -1,0 +1,22 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - ''
+          - zh-Hant
+        keys:
+          - intro
+          - encourage-commit
+          - try-push
+          - push-fail-try-fetch
+          - explain-diverged
+          - poem-name-1
+          - poem-file-name-1
+          - poem-path-1-another
+          - poem-name-2
+          - poem-file-name-2
+          - poem-path-2-this
+          - poem-1
+          - poem-2
+          - commit-message-another
+          - commit-message-this

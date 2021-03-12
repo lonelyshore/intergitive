@@ -1,0 +1,22 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - ''
+          - zh-Hant
+        keys:
+          - basic-operation
+          - commits-advanced
+          - checkout-branches
+          - merge-branches
+          - create-repo-empty
+          - create-repo-midpoint
+          - share-history
+          - share-history-remote
+          - share-history-another
+          - resolve-conflict
+          - resolve-conflict-another
+          - resolve-conflict-remote
+          - manage-remote
+          - manage-remote-another
+          - manage-remote-remote

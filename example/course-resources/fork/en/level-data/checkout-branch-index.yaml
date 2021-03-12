@@ -1,0 +1,25 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - ''
+          - zh-Hant
+        keys:
+          - intro
+          - open-repo-and-add-modifications
+          - commit-1
+          - notify-no-branch-on-new-commit
+          - checkout-starting-commit
+          - confirm-diversity-eliminated
+          - intro-checkout-branch
+          - instruct-checkout-master
+          - hint-checkout-master-done
+          - instruct-add-modifications-2
+          - notify-branch-moved
+          - notify-current-branch-mark
+          - summary
+          - commit-message-1
+          - mod-1
+          - mod-1-file-path
+          - mod-2
+          - mod-2-file-path

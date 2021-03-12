@@ -1,0 +1,16 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - ''
+          - zh-Hant
+        keys:
+          - intro
+          - open-repo-and-count-branch-number
+          - intro-branch-list
+          - instruct-checkout-branch-1
+          - encourage-checkout-another
+          - intruct-checkout-branch-2
+          - checkout-back-to-master
+          - intruct-checkout-master
+          - summary

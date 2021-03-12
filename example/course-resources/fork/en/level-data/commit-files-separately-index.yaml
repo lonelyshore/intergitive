@@ -1,0 +1,25 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - ''
+          - zh-Hant
+        keys:
+          - intro-goal
+          - add-new-files
+          - will-commit-separately
+          - stage-first
+          - commit-first
+          - explain-separate-commit-by-index
+          - introduce-index
+          - stage-second
+          - explain-stage
+          - commit-second
+          - introduce-commit-multiple
+          - stage-all
+          - commit-remain
+          - summary
+          - empty
+          - first-commit-message
+          - second-commit-message
+          - last-commit-message

@@ -1,0 +1,22 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - ''
+          - zh-Hant
+        keys:
+          - introduction
+          - introduce-checkpoint
+          - open-gui
+          - open-target-folder-commented
+          - instruct-checkout-first
+          - intro-check-folder-content
+          - instruct-open-folder-reminder
+          - instruct-play-first-sound
+          - suggest-checkout-third
+          - instruct-checkout-third
+          - instruct-play-third-sound
+          - illustrate-checkout-revision
+          - illustrate-browse-history
+          - suggest-checkout-sixth
+          - conclude-section

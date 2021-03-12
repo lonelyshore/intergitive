@@ -1,0 +1,36 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - ''
+          - zh-Hant
+        keys:
+          - intro
+          - open-repo-using-gui
+          - create-branch-and-checkout
+          - remind-checkout-by-default
+          - instruct-create-another
+          - instruct-create-yet-another
+          - summary
+          - 'file-1:v1'
+          - 'file-1:v2'
+          - 'file-1:v3'
+          - 'file-2:v1'
+          - 'file-2:alt-1'
+          - 'file-2:alt-2:v1'
+          - 'file-2:alt-2:v2'
+          - 'file-2:alt-3'
+          - file-2-name
+          - file-2-path
+          - file-2-commit-hamburger
+          - file-2-commit-alt-1
+          - 'file-2-commit-alt-2:v1'
+          - 'file-2-commit-alt-2:v2'
+          - file-2-commit-alt-3
+          - branch-name-5
+          - branch-name-1
+          - branch-name-7
+          - branch-name-hamburger
+          - branch-name-hamburger-alt-1
+          - branch-name-hamburger-alt-2
+          - branch-name-hamburger-alt-3

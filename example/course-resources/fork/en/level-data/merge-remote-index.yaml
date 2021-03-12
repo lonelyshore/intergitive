@@ -1,0 +1,25 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - ''
+          - zh-Hant
+        keys:
+          - intro
+          - merge-1
+          - push-1
+          - possibility-of-multiple-merge
+          - commit
+          - diverged-again
+          - diverged-yet-again
+          - push-finally
+          - summary
+          - poem-name-1
+          - poem-file-name-1
+          - poem-path-1-this
+          - removed-file-path-1
+          - removed-file-path-2
+          - poem-1
+          - commit-message-this
+          - commit-message-another-1
+          - commit-message-another-2
