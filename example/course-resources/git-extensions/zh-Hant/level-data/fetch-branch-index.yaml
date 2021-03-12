@@ -1,0 +1,21 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - fork
+          - ''
+        keys:
+          - intro
+          - open-repo
+          - update-remote
+          - update-remote-action
+          - config-graph-not-updated
+          - prompt-fetch-remote
+          - fetch
+          - cofirm-graph-updated
+          - effect-of-fetch
+          - merge-remote-branch
+          - confirm-merged
+          - summary
+          - commit-message-1
+          - 'file-1:v3'

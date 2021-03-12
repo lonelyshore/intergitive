@@ -1,0 +1,17 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - fork
+          - ''
+        keys:
+          - intro
+          - brief-move-branch
+          - delete-branch-1
+          - create-branch-1
+          - confirm-branch-moved-and-encourage-move-another
+          - try-delete-branch-2
+          - explain-current-branch-unremovable
+          - checkout-another-branch
+          - move-branch-2
+          - summary

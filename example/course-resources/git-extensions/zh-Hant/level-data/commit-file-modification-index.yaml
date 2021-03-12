@@ -1,0 +1,20 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - fork
+          - ''
+        keys:
+          - intro
+          - modify-file
+          - view-changes-tab
+          - intro-icon-diff
+          - select-modified-file
+          - intro-file-diff
+          - stage-modified-file
+          - elaborate-stage-modification
+          - commit-modified-file
+          - elaborate-commit-modofied-file
+          - summary
+          - file-1-v3
+          - commit-message

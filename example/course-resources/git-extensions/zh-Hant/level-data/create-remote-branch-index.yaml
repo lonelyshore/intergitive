@@ -1,0 +1,12 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - fork
+          - ''
+        keys:
+          - intro
+          - create-branch
+          - confirm-branch-created
+          - push-branch
+          - summary

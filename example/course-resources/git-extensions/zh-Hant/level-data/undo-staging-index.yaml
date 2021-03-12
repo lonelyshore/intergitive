@@ -1,0 +1,20 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - fork
+          - ''
+        keys:
+          - intro
+          - add-files
+          - stage-all
+          - unstage
+          - confirm-unstaged
+          - illustrate-unstage
+          - unstage-more
+          - work-tree-intact
+          - summary
+          - modify-3
+          - unwanted
+          - unwanted-path
+          - unwanted-path-in-basic

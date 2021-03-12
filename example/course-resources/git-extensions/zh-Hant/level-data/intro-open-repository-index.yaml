@@ -1,0 +1,28 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - fork
+          - ''
+        keys:
+          - sound-bird
+          - sound-cicada
+          - 'file-1:v1'
+          - 'file-1:v2'
+          - 'file-2:v1'
+          - 'file-3:v1'
+          - 'file-read-me:v1'
+          - 'file-read-me:v2'
+          - 'file-read-me:v3'
+          - msg-1
+          - msg-2
+          - msg-3
+          - msg-4
+          - msg-5
+          - msg-6
+          - introduce-goal
+          - open
+          - folded
+          - open-directory-in-fork
+          - instruct-verify-open
+          - summary

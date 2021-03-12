@@ -1,0 +1,16 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - fork
+          - ''
+        keys:
+          - intro
+          - concept
+          - intro-how-to-practice
+          - clone-repo
+          - set-username
+          - intro-cloned-repo
+          - summary
+          - 'file-1:v1'
+          - 'file-1:v2'

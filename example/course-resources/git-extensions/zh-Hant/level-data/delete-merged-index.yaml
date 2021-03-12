@@ -1,0 +1,15 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - fork
+          - ''
+        keys:
+          - intro
+          - delete-branch-1
+          - delete-merged-claim
+          - observe-commits-of-branch-about-deleted
+          - delete-branch-2
+          - confirm-commits-remain
+          - delete-branch-3
+          - summary

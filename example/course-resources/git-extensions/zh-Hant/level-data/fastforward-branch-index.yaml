@@ -1,0 +1,18 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - fork
+          - ''
+        keys:
+          - intro
+          - checkout-merging-1
+          - merge-target-1
+          - confirm-merging-1-fastforwarded
+          - explain-fastforward
+          - explain-cannot-fastforward
+          - prompt-merge-non-diverged
+          - checkout-branch-behind
+          - merge-target-2
+          - behind-merge-target-result
+          - summary

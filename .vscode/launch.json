@@ -45,6 +45,18 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Populate Asset",
+            "program": "${workspaceFolder}/dev/course-maker",
+            "args": [
+                "populate-asset",
+                "./example/course-resources",
+                "fork/zh-Hant",
+                "fork/en"
+            ],
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Mocha All",
             "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
             "args": [

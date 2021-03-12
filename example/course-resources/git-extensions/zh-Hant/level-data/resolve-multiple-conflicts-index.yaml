@@ -1,0 +1,29 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - fork
+          - ''
+        keys:
+          - intro
+          - generate-conflicts-1
+          - multiple-conflicts
+          - resolve-conflicts-1
+          - commit-and-push-1
+          - prompt-practice
+          - single-conflict
+          - resolve-conflicts-2
+          - summary
+          - file-name
+          - full-file-name
+          - file-path-another
+          - file-path-this
+          - file-this-1
+          - file-another-1
+          - file-resolved-1
+          - file-this-2
+          - file-another-2
+          - file-resolved-2
+          - commit-message-1
+          - commit-message-2
+          - commit-message-3

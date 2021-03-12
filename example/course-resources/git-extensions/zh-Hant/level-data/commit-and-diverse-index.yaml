@@ -1,0 +1,34 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - fork
+          - ''
+        keys:
+          - intro
+          - notify-on-last-commit
+          - jump-to-last-commit
+          - brief-commit-steps
+          - modify-folder
+          - stage-and-commit-1
+          - question-head-location
+          - confirm-new-head
+          - explain-head-advance
+          - how-about-head-not-on-end
+          - checkout-file-3-v1
+          - confirm-file-3-version
+          - change-file-3
+          - commit-file-3-change-1
+          - confirm-diversed-graph
+          - explain-diversed-graph
+          - confirm-file-3-change-1
+          - confirm-file-3-original
+          - parallel-universes
+          - checkout-original-end
+          - close-and-reopen-gui
+          - summary
+          - mod-1
+          - mod-1-file-path
+          - commit-message-1
+          - commit-message-2
+          - file-3-new-1

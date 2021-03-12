@@ -1,0 +1,23 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - fork
+          - ''
+        keys:
+          - intro
+          - check-head
+          - prepare-for-commit
+          - add-file
+          - commit-for-branch-2
+          - notify-branch-2-grow-independently
+          - value-of-branch
+          - can-branch-catch-up
+          - checkout-branch-1
+          - reproduce-commit
+          - check-result
+          - summary
+          - empty-file-content
+          - empty-file-name
+          - empty-file-path
+          - commit-message

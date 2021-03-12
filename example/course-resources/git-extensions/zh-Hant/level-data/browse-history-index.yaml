@@ -1,0 +1,24 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - fork
+          - ''
+        keys:
+          - introduction
+          - graph-as-folder-history
+          - file-tree-viewer
+          - open-folder
+          - use-file-tree-viewer
+          - read-file-tree-viewer
+          - explain-file-tree
+          - read-file-tree-of-second-commit
+          - read-readme-of-second-commit
+          - read-readme-of-last-commit
+          - read-readme-of-forth-commit
+          - read-file-tree-not-affect-working-directory
+          - check-working-directory
+          - introduce-work-tree
+          - illustrate-file-tree
+          - illustrate-browse-history
+          - summary

@@ -1,0 +1,274 @@
+!course
+  id: "fork-course"
+  nameKey: "levels/main.course-name"
+  children:
+    - !sequential-section # chapter 1: basics
+      id: "fork-main-section-intro"
+      nameKey: "levels/main.section-intro.name"
+      children:
+        - !level
+          id: "fork-main-intro-install"
+          nameKey: "levels/main.intro-install.name"
+          configAssetId: "levels/intro-install"
+        - !level
+          id: "fork-main-intro-open-repository"
+          nameKey: "levels/main.intro-open-repository.name"
+          configAssetId: "levels/intro-open-repository"
+        - !level 
+          id: "fork-main-browse-history"
+          nameKey: "levels/main.browse-history.name"
+          configAssetId: "levels/browse-history"
+        - !level 
+          id: "fork-main-checkout-revision"
+          nameKey: "levels/main.checkout-revision.name"
+          configAssetId: "levels/checkout-revision"
+    - !sequential-section # chapter 2: creating commits
+      id: "fork-main-section-create-commits"
+      nameKey: "levels/main.section-create-commits.name"
+      prerequisiteIds: [ "fork-main-section-intro" ]
+      children:
+        - !level 
+          id: "fork-main-commit-one-file"
+          nameKey: "levels/main.commit-one-file.name"
+          configAssetId: "levels/commit-one-file"
+        - !level 
+          id: "fork-main-commit-files-separately"
+          nameKey: "levels/main.commit-files-separately.name"
+          configAssetId: "levels/commit-files-separately"
+        - !level 
+          id: "fork-main-commit-file-modification"
+          nameKey: "levels/main.commit-file-modification.name"
+          configAssetId: "levels/commit-file-modification"
+        - !level 
+          id: "fork-main-commit-file-deletion"
+          nameKey: "levels/main.commit-file-deletion.name"
+          configAssetId: "levels/commit-file-deletion"
+        - !level 
+          id: "fork-main-undo-staging"
+          nameKey: "levels/main.undo-staging.name"
+          configAssetId: "levels/undo-staging"
+        - !level 
+          id: "fork-main-discard-changes"
+          nameKey: "levels/main.discard-changes.name"
+          configAssetId: "levels/discard-changes"
+        - !level 
+          id: "fork-main-meaning-of-checkout-commit"
+          nameKey: "levels/main.meaning-of-checkout-commit.name"
+          configAssetId: "levels/meaning-of-checkout-commit"
+    - !sequential-section # chapter 3: properties of commits
+      id: "fork-main-section-elaborate-commits"
+      nameKey: "levels/main.section-elaborate-commits.name"
+      prerequisiteIds: 
+        - "fork-main-section-intro"
+        - "fork-main-section-create-commits"
+      children:
+        - !level 
+          id: "fork-main-commit-properties"
+          nameKey: "levels/main.commit-properties.name"
+          configAssetId: "levels/commit-properties"
+        - !level 
+          id: "fork-main-commit-backtrace"
+          nameKey: "levels/main.commit-backtrace.name"
+          configAssetId: "levels/commit-backtrace"
+        - !level 
+          id: "fork-main-commit-diff"
+          nameKey: "levels/main.commit-diff.name"
+          configAssetId: "levels/commit-diff"
+    - !sequential-section # chapter 4: advanced history browsing
+      id: "fork-main-section-advaneced-history-browsing"
+      nameKey: "levels/main.section-advanced-history-browsing"
+      prerequisiteIds: 
+        - "fork-main-section-intro"
+        - "fork-main-section-create-commits"
+        - "fork-main-section-elaborate-commits"
+      children:
+        - !level 
+          id: "fork-main-checkout-file"
+          nameKey: "levels/main.checkout-file.name"
+          configAssetId: "levels/checkout-file"
+        - !level 
+          id: "fork-main-file-history"
+          nameKey: "levels/main.file-history.name"
+          configAssetId: "levels/file-history"
+        - !level 
+          id: "fork-main-file-checkout-combo"
+          nameKey: "levels/main.file-checkout-combo.name"
+          configAssetId: "levels/file-checkout-combo"
+        - !level 
+          id: "fork-main-commit-and-diverse"
+          nameKey: "levels/main.commit-and-diverse.name"
+          configAssetId: "levels/commit-and-diverse"
+    - !sequential-section # chapter 5: create and checkout branches
+      id: "fork-main-section-create-and-checkout-branches"
+      nameKey: "levels/main.section-create-and-checkout-branches"
+      prerequisiteIds: 
+        - "fork-main-section-intro"
+        - "fork-main-section-create-commits"
+        - "fork-main-section-elaborate-commits"
+        - "fork-main-section-advaneced-history-browsing"
+      children:
+        - !level 
+          id: "fork-main-create-branch"
+          nameKey: "levels/main.create-branch.name"
+          configAssetId: "levels/create-branch"
+        - !level 
+          id: "fork-main-checkout-branch"
+          nameKey: "levels/main.checkout-branch.name"
+          configAssetId: "levels/checkout-branch"
+        - !level 
+          id: "fork-main-current-branch"
+          nameKey: "levels/main.current-branch.name"
+          configAssetId: "levels/current-branch"
+        - !level 
+          id: "fork-main-create-and-checkout-branch"
+          nameKey: "levels/main.create-and-checkout-branch.name"
+          configAssetId: "levels/create-and-checkout-branch"
+        - !level
+          id: "fork-main-branch-for-variant"
+          nameKey: "levels/main.branch-for-variant.name"
+          configAssetId: "levels/branch-for-variant"
+        - !level 
+          id: "fork-main-branch-list"
+          nameKey: "levels/main.branch-list.name"
+          configAssetId: "levels/branch-list"
+        - !level 
+          id: "fork-main-create-branch-limit"
+          nameKey: "levels/main.create-branch-limit.name"
+          configAssetId: "levels/create-branch-limit"
+        - !level
+          id: "fork-main-branch-grow"
+          nameKey: "levels/main.branch-grow.name"
+          configAssetId: "levels/branch-grow"
+    - !sequential-section # chapter 6: merge and delete branches
+      id: "fork-main-section-merge-and-delete-branches"
+      nameKey: "levels/main.section-merge-and-delete-branches"
+      prerequisiteIds: 
+        - "fork-main-section-intro"
+        - "fork-main-section-create-commits"
+        - "fork-main-section-elaborate-commits"
+        - "fork-main-section-advaneced-history-browsing"
+        - "fork-main-section-create-and-checkout-branches"
+      children:
+        - !level 
+          id: "fork-main-merge-branch"
+          nameKey: "levels/main.merge-branch.name"
+          configAssetId: "levels/merge-branch"
+        - !level 
+          id: "fork-main-fastforward-branch"
+          nameKey: "levels/main.fastforward-branch.name"
+          configAssetId: "levels/fastforward-branch"
+        - !level 
+          id: "fork-main-delete-merged"
+          nameKey: "levels/main.delete-merged.name"
+          configAssetId: "levels/delete-merged"
+        - !level 
+          id: "fork-main-delete-unmerged"
+          nameKey: "levels/main.delete-unmerged.name"
+          configAssetId: "levels/delete-unmerged"
+        - !level 
+          id: "fork-main-move-branch"
+          nameKey: "levels/main.move-branch.name"
+          configAssetId: "levels/move-branch"
+    - !sequential-section # chapter 7: share repository
+      id: "fork-main-section-share-repository"
+      nameKey: "levels/main.section-share-repository"
+      prerequisiteIds: 
+        - "fork-main-section-intro"
+        - "fork-main-section-create-commits"
+        - "fork-main-section-elaborate-commits"
+        - "fork-main-section-advaneced-history-browsing"
+        - "fork-main-section-create-and-checkout-branches"
+        - "fork-main-section-merge-and-delete-branches"
+      children:
+        - !level
+          id: "fork-main-create-repo"
+          nameKey: "levels/main.create-repo.name"
+          configAssetId: "levels/create-repo"
+        - !level
+          id: "fork-main-clone-repo"
+          nameKey: "levels/main.clone-repo.name"
+          configAssetId: "levels/clone-repo"
+        - !level
+          id: "fork-main-push-branch"
+          nameKey: "levels/main.push-branch.name"
+          configAssetId: "levels/push-branch"
+        - !level
+          id: "fork-main-fetch-branch"
+          nameKey: "levels/main.fetch-branch.name"
+          configAssetId: "levels/fetch-branch"
+        - !level
+          id: "fork-main-simple-collaboration"
+          nameKey: "levels/main.simple-collaboration.name"
+          configAssetId: "levels/simple-collaboration"
+    - !sequential-section # chapter 8: integrate repository
+      id: "fork-main-section-integrate-repository"
+      nameKey: "levels/main.section-integrate-repository"
+      prerequisiteIds: 
+        - "fork-main-section-intro"
+        - "fork-main-section-create-commits"
+        - "fork-main-section-elaborate-commits"
+        - "fork-main-section-advaneced-history-browsing"
+        - "fork-main-section-create-and-checkout-branches"
+        - "fork-main-section-merge-and-delete-branches"
+        - "fork-main-section-share-repository"
+      children:
+        - !level
+          id: "fork-main-diverged-remote"
+          nameKey: "levels/main.diverged-remote.name"
+          configAssetId: "levels/diverged-remote"
+        - !level
+          id: "fork-main-merge-remote"
+          nameKey: "levels/main.merge-remote.name"
+          configAssetId: "levels/merge-remote"
+        - !level
+          id: "fork-main-merge-conflict"
+          nameKey: "levels/main.merge-conflict.name"
+          configAssetId: "levels/merge-conflict"
+        - !level
+          id: "fork-main-resolve-conflict"
+          nameKey: "levels/main.resolve-conflict.name"
+          configAssetId: "levels/resolve-conflict"
+        - !level
+          id: "fork-main-resolve-multiple-conflicts"
+          nameKey: "levels/main.resolve-multiple-conflicts.name"
+          configAssetId: "levels/resolve-multiple-conflicts"
+        - !level
+          id: "fork-main-resolve-with-editor"
+          nameKey: "levels/main.resolve-with-editor.name"
+          configAssetId: "levels/resolve-with-editor"
+        - !level
+          id: "fork-main-resolve-binary"
+          nameKey: "levels/main.resolve-binary.name"
+          configAssetId: "levels/resolve-binary"
+        - !level
+          id: "fork-main-abort-merge"
+          nameKey: "levels/main.abort-merge.name"
+          configAssetId: "levels/abort-merge"
+    - !sequential-section # chapter 9: manage remote
+      id: "fork-main-section-manage-remote"
+      nameKey: "levels/main.section-manage-remote"
+      prerequisiteIds: 
+        - "fork-main-section-intro"
+        - "fork-main-section-create-commits"
+        - "fork-main-section-elaborate-commits"
+        - "fork-main-section-advaneced-history-browsing"
+        - "fork-main-section-create-and-checkout-branches"
+        - "fork-main-section-merge-and-delete-branches"
+        - "fork-main-section-share-repository"
+        - "fork-main-section-integrate-repository"
+      children:
+        - !level
+          id: "fork-main-checkout-remote-branch"
+          nameKey: "levels/main.checkout-remote-branch.name"
+          configAssetId: "levels/checkout-remote-branch"
+        - !level
+          id: "fork-main-create-remote-branch"
+          nameKey: "levels/main.create-remote-branch.name"
+          configAssetId: "levels/create-remote-branch"
+        - !level
+          id: "fork-main-delete-remote-branch"
+          nameKey: "levels/main.delete-remote-branch.name"
+          configAssetId: "levels/delete-remote-branch"
+
+
+

@@ -1,0 +1,22 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - fork
+          - ''
+        keys:
+          - intro
+          - remote-and-tracking-branch
+          - confirm-remote-branch-number
+          - confirm-tracking-branch-number
+          - source-of-tracking-branch
+          - checkout-remote-1
+          - confirm-checkout-result
+          - summary
+          - full-file-name
+          - file-path-this
+          - file-path-another
+          - file-content-1
+          - file-content-2
+          - file-content-3
+          - commit-message

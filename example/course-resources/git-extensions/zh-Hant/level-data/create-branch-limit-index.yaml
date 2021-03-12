@@ -1,0 +1,22 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - fork
+          - ''
+        keys:
+          - intro
+          - symbol-rules
+          - slash-rule
+          - create-slash-named-branch
+          - meaning-of-slash
+          - duplicated-branch-warning
+          - urge-branch-along-side-with-another
+          - branch-along-side-with-another
+          - notify-only-one-head
+          - branch-another-again
+          - emphasize-one-head
+          - summary
+          - slash-branch-name
+          - racing-branch-name-1
+          - racing-branch-name-2

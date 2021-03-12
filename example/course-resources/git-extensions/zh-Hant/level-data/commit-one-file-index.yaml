@@ -1,0 +1,24 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - fork
+          - ''
+        keys:
+          - intro-goal
+          - brief-workflow
+          - add-file
+          - instruct-open-fork
+          - instruct-open-commit
+          - stage-new-file
+          - fill-message-and-commit
+          - view-graph
+          - checkout-previous-revision
+          - confirm-sixth-commit
+          - checkout-seventh-commit
+          - confirm-seventh-commit
+          - intro-commit
+          - explain-staging
+          - conclusion
+          - empty
+          - commit-message

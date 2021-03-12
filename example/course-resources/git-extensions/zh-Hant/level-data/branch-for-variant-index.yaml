@@ -1,0 +1,27 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - fork
+          - ''
+        keys:
+          - intro
+          - elaborate-what-is-variant
+          - open-repo-and-checkout
+          - confirm-file-content
+          - create-and-checkout-branch-1
+          - modify-alt-1
+          - elaborate-alt-1
+          - prompt-for-alt-2
+          - create-and-checkout-branch-2
+          - modify-alt-2
+          - elaborate-alt-2
+          - prompt-for-alt-3
+          - create-and-checkout-branch-3
+          - modify-alt-3
+          - elaborate-alt-3
+          - prompt-for-alt-2-again
+          - checkout-branch-2
+          - modify-alt-2-again
+          - elaborate-alt-2-again
+          - summary

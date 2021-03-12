@@ -1,0 +1,17 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - fork
+          - ''
+        keys:
+          - intro
+          - illustrate-checkout
+          - hint-dirty-checkout
+          - modify-readme
+          - try-checkout-first
+          - explain-checkout-fail
+          - how-to-checkout-when-dirty
+          - clean-and-checkout
+          - summary
+          - modified-readme

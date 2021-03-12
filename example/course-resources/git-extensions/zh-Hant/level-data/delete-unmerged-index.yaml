@@ -1,0 +1,25 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - fork
+          - ''
+        keys:
+          - intro
+          - confirm-deleting-content
+          - delete-1
+          - mechanism-of-delete
+          - confition-of-non-deleted-commits
+          - prompt-delete-another
+          - delete-2
+          - prompt-checking-deleted-2
+          - prompt-delete-commit-with-multiple-branches
+          - find-multi-tagged-branch
+          - prompt-delete-multi-tagged
+          - delete-3
+          - confirm-result-of-delete-3
+          - explain-why-commit-not-eliminated
+          - delete-4
+          - confirm-commit-removed
+          - commit-removed-answer
+          - summary

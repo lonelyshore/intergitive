@@ -1,0 +1,26 @@
+asset_index:
+  fallbacks:
+    default:
+      - path_replacement:
+          - fork
+          - ''
+        keys:
+          - intro
+          - generate-conflicts
+          - confirm-conflicted-file
+          - conflict-markers
+          - benefit-of-direct-edit
+          - confirm-conflicted-content
+          - resolve-by-editting
+          - need-for-staging
+          - stage-and-commit
+          - push
+          - summary
+          - file-name
+          - full-file-name
+          - file-path-another
+          - file-path-this
+          - file-another
+          - file-this
+          - file-resolved
+          - commit-message
