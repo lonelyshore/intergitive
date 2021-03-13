@@ -16,7 +16,7 @@ const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 chai.should();
 
-describe.only('AssetLoader #core', function() {
+describe('AssetLoader #core', function() {
 
     describe('Mutability', function() {
         it('Cannot mutate bundle path state of AssetLoader', function() {

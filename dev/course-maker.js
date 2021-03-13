@@ -69,11 +69,7 @@ sourceRepoStorePath: path to repo store that is used to bake the course`);
 
     let settings = new RuntimeCourseSettings(
         projectPath,
-        {
-            relativeBasePath: args[1],
-            bundlePaths: args[2],
-            selectedCourse: args[3]
-        },
+        args[1],
         new ApplicationConfig(
             args[2],
             args[3]

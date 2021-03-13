@@ -30,7 +30,6 @@
           assetId: "archives/init-repo-store:test-local-ref"
 
     - !playActions
-      descriptionId: "render/loadReference"
       actions:
         - !act.loadReference
           repoSetupName: local

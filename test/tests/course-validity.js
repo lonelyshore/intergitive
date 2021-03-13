@@ -14,35 +14,27 @@ const loadCourseAsset = require('../../dev/dev-load-course-asset');
 const AssetLoader = require('../../src/main/asset-loader').AssetLoader;
 const configAction = require('../../dev/config-action');
 const configStep = require('../../src/common/config-step');
-const RuntimeCourseSettings = require('../../src/main/runtime-course-settings');
 const loaderUtility = require('../../src/main/loader-utility');
+const { ApplicationConfig } = require('../../src/common/config-app');
+const CourseStruct = require('../../src/main/course-struct');
 
 const testUtils = require('./test-utils');
 
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
-const { ApplicationConfig } = require('../../src/common/config-app');
+
 
 chai.use(chaiAsPromised);
 chai.should();
 
-let courseSettings = paths;
-if (process.env.COURSE_CONFIG_PATH) {
-    let serializedCourseSettings = yaml.safeLoad(
-        fs.readFileSync(
-            path.join(testUtils.PROJECT_PATH, process.env.COURSE_CONFIG_PATH)
-        )
-    );
-
-    courseSettings = new RuntimeCourseSettings(
-        testUtils.PROJECT_PATH,
-        serializedCourseSettings,
-        new ApplicationConfig(
-            serializedCourseSetting.bundlePaths[0],
-            serializedCourseSettings.selectedCourse
-        )
-    );
+let runtimeBasePath = paths.basePath;
+if (process.env.BASE_PATH) {
+    runtimeBasePath = path.isAbsolute(process.env.BASE_PATH) ? 
+        process.env.BASE_PATH :
+        path.join(testUtils.PROJECT_PATH, process.env.BASE_PATH);
 }
+
+let courseStruct = new CourseStruct(runtimeBasePath);
 
 // loads config from package.json
 let skipLevelUntil = process.env.SKIP_UNTIL || null;
@@ -50,20 +42,73 @@ let skipLevelUntil = process.env.SKIP_UNTIL || null;
 describe('Prepare to Validate Course Setting', function() {
 
     it('generate validations', function() {
+        let loaderPair = loadCourseAsset.createCourseAssetLoaderPair(courseStruct);
+
+        if (process.env.CORUSE_NAME && process.env.LANGUAGE) {
+            return GenerateValidationsForCourseAndLanguage(process.env.CORUSE_NAME, process.env.LANGUAGE, loaderPair);
+        }
+        else { // By default this test will validate all accessable courses
+
+            return fs.readdir(courseStruct.courseResourcesPath, { withFileTypes: true })
+            .then(dirents => {
+                let generateValidations = dirents.reduce(
+                    (previous, dirent) => {
+                        if (dirent.isDirectory()) { // is a course folder
+                            return previous.then(() => {
+                                return GenerateValidationForCourse(
+                                    dirent.name,
+                                    courseStruct.courseResourcesPath,
+                                    loaderPair
+                                );
+                            });
+                        }
+                        else {
+                            return previous;
+                        }
+                    },
+                    Promise.resolve()
+                );
+
+                return generateValidations;
+            });
+        }
+    });
+
+    function GenerateValidationForCourse(courseName, courseResourcesPath, loaderPair) {
+
+        return fs.readdir(path.join(courseResourcesPath, courseName), { withFileTypes: true })
+        .then(dirents => {
+            let generateValidations = dirents.reduce(
+                (previous, dirent) => {
+                    if (dirent.isDirectory()) { // is a language folder
+                        return previous.then(() => {
+                            return GenerateValidationsForCourseAndLanguage(courseName, dirent.name, loaderPair);
+                        });
+                    }
+                    else {
+                        return previous;
+                    }
+                },
+                Promise.resolve()
+            );
+
+            return generateValidations;
+        })
+    }
+
+    function GenerateValidationsForCourseAndLanguage(courseName, language, loaderPair) {
         let validatedCourse;
-        let loaderPair = loadCourseAsset.createCourseAssetLoaderPair(courseSettings);
-        let courseName = courseSettings.course;
-        let language = courseSettings.language;
+        
 
         return loaderPair.loadCourse(courseName, language)
         .then(course => {
             validatedCourse = course;
         })
         .then(() => {
-            validateCourseConfig(courseName, validatedCourse, loaderPair.getCourseLoader(courseName));
+            validateCourseConfig(courseName, validatedCourse, loaderPair.getCourseLoader(courseName, language));
         })
         .then(() => {
-            return gatherValidatableLevelList(validatedCourse, loaderPair.getCourseLoader(courseName), skipLevelUntil);
+            return gatherValidatableLevelList(validatedCourse, loaderPair.getCourseLoader(courseName, language), skipLevelUntil);
         })
         .then(validatedLevels => {
 
@@ -94,7 +139,7 @@ describe('Prepare to Validate Course Setting', function() {
                 );
             });
         });
-    });
+    }
 });
 
 /**
@@ -508,7 +553,7 @@ function validateLevels(course, levelConfigAndNames, loaderPair, courseName, lan
 
                 let assetDemands = collectAssetDemandsFromLevel(levelConfig);
 
-                let loader = loaderPair.getCourseLoader(courseName);
+                let loader = loaderPair.getCourseLoader(courseName, language);
 
                 let validateAssetDemands = assetDemands.reduce(
                     (validation, assetDemand) => {

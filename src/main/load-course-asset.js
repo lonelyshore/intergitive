@@ -145,12 +145,12 @@ class LoaderPair {
 
 /**
  * 
- * @param {RuntimeCourseSettings} courseSettings
+ * @param {CourseStruct} courseStruct
  * @returns {LoaderPair}
  */
-function createCourseAssetLoaderPair(courseSettings) {
-    let globalLoader = new AssetLoader(courseSettings.resourcesPath);
-    let courseLoader = new AssetLoader(courseSettings.courseResourcesPath);
+function createCourseAssetLoaderPair(courseStruct) {
+    let globalLoader = new AssetLoader(courseStruct.resourcesPath);
+    let courseLoader = new AssetLoader(courseStruct.courseResourcesPath);
 
     return new LoaderPair(globalLoader, courseLoader);
 }
