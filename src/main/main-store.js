@@ -12,6 +12,8 @@ const loaderUtility = require('./loader-utility');
 
 const normalizePathSep = require('./noarmalize-path-sep');
 const ActionExecutor = require('./action-executor').ActionExecutor;
+const { ProgressService } = require('./progress-service');
+const { AppConfigService } = require('./app-config-service');
 const loadCourseAsset = require('./load-course-asset');
 const stepConfigs = require('../common/config-step');
 const { LEVEL_CONFIG_SCHEMA } = require('../common/level-config-schema');
@@ -88,10 +90,10 @@ let store = {
             courseName: null,
         },
     },
-    config: {
-        isDebug: process.env.NODE_ENV !== 'production',
-        course: paths.course,
-        language: paths.language
+    isDebug: process.env.NODE_ENV !== 'production',
+    services: {
+        progress: null,
+        appConfig: null,
     },
     get levelState() {
         return this.state.levelState;
@@ -104,6 +106,12 @@ let store = {
     },
     get loaderPair() {
         return loaderPair;
+    },
+    initialize() {
+        this.services.appConfig = new AppConfigService(paths.executionPath);
+        this.services.progress = new ProgressService(paths.progressPath);
+
+        return this.services.appConfig.loadConfiguration();
     },
     execute(actionContent) {
         return Promise.resolve(yaml.load(actionContent, { schema: LEVEL_CONFIG_SCHEMA}))

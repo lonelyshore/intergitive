@@ -33,7 +33,10 @@ if (process.env.BASE_PATH) {
         path.join(testUtils.PROJECT_PATH, process.env.BASE_PATH);
 }
 
-let courseStruct = new CourseStruct(runtimeBasePath);
+let courseStruct = new CourseStruct(
+    testUtils.PROJECT_PATH,
+    path.relative(testUtils.PROJECT_PATH, runtimeBasePath)
+);
 
 // loads config from package.json
 let skipLevelUntil = process.env.SKIP_UNTIL || null;

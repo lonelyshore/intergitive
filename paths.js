@@ -11,7 +11,8 @@ let settingRawContent = fs.readFileSync(path.join(projectPath, 'example-course-s
 let relativeBasePath = yaml.safeLoad(settingRawContent).relativeBasePath;
 
 let baseSetting = new CourseStruct(
-    path.join(projectPath, relativeBasePath),
+    projectPath,
+    relativeBasePath
 );
 
 module.exports = baseSetting;

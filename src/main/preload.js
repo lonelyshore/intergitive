@@ -26,6 +26,7 @@ contextBridge.exposeInMainWorld(
         invokeStore: genInvokeServiceFunc('store'),
         invokeSelect: genInvokeServiceFunc('select'),
         invokeProgressService: genInvokeServiceFunc('progress'),
+        invokeAppConfigService: genInvokeServiceFunc('app-config'),
         invokeLoad: genInvokeServiceFunc('load'), // loads using functions defined in LoaderPair (load-course-asset.js)
         invokeExecute: function(actionContent) {
             //let content = yaml.dump(action, this.levelSchema);
@@ -35,7 +36,7 @@ contextBridge.exposeInMainWorld(
                 actionContent
             );
         },
-        getConfig: (configName) => ipcRenderer.sendSync('get-config', [configName]),
+        isDebug: (configName) => ipcRenderer.sendSync('is-debug', [configName]),
     }
 );
 

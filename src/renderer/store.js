@@ -309,11 +309,11 @@ function calculateCourseUnlockStatus(progressInfo, courseTree) {
 let store = {
     state: {
         appState: {
-            courseName: api.getConfig('course'),
-            language: api.getConfig('language')
+            courseName: null,
+            language: null
         },
         levelState: {
-            isDebug: api.getConfig('isDebug'),
+            isDebug: api.isDebug(),
             stepsReady: false,
             interactable: false,
             levelName: '',
@@ -385,6 +385,11 @@ let store = {
     },
     get pageState() {
         return this.state.pageState;
+    },
+    initialize() {
+        return api.invokeSelect('initialize')
+        .then(() => api.invokeAppConfigService('loadConfiguration'))
+        .then(appConfig => Object.assign(this.appState, appConfig));
     },
     loadTerms() {
         let loadPromises = [];

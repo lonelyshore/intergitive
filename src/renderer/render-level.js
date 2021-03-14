@@ -18,7 +18,9 @@ var app = new Vue({
         }
     },
     created: function () {
-        this.store.loadTerms()
+        Promise.resolve()
+        .then(() => this.store.initialize())
+        .then(() => this.store.loadTerms())
         .then(() => {
             return this.store.loadCommonAssetRelativePaths();
         })

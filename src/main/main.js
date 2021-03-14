@@ -20,7 +20,7 @@ function createWindow () {
 
   // and load the index.html of the app.
   win.loadFile('./index.html');
-  if (mainStore.config.isDebug)
+  if (mainStore.isDebug)
     win.webContents.openDevTools();
 
   win.on('closed', () => {
@@ -38,9 +38,8 @@ app.on('window-all-closed', () => {
   }
 });
 
-ipcMain.on('get-config', (event, arg) => {
-  let name = arg.shift();
-  event.returnValue = mainStore.config[name];
+ipcMain.on('is-debug', (event, arg) => {
+  event.returnValue = mainStore.isDebug;
 });
 
 // Invoke store methods and returns with store's new state
@@ -60,8 +59,14 @@ ipcMain.handle('select', async (event, arg) => {
 
 ipcMain.handle('progress', async (event, arg) => {
   let funcName = arg.shift();
-  return progress[funcName](...arg);
+  return mainStore.services.progress[funcName](...arg);
 });
+
+ipcMain.handle('app-config', async (event, arg) => {
+  let funcName = arg.shift();
+
+  return mainStore.services.appConfig[funcName](...arg);
+})
 
 // loads from LoaderPair
 ipcMain.handle('load', async (event, arg) => {

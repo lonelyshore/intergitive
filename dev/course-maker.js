@@ -67,7 +67,8 @@ sourceRepoStorePath: path to repo store that is used to bake the course`);
     }
 
     let courseStruct = new CourseStruct(
-        path.join(projectPath, args[1])
+        projectPath,
+        args[1]
     );
 
     let courseName = args[2];

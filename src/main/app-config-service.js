@@ -24,6 +24,9 @@ class AppConfigService {
         return path.join(this.configDirName, configName);
     }
 
+    /**
+     * @returns {ApplicationConfig} returns configuration. If not exists, create one.
+     */
     loadConfiguration() {
 
         return fs.readFile(this.configurationPath)

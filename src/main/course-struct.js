@@ -2,8 +2,9 @@
 const path = require('path');
 
 class CourseStruct {
-    constructor(basePath) {
-        this.basePath = basePath
+    constructor(projectPath, baseRelativePath) {
+        this.projectPath = projectPath;
+        this.basePath = path.join(projectPath, baseRelativePath);
     }
 
     get resourcesPath() {
@@ -16,6 +17,10 @@ class CourseStruct {
 
     get executionPath() {
         return path.join(this.basePath, 'execution');
+    }
+
+    get appConfigPath() {
+        return this.executionPath;
     }
 
     get playgroundPath() {
