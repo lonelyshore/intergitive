@@ -108,10 +108,19 @@ let store = {
         return loaderPair;
     },
     initialize() {
-        this.services.appConfig = new AppConfigService(paths.executionPath);
+        this.services.appConfig = new AppConfigService(paths.executionPath, paths);
         this.services.progress = new ProgressService(paths.progressPath);
 
-        return this.services.appConfig.loadConfiguration();
+        return this.services.appConfig.loadConfiguration()
+        .then(appConfig => {
+            return this.services.appConfig.listCourseAndLanguageOptions()
+            .then(options => {
+                return {
+                    appConfig: appConfig,
+                    courseOptions: options
+                };
+            })
+        });
     },
     execute(actionContent) {
         return Promise.resolve(yaml.load(actionContent, { schema: LEVEL_CONFIG_SCHEMA}))

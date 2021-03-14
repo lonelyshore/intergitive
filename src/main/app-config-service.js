@@ -2,8 +2,8 @@
 
 const fs = require('fs-extra');
 const path = require('path');
+const { CourseStruct } = require('./course-struct');
 const { ApplicationConfig } = require('../common/config-app');
-
 
 const configName = 'app-config.json';
 
@@ -16,8 +16,14 @@ function createDefaultConfig(){
 
 class AppConfigService {
 
-    constructor(configDirName) {
+    /**
+     * 
+     * @param {string} configDirName 
+     * @param {CourseStruct} courseStruct 
+     */
+    constructor(configDirName, courseStruct) {
         this.configDirName = configDirName;
+        this.courseStruct = courseStruct;
     }
 
     get configurationPath() {
@@ -71,6 +77,54 @@ class AppConfigService {
             this.configurationPath,
             JSON.stringify(config)
         );
+    }
+
+    listCourseAndLanguageOptions() {
+        let courses = {};
+        return fs.readdir(
+            this.courseStruct.courseResourcesPath,
+            { withFileTypes: true})
+        .then(dirents => {
+            let scanCourses = dirents.reduce(
+                (previous, dirent) => {
+                    if (dirent.isDirectory()) {
+                        let courseName = dirent.name;
+                        previous = previous.then(() => 
+                            scanCourse(this.courseStruct, courseName))
+                        .then(langs => {
+                            courses[courseName] = langs;
+                        });
+                    }
+
+                    return previous;
+                },
+                Promise.resolve()
+            );
+
+            return scanCourses;
+        })
+        .then(() => courses);
+
+        function scanCourse(courseStruct, courseName) {
+            return fs.readdir(
+                path.join(
+                    courseStruct.courseResourcesPath,
+                    courseName
+                ),
+                { withFileTypes: true }
+            )
+            .then(dirents => {
+                return dirents.reduce(
+                    (previous, dirent) => {
+                        if (dirent.isDirectory()) {
+                            previous.push(dirent.name);
+                        }
+                        return previous;
+                    },
+                    []
+                );
+            });
+        }
     }
 }
 
