@@ -5,9 +5,8 @@ const path = require('path');
 const AssetLoader = require('../src/main/asset-loader').AssetLoader;
 const devRunner = require('./dev-runner');
 const loadCourseAsset = require('../src/main/load-course-asset');
-const RuntimeCourseSettings = require('../src/main/runtime-course-settings');
+const CourseStruct = require('../src/main/course-struct');
 const zip = require('../src/main/simple-archive');
-const { ApplicationConfig } = require('../src/common/config-app');
 const populateAssetBundles = require('./poppulate-asset-index');
 
 const fileSystemBasePath = path.resolve(__dirname, '../bake');
@@ -67,20 +66,18 @@ sourceRepoStorePath: path to repo store that is used to bake the course`);
         return Promise.resolve();
     }
 
-    let settings = new RuntimeCourseSettings(
-        projectPath,
-        args[1],
-        new ApplicationConfig(
-            args[2],
-            args[3]
-        )
+    let courseStruct = new CourseStruct(
+        path.join(projectPath, args[1])
     );
 
-    let loaderPair = loadCourseAsset.createCourseAssetLoaderPair(settings);
+    let courseName = args[2];
+    let language = args[3];
+
+    let loaderPair = loadCourseAsset.createCourseAssetLoaderPair(courseStruct);
     
     let sourceRepoStorePath = normalizePath(args[4]);
 
-    let initRepoStoreArchivePath = path.join(settings.courseResourcesPath, settings.course, 'archives', 'init-repo-store');
+    let initRepoStoreArchivePath = path.join(courseStruct.courseResourcesPath, courseName, 'archives', 'init-repo-store');
 
     return fs.emptyDir(fileSystemBasePath)
     .then(() => {
@@ -94,8 +91,8 @@ sourceRepoStorePath: path to repo store that is used to bake the course`);
     })
     .then(() => {
         return devRunner.run(
-            settings.course,
-            settings.language,
+            courseName,
+            language,
             fileSystemBasePath,
             'repo-stores',
             loaderPair

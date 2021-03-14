@@ -3,7 +3,7 @@
 const yaml = require('js-yaml');
 
 const AssetLoader = require('./asset-loader').AssetLoader;
-const RuntimeCourseSettings = require('./runtime-course-settings');
+const CourseStruct = require('./course-struct');
 const levelSchema = require('../common/level-config-schema').LEVEL_CONFIG_SCHEMA;
 const courseSchema = require('../common/course-config-schema').COURSE_CONFIG_SCHEMA;
 

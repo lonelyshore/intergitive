@@ -15,7 +15,6 @@ const ActionExecutor = require('./action-executor').ActionExecutor;
 const loadCourseAsset = require('./load-course-asset');
 const stepConfigs = require('../common/config-step');
 const { LEVEL_CONFIG_SCHEMA } = require('../common/level-config-schema');
-const { language } = require('../../paths');
 
 const loaderPair = loadCourseAsset.createCourseAssetLoaderPair(
     paths

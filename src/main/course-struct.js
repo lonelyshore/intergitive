@@ -25,6 +25,10 @@ class CourseStruct {
     get progressPath() {
         return path.join(this.executionPath, 'progress');
     }
+
+    get repoStoreCollectionName() {
+        return 'repo-stores';
+    }
 }
 
 module.exports = CourseStruct;

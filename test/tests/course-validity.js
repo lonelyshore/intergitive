@@ -15,7 +15,6 @@ const AssetLoader = require('../../src/main/asset-loader').AssetLoader;
 const configAction = require('../../dev/config-action');
 const configStep = require('../../src/common/config-step');
 const loaderUtility = require('../../src/main/loader-utility');
-const { ApplicationConfig } = require('../../src/common/config-app');
 const CourseStruct = require('../../src/main/course-struct');
 
 const testUtils = require('./test-utils');

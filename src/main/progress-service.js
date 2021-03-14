@@ -2,7 +2,6 @@
 
 const fs = require('fs-extra');
 const path = require('path');
-const paths = require('../../paths');
 const { ProgressData } = require('../common/progress');
 
 class ProgressService{
@@ -69,4 +68,4 @@ class ProgressService{
     }
 }
 
-exports = module.exports = new ProgressService(paths.progressPath);
+module.exports.ProgressService = ProgressService;
