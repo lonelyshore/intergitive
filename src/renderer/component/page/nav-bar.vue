@@ -2,7 +2,8 @@
     <div class="nav-bar">
         <img class="back" v-on:click="clickBack" v-if="canBackward" src="static/images/left_arrow_white.svg" />
         <span class="title">{{ title }}</span>
-    </div>        
+        <img class="gear" v-on:click="openConfig" v-if="canShowConfig" src="static/images/gear.svg">
+    </div>  
 </template>
 
 <script>
@@ -30,6 +31,9 @@ exports = module.exports = {
         },
         canBackward: function() {
             return this.displayingNode.parent !== null;
+        },
+        canShowConfig: function() {
+            return true;
         }
     },
     watch: {
@@ -55,6 +59,9 @@ exports = module.exports = {
                     this.title = text;
                 }
             });
+        },
+        openConfig: function() {
+            this.store.openConfig();
         }
     }
 };

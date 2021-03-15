@@ -312,6 +312,7 @@ let store = {
             courseName: null,
             language: null
         },
+        courseOptions: {},
         levelState: {
             isDebug: api.isDebug(),
             stepsReady: false,
@@ -345,6 +346,9 @@ let store = {
                 generalExecutionDescription: '',
                 completeLevelDescription: '',
                 buttonConfirmText: '',
+
+                courseNameLabel: '',
+                languageLabel: '',
 
                 loadEbusyMessage: '',
             },
@@ -388,8 +392,10 @@ let store = {
     },
     initialize() {
         return api.invokeSelect('initialize')
-        .then(() => api.invokeAppConfigService('loadConfiguration'))
-        .then(appConfig => Object.assign(this.appState, appConfig));
+        .then(initialData => {
+            Object.assign(this.appState, initialData.appConfig);
+            Object.assign(this.state.courseOptions, initialData.courseOptions);
+        });
     },
     loadTerms() {
         let loadPromises = [];
@@ -1020,6 +1026,35 @@ let store = {
         .then(() => {
             this.state.pageState.displayingNode = this.state.pageState.displayingNode.parent;
         })
+    },
+    openConfig() {
+        let configNode = {
+            renderComponent: 'config',
+            previousPage: this.state.pageState.displayingNode,
+            currentConfig: Object.assign({}, this.state.appState)
+        };
+
+        return this.navigate(configNode);
+    },
+    closeConfig(newConfig) {
+        if (this.state.appState.courseName !== newConfig.courseName ||
+            this.steate.appState.language !== newConfig.courseName) { // save config and reset app
+
+                this.state.courseState.isReady = false;
+
+                return api.invokeAppConfigService('saveConfiguration', newConfig)
+                .then(() => api.invokeAppConfigService('loadConfiguration'))
+                .then(config => Object.assign(this.appState, config))
+                .then(() => {
+                    return this.loadCourse();
+                })
+                .then(() => {
+                    this.store.navigate(this.store.courseState.courseTree);
+                });
+        }
+        else {
+            return this.navigate(this.state.pageState.displayingNode.previousPage); // back to previous page
+        }
     }
 }
 

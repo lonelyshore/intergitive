@@ -76,6 +76,20 @@
     opacity: 0.7;
 }
 
+.nav-bar .gear {
+    position: absolute;
+    right: 0.2rem;
+    top: 0.25rem;
+    height: 2rem;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+.nav-bar .gear:hover {
+    cursor: pointer;
+    opacity: 0.7;
+}
+
 .menu-list .menu-list-entry {
     display: block;
     position: relative;

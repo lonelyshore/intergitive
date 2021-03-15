@@ -41,6 +41,7 @@
     source: Openclipart
     url: https://publicdomainvectors.org/en/free-clipart/White-cloud/45361.html
 
+
 - path: example/course-resources/fork/level-data/assets/sound
   - name: bird.mp3
     source: freesound.org
@@ -52,3 +53,17 @@
     author: macdaddyno1
     url: https://freesound.org/people/macdaddyno1/sounds/321591/
     modifications: clipping and compress to mp3
+
+- path: static/images
+  - name: left_arrow_dark_blue
+    source: Openclitart
+    url: https://publicdomainvectors.org/en/free-clipart/AIGA-left-arrow-sign-vector-image/17773.html
+    modifications: changed color
+  - name: left_arrow_white
+    source: Openclitart
+    url: https://publicdomainvectors.org/en/free-clipart/AIGA-left-arrow-sign-vector-image/17773.html
+    modifications: changed color
+  - name: gear.svg
+    source: Openclipart
+    url: https://publicdomainvectors.org/en/free-clipart/Red-gear-icon/38764.html
+    modifications: changed color

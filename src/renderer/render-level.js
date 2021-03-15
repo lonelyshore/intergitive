@@ -1,10 +1,13 @@
 'use strict';
 
+const { NamedCourseItem } = require('../common/config-course');
+
 const Vue = require('vue');
 const store = require('./store')
 
 const page = require('./component/page-components');
 const navBar = require('./component/page/nav-bar.vue').default;
+require('@popperjs/core/dist/umd/popper');
 require('bootstrap/dist/css/bootstrap.min.css');
 
 var app = new Vue({
@@ -33,29 +36,35 @@ var app = new Vue({
     },
     render(h) {
         if (this.currentPage !== null) {
-            return h(
-                'div',
-                [
-                    h(
-                        navBar,
-                        {
-                            props: {
-                                pageState: this.store.state.pageState
+            if (this.currentPage instanceof NamedCourseItem) {
+                return h(
+                    'div',
+                    [
+                        h(
+                            navBar,
+                            {
+                                props: {
+                                    pageState: this.store.state.pageState
+                                }
                             }
-                        }
-                    ),
-                    h(
-                        page[this.currentPage.renderComponent],
-                        {
-                            props: {
-                                levelState: this.store.state.levelState,
-                                courseState: this.store.state.courseState,
-                                pageState: this.store.state.pageState
+                        ),
+                        h(
+                            page[this.currentPage.renderComponent],
+                            {
+                                props: {
+                                    levelState: this.store.state.levelState,
+                                    courseState: this.store.state.courseState,
+                                    pageState: this.store.state.pageState
+                                }
                             }
-                        }
-                    )
-                ]
-            );
+                        )
+                    ]
+                );
+            }
+            else {
+                return h(page[this.currentPage.renderComponent]);
+            }
+
         }
         else {
             return h('div');
