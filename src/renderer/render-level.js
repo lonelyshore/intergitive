@@ -7,7 +7,7 @@ const store = require('./store')
 
 const page = require('./component/page-components');
 const navBar = require('./component/page/nav-bar.vue').default;
-require('@popperjs/core/dist/umd/popper');
+
 require('bootstrap/dist/css/bootstrap.min.css');
 
 var app = new Vue({
