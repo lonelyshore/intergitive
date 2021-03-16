@@ -8,7 +8,7 @@
                     </div>
                     <div class="col align-self-center">
                         <div class="dropdown" :class="{'show': courseOpen}">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" @click="courseOpen = !courseOpen" @blur="courseOpen = false">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" @click="courseOpen = !courseOpen">
                                 {{currentCourseName}}
                             </button>
                             <ul class="dropdown-menu" :class="{'show': courseOpen}">
@@ -25,7 +25,7 @@
                     </div>
                     <div class="col align-self-center">
                         <div class="dropdown" :class="{'show': languageOpen}">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" @click="languageOpen = !languageOpen" @blur="languageOpen = false">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" @click="languageOpen = !languageOpen">
                                 {{currentLanguage}}
                             </button>
                             <ul class="dropdown-menu" :class="{'show': languageOpen}">
@@ -35,14 +35,24 @@
                     </div>
                 </div>
             </li>
+            <li class="list-group-item">
+                <div class="row justify-content-evenly">
+                    <button type="button" class="col-3 btn btn-primary" @click="close(true)">
+                        {{saveAndCloseLabel}}
+                    </button>
+                    <button type="button" class="col-3 btn btn-primary" @click="close(false)">
+                        {{closeLabel}}
+                    </button>
+                </div>
+            </li>
         </ul>
-        <div class="fixed-bottom">
-            kerker
-        </div>
     </div>
 </template>
 <script>
 'use strict';
+
+const { ApplicationConfig } = require('../../../common/config-app');
+const Vue = require('vue');
 
 exports = module.exports = {
     data: function() {
@@ -77,11 +87,20 @@ exports = module.exports = {
         store: function() {
             return this.$root.$data.store;
         },
+        terms: function() {
+            return this.store.levelState.terms;
+        },
         courseNameLabel: function() {
-            return this.store.levelState.terms.courseNameLabel;
+            return this.terms.courseNameLabel;
         },
         languageLabel: function() {
-            return this.store.levelState.terms.languageLabel;
+            return this.terms.languageLabel;
+        },
+        saveAndCloseLabel: function() {
+            return this.terms.saveAndCloseLabel;
+        },
+        closeLabel: function() {
+            return this.terms.closeLabel;
         }
     },
     created: function() {
@@ -99,6 +118,7 @@ exports = module.exports = {
             this.languageOptions = this.store.state.courseOptions[courseName];
         },
         setCourseName: function(courseName) {
+            console.log('setCourseName')
             this.currentCourseName = courseName;
             this.updateLanguageOptions(courseName);
 
@@ -111,7 +131,18 @@ exports = module.exports = {
         setLanguage: function(language) {
             this.currentLanguage = language;
             this.languageOpen = false;
-        }
+        },
+        close: function(isSaving) {
+            let savedConfig = isSaving ?
+                new ApplicationConfig(
+                    this.currentLanguage,
+                    this.currentCourseName
+                ) :
+                this.store.appState;
+            
+
+            this.store.closeConfig(savedConfig);
+        },
     }
 }
 </script>

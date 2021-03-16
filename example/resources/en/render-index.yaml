@@ -26,4 +26,8 @@ asset_index:
     preCompleteLevelDescription: "Ah, you found the end of the level ฅ^•ﻌ•^ฅ"
     completeLevelDescription: "Congratulations! You have completed this level. Please click on the \"Confirm\" button to go back to level selection page  (*￣▽￣)/‧☆*\"'*-.,_,.-*'\"*-.,_☆"
     buttonConfirmText: "Confirm"
+    courseNameLabel: "Course"
+    languageLabel: "Language"
+    saveAndCloseLabel: "Save & Close"
+    closeLabel: "Close"
     loadEbusyMessage: "Something went wrong when loading the level. Please close all programs that are openning files managed by git"

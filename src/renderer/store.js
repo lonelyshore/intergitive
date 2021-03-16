@@ -349,6 +349,8 @@ let store = {
 
                 courseNameLabel: '',
                 languageLabel: '',
+                saveAndCloseLabel: '',
+                closeLabel: '',
 
                 loadEbusyMessage: '',
             },
@@ -1037,23 +1039,27 @@ let store = {
         return this.navigate(configNode);
     },
     closeConfig(newConfig) {
-        if (this.state.appState.courseName !== newConfig.courseName ||
-            this.steate.appState.language !== newConfig.courseName) { // save config and reset app
+        if (this.appState.courseName !== newConfig.courseName ||
+            this.appState.language !== newConfig.language) { // save config and reset app
 
                 this.state.courseState.isReady = false;
 
                 return api.invokeAppConfigService('saveConfiguration', newConfig)
                 .then(() => api.invokeAppConfigService('loadConfiguration'))
                 .then(config => Object.assign(this.appState, config))
+                .then(() => this.loadTerms())
+                .then(() => {
+                    return this.loadCommonAssetRelativePaths();
+                })
                 .then(() => {
                     return this.loadCourse();
                 })
                 .then(() => {
-                    this.store.navigate(this.store.courseState.courseTree);
+                    this.navigate(this.courseState.courseTree);
                 });
         }
         else {
-            return this.navigate(this.state.pageState.displayingNode.previousPage); // back to previous page
+            return this.navigate(this.pageState.displayingNode.previousPage); // back to previous page
         }
     }
 }

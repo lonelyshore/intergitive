@@ -1,4 +1,6 @@
 asset_index:
+  infile:
+    main.course-name: "Git-Extensions 使用教學"
   fallbacks:
     default:
       - path_replacement:
@@ -52,7 +54,6 @@ asset_index:
           - checkout-remote-branch
           - create-remote-branch
           - delete-remote-branch
-          - main.course-name
           - main.section-intro.name
           - main.section-create-commits.name
           - main.section-elaborate-commits.name
