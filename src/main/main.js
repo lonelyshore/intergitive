@@ -1,6 +1,7 @@
 "use strict";
 
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, shell } = require('electron');
+const urlTool = require('url');
 const path = require('path');
 const mainStore = require('./main-store');
 const assert = require('assert');
@@ -25,7 +26,22 @@ function createWindow () {
 
   win.on('closed', () => {
     win = null;
-  })
+  });
+
+  let webContents = win.webContents;
+
+  webContents.on('will-navigate', function(e, url) {
+    let getHost = url => urlTool.parse(url).host;
+
+    let reqHost = getHost(url);
+    let isExternal = reqHost && reqHost != getHost(webContents.getURL());
+
+    if(isExternal) {
+      e.preventDefault();
+      shell.openExternal(url);
+    }
+  });
+
 }
 
 app.on('ready', createWindow);
