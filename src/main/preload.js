@@ -2,14 +2,6 @@
 
 const { contextBridge, ipcRenderer, remote } = require('electron')
 
-const yaml = require('js-yaml')
-const stepConfigs = require('../common/config-step')
-const actionConfigs = require('../common/config-action')
-const courseConfig = require('../common/config-course')
-const { LEVEL_CONFIG_SCHEMA } = require('../common/level-config-schema')
-const { COURSE_CONFIG_SCHEMA } = require('../common/course-config-schema')
-const yamlOption = { schema: LEVEL_CONFIG_SCHEMA }
-
 function invokeService (serviceName, methodName, extraArgs) {
   extraArgs = extraArgs || []
   extraArgs.unshift(methodName)
@@ -37,16 +29,6 @@ contextBridge.exposeInMainWorld(
       )
     },
     isDebug: (configName) => ipcRenderer.sendSync('is-debug', [configName])
-  }
-)
-
-contextBridge.exposeInMainWorld(
-  'dependencies', {
-    // stepConfigs: stepConfigs,
-    // actionConfigs: actionConfigs,
-    // courseConfig: courseConfig,
-    // courseSchema: COURSE_CONFIG_SCHEMA,
-    // levelSchema: LEVEL_CONFIG_SCHEMA,
   }
 )
 

@@ -30,10 +30,10 @@ function createWindow () {
   const webContents = win.webContents
 
   webContents.on('will-navigate', function (e, url) {
-    const getHost = url => urlTool.parse(url).host
+    const getHost = url => new urlTool.URL(url).host
 
     const reqHost = getHost(url)
-    const isExternal = reqHost && reqHost != getHost(webContents.getURL())
+    const isExternal = reqHost && reqHost !== getHost(webContents.getURL())
 
     if (isExternal) {
       e.preventDefault()

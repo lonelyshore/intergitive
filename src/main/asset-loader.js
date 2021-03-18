@@ -1,5 +1,9 @@
 'use strict'
 
+/**
+ * @module main/asset-loader
+ */
+
 const fs = require('fs-extra')
 const path = require('path')
 const yaml = require('js-yaml')
@@ -187,6 +191,9 @@ class IndexedResult {
   }
 }
 
+/**
+ * @class
+ */
 class AssetLoader {
   constructor (rootPath, ...pathElements) {
     assert(path.isAbsolute(rootPath), `expect rootPath ${rootPath} to be absolute`)
@@ -392,10 +399,6 @@ class AssetLoader {
  * @deprecated
  */
 class MutableAssetLoader extends AssetLoader {
-  constructor (rootPath, ...pathElements) {
-    super(rootPath, ...pathElements)
-  }
-
   /**
      * @param {...string} pathElements
      */

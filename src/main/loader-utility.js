@@ -1,9 +1,8 @@
 'use strict'
 
 const readonly = require('../common/readonly')
-const AssetLoader = require('./asset-loader').AssetLoader
 
-const matchMustacheAssetId = /[\$\#\^]?{{[\s\w\d:\/\-_\.]*}}/g
+const matchMustacheAssetId = /[$#^]?{{[\s\w\d:/\-_.]*}}/g
 
 let mustacheMatchType = {
   MUSTACHE_ONLY: Symbol('MustacheOnly'),
@@ -78,7 +77,7 @@ class MustacheReplacement {
 /**
  *
  * @param {string} text
- * @param {AssetLoader} assetLoader
+ * @param {module:main/asset-loader~AssetLoader} assetLoader
  * @returns {Promise<MustacheReplacement>} a promise that yields a list of MustacheReplacement
  */
 function searchMustacheReplacementPairs (text) {

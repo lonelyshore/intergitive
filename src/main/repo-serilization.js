@@ -15,9 +15,9 @@ class SerializedTime {
 
 class SerializedIndexEntry {
   static castFromObject (obj) {
-    obj.__proto__ = SerializedIndexEntry.prototype
-    obj.mtime.__proto__ = SerializedTime.prototype
-    obj.ctime.__proto__ = SerializedTime.prototype
+    Object.setPrototypeOf(obj, SerializedIndexEntry.prototype)
+    Object.setPrototypeOf(obj.mtime, SerializedTime.prototype)
+    Object.setPrototypeOf(obj.ctime, SerializedTime.prototype)
     return obj
   }
 

@@ -6,8 +6,6 @@ const git = require('./git-kit')
 const vcs = require('./repo-vcs')
 const { assert } = require('console')
 const wait = require('../common/utility').wait
-const AssetLoader = require('./asset-loader').AssetLoader
-const RepoVcsSetup = require('../common/config-level').RepoVcsSetup
 const REPO_TYPE = require('../common/config-level').REPO_TYPE
 
 const operateRepo = Symbol('operateRepo')
@@ -36,7 +34,7 @@ class ActionExecutor {
      */
   executeWriteFile (sourceKeyIds, destinationPaths) {
     if (sourceKeyIds.length !== destinationPaths.length) {
-      return new Promise.reject(
+      return Promise.reject(
         new Error(
                     `sourceKeyIds should have a length (${sourceKeyIds.length}) equals to the one of destinationPaths (${destinationPaths.length})`))
     }
@@ -183,9 +181,9 @@ class ActionExecutor {
             let result = ''
             return this.exploitTextAsset(
               commitMessage,
-              original => result = original,
-              content => result = content,
-              filePath => result = filePath
+              original => { result = original },
+              content => { result = content },
+              filePath => { result = filePath }
             )
               .then(() => result)
           })
@@ -247,7 +245,7 @@ class ActionExecutor {
       repo => {
         const remoteSetup = this.repoSetups[remoteSetupName]
         if (!remoteSetup) {
-          return Promise.reject(`Failed to find remote setup ${remoteSetupName}`)
+          return Promise.reject(new Error(`Failed to find remote setup ${remoteSetupName}`))
         }
 
         const remotePath = path.join(
@@ -309,7 +307,7 @@ class ActionExecutor {
   executeSetUser (repoSetupName, userName, userEmail) {
     const setup = this.repoSetups[repoSetupName]
     if (!setup) {
-      return Promise.reject(new Error(`Cannot find repo setup ${setupName}`))
+      return Promise.reject(new Error(`Cannot find repo setup ${repoSetupName}`))
     }
     const configPath = path.join(
       this.fileSystemBaseFolder,

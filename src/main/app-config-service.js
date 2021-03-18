@@ -2,9 +2,7 @@
 
 const fs = require('fs-extra')
 const path = require('path')
-const { CourseStruct } = require('./course-struct')
 const { ApplicationConfig } = require('../common/config-app')
-
 const configName = 'app-config.json'
 
 function createDefaultConfig () {
@@ -18,7 +16,7 @@ class AppConfigService {
   /**
      *
      * @param {string} configDirName
-     * @param {CourseStruct} courseStruct
+     * @param {module:main/course-struct~CourseStruct} courseStruct
      */
   constructor (configDirName, courseStruct) {
     this.configDirName = configDirName
@@ -39,7 +37,7 @@ class AppConfigService {
         Object.setPrototypeOf(obj, ApplicationConfig)
         return obj
       })
-      .catch(err => {
+      .catch(() => { // simply ignores error
         const defaultConfig = createDefaultConfig()
 
         return this.saveConfiguration(defaultConfig)

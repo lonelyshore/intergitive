@@ -1,6 +1,13 @@
 'use strict'
 const path = require('path')
 
+/**
+ * @module main/course-struct
+ */
+
+/**
+ * @class
+ */
 class CourseStruct {
   constructor (projectPath, baseRelativePath) {
     this.projectPath = projectPath

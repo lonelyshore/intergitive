@@ -8,8 +8,8 @@ const git = require('nodegit')
  */
 const hasTag = function (repo, tagName) {
   return git.Tag.list(repo)
-    .then((tag_names) => {
-      return tag_names.indexOf(tagName) !== -1
+    .then(tagNames => {
+      return tagNames.indexOf(tagName) !== -1
     })
 }
 
@@ -63,7 +63,9 @@ const createSubModuleAndWarnExisting = function (gitModule, subModuleName) {
     console.error(subModuleName + ' already exists in nodegit')
   }
 
-  return gitModule[subModuleName] = {}
+  gitModule[subModuleName] = {}
+
+  return gitModule[subModuleName]
 }
 
 const getSubModuleAndWarnMissing = function (gitModule, subModuleName) {
@@ -102,7 +104,7 @@ function commit (repo, commitMessage, signature) {
       index = indexResult
       let getParentsPromise
 
-      if (repo.isEmpty() && index.entryCount() != 0) {
+      if (repo.isEmpty() && index.entryCount() !== 0) {
         getParentsPromise = () => Promise.resolve([])
       } else {
         getParentsPromise = () => {
