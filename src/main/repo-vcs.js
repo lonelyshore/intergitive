@@ -4,7 +4,6 @@ const vcs = require('./repo-vcs-implement')
 const eol = require('../common/text-eol')
 const readonly = require('../common/readonly')
 
-const RepoStorage = require('./repo-storage/repo-storage')
 const GitStorage = require('./repo-storage/repo-git-storage')
 const ArchiveStorage = require('./repo-storage/repo-archive-storage')
 
@@ -36,7 +35,7 @@ STORAGE_TYPE = readonly.wrap(STORAGE_TYPE) // wrap STORAGE_TYPE after initializa
 /**
  *
  * @param {STORAGE_TYPE} storageType
- * @returns {RepoStorage}
+ * @returns {module:repo-storage~RepoStorage}
  */
 function createStorage (storageType, isAutoCrlf) {
   switch (storageType) {
@@ -60,9 +59,6 @@ exports.RepoCheckpointManager = class RepoCheckpointManager {
       .then(() => ret)
   }
 
-  constructor () {
-  }
-
   [hiddenCtor] (monitoredPath, checkpointStorePath, storeName, isRemote, storageType, isCrLf) {
     this.backend = new vcs.RepoVersionControl(checkpointStorePath, createStorage(storageType, isCrLf), isCrLf)
     return this.backend.setTarget(monitoredPath, storeName, isRemote)
@@ -82,9 +78,6 @@ exports.RepoReferenceManager = class RepoReferenceManager {
     const ret = new RepoReferenceManager()
     return ret[hiddenCtor](monitoredPath, referenceStorePath, storeName, isRemote, storageType, isCrLf || eol.isCrLf())
       .then(() => ret)
-  }
-
-  constructor () {
   }
 
   [hiddenCtor] (monitoredPath, referenceStorePath, storeName, isRemote, storageType, isCrLf) {

@@ -1,5 +1,9 @@
 'use strict'
 
+/**
+ * @module main/repo-serialization
+ */
+
 const git = require('./git-kit')
 
 class SerializedTime {
@@ -13,6 +17,9 @@ class SerializedTime {
   }
 }
 
+/**
+ * @class
+ */
 class SerializedIndexEntry {
   static castFromObject (obj) {
     Object.setPrototypeOf(obj, SerializedIndexEntry.prototype)

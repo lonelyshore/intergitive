@@ -312,7 +312,7 @@ exports = module.exports = class GitStorage extends RepoStorage {
   }
 
   loadLocalToCache (revisionName) {
-    const assert = () => {
+    const assertFunc = () => {
       assert(fs.existsSync(this.storePath))
       assert(fs.existsSync(path.join(this.storePath, gitRepoFolderName)))
     }
@@ -330,6 +330,7 @@ exports = module.exports = class GitStorage extends RepoStorage {
     let serializedIndexEntries
 
     return Promise.resolve()
+      .then(() => assertFunc())
       .then(() => {
         return checkoutTag()
       })
@@ -624,38 +625,11 @@ exports = module.exports = class GitStorage extends RepoStorage {
         })
     }
 
-    let sourceRepo
     const restoreIndex = () => {
-      if (false) {
-        let serializedIndexEntries
-        let index
-
-        return this[_loadSerializedIndex]()
-          .then((serializedIndexEntriesResult) => {
-            serializedIndexEntries = serializedIndexEntriesResult
-            return git.Repository.open(destinationPath)
-          })
-          .then((repoResult) => {
-            sourceRepo = repoResult
-            return sourceRepo.refreshIndex()
-          })
-          .then((indexResult) => {
-            index = indexResult
-            return index.clear()
-          })
-          .then(() => {
-            serializedIndexEntries.forEach((entry) => {
-              index.add(entry.createIndexEntry())
-            })
-
-            return index.write()
-          })
-          .then(() => {
-            return sourceRepo.refreshIndex()
-          })
-      } else {
-        return Promise.resolve()
-      }
+      // Currently not restoring index
+      // Previously there was an implementation that does try restore index
+      // Removed after commit eaed0232237f670b6a9ed8e1ba7712af84086e15
+      return Promise.resolve()
     }
 
     let isBreaking = false

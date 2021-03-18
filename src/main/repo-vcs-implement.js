@@ -8,11 +8,7 @@ const assert = require('assert')
 const readline = require('readline')
 
 const git = require('./git-kit')
-const serialization = require('./repo-serilization')
 const normalizePathSep = require('./noarmalize-path-sep')
-
-const GitStorage = require('./repo-storage/repo-git-storage')
-const ArchiveStorage = require('./repo-storage/repo-archive-storage')
 
 class CommitNode {
   /**
@@ -95,7 +91,7 @@ class CommitNode {
     } else {
       if (this.previouses === null || otherPreviouses === null) {
         return false
-      } else if (this.previouses.length != otherPreviouses.length) {
+      } else if (this.previouses.length !== otherPreviouses.length) {
         return false
       } else {
         for (let i = 0; i < this.previouses.length; i++) {
@@ -126,64 +122,16 @@ function _compareRepoNodes (repoNodes, refNodes) {
   return true
 }
 
-function _countObjectNumber (repoPath) {
-  const repoObjectPath = path.join(repoPath, 'objects')
+// Previously we have a function that counts object numbers of .git folder
+// But this implementation is not used anymore so it is removed after commit eaed0232237f670b6a9ed8e1ba7712af84086e15
 
-  let repoObjectCount = 0
-  let paths = []
-  return fs.readdir(repoObjectPath)
-    .then((childPaths) => {
-      const expands = []
-      childPaths.forEach((childPath) => {
-        const fullPath = path.join(repoObjectPath, childPath)
-
-        expands.push(
-          Promise.resolve()
-            .then(() => {
-              return fs.stat(fullPath)
-            })
-            .then(stat => {
-              if (stat.isDirectory()) {
-                return fs.readdir(fullPath)
-                  .then(subPaths => {
-                    paths = paths.concat(subPaths.map(e => childPath + e))
-                    repoObjectCount += subPaths.length
-                  })
-              } else {
-                paths.push(fullPath)
-                repoObjectCount += 1
-              }
-            }))
-      })
-
-      return Promise.all(expands)
-    })
-    .then(() => {
-      return repoObjectCount
-    })
-}
-
-function _compareRepoRevisionFiles (repoPath, refRepoPath) {
-  let repoObjectCount = 0
-  let refObjectCount = 0
-
-  return _countObjectNumber(repoPath)
-    .then(count => {
-      repoObjectCount = count
-      return _countObjectNumber(refRepoPath)
-    })
-    .then(count => {
-      refObjectCount = count
-    })
-    .then(() => {
-      return repoObjectCount == refObjectCount
-    })
-}
+// Previously we have a function that compares repo revision files here.
+// The function is not used and is removed after commit eaed0232237f670b6a9ed8e1ba7712af84086e15
 
 /**
  *
  * @param {git.Index} index
- * @param {Array<serialization.SerializedIndexEntries>} serializedIndexEntries
+ * @param {Array<module:repo-serialization~SerializedIndexEntry>} serializedIndexEntries
  */
 function _compareIndexWithSerializedIndex (index, serializedIndexEntries) {
   const dict = {}
@@ -406,36 +354,12 @@ function _dirtyWorkTreeEqualRefWorkTree (sourceDiff, sourcePath, refPath) {
   return compareHashes
 }
 
-function _compareDiffs (diff, otherDiff) {
-  if (diff.numDeltas() !== otherDiff.numDeltas()) {
-    return Promise.resolve(false)
-  } else {
-    return new Promise((resolve, reject) => {
-      const otherDiffFiles = {}
-
-      for (let i = 0; i < otherDiff.numDeltas(); i++) {
-        const diffFile = otherDiff.getDelta(i).newFile()
-        otherDiffFiles[diffFile.path()] = diffFile
-      }
-
-      for (let i = 0; i < diff.numDeltas(); i++) {
-        const diffFile = diff.getDelta(i).newFile()
-        const otherDiffFile = otherDiffFiles[diffFile.path()]
-        if (!otherDiffFile ||
-                    !diffFile.id().equal(otherDiffFile.id())) {
-          resolve(false)
-        }
-      }
-
-      resolve(true)
-    })
-  }
-}
+// Previously we have a function that compares git diffs.
+// The function is removed after commit eaed0232237f670b6a9ed8e1ba7712af84086e15
 
 const _repo = Symbol('_repo')
 const _compareRepoRevisions = Symbol('_compareRepoRevisions')
 const _compareRepoIndex = Symbol('_compareRepoIndex')
-const _loadSerializedIndex = Symbol('_loadSerializedIndex')
 const _compareWorkingTreeDiff = Symbol('_compareWorkingTreeDiff')
 const _repairIndex = Symbol('_repairIndex')
 

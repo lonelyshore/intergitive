@@ -4,20 +4,6 @@ const fs = require('fs-extra')
 const path = require('path')
 const AdmZip = require('adm-zip')
 
-function archivePathIncludeRoot (sourcePath, outputPath) {
-  return new Promise((resolve, reject) => {
-    const zip = new AdmZip()
-    zip.addLocalFolder(sourcePath, path.basename(outputPath, '.zip'))
-    zip.writeZip(outputPath, (err) => {
-      if (err) {
-        reject(new Error(`[simple-archive] Error occured when archiving ${sourcePath} to ${outputPath}: ${err}`))
-      } else {
-        resolve()
-      }
-    })
-  })
-}
-
 function archivePathWithoutRoot (sourcePath, outputPath, removedFiles) {
   return fs.readdir(sourcePath, { withFileTypes: true })
     .then(dirents => {
@@ -69,7 +55,7 @@ module.exports.operateZip = function (zipFilePath, operations) {
       return new Promise((resolve, reject) => {
         zip.writeZip((err) => {
           if (err) {
-            reject(new Error(`[simple-archive] Error occured when archiving ${sourcePath} to ${outputPath}: ${err}`))
+            reject(new Error(`[simple-archive] Error occured when operating zip file ${zipFilePath}: ${err}`))
           } else {
             resolve()
           }

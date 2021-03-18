@@ -1,5 +1,9 @@
 'use strict'
 
+/**
+ * @module main/repo-storage
+ */
+
 const fs = require('fs-extra')
 const path = require('path')
 const git = require('../git-kit')
@@ -13,7 +17,7 @@ function loadGitRemoteNamesFromConfigFile (configFilePath) {
     })
 
   function loadGitRemoteNamesFromConfigContent (content) {
-    const remoteMatcher = /\[remote\s\"([\w\d]+)\"\]/g
+    const remoteMatcher = /\[remote\s"([\w\d]+)"\]/g
     let matches
     const remotes = []
 
