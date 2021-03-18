@@ -2,7 +2,6 @@
 
 const action = require('./config-action')
 const readonly = require('./readonly')
-const { assert } = require('./utility')
 
 class Step {
   createInitialState () {
@@ -53,25 +52,6 @@ const renderable = (Sup, componentType) => class extends Sup {
   deepCloneInto (source, target) {
     super.deepCloneInto(source, target)
     target.isEnabled = source.isEnabled
-  }
-}
-
-const hasPhase = (Sup, PhaseType) => class extends Sup {
-  createInitialState () {
-    assert(PhaseType.prototype instanceof StepPhase, `${PhaseType} should be a subclass of "Phase"`)
-
-    return Object.assign(
-      super.createInitialState(),
-      {
-        phase: new PhaseType()
-      }
-    )
-  }
-
-  deepCloneInto (source, target) {
-    super.deepCloneInto(source, target)
-    target.phase = new PhaseType()
-    target.phase.current = source.phase.current
   }
 }
 
@@ -203,12 +183,6 @@ const repeatableUserActionStep = (Sup) => {
   }
 }
 
-class StepPhase {
-  constructor () {
-    this.current = null
-  }
-}
-
 let UserDrivenProcessPhase = {
   IDLE: Symbol('user_driven_idle'),
   RUNNING: Symbol('user_driven_running'),
@@ -324,21 +298,12 @@ const descriptiveStep = (Step, mode) => {
 }
 
 class ElaborateStep extends descriptiveStep(Step, 'elaborate') {
-  constructor (descriptionId, needConfirm) {
-    super(descriptionId, needConfirm)
-  }
 }
 
 class IllustrateStep extends descriptiveStep(Step, 'illustrate') {
-  constructor (descriptionId, needConfirm) {
-    super(descriptionId, needConfirm)
-  }
 }
 
 class InstructStep extends descriptiveStep(Step, 'instruct') {
-  constructor (descriptionId, needConfirm) {
-    super(descriptionId, needConfirm)
-  }
 }
 
 class VerifyInputStep extends interactableStep(

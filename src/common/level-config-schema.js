@@ -1135,7 +1135,7 @@ const levelType = new yaml.Type('!level', {
             'steps' in data &&
             Array.isArray(data.steps) &&
             (
-              !'repoVcsSetups' in data ||
+              !('repoVcsSetups' in data) ||
                 data.repoVcsSetups instanceof Object
             )
   },

@@ -90,10 +90,6 @@ class LevelItem extends NamedCourseItem {
 }
 
 class SequentialSectionItem extends NestedNamedCourseItem {
-  constructor (id, nameKey, prerequisiteIds, children) {
-    super(id, nameKey, prerequisiteIds, children)
-  }
-
   get renderComponent () {
     return 'sequential-section'
   }
@@ -108,10 +104,6 @@ class SequentialSectionItem extends NestedNamedCourseItem {
 }
 
 class FreeAccessSectionItem extends NestedNamedCourseItem {
-  constructor (id, nameKey, prerequisiteIds, children) {
-    super(id, nameKey, prerequisiteIds, children)
-  }
-
   get renderComponent () {
     return 'free-access-section'
   }

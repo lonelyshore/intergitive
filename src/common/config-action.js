@@ -28,9 +28,6 @@ const baseSequentialAction = (classTag) => {
 }
 
 class SequentialAction extends baseSequentialAction('SequentialAction') {
-  constructor (actions) {
-    super(actions)
-  }
 }
 
 /**
