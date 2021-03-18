@@ -1,182 +1,182 @@
-'use strict';
+'use strict'
 
-const yaml = require('js-yaml');
-const course = require('./config-course');
+const yaml = require('js-yaml')
+const course = require('./config-course')
 
-const isString = require('./utility').typeCheck.isString;
+const isString = require('./utility').typeCheck.isString
 
-let levelType = new yaml.Type('!level', {
-    kind: 'mapping',
+const levelType = new yaml.Type('!level', {
+  kind: 'mapping',
 
-    resolve: function(data) {
-        return data !== null
-            && 'id' in data
-            && isString(data.id)
-            && 'nameKey' in data
-            && isString(data.nameKey)
-            && 'configAssetId' in data
-            && isString(data.configAssetId)
-            && (
-                !('prerequisiteIds' in data)
-                || (
-                    Array.isArray(data.prerequisiteIds)
-                    && data.prerequisiteIds.every(p => isString(p))
-                )
-            );
-    },
-
-    construct: function(data) {
-        return new course.LevelItem(
-            data.id,
-            data.nameKey,
-            data.prerequisiteIds || [],
-            data.configAssetId
-        );
-    },
-
-    instanceOf: course.LevelItem,
-
-    represent: function(item) {
-        return {
-            id: item.id,
-            nameKey: item.nameKey,
-            prerequisiteIds: item.prerequisiteIds,
-            configPath: item.configAssetId
-        };
-    }
-});
-
-let sequentialSectionItemType = new yaml.Type('!sequential-section', {
-    kind: 'mapping',
-
-    resolve: function(data) {
-        return data !== null
-            && data instanceof Object
-            && 'id' in data
-            && isString(data.id)
-            && 'nameKey' in data
-            && isString(data.nameKey)
-            && (
-                !('prerequisiteIds' in data)
-                || (
-                    Array.isArray(data.prerequisiteIds)
-                    && data.prerequisiteIds.every(p => isString(p))
+  resolve: function (data) {
+    return data !== null &&
+            'id' in data &&
+            isString(data.id) &&
+            'nameKey' in data &&
+            isString(data.nameKey) &&
+            'configAssetId' in data &&
+            isString(data.configAssetId) &&
+            (
+              !('prerequisiteIds' in data) ||
+                (
+                  Array.isArray(data.prerequisiteIds) &&
+                    data.prerequisiteIds.every(p => isString(p))
                 )
             )
-            && 'children' in data
-            && Array.isArray(data.children)
-            && data.children.every(c => {
-                    return c !== null && c instanceof course.NamedCourseItem;
-            });
-    },
+  },
 
-    construct: function(data) {
-        return new course.SequentialSectionItem(
-            data.id,
-            data.nameKey,
-            data.prerequisiteIds || [],
-            data.children
-        );
-    },
+  construct: function (data) {
+    return new course.LevelItem(
+      data.id,
+      data.nameKey,
+      data.prerequisiteIds || [],
+      data.configAssetId
+    )
+  },
 
-    instanceOf: course.SequentialSectionItem,
+  instanceOf: course.LevelItem,
 
-    represent: function(item) {
-        return {
-            id: item.id,
-            nameKey: item.nameKey,
-            prerequisiteIds: item.prerequisiteIds,
-            children: item.children,
-        };
+  represent: function (item) {
+    return {
+      id: item.id,
+      nameKey: item.nameKey,
+      prerequisiteIds: item.prerequisiteIds,
+      configPath: item.configAssetId
     }
-});
+  }
+})
 
-let freeAccessSectionItemType = new yaml.Type('!free-access-section', {
-    kind: 'mapping',
+const sequentialSectionItemType = new yaml.Type('!sequential-section', {
+  kind: 'mapping',
 
-    resolve: function(data) {
-        return data !== null
-            && data instanceof Object
-            && 'id' in data
-            && isString(data.id)
-            && 'nameKey' in data
-            && isString(data.nameKey)
-            && (
-                !('prerequisiteIds' in data)
-                || (
-                    Array.isArray(data.prerequisiteIds)
-                    && data.prerequisiteIds.every(p => isString(p))
+  resolve: function (data) {
+    return data !== null &&
+            data instanceof Object &&
+            'id' in data &&
+            isString(data.id) &&
+            'nameKey' in data &&
+            isString(data.nameKey) &&
+            (
+              !('prerequisiteIds' in data) ||
+                (
+                  Array.isArray(data.prerequisiteIds) &&
+                    data.prerequisiteIds.every(p => isString(p))
                 )
-            )
-            && 'children' in data
-            && Array.isArray(data.children)
-            && data.children.every(c => {
-                    return c !== null && c instanceof course.NamedCourseItem;
-            });
-    },
+            ) &&
+            'children' in data &&
+            Array.isArray(data.children) &&
+            data.children.every(c => {
+              return c !== null && c instanceof course.NamedCourseItem
+            })
+  },
 
-    construct: function(data) {
-        return new course.FreeAccessSectionItem(
-            data.id,
-            data.nameKey,
-            data.prerequisiteIds || [],
-            data.children
-        );
-    },
+  construct: function (data) {
+    return new course.SequentialSectionItem(
+      data.id,
+      data.nameKey,
+      data.prerequisiteIds || [],
+      data.children
+    )
+  },
 
-    instanceOf: course.FreeAccessSectionItem,
+  instanceOf: course.SequentialSectionItem,
 
-    represent: function(item) {
-        return {
-            id: item.id,
-            nameKey: item.nameKey,
-            prerequisiteIds: item.prerequisiteIds,
-            children: item.children,
-        };
+  represent: function (item) {
+    return {
+      id: item.id,
+      nameKey: item.nameKey,
+      prerequisiteIds: item.prerequisiteIds,
+      children: item.children
     }
-});
+  }
+})
 
-let courseType = new yaml.Type('!course', {
-    kind: 'mapping',
+const freeAccessSectionItemType = new yaml.Type('!free-access-section', {
+  kind: 'mapping',
 
-    resolve: function(data) {
-        return data !== null
-            && data instanceof Object
-            && 'id' in data
-            && isString(data.id)
-            && 'nameKey' in data
-            && isString(data.nameKey)
-            && 'children' in data
-            && Array.isArray(data.children)
-            && data.children.every(c => {
-                    return c !== null && c instanceof course.NamedCourseItem;
-            });
-    },
+  resolve: function (data) {
+    return data !== null &&
+            data instanceof Object &&
+            'id' in data &&
+            isString(data.id) &&
+            'nameKey' in data &&
+            isString(data.nameKey) &&
+            (
+              !('prerequisiteIds' in data) ||
+                (
+                  Array.isArray(data.prerequisiteIds) &&
+                    data.prerequisiteIds.every(p => isString(p))
+                )
+            ) &&
+            'children' in data &&
+            Array.isArray(data.children) &&
+            data.children.every(c => {
+              return c !== null && c instanceof course.NamedCourseItem
+            })
+  },
 
-    construct: function(data) {
-        return new course.Course(
-            data.id,
-            data.nameKey,
-            data.children
-        );
-    },
+  construct: function (data) {
+    return new course.FreeAccessSectionItem(
+      data.id,
+      data.nameKey,
+      data.prerequisiteIds || [],
+      data.children
+    )
+  },
 
-    instanceOf: course.Course,
+  instanceOf: course.FreeAccessSectionItem,
 
-    represent: function(item) {
-        return {
-            id: item.id,
-            nameKey: item.nameKey,
-            children: item.children
-        };
+  represent: function (item) {
+    return {
+      id: item.id,
+      nameKey: item.nameKey,
+      prerequisiteIds: item.prerequisiteIds,
+      children: item.children
     }
-});
+  }
+})
 
-let schema = yaml.Schema.create([
-    levelType,
-    sequentialSectionItemType,
-    freeAccessSectionItemType,
-    courseType
-]);
+const courseType = new yaml.Type('!course', {
+  kind: 'mapping',
 
-module.exports.COURSE_CONFIG_SCHEMA = schema;
+  resolve: function (data) {
+    return data !== null &&
+            data instanceof Object &&
+            'id' in data &&
+            isString(data.id) &&
+            'nameKey' in data &&
+            isString(data.nameKey) &&
+            'children' in data &&
+            Array.isArray(data.children) &&
+            data.children.every(c => {
+              return c !== null && c instanceof course.NamedCourseItem
+            })
+  },
+
+  construct: function (data) {
+    return new course.Course(
+      data.id,
+      data.nameKey,
+      data.children
+    )
+  },
+
+  instanceOf: course.Course,
+
+  represent: function (item) {
+    return {
+      id: item.id,
+      nameKey: item.nameKey,
+      children: item.children
+    }
+  }
+})
+
+const schema = yaml.Schema.create([
+  levelType,
+  sequentialSectionItemType,
+  freeAccessSectionItemType,
+  courseType
+])
+
+module.exports.COURSE_CONFIG_SCHEMA = schema

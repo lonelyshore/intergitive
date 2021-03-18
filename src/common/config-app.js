@@ -1,10 +1,10 @@
-'use strict';
+'use strict'
 
 class ApplicationConfig {
-    constructor(language, courseName) {
-        this.language = language;
-        this.courseName = courseName;
-    }
+  constructor (language, courseName) {
+    this.language = language
+    this.courseName = courseName
+  }
 }
 
-module.exports.ApplicationConfig = ApplicationConfig;
+module.exports.ApplicationConfig = ApplicationConfig
