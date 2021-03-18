@@ -1,7 +1,10 @@
 <template>
     <div>
+        <div class="nav-bar">
+            <span class="title">{{ title }}</span>
+        </div>  
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">
+            <li class="list-group-item px-5">
                 <div class="row justify-content-center">
                     <div class="col align-self-center">
                         {{courseNameLabel}}
@@ -18,7 +21,7 @@
                     </div>
                 </div>
             </li>
-            <li class="list-group-item">
+            <li class="list-group-item px-5">
                 <div class="row justify-content-center">
                     <div class="col align-self-center">
                         {{languageLabel}}
@@ -35,7 +38,7 @@
                     </div>
                 </div>
             </li>
-            <li class="list-group-item">
+            <li class="list-group-item px-5">
                 <div class="row justify-content-evenly">
                     <button type="button" class="col-3 btn btn-primary" @click="close(true)">
                         {{saveAndCloseLabel}}
@@ -101,6 +104,9 @@ exports = module.exports = {
         },
         closeLabel: function() {
             return this.terms.closeLabel;
+        },
+        title: function() {
+            return this.terms.configTitle;
         }
     },
     created: function() {

@@ -30,4 +30,5 @@ asset_index:
     languageLabel: "Language"
     saveAndCloseLabel: "Save & Close"
     closeLabel: "Close"
+    configTitle: "Configurations"
     loadEbusyMessage: "Something went wrong when loading the level. Please close all programs that are openning files managed by git"

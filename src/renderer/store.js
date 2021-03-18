@@ -351,6 +351,7 @@ let store = {
                 languageLabel: '',
                 saveAndCloseLabel: '',
                 closeLabel: '',
+                configTitle: '',
 
                 loadEbusyMessage: '',
             },
