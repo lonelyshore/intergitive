@@ -10,6 +10,7 @@ const navBar = require('./component/page/nav-bar.vue').default
 
 require('bootstrap/dist/css/bootstrap.min.css')
 
+/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "app" }] */
 const app = new Vue({
   el: '#main',
   data: {

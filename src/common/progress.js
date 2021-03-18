@@ -1,5 +1,9 @@
 'use strict'
 
+/**
+ * @module common/progress
+ */
+
 const readonly = require('./readonly')
 
 let ProgressEnum = {
@@ -23,6 +27,9 @@ let ProgressEnum = {
 
 ProgressEnum = readonly.wrap(ProgressEnum)
 
+/**
+ * @class
+ */
 class ProgressData {
   constructor (courseName) {
     this.courseName = courseName

@@ -1,13 +1,18 @@
 'use strict'
 
-const { ProgressData } = require('../common/progress')
+/**
+ * @module renderer/progress-manager
+ */
 
 const api = window.api
 
+/**
+ * @class
+ */
 class ProgressInfo {
   /**
      *
-     * @param {ProgressData} data
+     * @param {module:common/progress~ProgressData} data
      */
   constructor (data) {
     this.data = data

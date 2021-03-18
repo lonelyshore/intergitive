@@ -4,10 +4,9 @@ const yaml = require('js-yaml')
 const marked = require('marked')
 
 const { ProgressEnum } = require('../common/progress')
-const { ProgressManager, ProgressInfo } = require('./progress-manager')
+const { ProgressManager } = require('./progress-manager')
 const { assert } = require('../common/utility')
 
-const dependencies = window.dependencies
 const stepConfigs = require('../common//config-step')
 const actionConfigs = require('../common/config-action')
 const courseConfig = require('../common/config-course')
@@ -143,7 +142,7 @@ class StoreStateCheckpoint {
 
 /**
  *
- * @param {ProgressInfo} progressInfo
+ * @param {module:renderer/progress-manager~ProgressInfo} progressInfo
  * @param {courseConfig.NamedCourseItem} courseTree
  * @returns {Object} a mapping from course item to unlock status
  */
@@ -872,7 +871,7 @@ const store = {
     assert(unblockedIndex <= this.levelState.minProcessingStep, `Expect all previous processing steps completed before unblocking for index ${unblockedIndex}`)
 
     const blockingStepArrayIndex = this.levelState.blockingSteps.indexOf(unblockedIndex)
-    if (blockingStepArrayIndex != this.levelState.blockingSteps.length - 1) {
+    if (blockingStepArrayIndex !== this.levelState.blockingSteps.length - 1) {
       this.levelState.currentBlockingStep = this.levelState.blockingSteps[blockingStepArrayIndex + 1]
     } else {
       this.levelState.currentBlockingStep = Object.keys(this.levelState.stepStates).length
