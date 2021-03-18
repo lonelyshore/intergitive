@@ -14,7 +14,6 @@ const assert = require('assert')
 
 const yaml = require('js-yaml')
 
-const { AssetIndex } = require('../src/main/asset-loader')
 const { getAllFilesRecursive } = require('../test/tests/test-utils')
 
 class PopulatedIndex {
@@ -168,7 +167,7 @@ function createOrPopulateIndex (assetLoaderBasePath, sourceBundlePaths, targetBu
     fs.readFile(path.join(assetLoaderBasePath, ...targetBundlePaths, indexRelativePath))
       .then(content => yaml.load(content))
       .then(obj => obj.asset_index)
-      .catch(err => { return {} })
+      .catch(() => { return {} })
   ])
     .then(indices => {
       return populateIndex(

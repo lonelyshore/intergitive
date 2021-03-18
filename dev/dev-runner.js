@@ -8,37 +8,12 @@ const NestedError = require('nested-error-stacks')
 const actionConf = require('./config-action')
 const stepConf = require('../src/common/config-step')
 const courseConfig = require('../src/common/config-course')
-const vcs = require('../src/main/repo-vcs')
-const devParams = require('./parameters')
-const loadCourseAsset = require('../src/main/load-course-asset')
 const LEVEL_SCHEMA = require('./level-config-schema').LEVEL_CONFIG_SCHEMA
-const COURSE_SCHEMA = require('../src/common/course-config-schema').COURSE_CONFIG_SCHEMA
-const REPO_TYPE = require('../src/common/config-level').REPO_TYPE
 const ActionExecutor = require('./action-executor').DevActionExecutor
-const Level = require('../src/common/config-level').Level
 
-const loadReferenceMakerMapping = function (repoVcsSetups, storePath) {
-  const referenceMakerMapping = {}
-
-  const loadReferenceMakers =
-        Object.keys(repoVcsSetups).map(key => {
-          const setup = repoVcsSetups[key]
-          return vcs.RepoReferenceMaker.create(
-            setup.workingPath,
-            storePath,
-            setup.referenceStoreName,
-            setup.repoType === REPO_TYPE.REMOTE,
-            devParams.defaultRepoStorageType
-          )
-            .then(maker => {
-              referenceMakerMapping[key] = maker
-            })
-        })
-
-  return Promise.all(loadReferenceMakers).then(() => {
-    return referenceMakerMapping
-  })
-}
+// Previously we have functions to collect sequential levels or levels with prerequisites
+// and a function that loads ReferenceMaker mapping for repoVcsSetups
+// They were removed because they were not used anymore after commit 82b4c918a04cbe2dfb029928c4ec1c00abad79d1
 
 /**
  *
@@ -176,73 +151,13 @@ const bakeLevel = function (levelItem, flatCourseItems, actionExecutorContext) {
 
 /**
  *
- * @param {courseConfig.SectionItem} course
- * @returns {Array<courseConfig.LevelItem>}
- */
-const collectSequentialLevels = function (course) {
-  const collected = []
-
-  course.sequentialChildren.forEach(item => {
-    if (item instanceof courseConfig.LevelItem) {
-      collected.push(item)
-    } else {
-      collected.concat(collectSequentialLevels(item))
-    }
-  })
-
-  return collected
-}
-
-/**
- *
- * @param {courseConfig.SectionItem} course
- * @returns {Array<courseConfig.LevelItem>}
- */
-const collectHasPrerequisiteLevels = function (course) {
-  const collected = []
-  const stack = []
-  stack.push(course)
-
-  while (stack.length != 0) {
-    const current = stack.pop()
-    current.hasPrerequisiteChildren.forEach(item => {
-      const internal = item.wrappedItem
-      if (internal instanceof courseConfig.LevelItem) {
-        collected.push(internal)
-      } else {
-        stack.push(internal)
-      }
-    })
-  }
-
-  return collected
-}
-
-function CollectCourseItemIdToItemDict (course) {
-  const dict = {}
-
-  let stack = [course]
-  while (stack.length !== 0) {
-    const current = stack.pop()
-    dict[current.id] = current
-
-    if ('children' in current) {
-      stack = stack.concat(current.children)
-    }
-  }
-
-  return dict
-}
-
-/**
- *
  * @param {string} courseName
  * @param {string} language
  * @param {string} fileSystemBaseFolder
  * @param {string} repoStoreSubPath
- * @param {loadCourseAsset.LoaderPair} loaderPair
+ * @param {module:main/load-course-asset~LoaderPair} loaderPair
  */
-const run = function (courseName, fileSystemBaseFolder, repoStoreSubPath, loaderPair) {
+const run = function (courseName, language, fileSystemBaseFolder, repoStoreSubPath, loaderPair) {
   const actionExecutorContext = {
     fileSystemBaseFolder: fileSystemBaseFolder,
     repoStoreSubPath: repoStoreSubPath,

@@ -2,7 +2,6 @@
 
 const fs = require('fs-extra')
 const path = require('path')
-const AssetLoader = require('../src/main/asset-loader').AssetLoader
 const devRunner = require('./dev-runner')
 const loadCourseAsset = require('../src/main/load-course-asset')
 const CourseStruct = require('../src/main/course-struct')

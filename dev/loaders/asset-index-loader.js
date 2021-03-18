@@ -1,6 +1,6 @@
 'use strict'
 
-const { AssetLoader } = require('../../src/main/asset-loader')
+/* eslint-disable */
 
 module.exports = function (content, map, meta) {
   const callback = this.async()

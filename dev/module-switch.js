@@ -165,7 +165,7 @@ function listModuleVersions (moduleName) {
       if (exists) {
         let currentVersion
         return whichModuleVersion(moduleName)
-          .then(version => currentVersion = version)
+          .then(version => { currentVersion = version })
           .then(() => fs.readdir(modulePath))
           .then(envNames => {
             envNames.forEach(envName => {

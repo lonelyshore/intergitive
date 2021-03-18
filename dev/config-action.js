@@ -1,7 +1,6 @@
 'use strict'
 
 const upstream = require('../src/common/config-action')
-const ActionExecutor = require('./action-executor').DevActionExecutor
 
 class UnstageAction extends upstream.Action {
   constructor (repoSetupName, pathSpec) {

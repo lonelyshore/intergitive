@@ -84,10 +84,8 @@ module.exports.generateBaseRepo = function (workingPath, assetStorePath, yamlPat
           )
 
           Object.keys(repoSetups).forEach(repoSetupName => {
-            let repoSetup = repoSetups[repoSetupName]
-
-            repoSetup = Object.assign(
-              repoSetup,
+            Object.assign(
+              repoSetups[repoSetupName],
               actionExecutor.getRepoFullPaths(repoSetupName)
             )
           })

@@ -1,5 +1,9 @@
 'use strict'
 
+/**
+ * @module main/load-course-asset
+ */
+
 const yaml = require('js-yaml')
 
 const AssetLoader = require('./asset-loader').AssetLoader
@@ -24,6 +28,9 @@ class CourseAssetNameToId {
   }
 }
 
+/**
+ * @class
+ */
 class LoaderPair {
   /**
      *

@@ -5,15 +5,6 @@ const loadCourseAsset = require('../src/main/load-course-asset')
 const LEVEL_SCHEMA = require('./level-config-schema').LEVEL_CONFIG_SCHEMA
 
 class DevLoaderPair extends loadCourseAsset.LoaderPair {
-  /**
-     *
-     * @param {AssetLoader} globalLoader
-     * @param {AssetLoader} courseLoader
-     */
-  constructor (globalLoader, courseLoader) {
-    super(globalLoader, courseLoader)
-  }
-
   loadLevelFromCourse (levelName, courseName, language) {
     const loader = this.getCourseLoader(courseName, language)
 

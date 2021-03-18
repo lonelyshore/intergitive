@@ -45,10 +45,6 @@ const collectAssetNamePairsFromIndex = function (index) {
   }
 }
 
-function generateAssetAtPath (assetPath, key) {
-  return fs.writeFile(assetPath, key)
-}
-
 /**
  *
  * @param {string} basePath
