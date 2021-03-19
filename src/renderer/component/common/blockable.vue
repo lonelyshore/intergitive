@@ -5,17 +5,17 @@
 </template>
 
 <script>
-'use strict';
+'use strict'
 
 exports = module.exports = {
-    computed: {
-        isBlocked: function() {
-            let levelState = this.$root.$data.store.state.levelState;
-            return levelState.stepStates[this.stepKey].state.isBlocked;
-        }
-    },
-    props: {
-        stepKey: String,
+  computed: {
+    isBlocked: function () {
+      const levelState = this.$root.$data.store.state.levelState
+      return levelState.stepStates[this.stepKey].state.isBlocked
     }
+  },
+  props: {
+    stepKey: String
+  }
 }
 </script>

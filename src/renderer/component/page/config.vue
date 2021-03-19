@@ -2,7 +2,7 @@
     <div>
         <div class="nav-bar">
             <span class="title">{{ title }}</span>
-        </div>  
+        </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item px-5">
                 <div class="row justify-content-center">
@@ -52,103 +52,102 @@
     </div>
 </template>
 <script>
-'use strict';
+'use strict'
 
-const { ApplicationConfig } = require('../../../common/config-app');
-const Vue = require('vue');
+const { ApplicationConfig } = require('../../../common/config-app')
+const Vue = require('vue')
 
 exports = module.exports = {
-    data: function() {
-        return {
-            courseOptions: {
-                type: Array,
-                default: []
-            },
-            languageOptions: {
-                type: Array,
-                default: []
-            },
-            currentCourseName: {
-                type: String,
-                default: ''
-            },
-            currentLanguage: {
-                type: String,
-                default: ''
-            },
-            courseOpen: {
-                type: Boolean,
-                default: false
-            },
-            languageOpen: {
-                type: Boolean,
-                default: false
-            }
-        }
-    },
-    computed: {
-        store: function() {
-            return this.$root.$data.store;
-        },
-        terms: function() {
-            return this.store.levelState.terms;
-        },
-        courseNameLabel: function() {
-            return this.terms.courseNameLabel;
-        },
-        languageLabel: function() {
-            return this.terms.languageLabel;
-        },
-        saveAndCloseLabel: function() {
-            return this.terms.saveAndCloseLabel;
-        },
-        closeLabel: function() {
-            return this.terms.closeLabel;
-        },
-        title: function() {
-            return this.terms.configTitle;
-        }
-    },
-    created: function() {
-        this.courseOpen = false;
-        this.languageOpen = false;
-
-        this.courseOptions = Object.keys(this.store.state.courseOptions);
-        this.currentCourseName = this.store.appState.courseName;
-
-        this.updateLanguageOptions(this.currentCourseName);
-        this.currentLanguage = this.store.appState.language;
-    },
-    methods: {
-        updateLanguageOptions: function(courseName) {
-            this.languageOptions = this.store.state.courseOptions[courseName];
-        },
-        setCourseName: function(courseName) {
-            console.log('setCourseName')
-            this.currentCourseName = courseName;
-            this.updateLanguageOptions(courseName);
-
-            if (this.languageOptions.indexOf(this.currentLanguage) < 0) {
-                this.currentLanguage = this.languageOptions[0];
-            }
-
-            this.courseOpen = false;
-        },
-        setLanguage: function(language) {
-            this.currentLanguage = language;
-            this.languageOpen = false;
-        },
-        close: function(isSaving) {
-            let savedConfig = isSaving ?
-                new ApplicationConfig(
-                    this.currentLanguage,
-                    this.currentCourseName
-                ) :
-                this.store.appState;
-            
-
-            this.store.closeConfig(savedConfig);
-        },
+  data: function () {
+    return {
+      courseOptions: {
+        type: Array,
+        default: []
+      },
+      languageOptions: {
+        type: Array,
+        default: []
+      },
+      currentCourseName: {
+        type: String,
+        default: ''
+      },
+      currentLanguage: {
+        type: String,
+        default: ''
+      },
+      courseOpen: {
+        type: Boolean,
+        default: false
+      },
+      languageOpen: {
+        type: Boolean,
+        default: false
+      }
     }
+  },
+  computed: {
+    store: function () {
+      return this.$root.$data.store
+    },
+    terms: function () {
+      return this.store.levelState.terms
+    },
+    courseNameLabel: function () {
+      return this.terms.courseNameLabel
+    },
+    languageLabel: function () {
+      return this.terms.languageLabel
+    },
+    saveAndCloseLabel: function () {
+      return this.terms.saveAndCloseLabel
+    },
+    closeLabel: function () {
+      return this.terms.closeLabel
+    },
+    title: function () {
+      return this.terms.configTitle
+    }
+  },
+  created: function () {
+    this.courseOpen = false
+    this.languageOpen = false
+
+    this.courseOptions = Object.keys(this.store.state.courseOptions)
+    this.currentCourseName = this.store.appState.courseName
+
+    this.updateLanguageOptions(this.currentCourseName)
+    this.currentLanguage = this.store.appState.language
+  },
+  methods: {
+    updateLanguageOptions: function (courseName) {
+      this.languageOptions = this.store.state.courseOptions[courseName]
+    },
+    setCourseName: function (courseName) {
+      console.log('setCourseName')
+      this.currentCourseName = courseName
+      this.updateLanguageOptions(courseName)
+
+      if (this.languageOptions.indexOf(this.currentLanguage) < 0) {
+        this.currentLanguage = this.languageOptions[0]
+      }
+
+      this.courseOpen = false
+    },
+    setLanguage: function (language) {
+      this.currentLanguage = language
+      this.languageOpen = false
+    },
+    close: function (isSaving) {
+      const savedConfig = isSaving
+        ? new ApplicationConfig(
+          this.currentLanguage,
+          this.currentCourseName
+        )
+        : this.store.appState
+
+      this.store.closeConfig(savedConfig)
+    }
+  }
 }
 </script>
