@@ -28,7 +28,6 @@
 <script>
 'use strict'
 
-const readonly = require('../../../common/readonly')
 const stepConfig = require('../../../common/config-step')
 const Phase = stepConfig.AutoFirstProcessPhase
 

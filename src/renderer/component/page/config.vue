@@ -55,7 +55,6 @@
 'use strict'
 
 const { ApplicationConfig } = require('../../../common/config-app')
-const Vue = require('vue')
 
 exports = module.exports = {
   data: function () {
