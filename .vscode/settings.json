@@ -1,4 +1,8 @@
 {
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "eslint.validate": ["javascript"],
     "yaml.schemas": {
         "json-schemas/course.json": "*/course/*.yaml",
         "json-schemas/asset-index.json": "*-index.yaml",
