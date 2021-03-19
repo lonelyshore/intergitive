@@ -1,16 +1,13 @@
 'use strict'
 
 const fs = require('fs-extra')
-const yaml = require('js-yaml')
 const path = require('path')
 
 const paths = require('../../paths')
 const zip = require('../../src/main/simple-archive')
 const repoVcs = require('../../src/main/repo-vcs')
 const configCourse = require('../../src/common/config-course')
-const configLevel = require('../../src/common/config-level')
 const loadCourseAsset = require('../../dev/dev-load-course-asset')
-const AssetLoader = require('../../src/main/asset-loader').AssetLoader
 const configAction = require('../../dev/config-action')
 const configStep = require('../../src/common/config-step')
 const loaderUtility = require('../../src/main/loader-utility')
@@ -138,7 +135,7 @@ describe('Prepare to Validate Course Setting', function () {
  *
  * @param {string} courseName
  * @param {courseConfig.Course} course
- * @param {AssetLoader} assetLoader
+ * @param {module:main/asset-loader~AssetLoader} assetLoader
  */
 function validateCourseConfig (courseName, course, assetLoader) {
   describe(`Validate course config: ${courseName}`, function () {
@@ -243,7 +240,7 @@ function validateCourseConfig (courseName, course, assetLoader) {
 /**
  *
  * @param {courseConfig.Course} course
- * @param {AssetLoader} assetLoader
+ * @param {module:main/asset-loader~AssetLoader} assetLoader
  * @param {string} skipUntil
  */
 function gatherValidatableLevelList (course, assetLoader, skipUntil) {
@@ -281,7 +278,7 @@ function gatherValidatableLevelList (course, assetLoader, skipUntil) {
 function validateLevels (course, levelConfigAndNames, loaderPair, courseName, language) {
   /**
      *
-     * @param {configLevel.Level} levelConfig
+     * @param {module:common/config-level~Level} levelConfig
      * @param {string} previousLevelId
      * @param {string} levelName
      * @param {loadCourseAsset.LoaderPair} loaderPair
@@ -305,7 +302,7 @@ function validateLevels (course, levelConfigAndNames, loaderPair, courseName, la
         /**
                  *
                  * @param {string} repoSetupName
-                 * @param {configLevel.RepoVcsSetup} repoSetup
+                 * @param {module:common/config-level~RepoVcsSetup} repoSetup
                  * @param {Array<RepoRefDemand>} repoRefDemands
                  */
         function validateRepoStore (repoSetupName, repoSetup, repoRefDemands) {
@@ -371,7 +368,7 @@ function validateLevels (course, levelConfigAndNames, loaderPair, courseName, la
 
         /**
                  *
-                 * @param {configLevel.Level} levelConfig
+                 * @param {module:common/config-level~Level} levelConfig
                  */
         function collectRepoSetupToDemandedRepoReferenceAndHosts (levelConfig, previousLevelId) {
           const repoSetupNames = Object.keys(levelConfig.repoVcsSetups)
@@ -643,7 +640,7 @@ function validateLevels (course, levelConfigAndNames, loaderPair, courseName, la
         /**
                  *
                  * @param {string} text
-                 * @param {AssetLoader} loader
+                 * @param {module:main/asset-loader~AssetLoader} loader
                  */
         function validateTextReplacements (text, host, loader, repoSetups) {
           return loaderUtility.searchMustacheReplacementPairs(

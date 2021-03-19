@@ -1,5 +1,9 @@
 'use strict'
 
+/**
+ * @module common/config-level
+ */
+
 const readonly = require('./readonly')
 
 let REPO_TYPE = {
@@ -9,6 +13,9 @@ let REPO_TYPE = {
 
 REPO_TYPE = readonly.wrap(REPO_TYPE)
 
+/**
+ * @class
+ */
 class RepoVcsSetup {
   /**
      *
@@ -25,6 +32,9 @@ class RepoVcsSetup {
   }
 }
 
+/**
+ * @class
+ */
 class Level {
   /**
      *

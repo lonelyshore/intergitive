@@ -2,19 +2,16 @@
 
 const path = require('path')
 const fs = require('fs-extra')
-const assert = require('assert')
 const utils = require('./test-utils')
 
 const simpleGit = require('simple-git/promise')
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 
-const zip = require('../../src/main/simple-archive')
 const vcs = require('../../src/main/repo-vcs')
 
 const ActionExecutor = require('../../dev/action-executor').DevActionExecutor
 const AssetLoader = require('../../src/main/asset-loader').AssetLoader
-const RepoSetup = require('../../src/common/config-level').RepoVcsSetup
 
 chai.use(chaiAsPromised)
 chai.should()
@@ -49,7 +46,7 @@ describe('Prepare Repo Save & Restore Tests', function () {
             return manager.restore(referenceName)
           })
           .then(() => {
-            return new simpleGit(restoredPath)
+            return simpleGit(restoredPath)
           })
       }
 
@@ -64,7 +61,7 @@ describe('Prepare Repo Save & Restore Tests', function () {
         return fs.emptyDir(workingPath)
           .then(() => fs.emptyDir(savedPath))
           .then(() => {
-            savedRepo = new simpleGit(savedPath)
+            savedRepo = simpleGit(savedPath)
             return savedRepo.raw(['init'])
           })
           .then(() => {
@@ -330,13 +327,6 @@ function createTests (testdataEntryNames, isRemoteRepo, testingStorageTypes, cre
         .then(snapshotPath => {
           repoSnapshotsPath = snapshotPath
         })
-
-      let clearUp = Promise.resolve()
-      repoCreationPaths.forEach(repoCreationPath => {
-        clearUp = clearUp.then(() => {
-          return fs.emptyDir(repoCreationPath)
-        })
-      })
     })
 
     after('Clean up', function () {

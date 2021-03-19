@@ -16,14 +16,9 @@ const assertRemoteUpdated = require('./action-executor').assertRemoteUpdated
 
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
-const { util } = require('chai')
 
 chai.use(chaiAsPromised)
 chai.should()
-
-const fail = function () {
-  throw new Error('fail')
-}
 
 describe('Dev Action Executor', function () {
   let actionExecutor
@@ -178,7 +173,6 @@ describe('Dev Action Executor', function () {
             return repo.status()
           })
           .then(status => {
-            const dummy = status
             return status
           })
           .should.eventually.deep.include({
@@ -573,8 +567,6 @@ describe('Dev Action Executor', function () {
       })
 
       it('clone into empty', function () {
-        const targetRef = 'master'
-
         const action = new actionTypes.CloneRepoAction(
           testRemoteRepoSetupName,
           destinationRepoSetupName

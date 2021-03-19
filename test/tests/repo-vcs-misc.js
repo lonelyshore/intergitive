@@ -2,8 +2,6 @@
 
 const path = require('path')
 const fs = require('fs-extra')
-const yaml = require('js-yaml')
-const simpleGit = require('simple-git/promise')
 const utils = require('./test-utils')
 
 const chai = require('chai')
@@ -47,16 +45,13 @@ function createTests (storageType) {
       const referenceArchivePath = path.join(archivePath, `compare-vcs-local-ref-${vcs.STORAGE_TYPE.toString(storageType)}.zip`)
       const checkedArchivePath = path.join(archivePath, 'compare-vcs.zip')
 
-      let repo
       let refManager
-      let stageMap = {}
       let actionExecutor
       let checkedRepoPath
 
       const resetCheckRepo = function () {
         return fs.remove(checkedRepoPath)
           .then(() => zip.extractArchiveTo(checkedArchivePath, checkedRepoPath))
-          .then(() => repo = simpleGit(checkedRepoPath))
       }
 
       before(function () {
@@ -68,8 +63,6 @@ function createTests (storageType) {
             return archiveCreationConfigExecutor.loadConfig(yamlPath)
           })
           .then(config => {
-            stageMap = config.stageMap
-
             const assetLoader = new AssetLoader(assetStorePath)
 
             const repoSetups =

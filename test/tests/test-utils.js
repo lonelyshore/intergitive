@@ -2,8 +2,7 @@
 
 const fs = require('fs-extra')
 const path = require('path')
-const yaml = require('js-yaml')
-const simpleGitCtor = require('simple-git/promise')
+const simpleGit = require('simple-git/promise')
 const random = require('seedrandom')
 
 const eol = require('../../src/common/text-eol')
@@ -14,7 +13,7 @@ const resourcesPath = path.resolve(__dirname, '../resources')
 const rng = random('seed')
 
 function generateConfigSummary (workingPath) {
-  const repo = new simpleGitCtor(workingPath)
+  const repo = simpleGit(workingPath)
 
   return repo.raw(['config', '--local', '--list'])
     .then(result => {
@@ -32,7 +31,7 @@ function generateConfigSummary (workingPath) {
 }
 
 function generateRepoHistorySummary (workingPath) {
-  const repo = new simpleGitCtor(workingPath)
+  const repo = simpleGit(workingPath)
 
   const refCommits = []
 
@@ -56,7 +55,7 @@ function generateRepoHistorySummary (workingPath) {
 }
 
 function generateIndexDiffSummary (workingPath) {
-  const repo = new simpleGitCtor(workingPath)
+  const repo = simpleGit(workingPath)
 
   const diffs = []
   return repo.raw(['diff-index', '--cached', 'HEAD'])
@@ -82,7 +81,7 @@ function generateIndexDiffSummary (workingPath) {
 }
 
 function getRepoStatus (workingPath) {
-  const repo = new simpleGitCtor(workingPath)
+  const repo = simpleGit(workingPath)
 
   return repo.raw(['status'])
 }
@@ -119,7 +118,7 @@ function getAllFilesRecursive (currentPath, shouldExplore) {
 }
 
 function generateWorktreeSummary (workingPath) {
-  const repo = new simpleGitCtor(workingPath)
+  const repo = simpleGit(workingPath)
   const summary = []
 
   return getAllFilesRecursive(
@@ -187,7 +186,7 @@ function areGitRepoSame (first, second, isVerbose) {
   return checkConfigsSame()
     .then(configSame => {
       if (!configSame) {
-        throw 'breaking'
+        throw new Error('breaking')
       }
     })
     .then(() => {
@@ -207,7 +206,7 @@ function areGitRepoSame (first, second, isVerbose) {
             })
             .then(indexSame => {
               if (!indexSame) {
-                throw 'breaking'
+                throw new Error('breaking')
               }
             })
             .then(() => {

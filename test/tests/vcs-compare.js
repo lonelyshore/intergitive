@@ -2,7 +2,6 @@
 
 const path = require('path')
 const fs = require('fs-extra')
-const yaml = require('js-yaml')
 const simpleGit = require('simple-git/promise')
 const utils = require('./test-utils')
 
@@ -14,7 +13,6 @@ const vcs = require('../../src/main/repo-vcs')
 
 const ActionExecutor = require('../../dev/action-executor').DevActionExecutor
 const AssetLoader = require('../../src/main/asset-loader').AssetLoader
-const RepoSetup = require('../../src/common/config-level').RepoVcsSetup
 
 chai.use(chaiAsPromised)
 chai.should()
@@ -138,7 +136,7 @@ function createTests (storageType) {
       const resetCheckRepo = function () {
         return fs.remove(checkedRepoPath)
           .then(() => zip.extractArchiveTo(checkedArchivePath, checkedRepoPath))
-          .then(() => repo = simpleGit(checkedRepoPath))
+          .then(() => { repo = simpleGit(checkedRepoPath) })
       }
 
       before(function () {
@@ -432,7 +430,7 @@ function createTests (storageType) {
         it('differ HEAD', function () {
           let currentSha
           return repo.revparse(['HEAD'])
-            .then(result => currentSha = result.trim())
+            .then(result => { currentSha = result.trim() })
             .then(() => repo.reset(['--soft', 'HEAD^']))
             .then(() => vcsManager.equivalent('clean'))
             .should.eventually.equal(false, 'expect to differ from clean after reset HEAD')

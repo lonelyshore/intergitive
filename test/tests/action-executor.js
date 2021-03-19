@@ -4,7 +4,6 @@ const path = require('path')
 const fs = require('fs-extra')
 const simpleGitCtor = require('simple-git/promise')
 
-const eol = require('../../src/common/text-eol')
 const zip = require('../../src/main/simple-archive')
 const devParams = require('../../dev/parameters')
 const normalizePathSep = require('../../src/main/noarmalize-path-sep')
@@ -14,16 +13,11 @@ const utils = require('./test-utils')
 const AssetLoader = require('../../src/main/asset-loader').AssetLoader
 const ActionExecutor = require('../../src/main/action-executor').ActionExecutor
 const RepoVcsSetup = require('../../src/common/config-level').RepoVcsSetup
-const RepoReferenceManager = require('../../src/main/repo-vcs').RepoReferenceManager
 const REPO_TYPE = require('../../src/common/config-level').REPO_TYPE
 const actionTypes = require('../../dev/config-action')
 
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
-const { util } = require('chai')
-const { promises } = require('dns')
-const { writeFile } = require('fs')
-const { assert } = require('console')
 
 chai.use(chaiAsPromised)
 chai.should()
@@ -1301,7 +1295,7 @@ describe('Action Executor #core', function () {
               localRepoRefsBefore = parseRefs(result)
             })
             .then(() => {
-              chai.expect(localRepoRefsBefore.remotes).to.be.empty
+              return Promise.resolve(Object.keys(localRepoRefsBefore.remotes)).should.eventually.have.lengthOf(0)
             })
             .then(() => {
               return action.executeBy(actionExecutor)

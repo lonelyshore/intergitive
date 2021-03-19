@@ -178,7 +178,7 @@ describe('AssetLoader #core', function () {
       it('redirect fallback to raw text', function () {
         return assetLoader.loadTextContent(`${assets}/redirect_fallback_raw_text`)
           .should.eventually
-          .equal('\"DOUBLE QUOTE\"')
+          .equal('"DOUBLE QUOTE"')
       })
 
       it('redirect fallback text content from file', function () {
@@ -405,13 +405,6 @@ describe('AssetLoader #core', function () {
       it(`contain ${assetId}`, function () {
         return assetLoader.containsAsset(assetId)
           .should.eventually.equal(true)
-      })
-    }
-
-    function testShouldNotContainAsset (assetId) {
-      it(`contain ${assetId}`, function () {
-        return assetLoader.containsAsset(assetId)
-          .should.eventually.equal(false)
       })
     }
 
