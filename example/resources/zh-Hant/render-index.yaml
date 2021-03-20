@@ -34,4 +34,6 @@ asset_index:
     closeLabel: "關閉"
     configTitle: "設定"
     creditsAndLicense: "版權聲明"
+
+    errorDialogTitle: "系統錯誤"
     loadEbusyMessage: "讀取關卡時發生錯誤。請關閉所有受 git 管控而被開啟編輯的檔案後再嘗試一次"

@@ -3,7 +3,7 @@
 const path = require('path')
 const fs = require('fs-extra')
 const yaml = require('js-yaml')
-const { shell } = require('electron')
+const { shell, dialog } = require('electron')
 const marked = require('marked')
 
 const paths = require('../../paths')
@@ -89,6 +89,10 @@ const store = {
       courseName: null
     }
   },
+  messages: {
+    errorDialogTitle: '',
+    loadEbusyMessage: ''
+  },
   isDebug: process.env.NODE_ENV !== 'production',
   services: {
     progress: null,
@@ -112,7 +116,20 @@ const store = {
 
     return this.services.appConfig.loadConfiguration()
       .then(appConfig => {
-        return this.services.appConfig.listCourseAndLanguageOptions()
+        const loadMessages = Object.keys(this.messages).reduce(
+          (pervious, key) => {
+            return pervious.then(() => {
+              return this.loaderPair.loadCommonString(key, appConfig.language)
+                .then(content => {
+                  this.messages[key] = content
+                })
+            })
+          },
+          Promise.resolve()
+        )
+
+        return loadMessages
+          .then(() => this.services.appConfig.listCourseAndLanguageOptions())
           .then(options => {
             return {
               appConfig: appConfig,
@@ -283,8 +300,11 @@ const store = {
           .catch(err => {
             console.error(`Error occured when loading repo setups ${err}`)
             if (err.code === 'EBUSY') {
-              console.error(err)
-              throw err
+              dialog.showErrorBox(
+                this.messages.errorDialogTitle,
+                this.messages.loadEbusyMessage
+              )
+              return
             }
             throw err
           })

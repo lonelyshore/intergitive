@@ -34,4 +34,6 @@ asset_index:
     closeLabel: "Close"
     configTitle: "Configurations"
     creditsAndLicense: "Credits and License"
-    loadEbusyMessage: "Something went wrong when loading the level. Please close all programs that are openning files managed by git"
+
+    errorDialogTitle: "Error"
+    loadEbusyMessage: "Something went wrong when loading the level. Please close all programs that are openning files managed by git and try again"
