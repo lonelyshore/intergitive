@@ -93,7 +93,7 @@ const store = {
     errorDialogTitle: '',
     loadEbusyMessage: ''
   },
-  isDebug: process.env.NODE_ENV !== 'production',
+  isDebug: process.env.DEBUG_ENABLED === 'true',
   services: {
     progress: null,
     appConfig: null
