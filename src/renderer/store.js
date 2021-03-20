@@ -333,8 +333,10 @@ const store = {
         saveAndCloseLabel: '',
         closeLabel: '',
         configTitle: '',
+        creditsAndLicense: '',
 
-        loadEbusyMessage: ''
+        loadEbusyMessage: '',
+        creditsAndLicenseContent: ''
       },
       commonAssetRelativePaths: {
         imgCorrect: ''

@@ -49,6 +49,19 @@
                 </div>
             </li>
         </ul>
+        <div class="accordion p-5" id="accordionExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+              <button class="accordion-button" :class="getInfoHeaderStatus(0)" type="button" :aria-expanded="`${infoEntryOpened === 0}`" aria-controls="collapseOne" @click="clickInfoEntry(0)">
+                {{creditsAndLicense}}
+              </button>
+            </h2>
+            <div class="accordion-collapse collapse" :class="getInfoEntryStatus(0)" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+              <div class="accordion-body" v-html="creditsAndLicenseContent">
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
 </template>
 <script>
@@ -82,6 +95,10 @@ exports = module.exports = {
       languageOpen: {
         type: Boolean,
         default: false
+      },
+      infoEntryOpened: {
+        type: Number,
+        default: Number.NaN
       }
     }
   },
@@ -106,11 +123,18 @@ exports = module.exports = {
     },
     title: function () {
       return this.terms.configTitle
+    },
+    creditsAndLicense: function () {
+      return this.terms.creditsAndLicense
+    },
+    creditsAndLicenseContent: function () {
+      return this.store.processMarkdown(this.terms.creditsAndLicenseContent)
     }
   },
   created: function () {
     this.courseOpen = false
     this.languageOpen = false
+    this.infoEntryOpened = Number.NaN
 
     this.courseOptions = Object.keys(this.store.state.courseOptions)
     this.currentCourseName = this.store.appState.courseName
@@ -146,6 +170,23 @@ exports = module.exports = {
         : this.store.appState
 
       this.store.closeConfig(savedConfig)
+    },
+    clickInfoEntry (entryIndex) {
+      if (entryIndex === this.infoEntryOpened) {
+        this.infoEntryOpened = Number.NaN
+      } else {
+        this.infoEntryOpened = entryIndex
+      }
+    },
+    getInfoHeaderStatus (entryIndex) {
+      return {
+        collpased: this.infoEntryOpened !== entryIndex
+      }
+    },
+    getInfoEntryStatus (entryIndex) {
+      return {
+        show: entryIndex === this.infoEntryOpened
+      }
     }
   }
 }

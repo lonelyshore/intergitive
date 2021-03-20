@@ -1,4 +1,6 @@
 asset_index:
+  ondisk:
+    creditsAndLicenseContent: 'credits_and_license.md'
   infile:
     elaborate: "Elaboration"
     illustrate: "Illustration"
@@ -31,4 +33,5 @@ asset_index:
     saveAndCloseLabel: "Save & Close"
     closeLabel: "Close"
     configTitle: "Configurations"
+    creditsAndLicense: "Credits and License"
     loadEbusyMessage: "Something went wrong when loading the level. Please close all programs that are openning files managed by git"
