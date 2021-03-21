@@ -35,11 +35,11 @@ Most part of `intergitive` is developed under the following environment settings
     - Install `nodegit` for electron
       - Create `.npmrc` and fill in the following contents. If the file already exists, overwrite it:  
     ```
-$content = @"
-runtime = electron
-target = 8.2.0
-target_arch = $architecture
-disturl = "https://atom.io/download/atom-shell"
+    $content = @"
+    runtime = electron
+    target = 8.2.0
+    target_arch = $architecture
+    disturl = "https://atom.io/download/atom-shell"
     ```  
       - Install `nodegit`: execute `npm install nodegit@0.26.x`
       - Cache it: execute `node .\dev\module-switch.js save nodegit electron`
