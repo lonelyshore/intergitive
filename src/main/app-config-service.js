@@ -8,7 +8,7 @@ const configName = 'app-config.json'
 function createDefaultConfig () {
   return new ApplicationConfig(
     'zh-Hant',
-    'git-extensions'
+    'fork'
   )
 }
 
