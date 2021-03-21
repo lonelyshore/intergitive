@@ -37,11 +37,11 @@
     - 為 electron 模式安裝 nodegit
       - 在專案目錄下建立 `.npmrc`，填入下列內容。如果已經存在 `.npmrc`，請以下列內容取代
     ```
-$content = @"
-runtime = electron
-target = 8.2.0
-target_arch = $architecture
-disturl = "https://atom.io/download/atom-shell"
+    $content = @"
+    runtime = electron
+    target = 8.2.0
+    target_arch = $architecture
+    disturl = "https://atom.io/download/atom-shell"
     ```  
       - 透過 npm 安裝 nodegit：執行 `npm install nodegit@0.26.x`
       - 存入快取：執行 `node .\dev\module-switch.js save nodegit electron`
