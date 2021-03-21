@@ -47,7 +47,7 @@ As for introductions to how to contribute to this project, please refer to the [
 
 ## English Introduction  
 
-[Download link to Windows version]()  
+[Download link to Windows version](https://github.com/lonelyshore/intergitive/releases)  
 
 ### Goal
 
