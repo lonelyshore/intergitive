@@ -4,7 +4,7 @@ intergitive 受到以下兩款程式啟發，感謝前人的無私奉獻，才�
 - [Git-it (Desktop App)](https://github.com/jlord/git-it-electron)：是一款逐步介紹如何操作 git 指令以及使用 GitHub 的教學軟體  
 - [Learn Git Branching](https://learngitbranching.js.org/?locale=zh_TW)：是一款專注於 git 分支操作的互動式教學軟體  
 
-其中， intergitve 擅自地大量挪用 Git-it 專案的網頁風格設定(CSS)  
+其中， intergitve 的網頁風格設定(CSS)大量引用自 Git-it 專案  
 基於對該專案的尊重以及為了遵守其版權條件，在此附上該專案的版權聲明  
 
 ```

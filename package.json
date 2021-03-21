@@ -76,5 +76,5 @@
     "test-pack-production": "npm run \"load-native-electron\" && npm run pack && electron ./main.js"
   },
   "author": "zedaizd",
-  "license": "ISC"
+  "license": "MIT"
 }

@@ -1,10 +1,10 @@
 .md
 ### Acknowledgements
 The author of `intergitive` is inspired by the following programs and is truly gratful for their great works.  
-- [Git-it (Desktop App)](https://github.com/jlord/git-it-electron)： is a program that teaches how to use git CLI step-by-step.  
+- [Git-it (Desktop App)](https://github.com/jlord/git-it-electron)： is a program that teaches how to use git CLI and GitHub step-by-step.  
 - [Learn Git Branching](https://learngitbranching.js.org/?locale=https://learngitbranching.js.org/?locale=en_US)： focuses on teaching how to manipulate branches in git in an interactive approach.  
 
-`intergitve` uses the CSS of the Git-it without any form of permissions from its author.  
+`intergitve` uses many settings of CSS of the Git-it.  
 In order to comply with its program license and show respect to its creator/contributors, here is the license of Git-it:  
 
 ```
