@@ -10,7 +10,7 @@ As for introductions to how to contribute to this project, please refer to the [
 
 ## 中文介紹
 
-[Windows 本體程式下載連結]()
+[Windows 本體程式下載連結](https://github.com/lonelyshore/intergitive/releases)
 
 ### 目標
 
