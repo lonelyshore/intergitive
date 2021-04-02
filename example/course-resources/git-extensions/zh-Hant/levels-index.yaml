@@ -1,112 +1,144 @@
 asset_index:
   infile:
     main.course-name: "Git-Extensions 使用教學"
-  fallbacks:
-    default:
-      - path_replacement:
-          - fork
-          - ''
-        keys:
-          - intro-install
-          - intro-open-repository
-          - browse-history
-          - checkout-revision
-          - commit-one-file
-          - commit-files-separately
-          - commit-file-modification
-          - commit-file-deletion
-          - undo-staging
-          - discard-changes
-          - meaning-of-checkout-commit
-          - commit-properties
-          - commit-backtrace
-          - commit-diff
-          - checkout-file
-          - file-history
-          - file-checkout-combo
-          - commit-and-diverse
-          - create-branch
-          - checkout-branch
-          - current-branch
-          - create-and-checkout-branch
-          - branch-for-variant
-          - branch-list
-          - create-branch-limit
-          - branch-grow
-          - merge-branch
-          - fastforward-branch
-          - delete-merged
-          - delete-unmerged
-          - move-branch
-          - create-repo
-          - clone-repo
-          - push-branch
-          - fetch-branch
-          - simple-collaboration
-          - diverged-remote
-          - merge-remote
-          - merge-conflict
-          - resolve-conflict
-          - resolve-multiple-conflicts
-          - resolve-with-editor
-          - resolve-binary
-          - abort-merge
-          - checkout-remote-branch
-          - create-remote-branch
-          - delete-remote-branch
-          - main.section-intro.name
-          - main.section-create-commits.name
-          - main.section-elaborate-commits.name
-          - main.section-advanced-history-browsing
-          - main.section-create-and-checkout-branches
-          - main.section-merge-and-delete-branches
-          - main.section-share-repository
-          - main.section-integrate-repository
-          - main.section-manage-remote
-          - main.intro-install.name
-          - main.intro-open-repository.name
-          - main.browse-history.name
-          - main.checkout-revision.name
-          - main.commit-one-file.name
-          - main.commit-files-separately.name
-          - main.commit-file-modification.name
-          - main.commit-file-deletion.name
-          - main.undo-staging.name
-          - main.discard-changes.name
-          - main.meaning-of-checkout-commit.name
-          - main.commit-properties.name
-          - main.commit-backtrace.name
-          - main.commit-diff.name
-          - main.checkout-file.name
-          - main.file-history.name
-          - main.file-checkout-combo.name
-          - main.commit-and-diverse.name
-          - main.create-branch.name
-          - main.checkout-branch.name
-          - main.current-branch.name
-          - main.create-and-checkout-branch.name
-          - main.branch-for-variant.name
-          - main.branch-list.name
-          - main.create-branch-limit.name
-          - main.branch-grow.name
-          - main.merge-branch.name
-          - main.fastforward-branch.name
-          - main.delete-merged.name
-          - main.delete-unmerged.name
-          - main.move-branch.name
-          - main.create-repo.name
-          - main.clone-repo.name
-          - main.push-branch.name
-          - main.fetch-branch.name
-          - main.simple-collaboration.name
-          - main.diverged-remote.name
-          - main.merge-remote.name
-          - main.merge-conflict.name
-          - main.resolve-conflict.name
-          - main.resolve-multiple-conflicts.name
-          - main.resolve-with-editor.name
-          - main.resolve-binary.name
-          - main.abort-merge.name
-          - main.checkout-remote-branch.name
-          - main.create-remote-branch.name
-          - main.delete-remote-branch.name
+  # name of sections
+    main.section-intro.name: "第一章：Git Extensions 安裝與瀏覽版本"
+    main.section-create-commits.name: "第二章：建立版本歷史與檔案狀態"
+    main.section-elaborate-commits.name: "第三章：保存的版本的性質"
+    main.section-advanced-history-browsing: "第四章：進階瀏覽版本歷史與回溯版本"
+    main.section-create-and-checkout-branches: "第五章：建立與切換分支－－創建分歧"
+    main.section-merge-and-delete-branches: "第六章：合併與刪除分支－－刪減分歧"
+    main.section-share-repository: "第七章：多人共享版本歷史"
+    main.section-integrate-repository: "第八章：整合多人提交歷史"
+    main.section-manage-remote: "第九章：管理遠端"
+
+  # level names of section one
+    main.intro-install.name: "1-1 節：安裝"
+    main.intro-open-repository.name: "1-2 節：使用 Git Extensions 開啟資料夾"
+    main.browse-history.name: "1-3 節：瀏覽版本歷史"
+    main.checkout-revision.name: "1-4 節：切換工作樹版本"
+
+  # level names of section two
+    main.commit-one-file.name: "2-1 節：快照一個檔案"
+    main.commit-files-separately.name: "2-2 節：分批快照檔案"
+    main.commit-file-modification.name: "2-3 節：快照檔案修改"
+    main.commit-file-deletion.name: "2-4 節：快照檔案刪除"
+    main.undo-staging.name: "2-5 節：復原暫存"
+    main.discard-changes.name: "2-6 節：放棄變更"
+    main.meaning-of-checkout-commit.name: "2-7 節：切換版本的意義"
+
+  # level names of section three
+    main.commit-properties.name: "3-1 節：總覽變更版本資料"
+    main.commit-backtrace.name: "3-2 節：變更版本構成歷史"
+    main.commit-diff.name: "3-3 節：觀察變更版本之間的差異"
+
+  # level names of section four
+    main.checkout-file.name: "4-1 節：回溯檔案到特定版本"
+    main.file-history.name: "4-2 節：單一檔案的版本歷史"
+    main.file-checkout-combo.name: "4-3 節：組合技－－回溯檔案到其版本歷史上的特定版"
+    main.commit-and-diverse.name: "4-4 節：回顧建立變更版本與製造歷史分歧"
+
+  # level names of section five
+    main.create-branch.name: "5-1 節：建立分支標註出特定版本"
+    main.checkout-branch.name: "5-2 節：切換工作中版本到分支上並在分支上提交"
+    main.current-branch.name: "5-3 節：當前的分支與分離的工作版本"
+    main.create-and-checkout-branch.name: "5-4 節：建立並同時切換分支"
+    main.branch-for-variant.name: "5-5 節：分支用來分頭進展"
+    main.branch-list.name: "5-6 節：分支列表"
+    main.create-branch-limit.name: "5-7 節：建立分支的限制"
+    main.branch-grow.name: "5-8 節：分支的獨立成長"
+
+  # level names of section six
+    main.merge-branch.name: "6-1 節：合併分支以融合變更"
+    main.fastforward-branch.name: "6-2 節：合併領先的分支以更新分支狀態"
+    main.delete-merged.name: "6-3 節：刪除已合併的分支"
+    main.delete-unmerged.name: "6-4 節：刪除未合併的分支以捨棄不想要的變更"
+    main.move-branch.name: "6-5 節：組合技－－搬移分支"
+
+  # level names of section seven
+    main.create-repo.name: "7-1 節：建立倉庫"
+    main.clone-repo.name: "7-2 節：複製倉庫"
+    main.push-branch.name: "7-3 節：推送分支"
+    main.fetch-branch.name: "7-4 節：抓取分支"
+    main.simple-collaboration.name: "7-5 節：簡單的多人協作模式"
+
+  # level names of section eight
+    main.diverged-remote.name: "8-1 節：遭遇來自遠端的分歧"
+    main.merge-remote.name: "8-2 節：合併分歧的遠端"
+    main.merge-conflict.name: "8-3 節：合併衝突與合併中狀態"
+    main.resolve-conflict.name: "8-4 節：在合併工具中解決合併衝突"
+    main.resolve-multiple-conflicts.name: "8-5 節：解決多個合併衝突"
+    main.resolve-with-editor.name: "8-6 節：使用文字編輯器解決合併衝突"
+    main.resolve-binary.name: "8-7 節：選取他方或我方解決合併衝突"
+    main.abort-merge.name: "8-8 節：放棄解決合併衝突"
+
+  # level names of section nine
+    main.checkout-remote-branch.name: "9-1 節：遠端分支與追蹤分支"
+    main.create-remote-branch.name: "9-2 節：建立遠端分支"
+    main.delete-remote-branch.name: "9-3 節：刪除遠端分支"
+
+  ondisk:
+  # level configs of section one: intro
+    intro-install: "intro-install.yaml"
+    intro-open-repository: "intro-open-repository.yaml"
+    browse-history: "browse-history.yaml"
+    checkout-revision: "checkout-revision.yaml"
+
+  # level configs of section two: create commits
+    commit-one-file: "commit-one-file.yaml"
+    commit-files-separately: "commit-files-separately.yaml"
+    commit-file-modification: "commit-file-modification.yaml"
+    commit-file-deletion: "commit-file-deletion.yaml"
+    undo-staging: "undo-staging.yaml"
+    discard-changes: "discard-changes.yaml"
+    meaning-of-checkout-commit: "meaning-of-checkout-commit.yaml"
+
+  # level configs of section three: elaborate commits
+    commit-properties: "commit-properties.yaml"
+    commit-backtrace: "commit-backtrace.yaml"
+    commit-diff: "commit-diff.yaml"
+
+  # level configs of section four: advanced history browsing
+    checkout-file: "checkout-file.yaml"
+    file-history: "file-history.yaml"
+    file-checkout-combo: "file-checkout-combo.yaml"
+    commit-and-diverse: "commit-and-diverse.yaml"
+
+  # level configs of section five: create and checkout branches
+    create-branch: "create-branch.yaml"
+    checkout-branch: "checkout-branch.yaml"
+    current-branch: "current-branch.yaml"
+    create-and-checkout-branch: "create-and-checkout-branch.yaml"
+    branch-for-variant: "branch-for-variant.yaml"
+    branch-list: "branch-list.yaml"
+    create-branch-limit: "create-branch-limit.yaml"
+    branch-grow: "branch-grow.yaml"
+
+  # level configs of section six: merge and delete branches
+    merge-branch: "merge-branch.yaml"
+    fastforward-branch: "fastforward-branch.yaml"
+    delete-merged: "delete-merged.yaml"
+    delete-unmerged: "delete-unmerged.yaml"
+    move-branch: "move-branch.yaml"
+
+  # level configs of section seven: share repository
+    create-repo: "create-repo.yaml"
+    clone-repo: "clone-repo.yaml"
+    push-branch: "push-branch.yaml"
+    fetch-branch: "fetch-branch.yaml"
+    simple-collaboration: "simple-collaboration.yaml"
+
+  # level configs of section eight: integrate repository
+    diverged-remote: "diverged-remote.yaml"
+    merge-remote: "merge-remote.yaml"
+    merge-conflict: "merge-conflict.yaml"
+    resolve-conflict: "resolve-conflict.yaml"
+    resolve-multiple-conflicts: "resolve-multiple-conflicts.yaml"
+    resolve-with-editor: "resolve-with-editor.yaml"
+    resolve-binary: "resolve-binary.yaml"
+    abort-merge: "abort-merge.yaml"
+
+  # level configs of section nine: manager remote
+    checkout-remote-branch: "checkout-remote-branch.yaml"
+    create-remote-branch: "create-remote-branch.yaml"
+    delete-remote-branch: "delete-remote-branch.yaml

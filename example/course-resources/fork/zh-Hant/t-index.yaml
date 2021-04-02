@@ -18,7 +18,6 @@ asset_index:
     graph: 線圖
     file-tree-f: 檔案樹(file tree)
     file-tree: 檔案樹
-    file-tree-gui: 「File Tree」
     work-tree-alt-f: 工作目錄(working directory)
     work-tree-f: 工作樹(working tree)
     work-tree-alt: 工作目錄

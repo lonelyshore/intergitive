@@ -1,4 +1,24 @@
 asset_index:
+  infile:
+    check-working-directory: |+2
+      .md
+      首先，且讓我們打開看看目前被 git 管理的資料夾長甚麼樣子  
+      請如下圖(九)所示，按下紅框圈選的按鈕  
+      就可以將目前被 git 管理的資料夾用檔案管理員開啟  
+
+      ![illustration]({{images/open-working-directory}})  
+      <div class="img-title">圖(九)</div>  
+
+      完成操作後後，應該會出現檔案管理員，顯示 `#{{basic}}` 目前的檔案狀態  
+      請從檔案管理員開啟「===read me===.txt」  
+      然後在${{t/gui}}裡選擇檢視「第 4 號提交」的「===read me===.txt」的狀態  
+      
+      請問，「===read me===.txt」目前的實際內容是否與${{t/gui}}裡面顯示的一致呢？  
+      1. 是
+      2. 否
+
+      請以數字選項(1/2)回答～
+
   fallbacks:
     default:
       - path_replacement:
@@ -17,7 +37,7 @@ asset_index:
           - read-readme-of-last-commit
           - read-readme-of-forth-commit
           - read-file-tree-not-affect-working-directory
-          - check-working-directory
+          # - check-working-directory
           - introduce-work-tree
           - illustrate-file-tree
           - illustrate-browse-history

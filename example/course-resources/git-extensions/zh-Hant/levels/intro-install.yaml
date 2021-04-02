@@ -1,0 +1,14 @@
+!level
+  repoVcsSetups: {}
+  steps:
+    - !elaborate
+      descriptionId: "level-data/intro-install/introduce"
+    - !instruct 
+      descriptionId: "level-data/intro-install/download"
+    - !instruct 
+      descriptionId: "level-data/intro-install/install-git"
+    - !instruct 
+      descriptionId: "level-data/intro-install/install-gui"
+    - !instruct
+      descriptionId: "level-data/intro-install/configure-ge"
+    

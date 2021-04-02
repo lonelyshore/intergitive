@@ -1,4 +1,6 @@
 asset_index:
+  infile:
+    file-tree-gui: 'File tree'
   fallbacks:
     default:
       - path_replacement:

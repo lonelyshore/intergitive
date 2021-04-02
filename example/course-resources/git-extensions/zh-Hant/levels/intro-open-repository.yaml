@@ -1,0 +1,25 @@
+!level
+  repoVcsSetups:
+    basic:
+      workingPath: basic
+      referenceStoreName: basic-operation
+      checkpointStoreName: basic-operation-checkpoints
+  steps:
+    - !loadOneReference
+      repoSetupName: basic
+      referenceName: init
+
+    - !elaborate
+      descriptionId: "level-data/intro-open-repository/introduce-goal"
+    - !instruct 
+      descriptionId: "level-data/intro-open-repository/open-directory"
+    - !instruct 
+      descriptionId: "level-data/intro-open-repository/instruct-verify-open"
+      needConfirm: false
+    - !verifyInput 
+      answer: "6"
+
+    - !elaborate
+      descriptionId: "level-data/intro-open-repository/summary"
+      needConfirm: false
+    

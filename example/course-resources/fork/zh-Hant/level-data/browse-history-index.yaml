@@ -69,7 +69,7 @@ asset_index:
       
       確認成功後請進行下一步  
 
-      ![illustration]({{images/fork-open-basic}})  
+      ![illustration]({{images/open-basic}})  
       <div class="img-title">圖(三)</div>  
 
     use-file-tree-viewer: |+2
@@ -82,7 +82,7 @@ asset_index:
       <div class="img-title">圖(四)</div>  
 
       完成選取之後，如下圖(五)所示  
-      請在${{t/graph}}下方的三個頁籤(Commit/Changes/File Tree)中選擇**最右邊的${{t/file-tree-gui}}**  
+      請在${{t/graph}}下方的頁籤中選擇紅框圈選的**「${{st/file-tree-gui}}」**  
 
       ![illustration]({{images/select-file-tree-tab}})  
       <div class="img-title">圖(五)</div>  
@@ -90,7 +90,7 @@ asset_index:
     read-file-tree-viewer: |+2
       .md
 
-      選取了${{t/file-tree-gui}}之後，應該會如下圖(六)紅框範圍所示，顯示出目前選中版本的資料夾內容  
+      選取了${{st/file-tree-gui}}之後，應該會如下圖(六)紅框範圍所示，顯示出目前選中版本的資料夾內容  
 
       ![illustration]({{images/show-file-tree}})  
       <div class="img-title">圖(六)</div>  
@@ -105,7 +105,7 @@ asset_index:
     explain-file-tree: |+2
       .md
 
-      在前面的指引中，我們介紹了透過${{t/gui}}的${{t/file-tree-gui}}分頁可以看見一個資料夾在特定版本的內容  
+      在前面的指引中，我們介紹了透過${{t/gui}}的${{st/file-tree-gui}}分頁可以看見一個資料夾在特定版本的內容  
 
       為什麼是「file tree」呢？  
       其實 **file tree** 是一種專用術語  
@@ -115,13 +115,13 @@ asset_index:
       在這個教學中，當我們說**${{t/file-tree}}**時，指稱的就是「被 git 管控的資料夾，它的某個版本的所有檔案內容」  
       簡單來說，就是指一個資料夾某時的狀態  
 
-      接下來，讓我們再更進一步發掘${{t/file-tree-gui}}的有趣功能：檢視${{t/file-tree}}的檔案內容
+      接下來，讓我們再更進一步發掘${{st/file-tree-gui}}的有趣功能：檢視${{t/file-tree}}的檔案內容
 
     read-file-tree-of-second-commit: |+2
       .md
 
       請在${{t/graph}}上面，選取寫著「第 2 號提交」的圓點  
-      然後檢視${{t/file-tree-gui}}分頁，應該會出現如下圖(七)紅框所示的五個檔案  
+      然後檢視${{st/file-tree-gui}}分頁，應該會出現如下圖(七)紅框所示的五個檔案  
 
       ![illustration]({{images/show-file-tree-of-second-commit}})  
       <div class="img-title">圖(七)</div>  
@@ -129,14 +129,14 @@ asset_index:
     read-readme-of-second-commit: |+2
       .md
 
-      使用${{t/file-tree-gui}}檢視指定版本的${{t/file-tree}}的情況下  
+      使用${{st/file-tree-gui}}檢視指定版本的${{t/file-tree}}的情況下  
       我們可以進一步檢視個別檔案的內容  
-      請如下圖(八)所示，使用滑鼠左鍵單點「===read me===.txt」，將它以深藍底白字的方式選取  
+      請如下圖(八)所示，使用滑鼠左鍵單點「===read me===.txt」，將它以藍底白字的方式選取  
       
       ![illustration]({{images/read-readme-of-second-commit}})  
       <div class="img-title">圖(八)</div>  
 
-      完成選取後，${{t/gui}}右下角紅框圈選的範圍會顯示從${{t/file-tree-gui}}中選擇的檔案內容  
+      完成選取後，${{t/gui}}右下角紅框圈選的範圍會顯示從${{st/file-tree-gui}}中選擇的檔案內容  
       請在下面的輸入欄輸入你所看見的檔案內容，並按下確認檢查答案～
 
     read-readme-of-last-commit: |+2
@@ -144,7 +144,7 @@ asset_index:
 
       且讓我們繼續練習瀏覽不同版本的「===read me===.txt」  
 
-      請從${{t/graph}}選擇最上面一個圓點(寫著「第 6 號提交」)，並且從${{t/file-tree-gui}}檢視「===read me===.txt」的內容  
+      請從${{t/graph}}選擇最上面一個圓點(寫著「第 6 號提交」)，並且從${{st/file-tree-gui}}檢視「===read me===.txt」的內容  
 
       這個版本的「===read me===.txt」內容是一篇歷史名作  
       因為文長限制，就不方便檢核看到的內容。我們改問這篇名作的原作者是：  
@@ -164,7 +164,7 @@ asset_index:
     read-file-tree-not-affect-working-directory: |+2
       .md
 
-      經過前面的練習，我們發現${{t/file-tree-gui}}的功能非常有趣：  
+      經過前面的練習，我們發現${{st/file-tree-gui}}的功能非常有趣：  
       它可以讓我們隨意地讀取這個資料夾過去任何版本的任何檔案內容  
 
       但是，這樣隨意翻看**過去**的檔案，會影響到**現在**這個資料夾的內容嗎？  

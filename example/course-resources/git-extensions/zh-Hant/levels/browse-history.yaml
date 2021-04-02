@@ -1,0 +1,73 @@
+!level
+  repoVcsSetups:
+    basic:
+      workingPath: basic
+      referenceStoreName: basic-operation
+      checkpointStoreName: basic-operation-checkpoints
+  steps:
+    - !illustrate  
+      descriptionId: "level-data/browse-history/introduction"
+    - !elaborate 
+      descriptionId: "level-data/browse-history/graph-as-folder-history"
+    - !illustrate 
+      descriptionId: "level-data/browse-history/file-tree-viewer"
+
+    - !loadOneReference 
+      repoSetupName: basic
+      referenceName: init
+
+# intruct how to use file viewer
+    - !instruct 
+      descriptionId: "level-data/browse-history/open-folder"
+    - !instruct 
+      descriptionId: "level-data/browse-history/use-file-tree-viewer"
+    - !instruct 
+      descriptionId: "level-data/browse-history/read-file-tree-viewer"
+      needConfirm: false
+    - !verifyInput 
+      answer: "2"
+
+# introduce file tree and practice
+    - !illustrate 
+      descriptionId: "level-data/browse-history/explain-file-tree"
+    - !instruct 
+      descriptionId: "level-data/browse-history/read-file-tree-of-second-commit"
+    - !instruct 
+      descriptionId: "level-data/browse-history/read-readme-of-second-commit"
+      needConfirm: false
+    - !verifyInput 
+      answer: "${{level-data/intro-open-repository/file-read-me:v1}}"
+
+    - !instruct 
+      descriptionId: "level-data/browse-history/read-readme-of-last-commit"
+      needConfirm: false
+    - !verifyInput 
+      answer: "3"
+
+    - !instruct 
+      descriptionId: "level-data/browse-history/read-readme-of-forth-commit"
+      needConfirm: false
+    - !verifyInput 
+      answer: "${{level-data/intro-open-repository/file-read-me:v2}}"
+      
+# read file tree will not change working directory
+    - !elaborate 
+      descriptionId: "level-data/browse-history/read-file-tree-not-affect-working-directory"
+    - !instruct 
+      descriptionId: "level-data/browse-history/check-working-directory"
+      needConfirm: false
+    - !verifyInput 
+      answer: "2"
+    - !elaborate  
+      descriptionId: "level-data/browse-history/introduce-work-tree"
+    - !illustrate 
+      descriptionId: "level-data/browse-history/illustrate-file-tree"
+    - !illustrate 
+      descriptionId: "level-data/browse-history/illustrate-browse-history"
+
+    - !elaborate 
+      descriptionId: "level-data/browse-history/summary"
+      
+
+    
+    

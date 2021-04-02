@@ -3,15 +3,15 @@
   nameKey: "levels/main.course-name"
   children:
     - !sequential-section # chapter 1: basics
-      id: "fork-main-section-intro"
+      id: "ge-main-section-intro"
       nameKey: "levels/main.section-intro.name"
       children:
         - !level
-          id: "fork-main-intro-install"
+          id: "ge-main-intro-install"
           nameKey: "levels/main.intro-install.name"
           configAssetId: "levels/intro-install"
         - !level
-          id: "fork-main-intro-open-repository"
+          id: "ge-main-intro-open-repository"
           nameKey: "levels/main.intro-open-repository.name"
           configAssetId: "levels/intro-open-repository"
         - !level 

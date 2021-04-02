@@ -40,18 +40,18 @@ asset_index:
 # course content
     introduce-goal: |+2
       .md
-      在這一個章節中，將介紹如何使用 fork 開啟一個資料夾  
-      在往後的教學中，當提到「使用 fork 開啟 OOO 資料夾」時，請按照本章節的步驟進行
+      在這一個章節中，將介紹如何使用${{t/gui}}開啟一個資料夾  
+      在往後的教學中，當提到「使用${{t/gui}}開啟 OOO 資料夾」時，請按照本章節的步驟進行
     
     open: |+2
       .md
-      首先，請開啟已經安裝好的 fork  
+      首先，請開啟已經安裝好的${{t/gui}}  
 
       在 Windows 10 中，可以從開始目錄的「Fork」資料夾中找到，如下圖紅框圈選範圍所示  
 
       ![illustration]({{images/fork-from-start-menu}})  
 
-      開啟完成後，會出現如下圖的視窗，這就是 fork 的主要操作介面  
+      開啟完成後，會出現如下圖的視窗，這就是${{t/gui}}的主要操作介面  
 
       ![illustration]({{images/fork-opened}})
 
@@ -62,14 +62,14 @@ asset_index:
 
       ![illustration]({{images/fork-folded}})  
 
-      當遇到這種情況時，可以嘗試將 fork 放到最大，以確保可以找到接下來教學中所描述的功能  
+      當遇到這種情況時，可以嘗試將${{t/gui}}放到最大，以確保可以找到接下來教學中所描述的功能  
 
     open-directory-in-fork: |+2
       .md
 
       現在，就讓我們來試著開啟練習用的資料夾吧  
 
-      請進入 fork  
+      請進入${{t/gui}}  
       如下圖所示，在左上角的工具列選擇 <code>File > Open Repository...</code>  
 
       ![illustration]({{images/fork-choose-open-repository}})
@@ -86,18 +86,18 @@ asset_index:
 
     instruct-verify-open: |+2
       .md
-      成功開啟之後，fork 中應該會出現類似下圖紅框圈選的範圍，這個叫作${{t/graph-f}}
+      成功開啟之後，${{t/gui}}中應該會出現類似下圖紅框圈選的範圍，這個叫作${{t/graph-f}}
 
       ![illustration]({{images/fork-open-basic}})  
 
-      請計算出現在你的 fork 中的${{t/graph}}上，圓圈的數量，並回答在下方的欄位中  
+      請計算出現在你的${{t/gui}}中的${{t/graph}}上，圓圈的數量，並回答在下方的欄位中  
     
     summary: |+2
       .md
 
       至此為止，你已經學會  
-      1. 如何開啟 fork
-      2. 使用 fork 開啟 git 專案
+      1. 如何開啟${{t/gui}}
+      2. 使用${{t/gui}}開啟 git 專案
 
       在本章節的最後，我們引出了 git 最重要的一個概念：${{t/graph}}  
       在接下來的章節中，我們都將圍繞著它進行，逐步的熟悉 git 的概念以及操作方法  

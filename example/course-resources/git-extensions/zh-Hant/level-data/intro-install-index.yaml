@@ -1,10 +1,138 @@
 asset_index:
-  fallbacks:
-    default:
-      - path_replacement:
-          - fork
-          - ''
-        keys:
-          - introduce-fork
-          - download
-          - install
+  infile:
+    introduce: |+2
+      .md
+      歡迎使用 intergitve 教學  
+      在這個教學中，會介紹如何使用名為 ${{t/gui}} 的 git 操作程式  
+
+      git 是一個負責提供版本控管的功能  
+      ${{t/gui}}則是方便大家操作 git 的程式  
+
+      ${{t/gui}}的特點是有簡約明瞭的操作介面，使得學習 git 更加的容易  
+      除此以外，他還是[開源的軟體](https://zh.wikipedia.org/wiki/%E5%BC%80%E6%BA%90%E8%BD%AF%E4%BB%B6)(GPL-3.0)  
+
+      現在我們了解了我們將在這個教學中學習這兩種程式  
+      那麼話不多說，就先讓我們來安裝他們吧  
+
+    download: |+2
+      .md
+      首先，請先分別下載 git 以及${{t/gui}}  
+      git 可以從[它的官網](https://git-scm.com/downloads)下載  
+      而${{t/gui}}的安裝檔可以從它的[官方網頁](http://gitextensions.github.io/)找到並[下載](https://github.com/gitextensions/gitextensions/releases/tag/v3.4.3)  
+
+      下載完成後，請按「確認」進行下一步驟  
+
+    install-git: |+2
+      .md
+      在這個區塊中，我們將介紹如何安裝 git 以及${{t/gui}}  
+      如果您以前就已經安裝過 git，則可以跳過這個步驟  
+
+      首先，讓我們來安裝 git  
+      因為 git 的安裝程式預設的選項可以滿足大部分使用者的需求  
+      我們建議執行安裝程式後，可以一路按「Next」前進  
+      最後，就會一不小心出現以下的畫面，表示我們已經成功安裝 git ，恭喜！  
+
+      ![illustration]({{images/finish-git-installation}})
+      <div class="img-title">圖(一)</div>  
+
+      按下「Finish」按鈕就可以結束 git 安裝  
+
+    install-gui: |+2
+      .md
+      接下來，讓我們安裝${{t/gui}}  
+      
+      同樣的，安裝程式將會詢問一些細部的設定  
+      建議沒有特殊需求的話，請直接以原本設定好的情況繼續進行就可以  
+      請一路按下「Next」按鈕繼續，直到如下圖所示的畫面出現  
+
+      ![illustration]({{images/ge-install-dialog-1}})
+      <div class="img-title">圖(二)</div>  
+
+      這個畫面表示安裝程式進行最後確認  
+      請按下紅框圈選的「Install」開始安裝  
+
+      當安裝程式執行完畢，就會出現如下圖的畫面  
+      這表示${{t/gui}}就成功地安裝到您的電腦上了，恭喜！  
+
+      ![illustration]({{images/ge-install-dialog-2}})
+      <div class="img-title">圖(三)</div>  
+
+      請按下紅框圈選的「Finish」結束安裝程式  
+
+    configure-ge: |+2
+      .md
+      現在，我們已經成功安裝${{t/gui}}了  
+      馬上就讓我們打開它並且進行初次設定吧  
+
+      首次執行${{t/gui}}之後，首先會出現如下圖的畫面  
+      讓我們選擇要使用的語言  
+      為了用語統一以及教學編寫方便，建議如下圖紅框所示選擇英文  
+      
+      ![illustration]({{images/ge-config-lang}})
+      <div class="img-title">圖(四)</div>  
+
+      選擇完語言後，${{t/gui}}會嘗試偵測是否電腦上已經有安裝 git  
+      如果偵測失敗，將會跳出如下圖的對話框  
+      反之，如果沒看到這個對話框，就表示偵測成功，可以安心跳過直接進行下一個區塊  
+      
+      ![illustration]({{images/ge-config-git}})
+      <div class="img-title">圖(五)</div>  
+
+      如果出現了如上圖的對話框，請選擇「Find git...」來告訴${{t/gui}}它的位置  
+
+      接著，${{t/gui}}會出現如下圖所示的設定面板  
+
+      ![illustration]({{images/ge-config-panel-1}})
+      <div class="img-title">圖(六)</div>  
+
+      初次開啟有可能會如上圖所示有好幾項是紅色的底色  
+      表示這些項目需要設定  
+      但是請不用慌張，上圖中四個紅色底的項目目前只有紅框和橘框圈選的兩項一定要在現在設定好  
+      剩下的兩項我們將留待未來再處理  
+
+      首先讓我們處理紅框圈選的項目  
+      請按下它旁邊的「Repair」按鈕，就會跳轉到如下圖所示的設定頁面  
+      
+      ![illustration]({{images/ge-git-settings-2}})
+      <div class="img-title">圖(七)</div>  
+
+      請在「User Name」的欄位中填入您喜歡的名字，這個名字會保留在 git 的提交上  
+      在「User email」的欄位也請選擇喜歡的信箱填入  
+
+      填寫完畢後，請按下右下角的「Apply」(套用)按鈕  
+      然後，請在左側分頁列選擇圖中紅框圈選的「Git Extensions」切回到設定面板  
+
+      這時候我們會發現面板中的紅底項目只剩下三個了：
+
+      ![illustration]({{images/ge-config-panel-2}})
+      <div class="img-title">圖(八)</div>  
+
+      接下來，就讓我們處理紅框新圈選的項目  
+      請按下它旁邊的「Repair」按鈕，試圖自動修正  
+
+      如果自動修正失敗，就會跳出如下圖所示的對話框  
+
+      ![illustration]({{images/ge-config-sh-failed}})
+      <div class="img-title">圖(九)</div>  
+
+      看到這個對話框不用驚慌，請按下「ok」將它關掉就可以了  
+      然後，我們將會被自動導引往如下圖所示的手動設定頁面  
+
+      ![illustration]({{images/ge-git-settings-2}})
+      <div class="img-title">圖(十)</div>  
+
+      請按下上圖中紅框圈選的「Browse」按鈕  
+      然後在 git 的安裝路徑下找到「bin」資料夾，並且選擇它  
+      (通常會是 `C:\Program Files\Git\bin`)  
+
+      選擇完畢後，請按下右下角的「Apply」按鈕儲存  
+      這時候回到設定面板應該會注意到紅色底的項目如下圖一樣只剩兩項  
+      這就表示我們可以開始使用了，恭喜！  
+
+      ![illustration]({{images/ge-config-panel-3}})
+      <div class="img-title">圖(十一)</div>  
+
+      關於如何操作，將會在接下來的章節中逐一引導，現在可以先把${{t/gui}}關閉  
+      
+      請按「確認」按鈕完成這個關卡，繼續下一關
+      

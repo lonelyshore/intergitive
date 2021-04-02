@@ -1,28 +1,42 @@
 asset_index:
+  ondisk:
+  # intro-install
+    ge-install-dialog-1: ge-install-dialog-1.png
+    ge-install-dialog-2: ge-install-dialog-2.png
+    ge-config-lang: ge-config-lang.png
+    ge-config-git: ge-config-git.png
+    finish-git-installation: finish-git-installation.png
+    ge-config-panel-1: ge-config-panel-1.png
+    ge-git-settings-1: ge-git-settings-1.png
+    ge-config-panel-2: ge-config-panel-2.png
+    ge-config-sh-failed: ge-config-sh-failed.png
+    ge-git-settings-2: ge-git-settings-2.png
+    ge-config-panel-3: ge-config-panel-3.png
+
+  # intro-open-repository
+    choose-open-repository: choose-open-repository.png
+    select-repository-location: select-repository-location.png
+    open-basic: open-basic.png
+
+  # browse-history
+    graph-fork: graph-fork.png
+    select-last-commit: select-last-commit.png
+    select-file-tree-tab: select-file-tree-tab.png
+    show-file-tree: show-file-tree.png
+    show-file-tree-of-second-commit: show-file-tree-of-second-commit.png
+    read-readme-of-second-commit: read-readme-of-second-commit.png
+    open-working-directory: open-working-directory.png
+
   fallbacks:
     default:
       - path_replacement:
           - fork
           - ''
         keys:
-          - fork-install-dialog
-          - fork-installed
-          - fork-from-start-menu
-          - fork-opened
-          - fork-folded
-          - fork-choose-open-repository
-          - fork-select-repository-location
-          - fork-open-basic
           - folder-history-change
-          - graph-fork
-          - select-last-commit
-          - select-file-tree-tab
-          - show-file-tree
-          - show-file-tree-of-second-commit
-          - read-readme-of-second-commit
-          - open-working-directory
           - illustrate-working-tree-and-file-trees
           - illustrate-browse-file-tree
+
           - open-folder-in-explorer
           - checkout-first-context-menu
           - checkout-first-confirm

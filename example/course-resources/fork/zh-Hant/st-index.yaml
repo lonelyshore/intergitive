@@ -1,6 +1,7 @@
 # "st" stands for "specific term". This file provides GUI specific terminology translations.
 asset_index:
   infile:
+    file-tree-gui: 「File Tree」
     open-in: "Open in (以...開啟)"
     open-in-explorer: "Open In File Explorer (以檔案管理員開啟)"
     checkout-revision: "Checkout Commit...(切換到提交...)"

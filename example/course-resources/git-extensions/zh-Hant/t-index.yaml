@@ -1,4 +1,6 @@
 asset_index:
+  infile:
+    gui: ' Git Extensions '
   fallbacks:
     default:
       - path_replacement:
@@ -17,7 +19,6 @@ asset_index:
           - commit-f
           - commit-s
           - commit-s-f
-          - gui
           - graph-f
           - graph
           - file-tree-f
