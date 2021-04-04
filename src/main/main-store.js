@@ -133,7 +133,8 @@ const store = {
           .then(options => {
             return {
               appConfig: appConfig,
-              courseOptions: options
+              courseOptions: options,
+              appVersion: process.env.npm_package_version
             }
           })
       })

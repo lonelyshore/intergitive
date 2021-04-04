@@ -5,6 +5,9 @@
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item px-5">
+              {{appVersionLabel}} - {{appVersion}}
+            </li>
+            <li class="list-group-item px-5">
                 <div class="row justify-content-center">
                     <div class="col align-self-center">
                         {{courseNameLabel}}
@@ -129,6 +132,12 @@ exports = module.exports = {
     },
     creditsAndLicenseContent: function () {
       return this.store.processMarkdown(this.terms.creditsAndLicenseContent)
+    },
+    appVersionLabel: function () {
+      return this.terms.appVersionLabel
+    },
+    appVersion: function () {
+      return this.store.state.appVersion
     }
   },
   created: function () {

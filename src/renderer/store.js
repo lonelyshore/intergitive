@@ -293,6 +293,7 @@ const store = {
       courseName: null,
       language: null
     },
+    appVersion: '',
     courseOptions: {},
     levelState: {
       isDebug: api.isDebug(),
@@ -334,6 +335,7 @@ const store = {
         closeLabel: '',
         configTitle: '',
         creditsAndLicense: '',
+        appVersionLabel: '',
 
         loadEbusyMessage: '',
         creditsAndLicenseContent: ''
@@ -381,6 +383,7 @@ const store = {
       .then(initialData => {
         Object.assign(this.appState, initialData.appConfig)
         Object.assign(this.state.courseOptions, initialData.courseOptions)
+        this.state.appVersion = initialData.appVersion
       })
   },
   loadTerms () {
