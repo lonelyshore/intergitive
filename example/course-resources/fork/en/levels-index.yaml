@@ -1,10 +1,24 @@
 asset_index:
+  infile:
+    main.course-name: "Fork Tutorial"
+    main.prolog.name: "Prolog: Why should we learn git?"
+    
+  # name of sections
+    main.section-intro.name: "Chapter I: Installation and Browsing Revisions"
+
+  # level names of section one
+    main.intro-install.name: "Section 1.1: Installation"
+    main.intro-open-repository.name: "Section 1.2: Open Repository using Fork"
+    main.browse-history.name: "Section 1.3: Browsing Revision History"
+
+  ondisk:
   fallbacks:
     default:
       - path_replacement:
           - ''
           - zh-Hant
         keys:
+          - prolog
           - intro-install
           - intro-open-repository
           - browse-history
@@ -52,8 +66,6 @@ asset_index:
           - checkout-remote-branch
           - create-remote-branch
           - delete-remote-branch
-          - main.course-name
-          - main.section-intro.name
           - main.section-create-commits.name
           - main.section-elaborate-commits.name
           - main.section-advanced-history-browsing
@@ -62,9 +74,6 @@ asset_index:
           - main.section-share-repository
           - main.section-integrate-repository
           - main.section-manage-remote
-          - main.intro-install.name
-          - main.intro-open-repository.name
-          - main.browse-history.name
           - main.checkout-revision.name
           - main.commit-one-file.name
           - main.commit-files-separately.name

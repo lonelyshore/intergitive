@@ -1,0 +1,102 @@
+asset_index:
+  infile:
+    intro: |+2
+      .md
+      ### <u>Welcome to `intergitive`!</u>  
+      
+      As its name suggests, this is a program that focusing on teaching *git* *interactively*. In addition to teaching *how* to use git, it further shows *what* is behind the scene so the reader can fully understand how it works.  
+
+      But before we continue, a great question to ask is that does it worth us that much time and effort to learn git in such a great detail?  
+      Let us find out the solution in the following paragraphs.  
+
+    why-git: |+2
+      .md
+      ### <u>What does git do？</u>  
+
+      Git is often referred to as the time machine in your computer. When in need, we can travel to the past and bring a file in its older version back.  
+
+      Another opinion could be (mine humble opinion), git is just like the save-and-load system of a game. We keep saves from time to time and load it back when we get into huge troubles.  
+      
+      Nevertheless, these two metaphors only shows one of the abilities of git: the power to bring back an older version of a file. Indeed, this is the most powerful one among all the abilities of git, but git is more versatile than you may think.   
+
+      ### <u>What others can git do?</u>  
+
+      In addition to its well-known power of reverting a file, git may often be used in two other ways.  
+
+      First, it lists revision history of files.  
+      By having such a list, one may have an idea of what happened at some specific point of time in the past. It could be very handy when we need to collaborate with others.  
+
+      Second, it can merge revision histories of multiple computers. That is, people can work individually on their own computers and put their results together, often auto-magically, into one piece using git.  
+
+      With those abilities, git is an ideal tool for collaborative editing files.  
+      However, with great power comes great responsibility, is git suitable for everyone to use?
+
+    who-is-target: |+2
+      .md
+      ### <u>Is git suitable for me?</u>  
+
+      No worries! In the first place, this tutorial is designed to let any computer user learns how to use git. Even though git was crafted for aiding programmers, all person that can use a computer is able to learn to use git!  
+
+      That being said, learning git may be a difficult journey because its commands are often complicated if not cryptic. Not to mention that one may easily break things when using it. In fact, there is a website that guides users to [fix things done by git](https://sethrobertson.github.io/GitFixUm/fixup.html) in a [choose-your-own-adventure style](https://zh.wikipedia.org/wiki/%E6%B8%B8%E6%88%8F%E4%B9%A6) webpage. 
+
+      It surely sounds daunting for learning git. And this is exactly the problem that this program wants to solve! 
+      It will help anyone who wants to learn git to achieve his or her goal in an easy and efficient way while avoiding pitfalls that caused much pain to other learners.  
+
+    what-content: |+2
+      .md
+      ### <u>How should I use this tutorial?</u>  
+
+      As described above, this program aims to help "anyone" to learn git easily and efficiently. It is expected that people with different level of knowledge of git can find it useful.  
+
+      👉If you are an ordinary computer user without programing knowledge. And you heard about git recently.  
+      
+      The majority people that do not know pretty much about programming are the main target of this tutorial. This is why it focuses on easy-to-use graphical user interface of git instead of dreadful command line to make learning more easily.  
+      
+      Moreover, it teaches techniques that are based on practical use cases. With detailed instructions and illustrations, it will guide you to complete operations step-by-step. 
+
+      Finally, it checks if the operations are completed successfully so you can be very sure things are done correctly.  
+
+      When you have gone through this tutorial, you will be well prepared to use git.  
+
+      ---  
+
+      👉If you can code, but you did not learn git before.
+
+      This is how the author was so the efforts made for simplifying the learning process should be suitable for you.  
+      
+      First, this tutorial is designed carefully to teach things with baby steps. It tries to  introduce new concepts only when the currently one is well explained. In this way, a user can learn things progressively and clearly.  
+
+      Second, this tutorial contains tips or tricks "that would be good if I have had known that before..." and helps people avoid horrible pitfalls in the first place.  
+
+      When you complete this tutorial, you can be sure that you know much more about git than the author did.  
+
+      ---  
+
+      👉If you can use git, but you want to know about how it works.
+
+      It's always good to know how things works. Good for you!  
+
+      Except for how to operate git, this tutorial also tries to explain how and why git works in such a way with simple and straightforward words. Knowing the mechanism of git, one will be more likely to solve problems tht are not mentioned in this tutorial. In addition to that, the clever design of git would be interesting and inspiring to a programmer.  
+
+      When you pass through this tutorial, you might have a deeper understanding toward a version control system.
+      
+      ---  
+
+      👉If you are already familiar with git.
+      
+      Congratulations! You are the master of git. This tutorial probably could not bring you any new thoughts.  
+
+      It would be greatly appreciated if you would like to [make this project better](https://github.com/lonelyshore/intergitive/blob/master/contribution-guides/en.md)!
+
+    summary: |+2
+      .md
+      In this prolog, we have gone through
+      - Why do we need git?
+      - Is git suitable for me ?
+      - What can I learn from this tutorial?
+
+      Now we are ready for the journey. Let's get started!  
+      
+
+
+
