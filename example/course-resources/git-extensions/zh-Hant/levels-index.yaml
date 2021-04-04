@@ -1,6 +1,8 @@
 asset_index:
   infile:
     main.course-name: "Git-Extensions 使用教學"
+    main.prolog.name: "序言：為什麼要學 git？"
+
   # name of sections
     main.section-intro.name: "第一章：Git Extensions 安裝與瀏覽版本"
     main.section-create-commits.name: "第二章：建立版本歷史與檔案狀態"
@@ -78,6 +80,7 @@ asset_index:
     main.delete-remote-branch.name: "9-3 節：刪除遠端分支"
 
   ondisk:
+    prolog: "prolog.yaml"
   # level configs of section one: intro
     intro-install: "intro-install.yaml"
     intro-open-repository: "intro-open-repository.yaml"
@@ -141,4 +144,4 @@ asset_index:
   # level configs of section nine: manager remote
     checkout-remote-branch: "checkout-remote-branch.yaml"
     create-remote-branch: "create-remote-branch.yaml"
-    delete-remote-branch: "delete-remote-branch.yaml
+    delete-remote-branch: "delete-remote-branch.yaml"

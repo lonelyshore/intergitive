@@ -2,6 +2,11 @@
   id: "fork-course"
   nameKey: "levels/main.course-name"
   children:
+    - !level  
+      id: "prolog"
+      nameKey: levels/main.prolog.name
+      configAssetId: levels/prolog
+
     - !sequential-section # chapter 1: basics
       id: "ge-main-section-intro"
       nameKey: "levels/main.section-intro.name"

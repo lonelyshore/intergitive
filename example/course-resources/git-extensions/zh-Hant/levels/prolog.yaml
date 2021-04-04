@@ -1,0 +1,16 @@
+!level
+  repoVcsSetups: {}
+  steps:
+    - !elaborate
+      descriptionId: "level-data/prolog/intro"
+    - !elaborate
+      descriptionId: "level-data/prolog/why-git"
+    - !elaborate
+      descriptionId: "level-data/prolog/who-is-target"
+    - !elaborate
+      descriptionId: "level-data/prolog/what-content"
+    - !elaborate
+      descriptionId: "level-data/prolog/summary"
+
+
+    

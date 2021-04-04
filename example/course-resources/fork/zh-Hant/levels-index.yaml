@@ -142,3 +142,11 @@ asset_index:
     checkout-remote-branch: "checkout-remote-branch.yaml"
     create-remote-branch: "create-remote-branch.yaml"
     delete-remote-branch: "delete-remote-branch.yaml"
+  fallbacks:
+    default:
+      - path_replacement:
+          - 'git-extensions'
+          - ''
+        keys:
+          - 'main.prolog.name'
+          - 'prolog'
