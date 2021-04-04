@@ -1,24 +1,265 @@
 asset_index:
-  fallbacks:
-    default:
-      - path_replacement:
-          - ''
-          - zh-Hant
-        keys:
-          - introduction
-          - graph-as-folder-history
-          - file-tree-viewer
-          - open-folder
-          - use-file-tree-viewer
-          - read-file-tree-viewer
-          - explain-file-tree
-          - read-file-tree-of-second-commit
-          - read-readme-of-second-commit
-          - read-readme-of-last-commit
-          - read-readme-of-forth-commit
-          - read-file-tree-not-affect-working-directory
-          - check-working-directory
-          - introduce-work-tree
-          - illustrate-file-tree
-          - illustrate-browse-history
-          - summary
+# tutorial contents
+    introduction: |+2
+      .md
+      
+      In the end of the previous level, we mentioned that understanding ${{t/graph}} is the key to learning git. The reason is that, as its name suggests, ${{graph}} displays the *revision history* of a git controlled folder graphically.  
+      
+      *Revision history* sounds pretty abstract, doesn't it? Please refer to the following illustration for what it exactly means.  
+
+      ![illustration]({{images/folder-history-change}})  
+      <div class="img-title">Illustration I</div>  
+
+      As one may see from the above illustration, there are two folders in it. One is white and the other one is yellow.  
+
+      Now please imaging that each of these two folders **records** the status of the same folder in our computer, but **at different  time**. The white one records the status when it is 8 o'clock, and there was only one file in it. On the other hand, the yellow one records the status when it is 9 o'clock, and someone added a file into it in the past hour.  
+
+      A sequency (history) of the records (revision) of the status of a folder, such as the above example shown, is **revision history**.  
+      
+      A good question would be what are the benefits of maintaining a revision history? The most obvious two would be:  
+      1. It is like a time machine of our computer. We can revert the status of a folder back to its previous status of any given time.  
+      2. It is like a historical record, to be more specifically, an annals, of a folder. We can known how a folder changes by reading it.  
+
+      Now we agree that revision history is a very useful data to have. Such data can be displayed in any forms we like. And as we knew from the starting point of this level, its graphical form is displayed throw the **${{t/graph}}** of ${{t/gui}}. That is, ${{t/graph}} is a friendly interface for us to search and extract desired information easily from revision history.  
+
+      Now, let us see how to exploit the ${{t/graph}} interface in this level.  
+    
+    graph-as-folder-history: |+2
+      .md
+
+      在繼續進行之前，先讓我們熟悉${{t/graph}}到底是甚麼  
+      我們說到了${{t/graph}}**圖像地**呈現了資料夾變化的歷史，圖像化是甚麼意思呢？ 請看下面圖(二)  
+
+      ![illustration]({{images/graph-fork}})
+      <div class="img-title">圖(二)</div>  
+
+      圖(二)是從${{t/gui}}取出的關於${{t/graph}}特寫  
+
+      我們可以看到${{t/graph}}是由縱向排列串連的六顆圓點組成的  
+      每一顆圓點，其實都代表我們記錄下來的一次資料夾內容  
+      可以想像成圖(一)的白色資料夾或黃色資料夾，就各自是這裡的一個圓點  
+      而從下到上六個串連的圓點，就代表這裡紀錄了一個資料夾的六次版本內容  
+
+      也就是說${{t/graph}}以一個圓點代表資料夾的一個版本，把多個圓點以線條串聯來呈現資料夾變化歷史  
+      但是，好像還少了些甚麼？
+
+    file-tree-viewer: |+2
+      .md
+
+      聰明如你，到這裡或許注意到了  
+      圖(一)裡面我們列出了同一個資料夾在八點和九點時，兩個版本的**內容**  
+      但是圖(二)裡面，我們只能看到總共有六次資料夾的內容版本紀錄，卻不知道他們各自內容為何...  
+
+      不用擔心！檢視每個版本的內容的功能確實的內建於${{t/gui}}之中  
+      接下來，我們會在電腦上實際產生出一個被 git 紀錄了六次檔案版本歷史的資料夾  
+      請逐步按照指示操作，來體驗如何使用${{t/gui}}閱覽資料夾歷史~  
+
+    open-folder: |+2
+      .md
+
+      首先，請使用${{t/gui}}開啟 `#{{basic}}`  
+      完成後，應該會出現如下圖(三)的畫面：  
+      紅框圈選的範圍裏面出現一條有六個點的${{t/graph}}  
+      
+      確認成功後請進行下一步  
+
+      ![illustration]({{images/open-basic}})  
+      <div class="img-title">圖(三)</div>  
+
+    use-file-tree-viewer: |+2
+      .md
+
+      接著，請在${{t/graph}}上面，使用滑鼠左鍵單點，選取位於最上方的圓點  
+      最上方的圓點被選中後會如下圖(四)所示，以深藍色底反白，表示「這個資料夾版本被選中了」  
+
+      ![illustration]({{images/select-last-commit}})  
+      <div class="img-title">圖(四)</div>  
+
+      完成選取之後，如下圖(五)所示  
+      請在${{t/graph}}下方的頁籤中選擇紅框圈選的**「${{st/file-tree-gui}}」**  
+
+      ![illustration]({{images/select-file-tree-tab}})  
+      <div class="img-title">圖(五)</div>  
+
+    read-file-tree-viewer: |+2
+      .md
+
+      選取了${{st/file-tree-gui}}之後，應該會如下圖(六)紅框範圍所示，顯示出目前選中版本的資料夾內容  
+
+      ![illustration]({{images/show-file-tree}})  
+      <div class="img-title">圖(六)</div>  
+
+      請根據你的${{t/gui}}裡面顯示的資料夾內容，回答總共有哪些個檔案呢？  
+      1. a.txt, b.txt, c.txt  
+      2. ===read me===.txt, 1.txt, 3.txt  
+      3. 甚麼東西都沒有  
+
+      請以數字選項(1/2/3)回答      
+
+    explain-file-tree: |+2
+      .md
+
+      在前面的指引中，我們介紹了透過${{t/gui}}的${{st/file-tree-gui}}分頁可以看見一個資料夾在特定版本的內容  
+
+      為什麼是「file tree」呢？  
+      其實 **file tree** 是一種專用術語  
+      因為資料夾裡面通常會有數個檔案跟數個子資料夾，子資料夾還有孫資料夾  
+      反覆展開像是一顆樹一樣，就稱呼為${{t/file-tree-f}}了  
+
+      在這個教學中，當我們說**${{t/file-tree}}**時，指稱的就是「被 git 管控的資料夾，它的某個版本的所有檔案內容」  
+      簡單來說，就是指一個資料夾某時的狀態  
+
+      接下來，讓我們再更進一步發掘${{st/file-tree-gui}}的有趣功能：檢視${{t/file-tree}}的檔案內容
+
+    read-file-tree-of-second-commit: |+2
+      .md
+
+      請在${{t/graph}}上面，選取寫著「第 2 號提交」的圓點  
+      然後檢視${{st/file-tree-gui}}分頁，應該會出現如下圖(七)紅框所示的五個檔案  
+
+      ![illustration]({{images/show-file-tree-of-second-commit}})  
+      <div class="img-title">圖(七)</div>  
+
+    read-readme-of-second-commit: |+2
+      .md
+
+      使用${{st/file-tree-gui}}檢視指定版本的${{t/file-tree}}的情況下  
+      我們可以進一步檢視個別檔案的內容  
+      請如下圖(八)所示，使用滑鼠左鍵單點「===read me===.txt」，將它以藍底白字的方式選取  
+      
+      ![illustration]({{images/read-readme-of-second-commit}})  
+      <div class="img-title">圖(八)</div>  
+
+      完成選取後，${{t/gui}}右下角紅框圈選的範圍會顯示從${{st/file-tree-gui}}中選擇的檔案內容  
+      請在下面的輸入欄輸入你所看見的檔案內容，並按下確認檢查答案～
+
+    read-readme-of-last-commit: |+2
+      .md
+
+      且讓我們繼續練習瀏覽不同版本的「===read me===.txt」  
+
+      請從${{t/graph}}選擇最上面一個圓點(寫著「第 6 號提交」)，並且從${{st/file-tree-gui}}檢視「===read me===.txt」的內容  
+
+      這個版本的「===read me===.txt」內容是一篇歷史名作  
+      因為文長限制，就不方便檢核看到的內容。我們改問這篇名作的原作者是：  
+      1. 塔史亮  
+      2. 豬哥亮  
+      3. 諸葛亮  
+      4. 諸葛暗  
+
+      請以數字選項(1/2/3/4)回答～
+
+    read-readme-of-forth-commit: |+2
+      .md
+
+      最後，請從${{t/graph}}選擇寫著「第 4 號提交」的圓點，再次檢視「===read me===.txt」的內容  
+      請在下方輸入欄填入你看到的內容，並按下確認檢查答案～
+
+    read-file-tree-not-affect-working-directory: |+2
+      .md
+
+      經過前面的練習，我們發現${{st/file-tree-gui}}的功能非常有趣：  
+      它可以讓我們隨意地讀取這個資料夾過去任何版本的任何檔案內容  
+
+      但是，這樣隨意翻看**過去**的檔案，會影響到**現在**這個資料夾的內容嗎？  
+      就讓我們實地檢查看看吧  
+
+    check-working-directory: |+2
+      .md
+
+      首先，且讓我們打開看看目前被 git 管理的資料夾長甚麼樣子  
+
+      請如下圖(九)紅框圈選範圍，依序操作：  
+
+      ![illustration]({{images/open-working-directory}})  
+      <div class="img-title">圖(九)</div>  
+
+      1. 在${{t/gui}}的右上角工具列找到「Open in」按鈕，展開選單  
+      2. 在選單上選擇「Open In File Explorer」，開啟檔案管理員  
+
+      完成操作後後，應該會出現檔案管理員，顯示 `#{{basic}}` 目前的檔案狀態  
+      請從檔案管理員開啟「===read me===.txt」  
+      然後在${{t/gui}}裡選擇檢視「第 4 號提交」的「===read me===.txt」的狀態  
+      
+      
+      請問，「===read me===.txt」目前的實際內容是否與${{t/gui}}裡面顯示的一致呢？  
+      1. 是
+      2. 否
+
+      請以數字選項(1/2)回答～
+      
+    introduce-work-tree: |+2
+      .md
+
+      根據前面的操作，我們發現了，從${{t/gui}}檢視到的過往的「===read me===.txt」是與目前資料夾中的版本不同的  
+      也就是說，閱覽以前的${{t/file-tree}}並不會修改目前資料夾實際上的內容  
+
+      「目前資料夾實際上的內容」說起來非常繞口  
+      在使用 git 時，我們常常必須區分想要講述的是「**當前**的資料夾狀態」還是「**以前**的資料夾狀態」  
+      
+      在前不久，我們介紹了「被 git 保存的任意**以前**資料夾版本內容」叫做${{t/file-tree}}  
+      相對於此，**當前**的資料夾內容則叫做**${{t/work-tree-f}}**  
+      或者比較通俗的說法是${{t/work-tree-alt-f}}  
+
+      雖然${{t/work-tree-alt}}比較容易貼近一般電腦使用者的用語  
+      為了配合 [git 的相關文件用法避免歧異](https://stackoverflow.com/questions/39128500/working-tree-vs-working-directory)，我們將統一使用${{t/work-tree}}來代表「目前資料夾實際上的內容」
+
+    illustrate-file-tree: |+2
+      .md
+
+      這個時候，或許你會覺得有點神奇：  
+      git 是如何做到讓我們可以隨意翻看過往的${{t/file-tree}}而不影響到當前的${{t/work-tree}}的呢？  
+
+      要說明這件事情，就要先了解 git 到底為我們做了甚麼    
+      git 所做的一個很重要的工作，就是把各個版本的${{t/file-tree}}保存在一個使用者看不到的地方  
+      請見下圖(十)來說明這一點：  
+
+      ![illustration]({{images/illustrate-working-tree-and-file-trees}})  
+      <div class="img-title">圖(十)</div>  
+
+      上圖的左邊是${{t/work-tree}}，下面有一個白色資料夾，代表平常我們工作的資料夾  
+      新增/修改/刪除等變化都發生在這裡  
+      因為通常我們只能在一個地方工作，所以左邊只有一個白色資料夾  
+      
+      然後，git 另外找了一個地方，把我們想要留下作紀念(?)的${{t/file-tree}}都偷偷存了起來  
+      就像上圖的右邊有三個不同顏色的資料夾，代表存了三個不同版本的${{t/file-tree}}  
+      而當我們想要瀏覽過去的版本，例如橘色版本時，git 就暫時讓我們觀察一下它偷藏起來的橘色資料夾的內容就好了  
+
+      所以，現在我們知道了 git 作的事情其實很簡單：  
+      就是偷藏了一群${{t/file-tree}}以備不時之需  
+
+    illustrate-browse-history: |+2
+      .md
+      話說回來，git 所維護的「一群${{t/file-tree}}」這個稱呼使用起來也很不方便  
+      所以，git 用來偷偷保存東西的地方也有一個大家慣用的名字  
+      它叫做**${{t/local-repo-f}}，或者更進一步簡稱${{t/repo-f}}**  
+
+      所以上面的概念圖(十)就會變成像下圖(十一)這樣：  
+
+      ![illustration]({{images/illustrate-browse-file-tree}})  
+      <div class="img-title">圖(十一)</div>  
+
+      與圖(十)類似，圖(十一)左邊是${{t/work-tree}}，只是右邊換成了一個一個的圓點代表過往的資料夾版本  
+      所有的圓點串接在一起，就形成了**${{t/repo}}**的**${{t/graph}}**  
+      
+      除此之外，這個圖還連帶說明了瀏覽不同版本${{t/file-tree}}這個操作的特性  
+
+      這裡，我們使用放大鏡來代表瀏覽的動作  
+      當放大鏡觀察紅色、橘色、或藍色的圓點，就表示我們在${{t/gui}}上瀏覽對應版本的${{t/file-tree}}  
+
+      可以發現，無論放大鏡觀察任何版本，左手邊的${{t/work-tree}}永遠保持白色的狀態  
+      這代表瀏覽過往的版本不會影響當前資料夾一分一毫  
+
+    summary: |+2
+      .md
+
+      在本章節中，我們學會了：  
+      1. **${{t/work-tree}}**代表工作中的資料夾狀態
+      2. **${{t/file-tree}}**代表某一個被 git 偷偷保存起來的過往資料夾狀態
+      3. **${{t/graph}}**用圖像的方式呈現了一連串的${{t/file-tree}}
+      4. 瀏覽過往的${{t/file-tree}}不會影響到${{t/work-tree}}
+      
+      回顧這個章節的第一個解說區塊，我們提到了紀錄一連串的${{t/file-tree}}還有一個好處是：  
+      > 猶如時光機，我們可以任意的把資料夾退回到過去特定的時間點  
+
+      這個功能又應該如何使用呢？請待下回分曉！

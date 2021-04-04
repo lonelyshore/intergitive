@@ -1,82 +1,77 @@
 asset_index:
-  fallbacks:
-    default:
-      - path_replacement:
-          - ''
-          - zh-Hant
-        keys:
-          - checkout-rev
-          - checkout-rev-f
-          - checkout-branch
-          - checkout-branch-f
-          - clean-f
-          - clean
-          - dirty-f
-          - dirty
-          - commit
-          - commit-f
-          - commit-s
-          - commit-s-f
-          - gui
-          - graph-f
-          - graph
-          - file-tree-f
-          - file-tree
-          - file-tree-gui
-          - work-tree-alt-f
-          - work-tree-f
-          - work-tree-alt
-          - work-tree
-          - local-repo-f
-          - local-repo
-          - repo-f
-          - repo
-          - revision
-          - revision-f
-          - unstaged-en
-          - staged-en
-          - stage-en
-          - unstaged-f
-          - unstaged
-          - unstage
-          - staged-f
-          - staged
-          - stage-f
-          - stage
-          - head-f
-          - head
-          - index-f
-          - index
-          - hash-f
-          - hash
-          - diff-f
-          - diff
-          - commit-msg
-          - branch
-          - branch-f
-          - merge
-          - merge-f
-          - merge-commit
-          - merge-commit-f
-          - parent-commit
-          - fastforward
-          - fastforward-f
-          - remote-repo
-          - remote-repo-f
-          - clone-repo
-          - clone-repo-f
-          - push-f
-          - push
-          - push-branch-f
-          - fetch-f
-          - fetch
-          - pull-f
-          - conflict-f
-          - conflict
-          - resolve
-          - tracking-f
-          - tracking
-          - remote-branch-f
-          - remote-branch
-          - tracking-branch-f
-          - tracking-branch
+  infile:
+    checkout-rev: checkout revision
+    checkout-rev-f: checkout revision
+    checkout-branch: checkout branch
+    checkout-branch-f: checkout branch
+    clean-f: clean
+    clean: clean
+    dirty-f: dirty
+    dirty: dirty
+    commit: commit
+    commit-f: commit
+    commit-s: commit
+    commit-s-f: commit
+    gui: fork
+    graph-f: revision graph
+    graph: graph
+    file-tree-f: file tree
+    file-tree: file tree
+    work-tree-alt-f: working directory
+    work-tree-f: work tree
+    work-tree-alt: working directory
+    work-tree: work tree
+    local-repo-f: local repository
+    local-repo: local repository
+    repo-f: repository
+    repo: repository
+    revision: revision
+    revision-f: revision
+    unstaged-en: unstaged
+    staged-en: staged
+    stage-en: stage
+    unstaged-f: unstaged
+    unstaged: unstaged
+    unstage: unstage
+    staged-f: staged
+    staged: staged
+    stage-f: stage
+    stage: stage
+    head-f: head
+    head: head
+    index-f: index
+    index: index
+    hash-f: hash
+    hash: hash
+    diff-f: diff
+    diff: diff
+    commit-msg: commit message
+    branch: branch
+    branch-f: branch
+    merge: merge
+    merge-f: merge
+    merge-commit: merging commit
+    merge-commit-f: merging commit
+    parent-commit: parent commit
+    fastforward: fastforward
+    fastforward-f: fastforward
+    remote-repo: remote repository
+    remote-repo-f: remote repository
+    clone-repo: clone repository
+    clone-repo-f: clone repository
+    push-f: push
+    push: push
+    push-branch-f: push branch
+    fetch-f: fetch
+    fetch: fetch
+    pull-f: pull
+    conflict-f: conflict
+    conflict: conflict
+    resolve: resolve
+    tracking-f: tracking
+    tracking: tracking
+    remote-branch-f: remote branch
+    remote-branch: remote branch
+    tracking-branch-f: tracking brach
+    tracking-branch: tracking brach
+

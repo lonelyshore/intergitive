@@ -1,28 +1,93 @@
 asset_index:
-  fallbacks:
-    default:
-      - path_replacement:
-          - ''
-          - zh-Hant
-        keys:
-          - sound-bird
-          - sound-cicada
-          - 'file-1:v1'
-          - 'file-1:v2'
-          - 'file-2:v1'
-          - 'file-3:v1'
-          - 'file-read-me:v1'
-          - 'file-read-me:v2'
-          - 'file-read-me:v3'
-          - msg-1
-          - msg-2
-          - msg-3
-          - msg-4
-          - msg-5
-          - msg-6
-          - introduce-goal
-          - open
-          - folded
-          - open-directory-in-fork
-          - instruct-verify-open
-          - summary
+  infile:
+# build basic operation repo
+    file-1:v1:
+      content of file1
+    file-1:v2:
+      file-1 version 2
+
+    file-2:v1:
+      content of file2
+
+    file-3:v1:
+      content of file3
+
+    file-read-me:v1:
+      Keep Kalm
+
+    file-read-me:v2:
+      Panik!!!
+
+    file-read-me:v3: |+2
+      To be or not to be, that is the question.
+    
+    msg-1: "1st commit"
+    msg-2: "2nd commit"
+    msg-3: "3rd commit"
+    msg-4: "4th commit"
+    msg-5: "5th commit"
+    msg-6: "6th commit"
+
+  # course content
+    introduce-goal: |+2
+      .md
+      In this level, we will introduce how to use ${{t/gui}} to open a folder that is controlled by git.  
+      In the following levels, please follow the steps shown in this level whenever an instruction such as "open folder located at blahblahblah with ${{t/gui}}".
+    
+    open: |+2
+      .md
+      First of all, please open ${{t/gui}} if it is not opened yet.  
+      If you are working with Windows 10, you may find it from the "Fork" folder in the starting menu. As the section highlighted by the red square shows in the following image,
+
+      ![illustration]({{images/fork-from-start-menu}})  
+
+      And the following is the main interface of ${{t/gui}}, as one may see after launching it.
+
+      ![illustration]({{images/fork-opened}})
+
+    folded: |+2
+      .md
+
+      From time to time, you might notice that some of the buttons on the toolbar is occluded just like the following image shows
+
+      ![illustration]({{images/fork-folded}})  
+
+      When it happens, one may try maximize the window to ensure all buttons on the toolbar are displayed.  
+
+    open-directory-in-fork: |+2
+      .md
+
+      So, let us open the folder, which is for practicing, with ${{t/gui}}!
+
+      After launching ${{t/gui}}, please choose `"File > Open Repository..."` from the upper-left menu, as shown in the following image.
+
+      ![illustration]({{images/fork-choose-open-repository}})
+
+      After choosing the menu item, a dialog is displayed, as the following image shows.
+
+      ![illustration]({{images/fork-select-repository-location}})
+
+      We may choose which folder to open in this dialog. A folder is prepared already for practicing. Please copy its path:  
+
+      `#{{basic}}`  
+
+      Then, paste it into one of the two sections marked by the red squares in the above image. Finally, clicking "Choose Folder" to open the folder.
+
+    instruct-verify-open: |+2
+      .md
+      Congratulations! Now we have successfully opened up a folder using ${{t/gui}}. Now, it should show something like the region marked by the red square in the following image. It is called ${{t/graph-f}}
+
+      ![illustration]({{images/fork-open-basic}})  
+
+      Please count how many "circles" are displayed on the ${{t/graph}} of your ${{t/gui}}, and fill the answer in the following text box.
+    
+    summary: |+2
+      .md
+
+      In this level, we have learned
+      1. How to open ${{t/gui}}
+      2. How to open a git controlled folder using ${{t/gui}}
+
+      In the previous block, we mentioned a term "${{graph}}". It is the foundation of how git controls versions of files. Understanding what a ${{t/graph}} is and how it works greatly helps one get familiar with git.  
+      In the following levels, we will have a deeper look into it.  
+

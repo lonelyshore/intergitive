@@ -1,10 +1,31 @@
 asset_index:
-  fallbacks:
-    default:
-      - path_replacement:
-          - ''
-          - zh-Hant
-        keys:
-          - introduce-fork
-          - download
-          - install
+  infile:
+    introduce-fork: |+2
+      .md
+      Welcome to `intergitive`!  
+
+      In this application, we will introduce how to exploit ${{t/gui}} for version control. It is a graphical user interface (GUI) of git.  
+
+      git is an application that controls versions of files. ${{t/gui}} is a friendly interface of git. It makes learning and using git much more easily.
+
+    download: |+2
+      .md
+      Before we continue on, we need to instal ${{t/gui}} into our computer.  
+
+      One can find its installer from its [official website](https://git-fork.com/). After the downloading is completed, please click on the "Confirm" button to continue.
+
+    install: |+2
+      .md
+      After executing the installer, the following dialog will show:  
+
+      ![illustration]({{images/fork-install-dialog}})
+
+      Please enter a name into the "User Name" field. As for the "Email" field, please fill in your e-mail address. Both the name and e-mail address will be recorded in the commits of git.  
+      After that, please click on the "Finish" button to begin installation.
+
+      When installation completes, the following window shows up.
+
+      ![illustration]({{images/fork-installed}})  
+
+      When one sees this window, it means the installation completed successfully. Congratulations!  
+      We will teach for how to operate ${{t/gui}} in the next level. Please click on the "Confirm" button to complete this level.  
