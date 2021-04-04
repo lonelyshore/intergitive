@@ -3,13 +3,15 @@
   nameKey: "levels/main.course-name"
   children:
     - !level  
-      id: "prolog"
+      id: prolog
       nameKey: levels/main.prolog.name
       configAssetId: levels/prolog
 
     - !sequential-section # chapter 1: basics
       id: "ge-main-section-intro"
       nameKey: "levels/main.section-intro.name"
+      prerequisiteIds: 
+        - prolog
       children:
         - !level
           id: "ge-main-intro-install"
@@ -30,7 +32,9 @@
     - !sequential-section # chapter 2: creating commits
       id: "fork-main-section-create-commits"
       nameKey: "levels/main.section-create-commits.name"
-      prerequisiteIds: [ "fork-main-section-intro" ]
+      prerequisiteIds: 
+        - prolog
+        - "fork-main-section-intro"
       children:
         - !level 
           id: "fork-main-commit-one-file"
@@ -64,6 +68,7 @@
       id: "fork-main-section-elaborate-commits"
       nameKey: "levels/main.section-elaborate-commits.name"
       prerequisiteIds: 
+        - prolog
         - "fork-main-section-intro"
         - "fork-main-section-create-commits"
       children:
@@ -83,6 +88,7 @@
       id: "fork-main-section-advaneced-history-browsing"
       nameKey: "levels/main.section-advanced-history-browsing"
       prerequisiteIds: 
+        - prolog
         - "fork-main-section-intro"
         - "fork-main-section-create-commits"
         - "fork-main-section-elaborate-commits"
@@ -107,6 +113,7 @@
       id: "fork-main-section-create-and-checkout-branches"
       nameKey: "levels/main.section-create-and-checkout-branches"
       prerequisiteIds: 
+        - prolog
         - "fork-main-section-intro"
         - "fork-main-section-create-commits"
         - "fork-main-section-elaborate-commits"
@@ -148,6 +155,7 @@
       id: "fork-main-section-merge-and-delete-branches"
       nameKey: "levels/main.section-merge-and-delete-branches"
       prerequisiteIds: 
+        - prolog
         - "fork-main-section-intro"
         - "fork-main-section-create-commits"
         - "fork-main-section-elaborate-commits"
@@ -178,6 +186,7 @@
       id: "fork-main-section-share-repository"
       nameKey: "levels/main.section-share-repository"
       prerequisiteIds: 
+        - prolog
         - "fork-main-section-intro"
         - "fork-main-section-create-commits"
         - "fork-main-section-elaborate-commits"
@@ -209,6 +218,7 @@
       id: "fork-main-section-integrate-repository"
       nameKey: "levels/main.section-integrate-repository"
       prerequisiteIds: 
+        - prolog
         - "fork-main-section-intro"
         - "fork-main-section-create-commits"
         - "fork-main-section-elaborate-commits"
@@ -253,6 +263,7 @@
       id: "fork-main-section-manage-remote"
       nameKey: "levels/main.section-manage-remote"
       prerequisiteIds: 
+        - prolog
         - "fork-main-section-intro"
         - "fork-main-section-create-commits"
         - "fork-main-section-elaborate-commits"
