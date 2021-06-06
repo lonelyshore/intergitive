@@ -6,6 +6,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CspHtmlWebpackPlugin = require('csp-html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { DefinePlugin } = require('webpack')
 const distPath = path.resolve(__dirname)
 
 module.exports = (env, options) => {
@@ -37,6 +38,9 @@ module.exports = (env, options) => {
     },
     plugins: [
       new IgnorePlugin(/build\/Debug\/nodegit.node$/i),
+      new DefinePlugin({
+        'process.env.BUNDLE_VERSION': JSON.stringify(process.env.npm_package_version)
+      }),
       new EnvironmentPlugin({
         NODE_ENV: 'dev',
         DEBUG_ENABLED: 'false'

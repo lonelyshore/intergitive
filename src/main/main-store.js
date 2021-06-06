@@ -134,7 +134,7 @@ const store = {
             return {
               appConfig: appConfig,
               courseOptions: options,
-              appVersion: process.env.npm_package_version
+              appVersion: process.env.BUNDLE_VERSION
             }
           })
       })
