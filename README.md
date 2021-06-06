@@ -25,10 +25,11 @@ If you have any of the above problems, `intergitive` can help you!
 - It comprises of comprehensive explanations and use illustrations to help them easy to understand
   - For example, here is a quote of explanation of "checkout" from the [git official site](https://git-scm.com/docs/git-checkout):
   ```
-    Updates files in the working tree to match the version in the index or the specified tree. If no pathspec was given, git checkout will also update HEAD to set the specified branch as the current branch.
+    Updates files in the working tree to match the version in the index or the specified tree.
+    If no pathspec was given, git checkout will also update HEAD to set the specified branch as the current branch.
   ```
   - And here is how `intergitive` says about the same thing
-    ![checkout-example](screenshots/checkout-illustration.png)  
+    ![checkout-example](docs/readme/screenshots/checkout-illustration.png)  
 - `intergitive` explains working mechanism and concepts of git in addition to instructions of how to operate it
 - It guides a user with an interactive "operate-and-verify" mechanism to ensures a user stays on track and has a great sense of progression
   - For example, teaching a three-steps operation in a statical tutorial may look like:
@@ -38,7 +39,7 @@ If you have any of the above problems, `intergitive` can help you!
     - The reader can compare his/her own result against the expected one. However, even if the reader knows the result is wrong, he/she would have no idea of what went wrong...🙈
   - In `intergitive`, the process is like:  
     - It shows how to do the first step, the reader follows.
-    - When the reader completes, he/she triggers `intergitive` to check if the result is as expected, as shown below
+    - When the reader completes, he/she triggers `intergitive` to check if the result is as expected, as shown below  
       ![interactive-1](docs/readme/screenshots/interactive-en-1.png)
       - If the result is as expected, the reader may continue on.
         ![interactive-2](docs/readme/screenshots/interactive-en-2.png)
@@ -118,5 +119,5 @@ One may select the best suited tutorial here：
   - Lists the ten reasons why the author hates git. Some of them are: bad user interface, obscure document, complex workflow, incomplete encapsulation, complicated concept
 - [The Hardest Things About Learning Git](https://blog.axosoft.com/hardest-things-learning-git/)
   - Opinions of why git is hard to learn, collected from twitter.
-- [On undoing, fixing, or removing commits in git]((https://sethrobertson.github.io/GitFixUm/fixup.html)
+- [On undoing, fixing, or removing commits in git](https://sethrobertson.github.io/GitFixUm/fixup.html)
   - An interesting text-based RPG that guides one to fix a corrupted/unwanted commit

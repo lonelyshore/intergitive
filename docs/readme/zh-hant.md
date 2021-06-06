@@ -118,5 +118,5 @@
   - 提出十點(作者)個人討厭 git 的理由。主要可以歸納為使用者介面設計不良、文件晦澀、操作流程繁瑣、封裝不全、核心概念複雜
 - [The Hardest Things About Learning Git](https://blog.axosoft.com/hardest-things-learning-git/)(英文)
   - 從 twitter 收集來的五點 git 難以學習的部分，包含：本地與遠端倉庫的困惑、reset 的三種型態、rebase 的意涵、合併衝突
-- [On undoing, fixing, or removing commits in git]((https://sethrobertson.github.io/GitFixUm/fixup.html)(英文)
-  - 
+- [On undoing, fixing, or removing commits in git](https://sethrobertson.github.io/GitFixUm/fixup.html)(英文)
+  - 以文字角色扮演遊戲的形式，引導修復壞掉的 git commit 
