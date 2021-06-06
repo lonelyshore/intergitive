@@ -2,12 +2,29 @@
 
 const fs = require('fs-extra')
 const path = require('path')
+const { app } = require('electron')
 const { ApplicationConfig } = require('../common/config-app')
 const configName = 'app-config.json'
 
+function getDefaultLanguage () {
+  const langTokens = app.getLocale().split('-')
+  if (langTokens.length === 0) {
+    return 'en'
+  } else if (langTokens.length === 1) {
+    return langTokens[0]
+  } else {
+    switch (langTokens[0]) {
+      case 'zh':
+        return 'zh-Hant'
+      default:
+        return langTokens[0]
+    }
+  }
+}
+
 function createDefaultConfig () {
   return new ApplicationConfig(
-    'zh-Hant',
+    getDefaultLanguage(),
     'fork'
   )
 }

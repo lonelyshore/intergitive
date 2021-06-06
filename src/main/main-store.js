@@ -114,7 +114,8 @@ const store = {
     this.services.appConfig = new AppConfigService(paths.executionPath, paths)
     this.services.progress = new ProgressService(paths.progressPath)
 
-    return this.services.appConfig.loadConfiguration()
+    return fs.ensureDir(paths.executionPath)
+      .then(() => this.services.appConfig.loadConfiguration())
       .then(appConfig => {
         const loadMessages = Object.keys(this.messages).reduce(
           (pervious, key) => {
