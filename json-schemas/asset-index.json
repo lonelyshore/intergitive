@@ -39,35 +39,40 @@
             "properties": {
                 "default": {
                     "$id": "#/definitions/fallbacks_block/properties/default",
-                    "type": "object",
-                    "title": "The Default Fallback Schema",
-                    "description": "enumerates set of assets that are redirected to a default asset. optional",
-                    "required": [
-                        "path_replacement",
-                        "keys"
-                    ],
-                    "properties": {
-                        "path_replacement": {
-                            "$id": "#/definitions/fallbacks_block/properties/default/properties/path_replacement",
-                            "type": "array",
-                            "title": "The Path Replacement Schema of Default Fallbacks",
-                            "description": "the new base path of the remapped keys; mandatory when .fallbacks.default exists.",
-                            "items": {
-                                "$id": "#/definitions/fallbacks_block/properties/default/properties/path_replacement/items",
-                                "type": "string",
-                                "default": ""
-                            }
-                        },
-                        "keys": {
-                            "$id": "#/definitions/fallbacks_block/properties/default/properties/keys",
-                            "type": "array",
-                            "title": "The Keys Schema of Default Fallbacks",
-                            "description": "an array of remapped keys. mandatory when fallback/default exists.",
-                            "items": {
-                                "$id": "#/definitions/fallbacks_block/properties/default/properties/keys/items",
-                                "type": "string",
-                                "title": "The Items Schema",
-                                "default": ""
+                    "type": "array",
+                    "description": "array of default fallback settings",
+                    "items": {
+                        "$id": "#/definitions/fallbacks_block/properties/default/items",
+                        "type": "object",
+                        "title": "The Default Fallback Schema",
+                        "description": "enumerates set of assets that are redirected to a default asset. optional",
+                        "required": [
+                            "path_replacement",
+                            "keys"
+                        ],
+                        "properties": {
+                            "path_replacement": {
+                                "$id": "#/definitions/fallbacks_block/properties/default/items/properties/path_replacement",
+                                "type": "array",
+                                "title": "The Path Replacement Schema of Default Fallbacks",
+                                "description": "the new base path of the remapped keys; mandatory when .fallbacks.default exists.",
+                                "items": {
+                                    "$id": "#/definitions/fallbacks_block/properties/default/items/properties/path_replacement/items",
+                                    "type": "string",
+                                    "default": ""
+                                }
+                            },
+                            "keys": {
+                                "$id": "#/definitions/fallbacks_block/properties/default/items/properties/keys",
+                                "type": "array",
+                                "title": "The Keys Schema of Default Fallbacks",
+                                "description": "an array of remapped keys. mandatory when fallback/default exists.",
+                                "items": {
+                                    "$id": "#/definitions/fallbacks_block/properties/default/properties/keys/items",
+                                    "type": "string",
+                                    "title": "The Items Schema",
+                                    "default": ""
+                                }
                             }
                         }
                     }
