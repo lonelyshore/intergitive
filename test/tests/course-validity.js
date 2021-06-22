@@ -285,7 +285,7 @@ function validateLevels (course, levelConfigAndNames, loaderPair, courseName, la
      * @param {string} courseName
      */
   function validateLevel (levelConfig, previousLevelId, levelName, loaderPair, courseName, language) {
-    describe(`Level ${levelName}`, function () {
+    describe(`Level ${levelName} in ${language}`, function () {
       describe('Repo VCS Setup', function () {
         const repoStorePath = path.join(
           testUtils.PLAYGROUND_PATH,
@@ -300,11 +300,11 @@ function validateLevels (course, levelConfigAndNames, loaderPair, courseName, la
         }
 
         /**
-                 *
-                 * @param {string} repoSetupName
-                 * @param {module:common/config-level~RepoVcsSetup} repoSetup
-                 * @param {Array<RepoRefDemand>} repoRefDemands
-                 */
+        *
+        * @param {string} repoSetupName
+        * @param {module:common/config-level~RepoVcsSetup} repoSetup
+        * @param {Array<RepoRefDemand>} repoRefDemands
+        */
         function validateRepoStore (repoSetupName, repoSetup, repoRefDemands) {
           const refStoreName = repoSetup.referenceStoreName
 
@@ -344,7 +344,7 @@ function validateLevels (course, levelConfigAndNames, loaderPair, courseName, la
                           .then(refExists => {
                             if (!refExists) {
                               errors.push(
-                                                        `[Missing Repo Reference] Cannot find reference ${repoRefDemand.reference} from ref store ${repoSetupName}. Required by ${repoRefDemand.host}`
+                                `[Missing Repo Reference] Cannot find reference ${repoRefDemand.reference} from ref store ${repoSetupName}. Required by ${repoRefDemand.host}`
                               )
                             }
                           })
@@ -367,9 +367,9 @@ function validateLevels (course, levelConfigAndNames, loaderPair, courseName, la
         }
 
         /**
-                 *
-                 * @param {module:common/config-level~Level} levelConfig
-                 */
+        *
+        * @param {module:common/config-level~Level} levelConfig
+        */
         function collectRepoSetupToDemandedRepoReferenceAndHosts (levelConfig, previousLevelId) {
           const repoSetupNames = Object.keys(levelConfig.repoVcsSetups)
 
@@ -685,7 +685,7 @@ function validateLevels (course, levelConfigAndNames, loaderPair, courseName, la
     })
   }
 
-  describe(`Validate Levels for Course ${courseName}`, function () {
+  describe(`Validate Levels for Course ${courseName} and Language ${language}`, function () {
     const flatCourseItems = configCourse.flattenCourseTree(course)
 
     levelConfigAndNames.forEach(levelConfigAndName => {
