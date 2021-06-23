@@ -77,7 +77,7 @@ asset_index:
       .md
       Congratulations! Now we have successfully opened up a folder using ${{t/gui}}. Now, it should show something like the region marked by the red square in the following image. It is called ${{t/graph-f}}
 
-      ![illustration]({{images/fork-open-basic}})  
+      ![illustration]({{images/open-basic}})  
 
       Please count how many "circles" are displayed on the ${{t/graph}} of your ${{t/gui}}, and fill the answer in the following text box.
     
@@ -88,6 +88,15 @@ asset_index:
       1. How to open ${{t/gui}}
       2. How to open a git controlled folder using ${{t/gui}}
 
-      In the previous block, we mentioned a term "${{graph}}". It is the foundation of how git controls versions of files. Understanding what a ${{t/graph}} is and how it works greatly helps one get familiar with git.  
+      In the previous block, we mentioned a term "${{t/graph}}". It is the foundation of how git controls versions of files. Understanding what a ${{t/graph}} is and how it works greatly helps one get familiar with git.  
       In the following levels, we will have a deeper look into it.  
+
+  fallbacks:
+    default:
+      - path_replacement:
+          - ''
+          - 'zh-Hant'
+        keys:
+          - sound-bird
+          - sound-cicada
 

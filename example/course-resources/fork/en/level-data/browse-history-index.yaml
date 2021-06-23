@@ -1,9 +1,10 @@
 asset_index:
 # tutorial contents
+  infile:
     introduction: |+2
       .md
       
-      In the end of the previous level, we mentioned that understanding ${{t/graph}} is the key to learning git. The reason is that, as its name suggests, ${{graph}} displays the *revision history* of a git controlled folder graphically.  
+      In the end of the previous level, we mentioned that understanding ${{t/graph}} is the key to learning git. The reason is that, as its name suggests, ${{t/graph}} displays the *revision history* of a git controlled folder graphically.  
       
       *Revision history* sounds pretty abstract, doesn't it? Please refer to the following illustration for what it exactly means.  
 

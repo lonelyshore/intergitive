@@ -12,7 +12,7 @@ asset_index:
           - fork-folded
           - fork-choose-open-repository
           - fork-select-repository-location
-          - fork-open-basic
+          - open-basic
           - folder-history-change
           - graph-fork
           - select-last-commit

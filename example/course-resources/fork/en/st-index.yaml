@@ -15,6 +15,7 @@ asset_index:
           - act-stage
           - act-unstage
           - discard-changes
+          - file-tree-gui
           - reset-file-item
           - reset-file-sub-current
           - reset-file-sub-previous

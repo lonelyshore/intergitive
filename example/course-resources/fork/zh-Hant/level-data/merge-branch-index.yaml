@@ -112,14 +112,14 @@ asset_index:
       就讓我們來偷看一下在「`${{level-data/merge-branch/branch-name-hamburger-alt-2}}`」這個分支上的「`${{level-data/merge-branch/file-2-name}}`」的內容如何吧  
 
       為了偷看別的${{t/branch}}的檔案內容  
-      我們可以回想前面章節曾經學過的，在${{t/gui}}上操作${{t/file-tree-gui}}介面  
+      我們可以回想前面章節曾經學過的，在${{t/gui}}上操作${{st/file-tree-gui}}介面  
       請仿照下圖(一)操作  
 
       ![illustration]({{images/recall-view-file-tree}})  
       <div class="img-title">圖(一)</div>  
 
       先從${{t/graph}}上圖紅框圈選處所示，選擇目標的${{t/revision}}  
-      然後如上圖橘框圈選處所示，開啟${{t/file-tree-gui}}介面  
+      然後如上圖橘框圈選處所示，開啟${{st/file-tree-gui}}介面  
 
       請檢視「`${{level-data/merge-branch/file-2-name}}`」的內容  
       並回答它的看起來像是下列何者：  
